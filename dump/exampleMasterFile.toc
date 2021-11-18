@@ -1,0 +1,16 @@
+\contentsline {chapter}{ACKNOWLEDGEMENTS}{4}{chapter*.1}%
+\contentsline {chapter}{LIST OF TABLES}{6}{chapter*.3}%
+\contentsline {chapter}{LIST OF FIGURES}{7}{chapter*.4}%
+\contentsline {chapter}{LIST OF ABBREVIATIONS}{8}{chapter*.5}%
+\contentsline {chapter}{ABSTRACT}{9}{section*.6}%
+\contentsline {part}{CHAPTER}{}{}
+\ttl@change@i {\@ne }{chapter}{2em}{\addvspace {8pt}}{{\hspace *{-2em}\hyper@linkstart {link}{\Hy@tocdestname }\hspace *{2em}{\contentslabel {2em}}\hyper@linkend }\ifchapterCapOff \else \color {blue}\uppercase \fi }{}{\hyper@linkstart {link}{\Hy@tocdestname }{\titlerule *[5pt]{.}\thecontentspage }\hyper@linkend \\*\addvspace {8pt}}\relax 
+\ttl@change@v {chapter}{}{}{}\relax 
+\contentsline {chapter}{\numberline {1}EXAMPLES OF EDITOR/Author TOOLS, TABLES, AND IMAGES}{10}{chapter.1}%
+\ttl@change@i {\@ne }{chapter}{2em}{\addvspace {8pt}}{{\hspace *{-2em}\hyper@linkstart {link}{\Hy@tocdestname }\hspace *{2em}{\contentslabel {2em}}\hyper@linkend }\ifchapterCapOff \else \color {blue}\uppercase \fi }{}{\hyper@linkstart {link}{\Hy@tocdestname }{\titlerule *[5pt]{.}\thecontentspage }\hyper@linkend \\*}\relax 
+\ttl@change@v {chapter}{}{}{}\relax 
+\ttl@change@i {\@ne }{chapter}{0em}{\addvspace {8pt}}{\hspace *{-2em}\hyper@linkstart {link}{\Hy@tocdestname }\hspace *{2em}{\contentslabel {2em}}\hyper@linkend }{}{\hyper@linkstart {link}{\Hy@tocdestname }{\titlerule *[5pt]{.}\thecontentspage }\hyper@linkend \\*}\relax 
+\ttl@change@v {chapter}{}{}{}\relax 
+\contentsfinish 
+\contentsline {chapter}{REFERENCES}{11}{section*.7}%
+\contentsline {chapter}{BIOGRAPHICAL SKETCH}{11}{chapter*.8}%

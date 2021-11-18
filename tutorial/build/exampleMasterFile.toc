@@ -1,0 +1,45 @@
+\contentsline {chapter}{ACKNOWLEDGEMENTS}{4}{chapter*.1}%
+\contentsline {chapter}{LIST OF TABLES}{6}{chapter*.3}%
+\contentsline {chapter}{LIST OF FIGURES}{7}{chapter*.4}%
+\contentsline {chapter}{LIST OF OBJECTS}{8}{chapter*.5}%
+\contentsline {chapter}{LIST OF ABBREVIATIONS}{9}{chapter*.6}%
+\contentsline {chapter}{ABSTRACT}{10}{section*.7}%
+\contentsline {part}{CHAPTER}{}{}
+\ttl@change@i {\@ne }{chapter}{2em}{\addvspace {8pt}}{{\hspace *{-2em}\hyper@linkstart {link}{\Hy@tocdestname }\hspace *{2em}{\contentslabel {2em}}\hyper@linkend }\ifchapterCapOff \else \color {blue}\uppercase \fi }{}{\hyper@linkstart {link}{\Hy@tocdestname }{\titlerule *[5pt]{.}\thecontentspage }\hyper@linkend \\*\addvspace {8pt}}\relax 
+\ttl@change@v {chapter}{}{}{}\relax 
+\contentsline {chapter}{\numberline {1}INTRODUCTION and opening remarks}{11}{chapter.1}%
+\contentsline {section}{\numberline {1.1}The Section Command Text Should Be in Title Case}{11}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Subsection Commands Are Also in Title Case}{11}{subsection.1.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1.1}Subsubsections are in sentence case}{11}{subsubsection.1.1.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1.2}If you divide a section, you must divide it into two, or more, parts}{11}{subsubsection.1.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.2}I Need Another Second Level Heading in This Section}{11}{subsection.1.1.2}%
+\contentsline {chapter}{\numberline {2}LITERATURE REVIEW}{14}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Dolor Sit Amet}{14}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Platea Dictumst}{14}{subsection.2.1.1}%
+\contentsline {section}{\numberline {2.2}Ex id ullamcorper commodo}{15}{section.2.2}%
+\contentsline {chapter}{\numberline {3}MATERIALS ANS METHODS}{16}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Consectetur Adipiscing Elit}{16}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}This Is an Isolated Heading}{16}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}Augue sapien mattis leo}{16}{section.3.2}%
+\contentsline {chapter}{\numberline {4}EXAMPLES OF EDITOR/Author TOOLS, TABLES, AND IMAGES}{17}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Example of using the authorRemark and editorRemark}{17}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Table Examples}{17}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Very Long Tables}{17}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Examples of Adding Graphics}{22}{section.4.4}%
+\contentsline {section}{\numberline {4.5}A Note On Graphics}{24}{section.4.5}%
+\contentsline {chapter}{\numberline {5}SUMMARY AND CONCLUSIONS}{25}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Non Porttitor Tellus}{25}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Nam Arcu Magna}{25}{subsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.1.1}Ut pellentesque velit sede}{25}{subsubsection.5.1.1.1}%
+\contentsfinish 
+\ttl@change@i {\@ne }{chapter}{2em}{\addvspace {8pt}}{{\hspace *{-2em}\hyper@linkstart {link}{\Hy@tocdestname }\hspace *{2em}{\contentslabel {2em}}\hyper@linkend }\ifchapterCapOff \else \color {blue}\uppercase \fi }{}{\hyper@linkstart {link}{\Hy@tocdestname }{\titlerule *[5pt]{.}\thecontentspage }\hyper@linkend \\*}\relax 
+\ttl@change@v {chapter}{}{}{}\relax 
+\ttl@change@i {\@ne }{chapter}{0em}{\addvspace {8pt}}{\hspace *{-2em}\hyper@linkstart {link}{\Hy@tocdestname }\hspace *{2em}{APPENDIX: \expandafter \contentslabel {2em}}\hyper@linkend \ifchapterCapOff \else \color {blue}\uppercase \fi }{}{\hyper@linkstart {link}{\Hy@tocdestname }{\titlerule *[5pt]{.}\thecontentspage }\hyper@linkend \\*}\relax 
+\ttl@change@v {chapter}{}{}{}\relax 
+\ttl@change@i {\@ne }{chapter}{0em}{\addvspace {8pt}}{\hspace *{-2em}\hyper@linkstart {link}{\Hy@tocdestname }\hspace *{2em}{APPENDIX: }\hyper@linkend \ifchapterCapOff \else \color {blue}\uppercase \fi }{}{\hyper@linkstart {link}{\Hy@tocdestname }{\titlerule *[5pt]{.}\thecontentspage }\hyper@linkend \\*}\relax 
+\ttl@change@v {chapter}{}{}{}\relax 
+\contentsline {chapter}{\numberline {A}Some Additional Material}{26}{chapter.6}%
+\ttl@change@i {\@ne }{chapter}{0em}{\addvspace {8pt}}{\hspace *{-2em}\hyper@linkstart {link}{\Hy@tocdestname }\hspace *{2em}{\contentslabel {2em}}\hyper@linkend }{}{\hyper@linkstart {link}{\Hy@tocdestname }{\titlerule *[5pt]{.}\thecontentspage }\hyper@linkend \\*}\relax 
+\ttl@change@v {chapter}{}{}{}\relax 
+\contentsline {chapter}{REFERENCES}{27}{section*.17}%
+\contentsline {chapter}{BIOGRAPHICAL SKETCH}{28}{chapter*.19}%

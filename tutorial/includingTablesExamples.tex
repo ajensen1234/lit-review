@@ -2,26 +2,27 @@
 You may notice that some tables get moved outside of where you placed them. This is because \LaTeX{} is a little too helpful when it comes to placement of `float' types; which includes tables and figures. You can get around this by using the ``H" parameter in the table environment, or the `multiFigure' environment described in the ``adding graphics section"; ie section \ref{Sec:addingGraphics}
 
 \begin{table}[H]
-\caption[An example of a table caption in the incorrect place.]{This table is located in the correct section because it uses the ``H" optional parameter in the table environment, unlike the next tables which have been helpfully moved by \LaTeX{} to the next page, which places them inside the section.You should also make a note that the caption command is placed after the table itself, which means the caption occurs after the table. The graduate school requires tables to have captions placed {before} the actual table data, so the caption command should be located before the table data. See the next table for an example.}
 \begin{tabular}{llcr}
-\hline Some    & Data  & Goes  & Here\\ \hline
 Some    & Data  & Goes  & Here\\
 Some    & Data  & Goes  & Here\\
 Some    & Data  & Goes  & Here\\
-\hline
+Some    & Data  & Goes  & Here\\
 \end{tabular}
+\caption[An example of a table caption in the incorrect place.]{This table is located in the correct section because it uses the ``H" optional parameter in the table environment, unlike the next tables which have been helpfully moved by \LaTeX{} to the next page, which places them inside the section.
 
+You should also make a note that the caption command is placed after the table itself, which means the caption occurs after the table. The graduate school requires tables to have captions placed {before} the actual table data, so the caption command should be located before the table data. See the next table for an example.}
 \end{table}
 
 \begin{table}[]
-\caption[A proper table caption location]{Notice that this caption is included above the table data, as per the graduate school requirements. Also note that the caption itself has a short version in the ``List of Tables" which is achieved by using the optional argument of the caption command. See the file source code directly to see the example. Unfortunately, since we did not use the ``H" parameter in the table environment, this table was placed \textit{after} the next section heading, which is almost certainly not where an author would have wanted it.}
+\caption[A proper table caption location]{Notice that this caption is included above the table data, as per the graduate school requirements. Also note that the caption itself has a short version in the ``List of Tables" which is achieved by using the optional argument of the caption command. See the file source code directly to see the example.
+
+Unfortunately, since we did not use the ``H" parameter in the table environment, this table was placed \textit{after} the next section heading, which is almost certainly not where an author would have wanted it.}
 %\begin{center}
-\begin{tabularx}{\textwidth}{XXXX}
-\hline Some    & Data  & Goes  & Here\\ \hline
+\begin{tabularx}{\textwidth}{XXXX}\hline
+Some    & Data  & Goes  & Here\\\hline
 Some    & Data  & Goes  & Here\\
 Some    & Data  & Goes  & Here\\
-Some    & Data  & Goes  & Here\\
-\hline
+Some    & Data  & Goes  & Here\\\hline
 \end{tabularx}
 %\end{center}
 
@@ -107,16 +108,16 @@ There are two approaches to inputting very long tables. You can do it manually, 
 \hline
 \end{tabularx}
 \end{table}
+\newpage
 
 Alternatively, compared to the previous example where we used manual breaks to break the table, we can let LaTeX do this for us, as well as taking care of any recurrent headers and footers, utilizing the \verb|\longtable| command,\footnote{note that the longtable environment is not in a table environment; putting it inside a table environment will stop it from correctly page breaking as needed.} as follows:
 
-\newpage
 
 \begin{longtable}[h!t!]{p{0.6in}p{1in}p{4.4in}}
     \caption{Duplicate of Previous table, using longtables environment.}\label{tbl2}\\% Default caption at top of table
     \hline {{Time (s)}} & {{Triple chosen}} & {{Other feasible triples}}\\ \hline \endfirsthead% The top row of the first page
     \hline\endfoot%         This line should always be included; it includes a line at the end of the table on every page.
-    \caption*{Table 4-4. Continued} \\% This caption is added to every page after the first as per the \endhead next line.
+    \caption*{continued} \\% This caption is added to every page after the first as per the \endhead next line.
     \hline{{Time (s)}} & {{Triple chosen}} & {{Other feasible triples}}\\ \hline \endhead%
 %                                                               Everything between \endfoot and \endhead here is added at
 %                                                                   the top of the table on every page except the first;
@@ -179,6 +180,7 @@ Alternatively, compared to the previous example where we used manual breaks to b
 148230 & (2, 2, 2745) & (2, 3, 0), (3, 1, 0) \\
 150975 & (1, 13, 16470) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
 153720 & (1, 12, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+\newpage% Force a pagebreak here so that we don't have a stranded row.
 156465 & (1, 13, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
 159210 & (1, 13, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
 161955 & (1, 13, 16470) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\

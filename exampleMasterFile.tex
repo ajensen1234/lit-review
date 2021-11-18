@@ -9,7 +9,7 @@
 \usepackage{tikz}%       tikz is used by almost everyone, but certainly by me for this.
 \usepackage{pgfplots}%   pgfplots is tikz but better.
 %\usepackage{amsrefs}%   amsrefs contains the .bibtex style content for mathematician papers.
-
+\usepackage{algorithmic}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                     User Configuration commands
@@ -18,7 +18,6 @@
 %% Uncomment the relevant line below if you have tables or figures.
 \haveTablestrue%        Uncomment this if you have tables in your thesis.
 \haveFigurestrue%       Uncomment this if you have figures in your thesis.
-\haveObjectstrue%       Uncomment this if you have Objects in your thesis. This is almost certainly not the case however.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Below are the commands to set the degree type, department, graduation time, and chair. 
@@ -28,15 +27,15 @@
 %           If John was your chair and you had no cochair, you can simply use \chair{John}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Dissertation and Thesis Example File}%  Put your title here.
+\title{An Autonomous Method for Measuring 3D Joint Kinematics from 2D Xray Images}%  Put your title here.
 
-\degreeType{Doctor of Philosophy}%   Official name of your degree; eg "Doctor of Philosophy".
-\major{Mathematics}%                    Your official Department
-\author{Jason Nowell}%                  Your Name
+\degreeType{Doctorate of Philosophy}%   Official name of your degree; eg "Doctorate of Philosophy".
+\major{Mechanical Engineering}%                    Your official Department
+\author{Andrew James Jensen}%                  Your Name
 \thesisType{Dissertation}%              Dissertation (PhD) or Thesis (Masters)
-\degreeYear{2019}%                      Intended graduation year (not the year you submit the thesis)
+\degreeYear{2021}%                      Intended graduation year (not the year you submit the thesis)
 \degreeMonth{August}%                   Month of graduation should be May, August, or December.
-\chair[Jack Griffin]{Claude Rains}%                   Chair and Cochair (see comment block above).
+\chair{Scott Banks}%                   Chair and Cochair (see comment block above).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -52,18 +51,18 @@
 
 %%% These are REQUIRED sections; easiest to do via these commands.
 
-\setDedicationFile{dedicationFile}%                 Dedication Page
-\setAcknowledgementsFile{acknowledgementsFile}%     Acknowledgements Page
-\setAbstractFile{abstractFile}%                     Abstract Page (This should only include the abstract itself)
-\setReferenceFile{referenceFile}{amsplain}%         References. First argument is your bibtex source file
+\setDedicationFile{./src/dedicationFile}%                 Dedication Page
+\setAcknowledgementsFile{./src/acknowledgementsFile}%     Acknowledgements Page
+\setAbstractFile{./src/abstractFile}%                     Abstract Page (This should only include the abstract itself)
+\setReferenceFile{./src/referenceFile}{amsplain}%         References. First argument is your bibtex source file
 %                                                       the second argument is your bibtex style file.
-\setBiographicalFile{biographyFile}%                Biography file of the Author (you).
+\setBiographicalFile{./src/biographyFile}%                Biography file of the Author (you).
 
 %%% These are NOT required, so only use them if you actually need/have them.
 
-\setAbbreviationsFile{abbreviations}%           Abbreviations Page
-\setAppendixFile{appendix}%                     Appendix Content; hyperlinking might be weird.
-\multipleAppendixtrue%                          Uncomment this if you have more than one appendix, 
+\setAbbreviationsFile{./src/abbreviations}%           Abbreviations Page
+%\setAppendixFile{appendix}%                     Appendix Content; hyperlinking might be weird.
+%\multipleAppendixtrue%                          Uncomment this if you have more than one appendix, 
 %                                                   comment it if you have only one appendix.
 
 
@@ -80,22 +79,16 @@
 
 
 
-\include{chapter1}% Modified from old template.
+\include{./src/ch1-introduction}% Modified from old template.
+\include{./src/ch2-proposal}% Modified from old template.
 
-%\begin{algorithm}% Example showing the weird "algorithm" environment works...
-%   \captionof{algorithm}{Test Caption}
-%\end{algorithm}
-%\addObject{TestStuff!}%     This is probably the command that a normal author will use to add objects.
-
-\include{chapter2}% Modified from old template.
-\include{chapter3}% Modified from old template.
 
 \chapter{EXAMPLES OF EDITOR/Author TOOLS, TABLES, AND IMAGES}% Notice that we can use chapter/section etc breaks in the master file if we want, and then use \input instead of \include to avoid unneccessary page breaks.
-\input{editorAndAuthorRemarks}%     Stuff about using editorRemark and authorRemark commands
-\input{includingTablesExamples}%    Stuff about using Tables.
-\input{includingImagesExamples}%    Stuff about using Images.
+%\input{editorAndAuthorRemarks}%     Stuff about using editorRemark and authorRemark commands
+%\input{includingTablesExamples}%    Stuff about using Tables.
+%\input{includingImagesExamples}%    Stuff about using Images.
 
-\include{chapter5}% Modified from old template.
+%\include{chapter5}% Modified from old template.
 
 
 

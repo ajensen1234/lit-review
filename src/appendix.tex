@@ -2,7 +2,7 @@
 
 Test for first appendix file.
 
-\chapter{Secondary Appendix Content}
+%\chapter{Secondary Appendix Content}
 
 \begin{table}[htbp]% Fix the table captions to sit directly on the table, but figures do NOT sit directly on the figure.
     \captionof{table}{A sample Table using tabularx}\label{first}
@@ -20,8 +20,8 @@ Test for first appendix file.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=.2]{graphics/theworld.png}
-    \caption[Figure Caption]{This is a long caption to make sure that the caption in the list-of section is correctly single space with the blank white line between captions. }
+    %\includegraphics[scale=.2]{theworld.png}
+    \caption[Figure Caption]{This is a super-long caption to make sure that the caption in the list-of section is correctly single space with the blank white line between captions. That being said, you should probably always use the list-entry optional argument in the captionof command to write a shorter caption instead of this nonsense.}
     \label{fig:my_label}
 \end{figure}
 
