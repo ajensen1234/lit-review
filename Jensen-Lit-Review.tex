@@ -52,16 +52,16 @@
 
 %%% These are REQUIRED sections; easiest to do via these commands.
 
-\setDedicationFile{./src/dedicationFile}%                 Dedication Page
-\setAcknowledgementsFile{./src/acknowledgementsFile}%     Acknowledgements Page
-\setAbstractFile{./src/abstractFile}%                     Abstract Page (This should only include the abstract itself)
+\setDedicationFile{./src/0-Preamble/dedicationFile}%                 Dedication Page
+\setAcknowledgementsFile{./src/0-Preamble/acknowledgementsFile}%     Acknowledgements Page
+\setAbstractFile{./src/0-Preamble/abstractFile}%                     Abstract Page (This should only include the abstract itself)
 \setReferenceFile{./src/myBib.bib}{amsplain}%         References. First argument is your bibtex source file
 %                                                       the second argument is your bibtex style file.
-\setBiographicalFile{./src/biographyFile}%                Biography file of the Author (you).
+\setBiographicalFile{./src/0-Preamble/biographyFile}%                Biography file of the Author (you).
 
 %%% These are NOT required, so only use them if you actually need/have them.
 
-\setAbbreviationsFile{./src/abbreviations}%           Abbreviations Page
+\setAbbreviationsFile{./src/0-Preamble/abbreviations}%           Abbreviations Page
 %\setAppendixFile{appendix}%                     Appendix Content; hyperlinking might be weird.
 %\multipleAppendixtrue%                          Uncomment this if you have more than one appendix, 
 %                                                   comment it if you have only one appendix.
@@ -80,7 +80,7 @@
 
 
 
-\include{./src/ch1-lit_review}
+\include{"./src/1-Intro/ch1-lit_review"}
 \include{./src/chX-jtml}
 
 
