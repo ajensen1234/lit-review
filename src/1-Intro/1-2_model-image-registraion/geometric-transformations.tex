@@ -1,0 +1,89 @@
+We start off with a brief overview of different 2D and 3D geometric primitives and transformations and how these can be represented computationally and mathematically.
+
+\subsubsection{2D and 3D Points}
+A point in N-dimensional space is represented as a set of N scalers, each representing a magnitude in that canonical direction (Eq. \ref{eq:point}).
+
+\begin{equation}
+    \mathbf{x} = \begin{bmatrix}
+        x_1 \\ x_2 \\ \vdots \\ x_{N-1} \\ x_N
+    \end{bmatrix} \in \mathbb{R}^N
+    \label{eq:point}
+\end{equation}
+
+A pixel on an image is represented as a 2D point, $\mathbf{x} = [x , y]^{T}$, and a point in space is represented as a 3D point, $\mathbf{x} = [x , y , z]^{T}$. We can also represent these points using \emph{homogeneous coordinates} by adding a scale factor, $\tilde{w}$ (Eq. \ref{eq:homog-point}). Homogeneous points are equivalent up to a scale factor. For most model-image registration, $\tilde{w} = 1$, allowing us to perform rotations and translations simultaneously and successively with matrix multiplications.
+
+\begin{equation}
+    \tilde{\mathbf{x}} = \begin{bmatrix}
+        \tilde{x_1} \\ \tilde{x_2} \\ \vdots \\ \tilde{x_N} \\ \tilde{w}
+    \end{bmatrix} = \tilde{w}\begin{bmatrix}
+        \mathbf{x}\\ 1
+    \end{bmatrix} = \tilde{w}\bar{\mathbf{x}}
+    \label{eq:homog-point}
+\end{equation}
+
+\subsubsection{2D Transformations}
+The most basic transformation is a translation, which is simply adding two vectors together (Eq. \ref{eq:translation}).
+
+\begin{equation}
+    \begin{aligned}
+        \mathbf{x'} &= \mathbf{x} + \begin{bmatrix}
+            t_x \\ t_y
+        \end{bmatrix} = \mathbf{x} + \mathbf{t}\\
+        &\text{Or, using homogeneous coordinates and matrix multiplication} \\
+        &= \begin{bmatrix}
+            \mathbf{I} & \mathbf{t}
+        \end{bmatrix}\bar{\mathbf{x}} \\
+        &\text{Where $I$ is the $2 \times 2$ identity matrix}
+    \end{aligned}
+    \label{eq:translation}
+\end{equation}
+
+Next, we have a \emph{rotation transform}, which changes the orientation of the object, but not the shape (Eq. \ref{eq:2d-rot}, \ref{eq:2d-rot-mat}). 
+
+\begin{equation}
+    \begin{aligned}
+        \mathbf{x}' = \mathbf{Rx}
+    \end{aligned}
+    \label{eq:2d-rot}
+\end{equation}
+
+where
+\begin{equation}
+    \mathbf{R} = \begin{bmatrix}
+        cos\theta & -sin \theta \\ sin \theta & cos \theta 
+    \end{bmatrix}
+    \label{eq:2d-rot-mat}
+\end{equation}
+
+This will rotate an object $\theta$ in the counter clockwise direction. 
+
+A translation and rotation can be performed together by replacing the $\mathbf{I}$ in Eq. \ref{eq:translation} with $\mathbf{R}$ from Eq. \ref{eq:2d-rot-mat}. (Eq. \ref{eq:2d-rot-trans}), this transformation preserves lengths and angles.
+\begin{equation}
+    \mathbf{x}' = \begin{bmatrix}
+        \mathbf{R}_{2 \times 2} & \mathbf{t}
+    \end{bmatrix} \bar{\mathbf{x}}
+    \label{eq:2d-rot-trans}
+\end{equation}
+
+
+A scaled rotation will change the size of the object by some scaler factor, $s$ (Eq. \ref{eq:2d-scaled-rot}); this transformation preserves angles.
+
+\begin{equation}
+    \mathbf{x}' = \begin{bmatrix}
+        s\mathbf{R}_{2 \times 2} & \mathbf{t}
+    \end{bmatrix}\bar{\mathbf{x}}
+    \label{eq:2d-scaled-rot}
+\end{equation}
+
+An affine transformation preserves parallelism, and is simply a pre-multiplication by an arbitrary $2 \times 3$ matrix (Eq. \ref{eq:2d-affine}).
+
+\begin{equation}
+    \begin{aligned}
+        \mathbf{x}' &= \mathbf{A\bar{x}}\\
+        &\text{where}\\
+        \mathbf{A} &= \begin{bmatrix}
+            a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23}
+        \end{bmatrix}
+    \end{aligned}
+    \label{eq:2d-affine}
+\end{equation}
