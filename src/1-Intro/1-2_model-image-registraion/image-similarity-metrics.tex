@@ -5,12 +5,16 @@ Intensity based measures are those that utilize specific pixel information in or
 
 A canonical difference between two images would be the p-norm separating them (Eq. \ref{eq:p-norm}), which iterates through each pixel of the two images and finds the p-norm difference each intensity for the pixel pair. Common p-norms are the $L_1$ norm (\emph{absolute intensity differences} or \emph{mean absolute difference}) \cite{kanadeStereoMatchingAlgorithm1994} ($p=1$) and the $L_{2}$, or Euclidean, norm (\emph{squared intensity differences} or \emph{mean squared difference}) \cite{hannahComputerMatchingAreas1977}($p=2$).
 
+Intensity-based measures use the pixel values of the images to determine their similarity. These measures can be global, meaning they consider the entire image, or they can focus on specific regions of interest. A common intensity-based measure is the p-norm (Eq. \ref{eq:p-norm}), which calculates the difference between the intensity of corresponding pixels in the two images. The $L_1$ norm, also known as the absolute intensity differences or mean absolute difference, uses $p=1$ in the equation \cite{kanadeStereoMatchingAlgorithm1994}, while the $L_2$ norm, also known as the squared intensity differences or mean squared difference, uses $p=2$ \cite{hannahComputerMatchingAreas1977}. 
+
 \begin{equation}
     \|A-B\|_{p} = (\sum_{x=0}^{w}\sum_{y=0}^{h}|a_{xy}-b_{xy}|^{p})^{\frac{1}{p}}
     \label{eq:p-norm}
 \end{equation}
 
-While conceptually easy, the main limitation of this type of correlation is the lack of spatial information between two images. For example, an image that was shifted my a linear transformation would not score very well using a p-norm, despite the two images containing only a minor shift, scale, or rotation. One of the principal methods of overcoming images shifted by linear transformations is using the cross-correlation, or sliding dot product, between images \cite{bendatRandomDataAnalysis2010,hannahComputerMatchingAreas1977} (Eq. \ref{eq:xcorr}). When used in conjunction with projective geometry, this can help locate regions of interest for a model-based registration pipeline.
+where $A$ and $B$ are the two images being compared, $w$ and $h$ are the width and height of the images, and $a_{xy}$ and $b_{xy}$ are the intensity values at pixel $(x,y)$ in the two images, respectively.
+
+While conceptually easy to use, the main limitation of p-norm measures is their lack of spatial information. For example, an image that has been shifted by a linear transformation would not score well using a p-norm, despite the two images containing only a minor shift, scale, or rotation. One method for overcoming this limitation is to use the cross-correlation, or sliding dot product, between images \cite{bendatRandomDataAnalysis2010,hannahComputerMatchingAreas1977} (Eq. \ref{eq:xcorr}). When used in conjunction with projective geometry, this can help locate regions of interest for a model-based registration pipeline. The cross-correlation is calculated using the following equation:
 
 \begin{equation}
     \begin{aligned}
