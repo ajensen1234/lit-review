@@ -34,7 +34,8 @@ Then, we use a projective transformation that determines the perspective scaling
     \label{eq:perspective-projection}
 \end{equation}
 
-We can account for any image offset using the principal point. This is the point where the ray from the x-ray to the image plane is perpendicular, which is typically near the center of the image, though not always.
+In computer graphics, the principal point, $(c_x,c_y)$ is a key element in the mathematical model of a camera. It is the point where the optical axis of the camera intersects the image plane, and is typically near the center of the image. The principal point is important because it determines the perspective of the image: objects that are farther away from the principal point will appear smaller in the image, while objects that are closer to the principal point will appear larger. When dealing with the shift between the reference frame embedded in the object and the reference frame embedded in the image plane, the principal point acts as a translation (Eq. \ref{eq:principal-point}).
+
 
 \begin{equation}
     \begin{aligned}
@@ -45,10 +46,10 @@ We can account for any image offset using the principal point. This is the point
         c_x &\approx \frac{W_{image}}{2} \\
         c_y &\approx \frac{H_{image}}{2} \\
     \end{aligned}
-    \label{eq:perspective-projection}
+    \label{eq:principal-point}
 \end{equation}
 
-Lastly, we need to convert the points in $\tilde{\mathbf{x}}_i$ to pixel coordinates using the pixel scale factor, $k_x,k_y$ for the x and y factors, respectively.
+Finally, we need to convert the image coordinates, $\tilde{\mathbf{x}}_i$, to pixel coordinates using the pixel scale factor (Eq.\ref{eq:pixel-scaling}). The pixel scale factor is defined by the parameters $k_x$ and $k_y$, which represent the number of pixels per unit distance in the x and y directions, respectively. By multiplying the perspective projection matrix by the pixel scale factor, we can obtain a new matrix that maps 3D points in world coordinates directly to pixel coordinates on the image.
 
 \begin{equation}
     \begin{aligned}
@@ -64,4 +65,5 @@ Lastly, we need to convert the points in $\tilde{\mathbf{x}}_i$ to pixel coordin
         f_x &= k_x f' \text{        and        } f_y = k_y f' \\
         &\text{Are focal distances in units of pixels} 
     \end{aligned}
+    \label{eq:pixel-scaling}
 \end{equation}

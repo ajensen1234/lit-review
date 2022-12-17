@@ -1,0 +1,15 @@
+Digital image processing is a field of computer vision that deals with the manipulation, analysis, and interpretation of digital images. It focuses on algorithms and techniques that extract meaningful information from images and to enhance visual quality. In fluoroscopy, image processing can be used to enhance the digital image, or determine important information about it such that a the model-image registration task can be performed efficiently and autonomously.
+
+\subsubsection{Filtering and Convolution}
+We have already seen how image formation yields a collection of 2D points, $\mathbf{x}_{pix}$. We can write the intensity values at each pixel locations as a function, $f(\mathbf{x}_{pix}) = f(i,j)$, where $(i,j)$ represent locations in the image, and the function returns the intensity of the image at that particular pixel location. This allows us to treat images as functions, and perform similar functional operations and analysis to extract meaningful information from them.
+
+The most widely used filter is a linear filter \cite{szeliskiComputerVisionAlgorithms2022}, where the output is some linear operation on the neighboring pixels (Eq. \ref{eq:convolution}), also known as a \emph{convolution}. In a convolution, the kernel, $h$ is shifted along the input image, $f$, and the resultant image, $g$, is the dot product of those two matrices at that specific location.
+
+\begin{equation}
+    \begin{aligned}
+        g(i,j) &= \sum_{k,l}f(i-k,j-l)h(k,l) \\
+        &= \sum_{k,l}f(k,l)h(i-k,j-l)
+    \end{aligned}
+    \label{eq:convolution}
+\end{equation}
+
