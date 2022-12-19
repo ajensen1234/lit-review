@@ -30,7 +30,7 @@ The convolution operation is \emph{linear shift invariant}, which means that it 
 A common filter applied to images is the Gaussian kernel (Eq. \ref{eq:gaussian-kernal}). This kernel is shaped as a 2D discrete Gaussian, and has the effect of blurring an image and removing noise.
 
 \begin{equation}
-    \frac{1}{256}\begin{bmatrix}
+    \text{Gaussian filter}=\frac{1}{256}\begin{bmatrix}
         1 & 4 & 6 & 4 & 1 \\
         4 & 16 & 24 & 16 & 4\\
         6 & 24 & 36 & 24 & 6\\
@@ -43,7 +43,7 @@ A common filter applied to images is the Gaussian kernel (Eq. \ref{eq:gaussian-k
 Another is the box kernel, which averages the value of the nearest K pixels (Eq. \ref{eq:box-filter}).
 
 \begin{equation}
-    \frac{1}{K^{2}}\begin{bmatrix}
+    \text{Box filter} = \frac{1}{K^{2}}\begin{bmatrix}
         1 & 1 & \cdots &1\\
         1 & 1 & \cdots &1 \\
         \vdots & \vdots & 1 & \vdots \\
@@ -91,10 +91,24 @@ Edge filters can also be created to detect vertical (Eq. \ref{eq:vert-edge-filte
 Lastly, we can use a corner filter to find corners in images (Eq. \ref{eq:corner-filter}).
 
 \begin{equation}
-    \frac{1}{4}\begin{bmatrix}
+    \text{Corner filter} = \frac{1}{4}\begin{bmatrix}
         1 & -2 & 1 \\
         -2 & 4 & -2 \\
         1 & -2 & 1 \\
     \end{bmatrix}
     \label{eq:corner-filter}
 \end{equation}
+
+Entire subfields of computer vision and image analysis are devoted to creating increasingly useful and complex filters, or collections of filters. These include steerable filters, which determine information occurring in arbitrary directions \cite{freemanSteerableFiltersLocal1992}, recursive filtering \cite{nielsenRegularizationScalespaceEdge1996}, and non-linear filtering \cite{tomasiBilateralFilteringGray1998}.
+
+\subsubsection{Binary Image Processing}
+
+A binary image is a digital image that consists only of black and white pixels. It is often used for labeling or masking an underlying image, where the values of 1 and 0 represent the presence or absence of a particular feature or object. Binary images are often used in computer vision and image processing applications because they can be easily processed and analyzed using algorithms. They are also useful for storing and transmitting large amounts of data, as the use of only two values reduces the amount of information that needs to be stored and transmitted.
+
+The primary form of processing on binary images is morphological, that is, changing the shape of the ``blob'' in order to extract useful information from it.
+
+\begin{figure}[h!]
+    \includegraphics[width = \linewidth]{figs/background/png/binary-image-processing.jpg}
+    \caption{A collection of morphological operations on a binary image: (a) original image; (b) dilation; (c) erosion; (d) majority; (e) opening; (f) closing. Image from \cite{szeliskiComputerVisionAlgorithms2022}}
+    \label{fig:binary-image-processing}
+\end{figure}
