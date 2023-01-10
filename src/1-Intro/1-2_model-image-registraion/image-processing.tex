@@ -112,3 +112,22 @@ The primary form of processing on binary images is morphological, that is, chang
     \caption{A collection of morphological operations on a binary image: (a) original image; (b) dilation; (c) erosion; (d) majority; (e) opening; (f) closing. Image from \cite{szeliskiComputerVisionAlgorithms2022}}
     \label{fig:binary-image-processing}
 \end{figure}
+
+Dilation and erosion are the two main operations that are used in model-image registration (\ref{eq:dilation-erosion}). These functions are ach two-fold: first, a convolution operation is applied to the existing binary image, then a threshold is applied to the convolution output to determine if the central pixel is a zero or 1. If $f$ is the input image, $s$ is the convolution kernel of $1$s, and $c=f\otimes s$ is the number of $1$s in the convolution output, then dilation and erosion can be expressed in the following way.
+
+\begin{equation}
+    \begin{aligned}
+        \text{dilate}(f,s) &= \theta(c,1) \\
+        \text{erode}(f,s) &= \theta(c,S) 
+    \end{aligned}
+    \label{eq:dilation-erosion}
+\end{equation}
+
+Where $\theta$ represents a thresholding function.
+
+\begin{equation}
+    \theta (f,t) = \begin{cases}
+        1 &\text{ if } f\ge t \\
+        0 &\text{ else}
+    \end{cases}
+\end{equation}

@@ -79,20 +79,7 @@ The ubiquitous edge detection algorithm was proposed by John Canny in 1986 \cite
 \emph{Using Edges for Image Similarity}\\
 In model-image registration, the similarity of two contours is used as a heuristic for the correct pose. When the projected model's contour aligns accurately with the edges in the fluoroscopic image, one can say that the model is \emph{properly registered} to the image. The main question becomes: how can we computationally determine when two contours are aligned?
 
-As always, the simplest approach is to take the p-norm between the model and image contours (Eq. \ref{eq:p-norm}), where instead of taking the difference between the two original images, one is taking the difference of the edges of the images. This function will be minimized when there is complete overlap between image and model contours. The primary issue with this formulation is the sensitivity to slight perturbations in the model. This is due to the width of the contour being a single pixel, which would render an extremely high error if the model is shifted just a single pixel in any direction. Because the edge-detected images are binary (0-no edge, 1-edge), we can take advantage of binary morphological operations to change the images to better suit the model-image registration pipeline. The primary operation is dilation (Eq. \ref{eq:dilation}), which is simply the convolutional operation with the kernel containing all 1s.
-
-\begin{equation}
-\begin{aligned}
-    I_{dil} &= (I \circledast g)\\
-    &\text{where} \\
-    g &= \begin{pmatrix}
-        1 & 1 & 1 \\ 1 & 1 & 1 \\ 1& 1 & 1
-    \end{pmatrix}
-\end{aligned}
-\label{eq:dilation}
-\end{equation}
-
-The dilation operator is useful because it decreases the sensitivity of the p-norm metric for image similarity, allowing for a smoother curve for optimization routines to find a global minima.
+As always, the simplest approach is to take the p-norm between the model and image contours (Eq. \ref{eq:p-norm}), where instead of taking the difference between the two original images, one is taking the difference of the edges of the images. This function will be minimized when there is complete overlap between image and model contours. The primary issue with this formulation is the sensitivity to slight perturbations in the model. This is due to the width of the contour being a single pixel, which would render an extremely high error if the model is shifted just a single pixel in any direction. Because the edge-detected images are binary (0-no edge, 1-edge), we can take advantage of binary morphological operations to change the images to better suit the model-image registration pipeline. The primary operation is dilation (Eq. \ref{eq:dilation-erosion}), which is useful because it decreases the sensitivity of the p-norm metric for image similarity, allowing for a smoother curve for optimization routines to find a global minima.
 
 \subsubsection{Symmetry Traps}
 Objects with rotational or mirror symmetry cause pathological solutions to many of the image similarity metrics when used for optimizing the pose of the object relative to the image. The simplest example of a symmetry trap can be posed as follows: given the shadow of a basketball, which direction was the logo facing? It is quickly apparent that this is an impossible question to answer with just the information given by the image and the 3D model. This problem arises when performing optimizing for the post of mediolaterally symmetric tibial implants. Additional information must be used to find the correct pose of the implant.
@@ -106,7 +93,7 @@ However, with the knowledge of the direction of symmetry, it is possible to dete
 \begin{enumerate}
     \item Determine the viewing ray from camera $\rightarrow$ object (Eq. \ref{eq:view-ray}).
     \item Determine the axis-angle ($m,\theta$) rotation between the viewing ray and the symmetric axis of the object (Eq. \ref{eq:angle-between}, \ref{eq:perp-axis}).
-    \item Rotate the object $-2\theta$ about the same axis, reflecting the rotation about the viewing ray (Eq. \ref{eq:equiv-axs-angle}).
+    \item Rotate the object $-2\theta$ about the same axis, reflecting the rotation about the viewing ray (Eq. \ref{eq:equiv-axis-angle}).
     \item The final orientation of the object is exactly the ``dual pose'', producing indistinguishable projective geometry (Eq. \ref{eq:rotation-matrix-mult}).
 \end{enumerate}
 \end{mdframed}
