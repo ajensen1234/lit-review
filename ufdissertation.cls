@@ -62,12 +62,12 @@
     \captionsetup[table]{skip=0pt}
 %\RequirePackage{tocloft}%  
 
-
+\DeclareMathOperator*{\argmax}{\arg\!max}
+\DeclareMathOperator*{\argmin}{\arg\!min}
 % Load the algorithm environment, which we hijack into the "Objects" environment.
 % The "plain" option is to remove the special algorithm formatting in the text.
 \RequirePackage[plain]{algorithm}
-
-
+\def\tabularxcolumn#1{m{#1}}
 % Use this for the actual header styling
 % The "largestsep" option forces the gap between chapter and text to be the same as
 % the gap between the chapter and section when they occur consecutively.
@@ -229,6 +229,7 @@
     {% End Environment Co
         \endminipage
     }
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Theorem environment definitions %%%
