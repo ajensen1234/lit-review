@@ -10,6 +10,9 @@
 \usepackage{pgfplots}%   pgfplots is tikz but better.
 %\usepackage{amsrefs}%   amsrefs contains the .bibtex style content for mathematician papers.
 \usepackage[framemethod=TikZ]{mdframed} %For MD Theorem
+\usepackage{cleveref}
+\usepackage{mathtools}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                     User Configuration commands
@@ -80,7 +83,8 @@
 
 
 \include{"./src/1-Intro/ch1-lit_review"}
-\include{./src/chX-jtml}
+\include{src/2-aims/2-aims.tex}
+\include{./src/JTML/chX-jtml}
 
 
 %\chapter{EXAMPLES OF EDITOR/Author TOOLS, TABLES, AND IMAGES}% Notice that we can use chapter/section etc breaks in the master file if we want, and then use \input instead of \include to avoid unneccessary page breaks.

@@ -1,6 +1,7 @@
 Geometric primitives, such as points, are fundamental building blocks for representing shapes and objects in computer graphics. In this section, we will discuss how points can be represented in 2D and 3D space..
 
 \subsubsection{2D and 3D Points}
+\label{sec:geometric-points}
 In N-dimensional space, a point is represented as a set of N scalars, each representing a magnitude in a particular direction. This can be represented mathematically as a column vector, as shown in Equation \ref{eq:point}. In the case of 2D space, a point is represented as a 2D column vector, $\mathbf{x} = [x , y]^{T}$. Similarly, in 3D space, a point is represented as a 3D column vector, $\mathbf{x} = [x , y , z]^{T}$..
 
 \begin{equation}
@@ -22,6 +23,7 @@ Homogeneous coordinates provide a way to represent points with an additional sca
 \end{equation}
 
 \subsubsection{2D Transformations}
+\label{sec:2d-transformations}
 Transformations are operations that change the position, orientation, or shape of an object in 2D space. One of the most basic transformations is a translation, which moves an object by adding a displacement vector to its position. This can be expressed mathematically as shown in Equation \ref{eq:translation}:
 
 \begin{equation}
@@ -111,6 +113,7 @@ To obtain inhomogeneous results, the resultant $\tilde{\mathbf{x}}'$ must be nor
 \end{equation}
 
 \subsubsection{3D Transformations}
+\label{sec:3d-transformations}
 
 3D transformations operate on 3D points (Eq. \ref{eq:point}) in a similar way to 2D transformations. In general, all types of transformations, including translations, rotations, scaled rotations, and projections, can be represented by matrices in 3D space, with the only difference being that the dimensions are increased by one.
 
