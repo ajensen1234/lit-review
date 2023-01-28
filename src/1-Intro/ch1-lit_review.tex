@@ -3,33 +3,11 @@ Total Knee Arthroplasty (TKA) is a standard procedure for alleviating symptoms r
 
 Model-image registration is a process where a 3D model is aligned to match an object’s projection in an image \cite{brownSurveyImageRegistration1992}. Researchers have performed model-image registration using single-plane fluoroscopic or flat-panel imaging since the 1990s. Early methods used pre-computed distance maps \cite{lavalleeRecoveringPositionOrientation1995,zuffiModelbasedMethodReconstruction1999}, or shape libraries \cite{banksAccurateMeasurementThreedimensional1996,wallaceAnalysisThreedimensionalMovement1980,wallaceEfficientThreedimensionalAircraft1980} to match the projection of a 3D implant model to its projection in a radiographic image. With increasing computational capabilities, methods that iteratively compared implant projections to images were possible \cite{mahfouzRobustMethodRegistration2003,floodAutomatedRegistration3D2018,loweFittingParameterizedThreedimensional1991}. Most model-image registration methods provide sufficient accuracy for clinical joint assessment applications, including natural and replaced knees \cite{banksVivoKinematicsCruciateretaining1997,banks2003HapPaul2004,komistekVivoFluoroscopicAnalysis2003,burtonAutomaticTrackingHealthy2021}, natural and replaced shoulders \cite{kijimaVivo3dimensionalAnalysis2015,mahfouzVivoDeterminationDynamics,matsukiVivo3dimensionalAnalysis2011,sugiComparingVivoThreedimensional2021}, and extremities \cite{cenniKinematicsThreeComponents2012,cenniFunctionalPerformanceTotal2013,deaslaSixDOFVivo2006}. One of the main benefits of this single-plane approach is that suitable images can be acquired with equipment found in most hospitals. The main impediment to implementing this approach into a standard clinical workflow is the time and expense of human operators to supervise the model-image registration process. These methods require either (1) an initial pose estimate \cite{floodAutomatedRegistration3D2018,loweFittingParameterizedThreedimensional1991}, (2) a pre-segmented contour of the implant in the image \cite{brownSurveyImageRegistration1992,lavalleeRecoveringPositionOrientation1995}, or (3) a human operator to assist the optimization routine out of local minima \cite{mahfouzRobustMethodRegistration2003}. Each of these requirements makes model-image registration methods impractical for clinical use. Even state-of-the-art model-image registration techniques \cite{floodAutomatedRegistration3D2018} require human initialization or segmentation to perform adequately.
 
-Machine learning algorithms automate the process of analytical model building, utilizing specific algorithms to fit a series of inputs to their respective outputs. Neural networks are a subset of machine learning algorithms that utilize artificial neurons inspired by the human brain’s connections \cite{marrEarlyProcessingVisual1976}. These networks have shown a great deal of success in many computer vision tasks, such as segmentation \cite{chanHistoSegNetSemanticSegmentation2019,wangDeepHighResolutionRepresentation2020,ronnebergerUNetConvolutionalNetworks2015}, pose estimation \cite{wuDeepGraphPose2020,kendallGeometricLossFunctions2017}, and classification \cite{krizhevskyImageNetClassificationDeep2017,qiPointNetDeepHierarchical2017,qiPointNetDeepLearning2017}. These capabilities might remove the need for human supervision from TKA model-image registration. Therefore, we propose a three-stage data analysis pipeline where a convolutional neural network (CNN) is used to segment, or identify, the pixels belonging to either a femoral or tibial component. Then, an initial pose estimate is generated comparing the segmented implant contour to a pre-computed shape library. Lastly, the initial pose estimate serves as the starting point for a Lipschitzian optimizer that aligns the contours of a 3D implant model to the contour of the CNN-segmented image.
-
-\section{Background}
-\subsection{Current Ortho Exams}
-\input{src/1-Intro/1-1_background/ortho-exams.tex}
-\subsection{Fluoroscopy}
-\input{src/1-Intro/1-1_background/fluoroscopy.tex}
-\subsection{Kinematics from Fluoroscopy}
-\input{src/1-Intro/1-1_background/kinematics-from-fluoro.tex}
+Machine learning algorithms automate the process of analytical model building, utilizing specific algorithms to fit a series of inputs to their respective outputs. Neural networks are a subset of machine learning algorithms that utilize artificial neurons inspired by the human brain’s connections \cite{marrEarlyProcessingVisual1976}. These networks have shown a great deal of success in many computer vision tasks, such as segmentation \cite{chanHistoSegNetSemanticSegmentation2019,wangDeepHighResolutionRepresentation2020,ronnebergerUNetConvolutionalNetworks2015}, pose estimation \cite{wuDeepGraphPose2020,kendallGeometricLossFunctions2017}, and classification \cite{krizhevskyImageNetClassificationDeep2017,qiPointNetDeepHierarchical2017,qiPointNetDeepLearning2017}. These capabilities might remove the need for human supervision from TKA model-image registration. 
 
 \section{Computer Vision Primer}
 \label{sec:cv-primer}
-\subsection{Geometric Transformations}
-\label{sec:geometric-transformations}
-\input{src/1-Intro/1-2_computer-vision-primer/geometric-transformations.tex}
-
-\subsection{Image Formation and Camera Properties}
-\label{sec:img-form-camera-props}
-\input{src/1-Intro/1-2_computer-vision-primer/image-formation-and-cameras.tex}
-
-\subsection{Image Processing}
-\label{sec:image-processing}
-\input{src/1-Intro/1-2_computer-vision-primer/image-processing.tex}
-
-\subsection{Image Similarity Metrics}
-\label{sec:image-similarity}
-\input{src/1-Intro/1-2_computer-vision-primer/image-similarity-metrics.tex}
+\input{src/1-Intro/1-2_computer-vision-primer/1-2_computer-vision-primer.tex}
 
 \section{Deep Learning for Image Processing in Orthopaedics}
 \label{sec:deep-learning}
