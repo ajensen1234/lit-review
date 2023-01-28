@@ -28,14 +28,20 @@ We can illustrate this convergence with a simple example: consider the function 
         f(x) &\ge f(a) - K(x - a) \\
         f(x) &\ge f(b) + K(x - b)
     \end{aligned}
-    \label{eq:sherbert}
+    \label{eq:shubert}
 \end{equation}
 
-\begin{center}
-    \Huge{SHERBERTS ALGORITHM FIGURE - look at Jones et all}
-\end{center}
+\begin{figure}
+    \begin{center}
+        \includegraphics[width = 0.75\linewidth]{figures/raster/shubert-step1.png}
+        \includegraphics[width = 0.75\linewidth]{figures/raster/shubert-step2.png}
+        \includegraphics[width = 0.75\linewidth]{figures/raster/shubert-step3.png}
+    \end{center}
+    \label{fig:shubert}
+    \caption{A visual representation of Shubert's algorthm, which finds the global minima iteratively through a repeated calculation of the intersection of two lines with slope $\pm K$. If $K$ is known, it will always find the global minimum.}
+\end{figure}
 
-While powerful, a-priori knowledge of the Lipschitz constant is needed for determining the global minima. Without it, there is no way of determining intersection points, and no way of selected new regions for subdivision and sampling. Sherbert's algorithm also has slow convergence, due to the inability to define parameters for when to explore local vs. global search. The Lipschitz constant, $K$, acts as a weight that places larger emphasis on global serach when high, and local search when low. 
+While powerful, a-priori knowledge of the Lipschitz constant is needed for determining the global minima. Without it, there is no way of determining intersection points, and no way of selected new regions for subdivision and sampling. shubert's algorithm also has slow convergence, due to the inability to define parameters for when to explore local vs. global search. The Lipschitz constant, $K$, acts as a weight that places larger emphasis on global serach when high, and local search when low. 
 
 Fortunately, methods exist for utilizing the power of Lipschitzian optimization without the need for explicit knowledge of the Lipschitz constant \cite{jonesLipschitzianOptimizationLipschitz1993}. These can both overcome the need for an a-priori knowledge of the Lipschitz constant, as well as offer some solutions of the slow convergence by providing methods for exploiting both local and global search simultaneously to find the minimum function values.
 
