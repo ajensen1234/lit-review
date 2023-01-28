@@ -1,0 +1,56 @@
+Broadly, optimization is the process of minimizing or maximizing an objective function, $f(\mathbb{R}^{n}) \rightarrow \mathbb{R}$, potentially subject to some constraints (e.g. $x \in \Omega$) \cite{audetDerivativeFreeBlackboxOptimization2017}. We formalize this below (\cref{eq:optim}). The simplest optimization problems have an analytic form of the gradient of $f$ that can be solved directly, typically by setting the first derivative to zero (e.g. least squares).
+
+\begin{equation}
+    \argmin_{x}\{f(x) : x \in \Omega\}
+    \label{eq:optim}
+\end{equation}
+
+A drawback to our pipeline is that there is no analytic form of the objective function between each segmentation and projected contour; they must be resampled over a specified range in order to approximate objective function values and gradients. This defines a \emph{black box} optimization routine, which is well studied in the literature \cite{audetDerivativeFreeBlackboxOptimization2017}. In this type of function, it is not possible to use gradient-based methods to determine a minimum value for the objective function, one must use heuristics or ad-hoc methods to find the minimum location. Lipschitzian optimization offers an appealing black box optimization approach because it satisfies our need for a global search algorithm with provable convergence. First, we start with the definition of Lipschitz continuous, which places bounds on the rate of change of a function specified by some constant, called the Lipschitz constant. With a known Lipshitz constant, is is possible to find the value for the global minimum of optimization function \cite{dreisigmeyerDIRECTSEARCHMETHODS2007}.
+
+
+\begin{mdframed}
+    \begin{definition}[Lipschitz Continuous]
+        The function $g$ is said to be Lipschitz Continuous on the set $\mathbf{X} \in \mathbb{R}^n$ if and only if there exists a scalar $K > 0$ for which
+        \begin{equation*}
+            \begin{aligned}
+                \|g(x) - g(y)\| \le K\|x - y\|  & \\
+                &\text{  for all  }& x,y \in \mathbf{X}
+            \end{aligned}
+        \end{equation*}
+        The scalar $K$ is called the {\bf Lipschitz Constant} of $g$ relative to the set $\mathbf{X}$.
+    \end{definition}
+\end{mdframed}
+
+We can illustrate this convergence with a simple example: consider the function $f(x) \rightarrow \mathbb{R}, x \in [a,b]$. If we know that the function is Lipschitz continuous, the following conditions are true on the domain $x\in[a,b]$. This corresponds to the positive and negative slopes, $K$, applied to the extrema of the domain, and the intersection, $x$ is selected as the choice for subdivision. This process is repeated, where the region is further subdivided based on the lowest value of $f(x_i)$. The iterative process is stopped once the difference between successive domain splitting is below a pre-specified global tolerance. 
+
+\begin{equation}
+    \begin{aligned}
+        f(x) &\ge f(a) - K(x - a) \\
+        f(x) &\ge f(b) + K(x - b)
+    \end{aligned}
+    \label{eq:sherbert}
+\end{equation}
+
+\begin{center}
+    \Huge{SHERBERTS ALGORITHM FIGURE - look at Jones et all}
+\end{center}
+
+While powerful, a-priori knowledge of the Lipschitz constant is needed for determining the global minima. Without it, there is no way of determining intersection points, and no way of selected new regions for subdivision and sampling. Sherbert's algorithm also has slow convergence, due to the inability to define parameters for when to explore local vs. global search. The Lipschitz constant, $K$, acts as a weight that places larger emphasis on global serach when high, and local search when low. 
+
+Fortunately, methods exist for utilizing the power of Lipschitzian optimization without the need for explicit knowledge of the Lipschitz constant \cite{jonesLipschitzianOptimizationLipschitz1993}. These can both overcome the need for an a-priori knowledge of the Lipschitz constant, as well as offer some solutions of the slow convergence by providing methods for exploiting both local and global search simultaneously to find the minimum function values.
+
+Jones et al. \cite{jonesLipschitzianOptimizationLipschitz1993} propose a method by which the center, $c$, of a domain is sampled, rather than the endpoints. This produces the equations below (\cref{eq:direct-lipschitz}). The inequalities represent slopes $+K$ and $-K$, respectively, and provide a maximum value for the lower bound of the function at the endpoints, $a$ and $b$. The midpoints of $[a,c]$, and $[c,b]$ are then calculated and the process is then repeated. The power of this method is that you can determine potentially optimal regions of the domain by choosing those points along the lower convex hull of the graph plotting sub-domain size vs center point function value. The points along this hull are those that could potentially include the function minimum, and each is chosen for further sub-sampling. This elegantly mixes local vs. global search, and drastically increases the speed of convergence.
+
+\begin{equation}
+    f(x) \ge \begin{dcases}
+        f(c) + K(x-c) & \text{if  } x \le c \\
+        f(c) - K(x-c) & \text{if  } x \ge c
+    \end{dcases}
+    \label{eq:direct-lipschitz}
+\end{equation}
+
+\begin{center}
+    \Huge{CONVEX HULL w/ potentially optimial regions labeled - Jones et al}
+\end{center}
+
+This can be extended into multiple dimensions without loss of generality. First, each dimension in the domain is normalized to the range $[0,1]$, and a hypercube is created in $\mathbb{R}^D$, where $D$ is the dimension of the domain you are searching. The first iteration trisects this hybercube along an arbitrary dimension, and further iterations trisect along the largest dimension of the hypercube. We select potentially optimal hypercubes by identifying points along the lower convex hull of the graph plotting hypercube size vs center point function value.

@@ -241,6 +241,8 @@
     \renewcommand{\theclaim}{\thechapter-\arabic{claim}}
 \newtheorem{lemma}{Lemma}[chapter]
     \renewcommand{\thelemma}{\thechapter-\arabic{lemma}}
+\newtheorem{definition}{Definition}[chapter]
+    \renewcommand{\thedefinition}{\thechapter-\arabic{definition}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%
