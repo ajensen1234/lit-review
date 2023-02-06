@@ -254,3 +254,5 @@ TSWLatexianTemp*
 # standalone packages
 *.sta
 .vscode/settings.json
+.vscode/settings.json
+.vscode*
