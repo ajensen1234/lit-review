@@ -1,0 +1,23 @@
+While establishing a pipeline for the fully autonomous measurements of TKA kinematics, we encountered many of the different limitations present in using single-plane fluoroscopy. Fundamentally, this is a problem that exists inherently in the system, as you have a severely underconstrained problem, leading us to the inverse problem of computer vision (\cref{def:inverse-problem}).
+
+\begin{mdframed}
+    \begin{definition}[Inverse Problem]
+        The inverse problem in computer vision is the process of calculating the causal factors (kinematics) the produced a set of observations (fluoroscopic images).
+        \label{def:inverse-problem}
+    \end{definition}
+\end{mdframed}
+
+However, we are equipped with a-priori information about human anatomy that can dictate a set of rules and procedures to follow in order to overcome some of the different limitations present in using single-plane fluoroscopy.
+
+\subsection{Depth Perception}
+One of the most apparent limitations is depth perception. When you only have a single camera to resolve the pose of your object, sensitivity parallel to the focal ray becomes increasingly difficult. However, when dealing with anatomic structures, we know that there are specific poses that are, at the very least, pathological, and at most, downright impossible. In the objective function used during our black-box optimization, we add linear constraints to the relative mediolateral translation between the two implants, simulating the role of ligaments and soft tissue structures. 
+
+\subsection{Projection Ambiguities and Symmetry Traps}
+
+One of the more pernicious limitations in single-plane fluoroscopy is an issue that we've dubbed the ``symmetry trap'', which causes multiple global minima when using a strictly contour-based objective function. The major contributer to these issues is symmetric tibial implants, which are mediolaterally symmetric (i.e. no different between right and left implants).
+
+\begin{mdframed}
+    \begin{definition}[Symmetry Trap]
+        A symmetry trap occurs when a symmetric object has a projective geometry with more than one unique pose that can produced it. The simplest case is a sphere, where all poses produce the same circular projective geometry.
+    \end{definition}
+\end{mdframed}
