@@ -14,10 +14,58 @@ One of the most apparent limitations is depth perception. When you only have a s
 
 \subsection{Projection Ambiguities and Symmetry Traps}
 
-One of the more pernicious limitations in single-plane fluoroscopy is an issue that we've dubbed the ``symmetry trap'', which causes multiple global minima when using a strictly contour-based objective function. The major contributer to these issues is symmetric tibial implants, which are mediolaterally symmetric (i.e. no different between right and left implants).
+One of the more pernicious limitations in single-plane fluoroscopy is an issue that we've dubbed the ``symmetry trap'', which causes multiple global minima when using a strictly contour-based objective function. The major contributor to these issues is symmetric tibial implants, which are mediolaterally symmetric (i.e. no different between right and left implants).
 
 \begin{mdframed}
     \begin{definition}[Symmetry Trap]
-        A symmetry trap occurs when a symmetric object has a projective geometry with more than one unique pose that can produced it. The simplest case is a sphere, where all poses produce the same circular projective geometry.
+        A symmetry trap occurs when a symmetric object has a projective geometry with more than one unique pose that can produce it. The simplest case is a sphere, where all poses produce the same circular projective geometry.
     \end{definition}
 \end{mdframed}
+
+In order to solve this problem, we must take advantage of a few key pieces of information
+
+\begin{itemize}
+    \item We know how humans think when they are performing model-image registration manually
+    \item We know the mechanical properties of the soft tissue surrounding the knee, and can emulate these problems algebraically
+    \item We can measure the relative performance between single-plane and bi-plane imaging, and create a ``correction factor'' to adjust single-plane measurements.
+\end{itemize}
+
+Each of these understanding motivates a different method by which we attempt to correct the symmetry trap. This aim serves to expand our understanding of how to overcome single-plane limitations in a rigorous manner.
+
+\subsubsection{Method 1: Artifical Ligaments Using Linear Springs}
+The first method involves modifying the cost function in order to incorporate linear springs that adjust for varus/valgus position, in much the same way that medial and lateral collateral ligaments do in human anatomy. First, we measure the relative kinematics between the femoral and tibial components in the current orientation, then use Euler angle decomposition to find the relative varus/valgus between them, and add a linear cost to that angle (\cref{eq:vv-cost-function}). This has the effect of choosing the choice of symmetric pose with a smaller varus/valgus angle, which is how human operators typically distinguish between the two options. The user must set the hyperparameter $\lambda$ such that the function does not prioritize the angle over the contour matching. Once selected, this value does not change.
+
+
+\begin{equation}
+    \begin{aligned}
+        J &= L_1 + \lambda|\theta_{VV}| & \\
+        & \text{where} & L_1 = \cref{eq:contour-diff}
+    \end{aligned}
+    \label{eq:vv-cost-function}
+\end{equation}
+
+\subsubsection{Method 2: Binary Selection Between Symmetric Poses}
+This method relies on the fact that, given the pose of an object and the axis of symmetry, we can determine the symmetric pose of that object that will produce the same projective geometry.
+
+The next method, rather than incorporating varus/valgus information in the objective function, simply calculates the angle for the current pose and it's symmetric pose, then picks the orientation that has the smaller absolute value. This can be more applicable than incorporating into the objective, because no hyperparameters need to be set, and the only information determining the correct orientation is the contour matching.
+
+\subsubsection{Method 3: Bi-plane Calibration}
+
+\begin{center}
+    \Large{Get figures for this}
+\end{center}
+
+This method utilizes the validation data that we used from Aim 1 (\cref{sec:aim1}) in order to create post-hoc calibration for the position of the implant. First, we compare our single-plane data to gold standard bi-plane data, which represents the ground truth for the position of the implant. Then, using Bland-Altman plot, we can determine a calibration constant for our implant's pose based on group truth data.
+
+\begin{center}
+    \Large{flesh this out a little bit more, not as much info as possible}
+\end{center}
+
+\subsubsection{Method 4: Decision Tree for Binary Selection}
+
+Next, we turn to machine learning in order to determine the correct pose of the object. A decision tree is a type of data structure that traverses through a series of binary choices in order to arrive at some classification. One might imagine that Method 2 is a decision tree with a single query that is used to select the correct pose from the incorrect pose. 
+
+Given the 8000 frames of human-supervised measuring TKA kinematics, there are plenty of samples that can be used to train this decision tree. The driving force behind this method is capturing the latent human intuition used to make decisions for the correct pose when given two symmetric poses. Though we claim that varus/valgus is typically used, perhaps there are edge cases using different criteria that this formalism might elucidate.
+
+\subsubsection{Method 5: Neural Network for Binary Selection}
+This approach is very similar to the decision tree, but a fully connected network (\cref{fig:fcn}) is used to select between the two poses. Rather than a series of binary queries, a densely connected feature space will extract latent decision making for choosing the correct pose.
