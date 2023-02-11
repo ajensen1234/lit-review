@@ -1,11 +1,47 @@
 3D/2D model-image registration utilizes the computer vision principles discussed previously to determine the position and orientation of the model, given an image containing that model. Relying on the idea that the projective scheme of the real-world camera can be emulated, then the goal is to find some type of similarity metric (\cref{sec:image-similarity}) between a projected 3D model (\cref{eq:perspective-projection}, \cref{sec:img-form-camera-props}) and the existing image such that minimizing this metric indicates that our object has been ``placed'' correctly. Many different branches of computer vision and optimization have been explored for determining the kinematics of total knee arthroplasty components, each with varying levels of computational intensity, objective function (via image similarity), and optimization routine. General groupings of each will be discussed here, along with pitfalls and limitations that prevent the technique from being applicable in a clinical setting.
 
+\begin{center}
+    \begin{Large}
+        \begin{itemize}
+            \item Biplane (different flavors)
+            \item Motion capture
+            \item single plane (different flavors)
+            \item Hand registered
+        \end{itemize}
+    \end{Large}
+\end{center}
+
 \subsection{Pre-Computed Projective Geometries}
 The earliest methods of model-image registration had to deal with many of the limiting factors of computational availability at the time. This forced researchers to find clever ways to determine image similarity metrics without the need to iteratively compute the projective geometry of the model thousands of times per second.
 
 First established in the early 80s \cite{wallaceAnalysisThreedimensionalMovement1980,wallaceEfficientThreedimensionalAircraft1980}, normalized Fourier descriptors provide a way to normalize 2-dimensional images using information from the latent 3D characteristics (position and orientation). This was used to determine TKA kinematics to high levels of accuracy \cite{banksModelBased3D1992,banksAccurateMeasurementThreedimensional1996}, so long as 3D shape information was known, and the camera matrix could be deduced. The image similarity metric utilized the $L_2$ difference between the normalized fourier descriptors of the input image and the precomputed shape library at known rotations. Further interpolation was used to increase accuracy significantly.
 
-In parallel, another group utilized pre-computed distance maps intrinsic to the 3D model \cite{lavalleeRecoveringPositionOrientation1995,zuffiModelbasedMethodReconstruction1999}. These distance maps could then be used to quickly determine the Euclidean distance between any node in the model and an arbitrary line in 3D space. Then, 3D vectors were creating starting at sampled points along the contour of the implant, and concluding at the origin of the camera. Assuming an accurate focal distance, then the objective is simply minimizing the distance between all the vectors and their corresponding nearest node on the 3D model. Once minimized, the 3D object fell into the ``slot'' carved out for it by the psuedo-conical shape.
+In parallel, another group utilized pre-computed distance maps intrinsic to the 3D model \cite{lavalleeRecoveringPositionOrientation1995,zuffiModelbasedMethodReconstruction1999}. These distance maps could then be used to quickly determine the Euclidean distance between any node in the model and an arbitrary line in 3D space. Then, 3D vectors were creating starting at sampled points along the contour of the implant, and concluding at the origin of the camera. Assuming an accurate focal distance, then the objective is simply minimizing the distance between all the vectors and their corresponding nearest node on the 3D model. Once minimized, the 3D object fell into the ``slot'' carved out for it by the pseudo-conical shape.
 
 
 The main issue with these pre-computed geometries is need for the researchers to hand-select the contours belonging to the implant. Despite the recently available Canny edge-detector \cite{cannyComputationalApproachEdge1986}, one still needed to hand-label the specific edges of interest. This would be far too time consuming in a clinical setting.
+
+
+\subsection{Motion Capture}
+
+Motion capture is a common method in computer vision involving the tracking of reflective markers using multiple cameras to over-determine the location of the markers. Then, if the position of the markers relative to anatomic features is known, a series of transformation matrices can be used to determine the location of the anatomic features, given the measurable location of the markers. Historically, this has taken two different approaches, skin-mounted and bone-mounted. 
+
+Skin mounted markers rely on a set of fiducial points on the body that are closely related to joint centers, such that relative translations and rotations can be resolved. However, there have been numerous studies showing that skin-motion during activity leads to high levels of inaccuracy at the joint \cite{gaoInvestigationSoftTissue2008,garlingSofttissueArtefactAssessment2007,linEffectsSoftTissue2016,kuoInfluenceSoftTissue2011}. These inaccuracies preclude this method from being a clinically viable option for measuring joint kinematics.
+
+Other groups have taken a much more accurate approach: drilling bone pins into the joints of interest and attaching motion-capture reflectors to the end of the pins \cite{lafortuneThreedimensionalKinematicsHuman1992}. While extremely accurate, this method is far too invasive and time consuming for a clinical setting.
+
+\subsection{Fully Human Supervised}
+
+One of the more dominant softwares in measuring joint kinematics is JointTrack, which utilizes the strongest neural network available (the human brain) connected to one of the most dexterous manipulators available (the human hand) to make accurate measurements of joint kinematics from single-plane images \cite{muJointTrackOpenSourceEasily2007}. This software works by accurately recreating the fluoroscopic system's projective matrix and allowing users to manipulate a 3D model of the desired bone or implant to align it with the provided image.
+
+There were additional views that allowed the user to see the alignment from the coronal plane, as well as graphs demonstrating the kinematics throughout the movement, which allowed abnormal frames to be identified and dealt with quickly. 
+
+Hundreds of papers have been published using this software as the method for determining kinematics, and it has been extensively validated using many different methods offering ground-truth solutions to kinematics. The main issue with this method is both the upfront time to train a user, and the necessity for human-supervision during hte entire measurement process. 
+
+\subsection{Biplane Kinematics Measurements}
+
+One of the most effective methods for resolving single-camera limitations in measuring kinematics is to add a second camera! This offers much greater accuracy and resolution, especially when determining out-of-plane translations, because the out of plane translation for one camera is an in-plane translation for the second.
+
+The groups that have used this have cited sub-mm and sub-degree accuracy for all translations and rotations \cite{burtonAutomaticTrackingHealthy2021,youVivoMeasurement3D2001,bakaStatisticalShapeModelBased2012}, and have used a wide variety of optimization routines and image similarity metrics. 
+
+While this seems extremely promising, the general cost and unavailability of bi-plane fluoroscopic imaging systems presents a problem for integrating this technology into a clinical setting. If kinematic analysis is going to be have widespread clinical adoption, it \textbf{must} be integrating into the imaging systems present at most hospitals and clinics, which is single-plane systems. However, the accuracy of bi-plane systems can be used to validation of performance for various single-plane pipelines.
