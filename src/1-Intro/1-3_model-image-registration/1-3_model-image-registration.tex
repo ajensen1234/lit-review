@@ -1,16 +1,5 @@
 3D/2D model-image registration utilizes the computer vision principles discussed previously to determine the position and orientation of the model, given an image containing that model. Relying on the idea that the projective scheme of the real-world camera can be emulated, then the goal is to find some type of similarity metric (\cref{sec:image-similarity}) between a projected 3D model (\cref{eq:perspective-projection}, \cref{sec:img-form-camera-props}) and the existing image such that minimizing this metric indicates that our object has been ``placed'' correctly. Many different branches of computer vision and optimization have been explored for determining the kinematics of total knee arthroplasty components, each with varying levels of computational intensity, objective function (via image similarity), and optimization routine. General groupings of each will be discussed here, along with pitfalls and limitations that prevent the technique from being applicable in a clinical setting.
 
-\begin{center}
-    \begin{Large}
-        \begin{itemize}
-            \item Biplane (different flavors)
-            \item Motion capture
-            \item single plane (different flavors)
-            \item Hand registered
-        \end{itemize}
-    \end{Large}
-\end{center}
-
 \subsection{Pre-Computed Projective Geometries}
 The earliest methods of model-image registration had to deal with many of the limiting factors of computational availability at the time. This forced researchers to find clever ways to determine image similarity metrics without the need to iteratively compute the projective geometry of the model thousands of times per second.
 
@@ -30,6 +19,12 @@ Skin mounted markers rely on a set of fiducial points on the body that are close
 
 Other groups have taken a much more accurate approach: drilling bone pins into the joints of interest and attaching motion-capture reflectors to the end of the pins \cite{lafortuneThreedimensionalKinematicsHuman1992}. While extremely accurate, this method is far too invasive and time consuming for a clinical setting.
 
+\subsection{Iterative Projections}
+Increased computational performance and widespread availability allowed for different types of methods of model-image registration that were previously untenable due to computational complexity. One of the main areas that saw increased speed-ups were in parallel computing, which drastically increased computer graphics performance. By leverage improved computer graphics pipelines, researchers were able to project and render 3D implants in near real-time and perform image similarity metrics quickly. This seemingly overcame the need for pre-computed projection schemes.
+
+Different groups have achieved strong performance using simulated annealing with direct image-to-image similarity metrics \cite{mahfouzRobustMethodRegistration2003}, and Lipschitzian optimization using contour matching \cite{floodAutomatedRegistration3D2018}. While powerful and quick, these methods still rely on human supervision to escape local minima and set an initial pose estimate. Noisy images and the need to set hyperparameters for the edge detection scheme also reduce the scope of generalization to new data in a clinically practical way.
+
+
 \subsection{Fully Human Supervised}
 
 One of the more dominant softwares in measuring joint kinematics is JointTrack, which utilizes the strongest neural network available (the human brain) connected to one of the most dexterous manipulators available (the human hand) to make accurate measurements of joint kinematics from single-plane images \cite{muJointTrackOpenSourceEasily2007}. This software works by accurately recreating the fluoroscopic system's projective matrix and allowing users to manipulate a 3D model of the desired bone or implant to align it with the provided image.
@@ -44,4 +39,4 @@ One of the most effective methods for resolving single-camera limitations in mea
 
 The groups that have used this have cited sub-mm and sub-degree accuracy for all translations and rotations \cite{burtonAutomaticTrackingHealthy2021,youVivoMeasurement3D2001,bakaStatisticalShapeModelBased2012}, and have used a wide variety of optimization routines and image similarity metrics. 
 
-While this seems extremely promising, the general cost and unavailability of bi-plane fluoroscopic imaging systems presents a problem for integrating this technology into a clinical setting. If kinematic analysis is going to be have widespread clinical adoption, it \textbf{must} be integrating into the imaging systems present at most hospitals and clinics, which is single-plane systems. However, the accuracy of bi-plane systems can be used to validation of performance for various single-plane pipelines.
+While this seems extremely promising, the general cost and unavailability of bi-plane fluoroscopic imaging systems presents a problem for integrating this technology into a clinical setting. If kinematic analysis is going to be have widespread clinical adoption, it \textbf{must} be integrating into the imaging systems present at most hospitals and clinics, which is single-plane systems. However, the accuracy of bi-plane systems can be used to validation of performance for various single-plane pipelines \cite{brobergValidationMachineLearning2023}.
