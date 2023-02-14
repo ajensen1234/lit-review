@@ -307,6 +307,18 @@
   file = {/home/andrew/Zotero/storage/TVQTZN3G/Bektaş Demi̇Rci̇ and Aghayev - 2020 - On geometric applications of quaternions.pdf}
 }
 
+@article{belloAttentionAugmentedConvolutional2019,
+  title = {Attention {{Augmented Convolutional Networks}}},
+  author = {Bello, Irwan and Zoph, Barret and Le, Quoc V. and Le, Quoc V. and Vaswani, Ashish and {Jonathon Shlens} and {Jonathon Shlens} and Shlens, Jonathon},
+  year = {2019},
+  month = oct,
+  pages = {3286--3295},
+  doi = {10.1109/iccv.2019.00338},
+  abstract = {Convolutional networks have enjoyed much success in many computer vision applications. The convolution operation however has a significant weakness in that it only operates on a local neighbourhood, thus missing global information. Self-attention, on the other hand, has emerged as a recent advance to capture long range interactions, but has mostly been applied to sequence modeling and generative modeling tasks. In this paper, we propose to augment convolutional networks with self-attention by concatenating convolutional feature maps with a set of feature maps produced via a novel relative self-attention mechanism. In particular, we extend previous work on relative self-attention over sequences to images and discuss a memory efficient implementation. Unlike Squeeze-and-Excitation, which performs attention over the channels and ignores spatial information, our self-attention mechanism attends jointly to both features and spatial locations while preserving translation equivariance. We find that Attention Augmentation leads to consistent improvements in image classification on ImageNet and object detection on COCO across many different models and scales, including ResNets and a state-of-the art mobile constrained network, while keeping the number of parameters similar. In particular, our method achieves a 1.3\% top-1 accuracy improvement on ImageNet classification over a ResNet50 baseline and outperforms other attention mechanisms for images such as Squeeze-and-Excitation. It also achieves an improvement of 1.4 AP in COCO Object Detection on top of a RetinaNet baseline.},
+  annotation = {MAG ID: 2981413347},
+  file = {/home/andrew/Zotero/storage/LPRVTN8G/Bello et al. - 2019 - Attention Augmented Convolutional Networks.pdf}
+}
+
 @book{bendatRandomDataAnalysis2010,
   title = {Random Data: Analysis and Measurement Procedures},
   shorttitle = {Random Data},
@@ -594,6 +606,7 @@
   issn = {0736-0266, 1554-527X},
   doi = {10.1002/jor.25518},
   abstract = {Kinematics of total knee replacements (TKR) play an important role in assessing the success of a procedure and would be a valuable addition to clinical practice; however, measuring TKR kinematics is time consuming and labour intensive. Recently, an automatic single-plane fluoroscopic method utilizing machine learning has been developed to facilitate a quick and simple process for measuring TKR kinematics. This study aimed to validate the new automatic single-plane technique using biplanar radiostereometric analysis (RSA) as the gold standard. Twenty-four knees were imaged at various angles of flexion in a dedicated RSA lab and 113 image pairs were obtained. Only the lateral RSA images were used for the automatic single-plane technique to simulate single-plane fluoroscopy. Two networks helped automate the kinematics measurement process, one segmented implant components and the other generated an initial pose estimate for the optimization algorithm. Kinematics obtained via the automatic single plane and manual biplane techniques were compared using root-mean-square error and Bland\textendash Altman plots. Two observers measured the kinematics using the automated technique and results were compared with assess reproducibility. Root-mean-square errors were 0.8 mm for anterior\textendash posterior translation, 0.5 mm for superior\textendash inferior translation, 2.6 mm for medial\textendash lateral translation, 1.0\textdegree{} for flexion\textendash extension, 1.2\textdegree{} for abduction\textendash adduction, and 1.7\textdegree{} for internal\textendash external rotation. Reproducibility, reported as root-mean-square errors between operator measurements, was submillimeter for in-plane translations and below 2\textdegree{} for all rotations. Clinical Significance: The advantages of the automated single plane technique should aid in the kinematic measurement process and help researchers and clinicians perform TKR kinematic analyses.},
+  copyright = {All rights reserved},
   langid = {english},
   file = {/home/andrew/Zotero/storage/2MCYVJSI/Broberg et al. - 2023 - Validation of a machine learning technique for seg.pdf}
 }
@@ -673,6 +686,7 @@
   journal = {Computers in Biology and Medicine},
   doi = {10.1016/j.compbiomed.2021.104945},
   abstract = {Kinematic tracking of healthy joints in radiography sequences is frequently performed by maximizing similarities between computed perspective projections of 3D computer models and corresponding objects' appearances in radiographic images. Significant human effort associated with manual tracking presents a major bottleneck in biomechanics research methods and limits the scale of target applications. The current work introduces a method for fully-automatic tracking of tibiofemoral and patellofemoral kinematics in stereo-radiography sequences for subjects performing dynamic activities. The proposed method involves the application of convolutional neural networks for annotating radiographs and a multi-stage optimization pipeline for estimating bone pose based on information provided by neural net predictions. Predicted kinematics are evaluated by comparing against manually-tracked trends across 20 distinct trials. Median absolute differences below 1.5millimeters or degrees for 6 tibiofemoral and 3 patellofemoral degrees of freedom demonstrate the utility of our approach, which improves upon previous semi-automatic methods by enabling end-to-end automation. Implementation of a fully-automatic pipeline for kinematic tracking will benefit evaluation of human movement by enabling large-scale studies of healthy knee kinematics.},
+  copyright = {All rights reserved},
   pmid = {34678483},
   annotation = {MAG ID: 3206636315},
   file = {/home/andrew/Zotero/storage/KLSW4ABE/Burton et al. - 2021 - Automatic tracking of healthy joint kinematics fro.pdf}
@@ -718,6 +732,17 @@
   keywords = {📥},
   annotation = {MAG ID: 1756736144},
   file = {/home/andrew/Zotero/storage/KW39T6DW/John Canny_1983_Finding Edges and Lines in Images.pdf}
+}
+
+@article{carionEndtoEndObjectDetection2020,
+  title = {End-to-{{End Object Detection}} with {{Transformers}}},
+  author = {Carion, Nicolas and Massa, Francisco and Synnaeve, Gabriel and Usunier, Nicolas and Kirillov, Alexander and Zagoruyko, Sergey},
+  year = {2020},
+  pages = {213--229},
+  doi = {10.1007/978-3-030-58452-8_13},
+  abstract = {AbstractWe present a new method that views object detection as a direct set prediction problem. Our approach streamlines the detection pipeline, effectively removing the need for many hand-designed components like a non-maximum suppression procedure or anchor generation that explicitly encode our prior knowledge about the task. The main ingredients of the new framework, called DEtection TRansformer or DETR, are a set-based global loss that forces unique predictions via bipartite matching, and a transformer encoder-decoder architecture. Given a fixed small set of learned object queries, DETR reasons about the relations of the objects and the global image context to directly output the final set of predictions in parallel. The new model is conceptually simple and does not require a specialized library, unlike many other modern detectors. DETR demonstrates accuracy and run-time performance on par with the well-established and highly-optimized Faster R-CNN baseline on the challenging COCO object detection dataset. Moreover, DETR can be easily generalized to produce panoptic segmentation in a unified manner. We show that it significantly outperforms competitive baselines. Training code and pretrained models are available at https://github.com/facebookresearch/detr.},
+  annotation = {MAG ID: 3096609285},
+  file = {/home/andrew/Zotero/storage/H4383NGM/Carion et al. - 2020 - End-to-End Object Detection with Transformers.pdf}
 }
 
 @article{carmonUnlabeledDataImproves,
@@ -1066,6 +1091,16 @@
   file = {/home/andrew/Zotero/storage/5NT3CBEV/Dennis et al. - 2001 - In Vivo Three-Dimensional Determination of Kinemat.pdf}
 }
 
+@article{devlinBERTPretrainingDeep2018,
+  title = {{{BERT}}: {{Pre-training}} of {{Deep Bidirectional Transformers}} for {{Language Understanding}}},
+  author = {Devlin, Jacob and Chang, Ming-Wei and Lee, Kenton and Toutanova, Kristina},
+  year = {2018},
+  month = oct,
+  pages = {4171--4186},
+  abstract = {We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models (Peters et al., 2018a; Radford et al., 2018), BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications. BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5 (7.7 point absolute improvement), MultiNLI accuracy to 86.7\% (4.6\% absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1 (5.1 point absolute improvement).},
+  annotation = {MAG ID: 2963341956}
+}
+
 @article{domingosFewUsefulThings2012,
   title = {A Few Useful Things to Know about Machine Learning},
   author = {Domingos, Pedro},
@@ -1096,6 +1131,24 @@
   pmid = {22801484},
   annotation = {MAG ID: 2027752865},
   file = {/home/andrew/Zotero/storage/BUPVBZ8P/Dorgham et al_2012_GPU Accelerated Generation of Digitally Reconstructed Radiographs for 2-D-3-D.pdf}
+}
+
+@misc{dosovitskiyImageWorth16x162021,
+  title = {An {{Image}} Is {{Worth}} 16x16 {{Words}}: {{Transformers}} for {{Image Recognition}} at {{Scale}}},
+  shorttitle = {An {{Image}} Is {{Worth}} 16x16 {{Words}}},
+  author = {Dosovitskiy, Alexey and Beyer, Lucas and Kolesnikov, Alexander and Weissenborn, Dirk and Zhai, Xiaohua and Unterthiner, Thomas and Dehghani, Mostafa and Minderer, Matthias and Heigold, Georg and Gelly, Sylvain and Uszkoreit, Jakob and Houlsby, Neil},
+  year = {2021},
+  month = jun,
+  number = {arXiv:2010.11929},
+  eprint = {2010.11929},
+  eprinttype = {arxiv},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  abstract = {While the Transformer architecture has become the de-facto standard for natural language processing tasks, its applications to computer vision remain limited. In vision, attention is either applied in conjunction with convolutional networks, or used to replace certain components of convolutional networks while keeping their overall structure in place. We show that this reliance on CNNs is not necessary and a pure transformer applied directly to sequences of image patches can perform very well on image classification tasks. When pre-trained on large amounts of data and transferred to multiple mid-sized or small image recognition benchmarks (ImageNet, CIFAR-100, VTAB, etc.), Vision Transformer (ViT) attains excellent results compared to state-of-the-art convolutional networks while requiring substantially fewer computational resources to train.},
+  archiveprefix = {arXiv},
+  langid = {english},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Computer Vision and Pattern Recognition,Computer Science - Machine Learning},
+  file = {/home/andrew/Zotero/storage/EPHK9SUV/Dosovitskiy et al. - 2021 - An Image is Worth 16x16 Words Transformers for Im.pdf}
 }
 
 @article{dreisigmeyerDIRECTSEARCHMETHODS2007,
@@ -1611,6 +1664,16 @@
   annotation = {MAG ID: 2078936766}
 }
 
+@article{guoAttentionMechanismsComputer2021,
+  title = {Attention {{Mechanisms}} in {{Computer Vision}}: {{A Survey}}},
+  author = {Guo, Meng-Hao and {Tian-Xing Xu} and {Jiang-Jiang Liu} and Liu, Zheng-Ning and {Peng-Tao Jiang} and Jiang, Peng-Tao and Mu, Tai-Jiang and Zhang, Song-Hai and Martin, Ralph R. and {Ming-Ming Cheng} and {Ming-Ming Cheng} and Hu, Shi-Min},
+  year = {2021},
+  month = nov,
+  journal = {arXiv: Computer Vision and Pattern Recognition},
+  abstract = {Humans can naturally and effectively find salient regions in complex scenes. Motivated by this observation, attention mechanisms were introduced into computer vision with the aim of imitating this aspect of the human visual system. Such an attention mechanism can be regarded as a dynamic weight adjustment process based on features of the input image. Attention mechanisms have achieved great success in many visual tasks, including image classification, object detection, semantic segmentation, video understanding, image generation, 3D vision, multi-modal tasks and self-supervised learning. In this survey, we provide a comprehensive review of various attention mechanisms in computer vision and categorize them according to approach, such as channel attention, spatial attention, temporal attention and branch attention; a related repository this https URL is dedicated to collecting related work. We also suggest future directions for attention mechanism research.},
+  annotation = {MAG ID: 3212386989}
+}
+
 @article{guoDeepLearning3D2020,
   title = {Deep {{Learning}} for {{3D Point Clouds}}: {{A Survey}}.},
   author = {Guo, Yulan and Wang, Hanyun and Wang, Hanyun and Hu, Qingyong and Liu, Hao and Liu, Li and Bennamoun, Mohammed},
@@ -1733,6 +1796,22 @@
   langid = {english},
   keywords = {📥},
   file = {/home/andrew/Zotero/storage/6EP4QBRD/Hirokawa et al. - 2008 - A 3D kinematic estimation of knee prosthesis using.pdf}
+}
+
+@article{hochreiterLongShorttermMemory1997,
+  title = {Long Short-Term Memory},
+  author = {Hochreiter, Sepp and Schmidhuber, J{\"u}rgen},
+  year = {1997},
+  month = nov,
+  journal = {Neural Computation},
+  volume = {9},
+  number = {8},
+  pages = {1735--1780},
+  doi = {10.1162/neco.1997.9.8.1735},
+  abstract = {Learning to store information over extended time intervals by recurrent backpropagation takes a very long time, mostly because of insufficient, decaying error backflow. We briefly review Hochreiter's (1991) analysis of this problem, then address it by introducing a novel, efficient, gradient based method called long short-term memory (LSTM). Truncating the gradient where this does not do harm, LSTM can learn to bridge minimal time lags in excess of 1000 discrete-time steps by enforcing constant error flow through constant error carousels within special units. Multiplicative gate units learn to open and close access to the constant error flow. LSTM is local in space and time; its computational complexity per time step and weight is O. 1. Our experiments with artificial data involve local, distributed, real-valued, and noisy pattern representations. In comparisons with real-time recurrent learning, back propagation through time, recurrent cascade correlation, Elman nets, and neural sequence chunking, LSTM leads to many more successful runs, and learns much faster. LSTM also solves complex, artificial long-time-lag tasks that have never been solved by previous recurrent network algorithms.},
+  pmid = {9377276},
+  annotation = {MAG ID: 2064675550},
+  file = {/home/andrew/Zotero/storage/JV6IQGCR/hochreiter1997.pdf.pdf}
 }
 
 @book{hoffmanLinearAlgebra2021,
@@ -2005,6 +2084,7 @@
   primaryclass = {q-bio},
   abstract = {Dynamic radiographic measurement of 3D TKA kinematics has provided important information for implant design and surgical technique for over 30 years. However, current methods of measuring TKA kinematics are too cumbersome or time-consuming for practical clinical application. Even stateof-the-art techniques require human-supervised initialization or human supervision throughout the entire optimization process. Elimination of human supervision could potentially bring this technology into clinical practicality. Therefore, we propose a fully autonomous pipeline for quantifying TKA kinematics from single-plane imaging. First, a convolutional neural network segments the femoral and tibial implants from the image. Second, segmented images are compared to Normalized Fourier Descriptor shape libraries for initial pose estimates. Lastly, a Lipschitzian optimization routine minimizes the difference between the segmented image and the projected implant. This technique reliably reproduces human-supervised kinematics measurements from internal datasets and external validation studies, with RMS differences of less than 0.7mm and 4\textdegree{} for internal studies and 0.8mm and 1.7\textdegree{} for external validation studies. This performance indicates that it will soon be practical to perform these measurements in a clinical setting.},
   archiveprefix = {arXiv},
+  copyright = {All rights reserved},
   langid = {english},
   keywords = {Quantitative Biology - Quantitative Methods},
   file = {/home/andrew/Zotero/storage/SPR9P82A/Jensen et al. - 2022 - Joint Track Machine Learning An autonomous method.pdf}
@@ -3108,6 +3188,16 @@
   abstract = {Although total knee arthroplasty is a successful and well-established surgical intervention, there is renewed interest in evaluating its theoretical underpinning and surgical techniques in order to identify areas for potential improvement in patient outcomes.},
   langid = {english},
   file = {/home/andrew/Zotero/storage/KUZWF2S2/Mercuri et al. - 2019 - Gap Balancing, Measured Resection, and Kinematic A.pdf}
+}
+
+@article{mikolovEfficientEstimationWord2013,
+  title = {Efficient {{Estimation}} of {{Word Representations}} in {{Vector Space}}},
+  author = {Mikolov, Tomas and Chen, Kai and {Kai Chen} and Corrado, Greg S. and Dean, Jeffrey},
+  year = {2013},
+  month = jan,
+  journal = {arXiv: Computation and Language},
+  abstract = {We propose two novel model architectures for computing continuous vector representations of words from very large data sets. The quality of these representations is measured in a word similarity task, and the results are compared to the previously best performing techniques based on different types of neural networks. We observe large improvements in accuracy at much lower computational cost, i.e. it takes less than a day to learn high quality word vectors from a 1.6 billion words data set. Furthermore, we show that these vectors provide state-of-the-art performance on our test set for measuring syntactic and semantic word similarities.},
+  annotation = {MAG ID: 2950577311}
 }
 
 @article{mohammadiProjectionNeuralNetwork2020,
@@ -4896,6 +4986,15 @@
   abstract = {A new algorithmfor registering a 3-0 model to a single or a sequence of two-dimensional images without a-priori knowledge of correspondences is presented. The algorithm is composed of two iterated steps, the first of which determines correspondences between imagefeatures and model data, while the second computes the 3 - 0rigid body transformation that minimizes the displacement of matched points. As camera images do not yieldfull 3-0 information, the key idea proposed is to exploit the inverse perspective, ie. the projection ray determined by the focal point of the camera and an image feature point. The inverse perspective yields the constraints for both correspondence search and pose estimation in 3-0 space rather than in the imageplane. This not only simplifies motion parameter estimation but also reduces matching ambiguities due to occlusions. In addition, a robust M-estimation technique reduces the impact of fulse CO rrespondences.},
   langid = {english},
   file = {/home/andrew/Zotero/storage/FE4G2ZEH/Wunsch and Hirzinger - Registration of CAD-MO els to Images by Iterative .pdf}
+}
+
+@article{wuVisualTransformersTokenbased2020,
+  title = {Visual {{Transformers}}: {{Token-based Image Representation}} and {{Processing}} for {{Computer Vision}}},
+  author = {Wu, Bichen and {Bichen Wu} and Xu, Chenfeng and {Chenfeng Xu} and Dai, Xiaoliang and {Xiaoliang Dai} and {Alvin Wan} and Wan, Alvin and Zhang, Peizhao and {Peizhao Zhang} and Tomizuka, Masayoshi and Keutzer, Kurt and {Kurt Keutzer} and Vajda, Peter and {Peter Vajda}},
+  year = {2020},
+  month = jun,
+  abstract = {Computer vision has achieved great success using standardized image representations -- pixel arrays, and the corresponding deep learning operators -- convolutions. In this work, we challenge this paradigm: we instead (a) represent images as a set of visual tokens and (b) apply visual transformers to find relationships between visual semantic concepts. Given an input image, we dynamically extract a set of visual tokens from the image to obtain a compact representation for high-level semantics. We then use visual transformers to operate over the visual tokens to densely model relationships between them. We find that this paradigm of token-based image representation and processing drastically outperforms its convolutional counterparts on image classification and semantic segmentation. To demonstrate the power of this approach on ImageNet classification, we use ResNet as a convenient baseline and use visual transformers to replace the last stage of convolutions. This reduces the stage's MACs by up to 6.9x, while attaining up to 4.53 points higher top-1 accuracy. For semantic segmentation, we use a visual-transformer-based FPN (VT-FPN) module to replace a convolution-based FPN, saving 6.5x fewer MACs while achieving up to 0.35 points higher mIoU on LIP and COCO-stuff.},
+  annotation = {MAG ID: 3033210410}
 }
 
 @article{yamaguchiAnkleSubtalarKinematics2009,
