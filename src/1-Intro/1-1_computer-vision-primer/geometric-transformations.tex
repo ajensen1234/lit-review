@@ -2,7 +2,7 @@ Geometric primitives, such as points, are fundamental building blocks for repres
 
 \subsubsection{2D and 3D Points}
 \label{sec:geometric-points}
-In N-dimensional space, a point is represented as a set of N scalars, each representing a magnitude in a particular direction. This can be represented mathematically as a column vector, as shown in Equation \ref{eq:point}. In the case of 2D space, a point is represented as a 2D column vector, $\mathbf{x} = [x , y]^{T}$. Similarly, in 3D space, a point is represented as a 3D column vector, $\mathbf{x} = [x , y , z]^{T}$..
+In N-dimensional space, a point is represented as a set of N scalars, each representing a magnitude in a particular direction. This can be represented mathematically as a column vector (\cref{eq:point}). In two dimensions, a point is represented with two elements, $\mathbf{x} = [x , y]^{T}$. Similarly, in three dimensions, a point is represented with three elements, $\mathbf{x} = [x , y , z]^{T}$.
 
 \begin{equation}
     \mathbf{x} = \begin{bmatrix}
@@ -11,7 +11,7 @@ In N-dimensional space, a point is represented as a set of N scalars, each repre
     \label{eq:point}
 \end{equation}
 
-Homogeneous coordinates provide a way to represent points with an additional scale factor, $\tilde{w}$. This allows us to perform rotations and translations simultaneously and successively using matrix multiplications. Homogeneous coordinates for a point in N-dimensional space are represented as a column vector with N+1 elements, as shown in Equation \ref{eq:homog-point}. The homogeneous coordinates for a 2D point and 3D point can be represented as $\tilde{\mathbf{x}} = \tilde{w}\bar{\mathbf{x}}$, where $\tilde{w}\bar{\mathbf{x}} = [\tilde{x_1} , \tilde{x_2}, \dots, \tilde{x_N} , \tilde{w}]^{T}$. In most model-image registration applications, the scale factor $\tilde{w}$ is set to 1..
+Homogeneous coordinates provide a way to represent points with an additional scale factor, $\tilde{w}$. This allows us to perform rotations and translations simultaneously and successively using matrix multiplications. Homogeneous coordinates for a point in N-dimensional space are represented as a column vector with N+1 elements (\cref{eq:homog-point}. In most model-image registration applications, the scale factor $\tilde{w}$ is set to 1. When dealing with homogenous coordinates, $\mathbf{\tilde{x}} = \tilde{w}\mathbf{\bar{x}}$, where $\mathbf{\tilde{x}}$ is the scaled version of $\bar{\mathbf{x}}$, and $\bar{\mathbf{x}}$ is simply the original vector, $\mathbf{x}$ with a $1$ appended.
 
 \begin{equation}
     \tilde{\mathbf{x}} = \begin{bmatrix}
@@ -24,23 +24,47 @@ Homogeneous coordinates provide a way to represent points with an additional sca
 
 \subsubsection{2D Transformations}
 \label{sec:2d-transformations}
-Transformations are operations that change the position, orientation, or shape of an object in 2D space. One of the most basic transformations is a translation, which moves an object by adding a displacement vector to its position. This can be expressed mathematically as shown in Equation \ref{eq:translation}:
+Transformations are operations that change the position, orientation, or shape of an object in 2D space. One of the most basic transformations is a translation, which moves an object by adding a displacement vector to its position (\cref{eq:translation}).
 
 \begin{equation}
     \begin{aligned}
-        \mathbf{x'} &= \mathbf{x} + \begin{bmatrix}
+        \mathbf{x'} &= \begin{bmatrix}
+            x  \\ y 
+        \end{bmatrix} + \begin{bmatrix}
+            t_x \\ t_y
+        \end{bmatrix} = \mathbf{x} + \begin{bmatrix}
             t_x \\ t_y
         \end{bmatrix} = \mathbf{x} + \mathbf{t}\\
         &\text{Or, using homogeneous coordinates and matrix multiplication} \\
         &= \begin{bmatrix}
+            1 & 0 & t_x \\ 0 & 1 & t_y
+        \end{bmatrix} \begin{bmatrix}
+            x \\ y \\ 1
+        \end{bmatrix} = \begin{bmatrix}
             \mathbf{I} & \mathbf{t}
         \end{bmatrix}\bar{\mathbf{x}} \\
-        &\text{Where $I$ is the $2 \times 2$ identity matrix}
     \end{aligned}
     \label{eq:translation}
 \end{equation}
 
-In this equation, $\mathbf{x}$ is the original position of the object, $\mathbf{x'}$ is the transformed position, and $\mathbf{t}$ is the displacement vector that specifies the amount of translation in the $x$ and $y$ directions. The identity matrix $\mathbf{I}$ is used when expressing the transformation using matrix multiplication, as it represents the identity transformation in the $x$ and $y$ dimensions. Using homogeneous coordinates and matrix multiplication allows for the convenient representation of multiple transformations as a single matrix multiplication, as well as for the composition of transformations (i.e., performing multiple transformations in a specific order).
+In this equation, $\mathbf{x}$ is the original position of the object, $\mathbf{x'}$ is the transformed position, and $\mathbf{t}$ is the displacement vector that specifies the amount of translation in the $x$ and $y$ directions. Using homogeneous coordinates and matrix multiplication allows for the convenient representation of multiple transformations as a single matrix multiplication, as well as for the composition of multiple transformations (\cref{eq:mult-translation}).
+
+\begin{equation}
+    \begin{aligned}
+        \mathbf{\bar{x}}'' &= \begin{bmatrix}
+            1 & 0 & t_x \\ 0 & 1 & t_y \\ 0 & 0 & 1
+        \end{bmatrix} 
+        \begin{bmatrix}
+            1 & 0 & q_x \\ 0 & 1 & q_y \\ 0 & 0 & 1
+        \end{bmatrix} \begin{bmatrix}
+            x \\ y \\ 1 
+        \end{bmatrix}\\
+        &= \begin{bmatrix}
+            x + t_x + q_x \\ y + t_y + q_y \\ 1
+        \end{bmatrix}
+    \end{aligned}
+    \label{eq:mult-translation}
+\end{equation}
 
 The next type of 2D transformation is a rotation, which changes the orientation of an object, but not its shape (Eq. \ref{eq:2d-rot}, \ref{eq:2d-rot-mat}). 
 
