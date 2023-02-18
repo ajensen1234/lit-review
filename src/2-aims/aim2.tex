@@ -71,3 +71,7 @@ Given the 8000 frames of human-supervised measuring TKA kinematics, there are pl
 This approach is very similar to the decision tree, but a fully connected network (\cref{fig:fcn}) is used to select between the two poses. Rather than a series of binary queries, a densely connected feature space will extract latent decision making for choosing the correct pose.
 
 In order to perform this, first, the process of calculating the symmetric pose will be encoded into the neural network, and those layers will be frozen (i.e. the weights will not be updated during training). Then, each tibiofemoral pose will be randomized between ``true'' and ``symmetric'' for the training set, and represented as a quaternion. The pipeline will then fuse both the current (either true or symmetric) and the secondary pose at the initial layer for a neural network, with the final output as a binary to ``keep' or ``switch'' the pose. Different network weights will be tried, with a final emphasis on parsimony.
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../Jensen-Lit-Review"
+%%% End:

@@ -4,26 +4,28 @@ The power of neural networks is that they are able to ``learn'' incredibly compl
 
 \subsubsection{Neural Network Cost Functions}
 
-The first step in determine how a machine learns is knowing how correct an output is. The {\bf cost function} is exactly the error metric that determines the wrongness of the neural network's output. It's this function that the neural network is attempting to minimize as it updates its weights.
+The first step in updating a machine learning pipeline is to understand the metric you are trying to minimize (or maximize). This can encode a specific understanding about the task at hand, and it can also be used to promote a specific structure in the network itself (parsimony, sparsity, etc).
 
-The choice of cost function is dependent on the task at hand. For a regression problem, a standard mean-squared-error is typically employed 
+The \textbf{cost function} is exactly that metric that the learning algorithm is attempting to minimize. \cref{tab:cost-functions}.
 
 \begin{center}
-    \Huge{PUT TABLE WITH SOME COST FUNCTIONS HERE}
+  \begin{table}[h!]
+    \centering
+    \begin{tabular}[h!]{c|c|c}
+    \hline
+    {\bf Cost Function} & {\bf Equation} & {\bf Use Cases}  \\ \hline
+    Mean Squared Error ($L_{2}$) & $\sum_{i=1}^{N}(t_{i}-y_{i})^{2}$ & Regression \\ \hline
+    Mean Absolute Error ($L_{1}$) & $\sum_{i=1}^{N}|t_{i} - y_{i}|$ & Regression (promotes sparsity) \\ \hline
+    Binary Cross Entropy & $t_{i}\cdot \log (y_{i}) + (1 - t_{i})\log (1 - y_{i})$ & Binary Categorical Selection \\ \hline
+    \end{tabular}
+    \caption{A collection of cost functions employed by neural networks for a wide variety of tasks.}
+    \label{tab:cost-functions}
+  \end{table}
 \end{center}
 
 \subsubsection{Optimizing and Updating Weights}
 
-For convex problems, there often exists a closed-form solution for the parameters that minimize a given objective function. However, neural networks are highly non-linear and non-convex, forcing researcher to employ different methods of updating parameter values in a direction of minimizing the objective function. Mathematically, this means that we are determining the local gradient of the cost function with respect to each of the parameters, and updating the parameters in the direction of the steepest negative gradient.
-
-If $w$ is the collection of all learnable parameters, then we are trying to minimize the error between the $y = \text{model}(x)$ and our true value, $t$. In equation \ref{eq:objective-fn}, $F(\cdot)$ is our objective function, $y$ is our model output, and $t$ is the true label.
-
-\begin{equation}
-    J(\text{model}) = F(y,t)
-    \label{eq:objective-fn}
-\end{equation}
-
-The local gradient of the objective space with respect to the model weights can be used to determine the direction of movement. We also want to add a learning rate ($\eta$) to control how much each of the weights is updated in the desired direction (Eq. \ref{eq:grad-descent}). This is known as gradient descent.
+For convex problems, there often exists a closed-form solution for the parameters that minimize a given objective function. However, neural networks are highly non-linear and non-convex, forcing researchers to employ different methods of updating parameter values in a direction of minimizing the objective function. Backpropagation has become the ubiquitous choice for updating these highly non-linear systems. \cite{rumelhartLearningRepresentationsBackpropagating1986}. This utilizes gradient descent (\cref{eq:grad-descent}) and the chain rule (\cref{eq:chain-rule}) in order to calculate the affect that each node has on the final output, and update it in the direction that maximally minimizes the current error. Researchers can control how aggressive the update is by changing the learning rate, $\eta$.
 
 \begin{equation}
     \begin{aligned}
@@ -34,15 +36,14 @@ The local gradient of the objective space with respect to the model weights can 
     \label{eq:grad-descent}
 \end{equation}
 
-In order to determine the gradient at a specific weight, we must consider all the operations that occur between the weight and the final output. This can be shown visually quite simply (Fig. XYZ). Calculating the gradient at a specific weight involves a simple chain-rule operation (Eq. \ref{eq:chain-rule}). The chain rule here is based on determining the local gradient at a weight only passing through a single layer. This process is known as backpropagation, and it ubiqutious for training neural networks \cite{rumelhartLearningRepresentationsBackpropagating1986}.
-
-\begin{center}
-    \Large{GRGAPH NN FOR GRAD DESCENT}
-\end{center}
-
 \begin{equation}
     \frac{\partial J}{\partial w} = \frac{\partial J}{\partial e}\frac{\partial e}{\partial \phi}\frac{\partial \phi}{\partial v} \frac{\partial v}{\partial w}
     \label{eq:chain-rule}
 \end{equation}
 
-One of the main limitations of gradient descent is the need to tune the learning rate. To small a value will cause a network to train extremely slowly and almost always get stuck in local minima. Too large a learning rate can cause the network to ``bounce out'' of the global minima due to the rate of change being too large. Hyperparameter tuning can be a difficult process without a defined methodology beyond trial and error. Some groups have proposed different methods of incorporating dynamically changing update rules in order to incorporate physical properties into the network training stage. The most common is Adaptive Moment Estimation, which incorporates Root Mean Squared Propagation \cite{hinton2012neural} and momentum learning. 
+One of the main limitations of gradient descent and backpropagation is the need to tune the learning rate. To small a value will cause a network to train extremely slowly and almost always get stuck in local minima. Too large a learning rate can cause the network to ``bounce out'' of the global minima due to the rate of change being too large. Hyperparameter tuning can be a difficult process without a defined methodology beyond trial and error. Some groups have proposed different methods of incorporating dynamically changing update rules in order to incorporate physical properties into the network training stage. The most common is Adaptive Moment Estimation \cite{kingmaAdamMethodStochastic2017}, which incorporates Root Mean Squared Propagation \cite{hinton2012neural} and momentum learning.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../../Jensen-Lit-Review"
+%%% End:

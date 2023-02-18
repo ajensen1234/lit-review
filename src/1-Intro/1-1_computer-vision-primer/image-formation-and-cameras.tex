@@ -1,17 +1,17 @@
 Using our knowledge of geometric transformations and projective geometries, we can build up a model of a camera step by step. We standardize our reference frame by having the $z$ direction along the focal direction of the camera, the $x$ direction to the right, and the $y$ direction such that the right-hand rule is maintained. The origin is at the center of the camera.
 
-We will describe the object of interest as a collection of points, $\mathbf{p} =  [x_i, y_i, z_i, 1] \text{ for } i = 1,2,\cdots,N$. For a complete picture, any given operation will be performed on all points. For simplicity, the following equations will demonstrate the process on a single point of the object.
+We will describe the object of interest as a collection of points, $\mathbf{p}_i =  [x_i, y_i, z_i, 1] \text{ for } i = 1,2,\cdots,N$. For a complete picture, any given operation will be performed on all points. For simplicity, the following equations will demonstrate the process on a single point of the object.
 
 First, we need to describe the location and orientation of the object with respect to the camera. This can be done with a 3D homogeneous transformation matrix (translation and rotation) (Eq. \ref{eq:4x4-homog-transformation}).
 
 \begin{equation}
     \tilde{\mathbf{p}}' = \begin{bmatrix}
-        R_{3 \times 3} & \mathbf{t}_{3 \times 1} \\ \mathbf{0}_{1 \times 3} & 1
+        \mathbf{R}_{3 \times 3} & \mathbf{t}_{3 \times 1} \\ \mathbf{0}_{1 \times 3} & 1
     \end{bmatrix} \tilde{\mathbf{p}}
     \label{eq:4x4-homog-transformation}
 \end{equation}
 
-Then, we use a projective transformation that determines the perspective scaling between the objects actual location and the image place at the focal distance. Geometrically, this relationship can be visualized with similar triangles (Fig. \ref{fig:perspective-projection}), and quantified using the ratio of lengths (Eq. \ref{eq:perspective-projection}). In these equations, $f'$ is the focal distance in units of length.
+Then, we use a projective transformation that determines the perspective scaling between the object's location and the image plane at the focal distance. Geometrically, this relationship can be visualized with similar triangles (Fig. \ref{fig:perspective-projection}), and quantified using the ratio of lengths (Eq. \ref{eq:perspective-projection}). In these equations, $f'$ is the focal distance in units of length.
 
 \begin{figure}[h!]
     \begin{center}
@@ -34,7 +34,7 @@ Then, we use a projective transformation that determines the perspective scaling
     \label{eq:perspective-projection}
 \end{equation}
 
-In computer graphics, the principal point, $(c_x,c_y)$ is a key element in the mathematical model of a camera. It is the point where the optical axis of the camera intersects the image plane, and is typically near the center of the image. The principal point is important because it determines the perspective of the image: objects that are farther away from the principal point will appear smaller in the image, while objects that are closer to the principal point will appear larger. When dealing with the shift between the reference frame embedded in the object and the reference frame embedded in the image plane, the principal point acts as a translation (Eq. \ref{eq:principal-point}).
+The standard image reference frame places the origin at the top left corner of the image, with the positive x-direction to the right, and the positive y-direction down. This introduces the idea of the principal point, $(c_x,c_y)$; which is the location where the optical axis of the camera intersects the image plane perpendicularly. In the camera model, the principal point is a translation starting at the image plane's origin (Eq. \ref{eq:principal-point}).
 
 
 \begin{equation}
@@ -57,13 +57,15 @@ Finally, we need to convert the image coordinates, $\tilde{\mathbf{x}}_i$, to pi
             k_x & 0& 0 \\ 0 & k_y & 0 \\ 0 & 0 & 1
         \end{bmatrix} \begin{bmatrix}
             f' & 0 & c_x \\ 0 & f' & c_y \\ 0 & 0 & 1 
-        \end{bmatrix} \\
+        \end{bmatrix}\tilde{\mathbf{p}}' \\
         & = \begin{bmatrix}
             f_x & 0 & c_x \\ 0 & f_y & c_y \\ 0 & 0 & 1 
-        \end{bmatrix}\\
+        \end{bmatrix}\tilde{\mathbf{p}}'\\
         &\text{where}\\
         f_x &= k_x f' \text{        and        } f_y = k_y f' \\
         &\text{Are focal distances in units of pixels} 
     \end{aligned}
     \label{eq:pixel-scaling}
 \end{equation}
+
+At this point, we have placed an object in front of a camera using 3D transformations, and then projected the points of that object onto the image plane using a camera matrix and projective transform. A simple silhouette rasterization of the image would simply fill in the pixel values interpolated between each of the discrete points obtained from this projection. Generating a photo-realistic image would involve coloring, shading, and ray tracing, but this is unnecessary for this dissertation, and will not be discussed.

@@ -19,7 +19,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                     User Configuration commands
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %% Uncomment the relevant line below if you have tables or figures
 \haveTablestrue%        Uncomment this if you have tables in your thesis.
 \haveFigurestrue%       Uncomment this if you have figures in your thesis.
@@ -81,22 +80,20 @@
 %       If you want to input the above files manually you can comment out the \setFILE command above 
 %       and use \input or \include here. Generally you want to use \include to get your pagebreak.
 %       NOTE: If you input manually you will have to do some/all the formatting manually.
-
-
-
-\include{"./src/1-Intro/ch1-lit_review"}
+\include{src/1-Intro/ch1-lit_review.tex}
 \include{src/2-aims/2-aims.tex}
-\include{./src/JTML/chX-jtml}
-
+\include{src/JTML/chX-jtml}
 
 %\chapter{EXAMPLES OF EDITOR/Author TOOLS, TABLES, AND IMAGES}% Notice that we can use chapter/section etc breaks in the master file if we want, and then use \input instead of \include to avoid unneccessary page breaks.
 %\input{editorAndAuthorRemarks}%     Stuff about using editorRemark and authorRemark commands
 %\input{includingTablesExamples}%    Stuff about using Tables.
 %\input{includingImagesExamples}%    Stuff about using Images.
-
 %\include{chapter5}% Modified from old template.
-
 
 
 \end{document}
 
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

@@ -4,16 +4,14 @@ One of the key components in model image registration is image similarity. Funda
 \label{sec:img-sim-intensity}
 Intensity based measures are those that utilize specific pixel information in order to determine the difference between two images. This can be either a global image similarity metric, or measure the specfic regions of interest in the given image. 
 
-A canonical difference between two images would be the p-norm separating them (Eq. \ref{eq:p-norm}), which iterates through each pixel of the two images and finds the p-norm difference each intensity for the pixel pair. Common p-norms are the $L_1$ norm (\emph{absolute intensity differences} or \emph{mean absolute difference}) \cite{kanadeStereoMatchingAlgorithm1994} ($p=1$) and the $L_{2}$, or Euclidean, norm (\emph{squared intensity differences} or \emph{mean squared difference}) \cite{hannahComputerMatchingAreas1977}($p=2$).
-
-Intensity-based measures use the pixel values of the images to determine their similarity. These measures can be global, meaning they consider the entire image, or they can focus on specific regions of interest. A common intensity-based measure is the p-norm (Eq. \ref{eq:p-norm}), which calculates the difference between the intensity of corresponding pixels in the two images. The $L_1$ norm, also known as the absolute intensity differences or mean absolute difference, uses $p=1$ in the equation \cite{kanadeStereoMatchingAlgorithm1994}, while the $L_2$ norm, also known as the squared intensity differences or mean squared difference, uses $p=2$ \cite{hannahComputerMatchingAreas1977}. 
+A canonical difference between two images would be the p-norm separating them (Eq. \ref{eq:p-norm}), which iterates through each pixel of the two images and finds the p-norm difference each intensity for the pixel pair. Common p-norms are the $L_1$ norm (\emph{absolute intensity differences} or \emph{mean absolute difference}) \cite{kanadeStereoMatchingAlgorithm1994} ($p=1$) and the $L_{2}$, or Euclidean norm (\emph{squared intensity differences} or \emph{mean squared difference}) \cite{hannahComputerMatchingAreas1977}($p=2$).
 
 \begin{equation}
     \|A-B\|_{p} = (\sum_{x=0}^{w}\sum_{y=0}^{h}|a_{xy}-b_{xy}|^{p})^{\frac{1}{p}}
     \label{eq:p-norm}
 \end{equation}
 
-where $A$ and $B$ are the two images being compared, $w$ and $h$ are the width and height of the images, and $a_{xy}$ and $b_{xy}$ are the intensity values at pixel $(x,y)$ in the two images, respectively.
+In Equation \cref{eq:p-norm}, $A$ and $B$ are the two images being compared, $w$ and $h$ are the width and height of the images, and $a_{xy}$ and $b_{xy}$ are the intensity values at pixel $(x,y)$ in the two images, respectively.
 
 While conceptually easy to use, the main limitation of p-norm measures is their lack of spatial information. For example, an image that has been shifted by a linear transformation would not score well using a p-norm, despite the two images containing only a minor shift, scale, or rotation. One method for overcoming this limitation is to use the cross-correlation, or sliding dot product, between images \cite{bendatRandomDataAnalysis2010,hannahComputerMatchingAreas1977} (Eq. \ref{eq:xcorr}). When used in conjunction with projective geometry, this can help locate regions of interest for a model-based registration pipeline. The cross-correlation is calculated using the following equation:
 
@@ -51,38 +49,17 @@ Feature based image similarity metrics involve some method of determining key fe
     \label{eq:wkp-error}
 \end{equation}
 
-Keypoints are particularly useful when there are invariant features in images and 3D models that will always be present. However, if these features will not, or cannot always be deteted, then other measures must be utilized.
+Keypoints are particularly useful when there are invariant features in images and 3D models that will always be present. However, if these features will not, or cannot always be detected, then other measures must be utilized.
 
-\emph{Finding Edges}\\
-Edge- and contour-based matching algorithms make use of the edges that are present in the image, and aligning that with a the projected edges of the 3D model. However, we must first consider the determination of edges in an images. For a human operator, it can be rather easy to find edges of interest, but how much this be incorporated computationally? The first approach might be in viewing an image topologically, with regions of different colors and intensity represented by different ``heights''. Then, an edge simply becomes an area with a steep gradient (Eq. \ref{eq:img-grad}).
+\paragraph*{Edges as Features}
+Edges are a natural choice of feature when determining image similarity. Similar to intensity-based image similarity, the similarity between the contours of two images offers a promising metric for determining the overall similarity between two images. In model-image registration, the contours of the input image and the projected model can easily be compared, which presents a reliable scheme for measuring their similarity. When the edges are aligned, you can say that the model is \textit{properly registered} to the image. However, how can we determine when the edges are aligned?
 
-\begin{equation}
-    \begin{aligned}
-        \mathbf{J}(\mathbf{x}) = \nabla I(\mathbf{x}) = (\frac{\partial I}{\partial x}, \frac{\partial I}{\partial y})(\mathbf{x})
-    \end{aligned}
-    \label{eq:img-grad}
-\end{equation}
-
-Finding the direction of the steepest ascent/descent at any given location will give use the normal to the local edge at that point. However, the derivative operator will accentuate and amplify high frequencies in the image, causing noise to overpower the signal. Removing the high-frequency information (a low-pass filter) in the image results in gradient detection that is much more aligned with the salient edges of the image. The Gaussian kernel is a good option for an isotropic low-pass filter on a 2D signal (image) (Eq. \ref{eq:gauss-kernel-grad})
-
-\begin{equation}
-    \begin{aligned}
-        \mathbf{J}_{\sigma}(\mathbf{x}) &= \nabla [G_\sigma (\mathbf{x} * I(\mathbf{x}))] \\
-        &= \nabla G_\sigma (\mathbf{x}) * I(\mathbf{x}) \\
-        &\text{where} \\
-        \nabla G_\sigma (\mathbf{x}) &= (\frac{\partial G_{\sigma}}{\partial x}, \frac{\partial G_{\sigma}}{\partial x}) = [-x - y]\frac{1}{\sigma^{2}}\text{exp}(\frac{-(x^2 + y^2)}{2 \sigma^2})
-    \end{aligned}
-    \label{eq:gauss-kernel-grad}
-\end{equation}
+As always, the simplest approach is to take the p-norm between the model and image contours (\cref{eq:p-norm}), where instead of taking the difference between the two original images, one is taking the difference of the edges of the images. This function will be minimized when there is complete overlap between image and model contours.
 
 
-The ubiquitous edge detection algorithm was proposed by John Canny in 1986 \cite{cannyComputationalApproachEdge1986}, which utilizes a five-step process. First, a Gaussian kernel is applied as a low-pass filter (Eq. \ref{eq:gauss-kernel-grad}), second, directional filters are used to find the gradients in each direction of the image, third, a gradient magnitude threshold is applied to remove noise, fourth, a double threshold is applied to remove both strong and weak edges, and lastly, edges are determined from hysteresis. 
-
-\emph{Using Edges for Image Similarity}\\
-In model-image registration, the similarity of two contours is used as a heuristic for the correct pose. When the projected model's contour aligns accurately with the edges in the fluoroscopic image, one can say that the model is \emph{properly registered} to the image. The main question becomes: how can we computationally determine when two contours are aligned?
-
-As always, the simplest approach is to take the p-norm between the model and image contours (Eq. \ref{eq:p-norm}), where instead of taking the difference between the two original images, one is taking the difference of the edges of the images. This function will be minimized when there is complete overlap between image and model contours. The primary issue with this formulation is the sensitivity to slight perturbations in the model. This is due to the width of the contour being a single pixel, which would render an extremely high error if the model is shifted just a single pixel in any direction. Because the edge-detected images are binary (0-no edge, 1-edge), we can take advantage of binary morphological operations to change the images to better suit the model-image registration pipeline. The primary operation is dilation (Eq. \ref{eq:dilation-erosion}), which is useful because it decreases the sensitivity of the p-norm metric for image similarity, allowing for a smoother curve for optimization routines to find a global minima.
-
+{
+  \Large{MOVE SYM TRAP SOMEWHERE ELSE}
+}
 \subsubsection{Symmetry Traps}
 Objects with rotational or mirror symmetry cause pathological solutions to many of the image similarity metrics when used for optimizing the pose of the object relative to the image. The simplest example of a symmetry trap can be posed as follows: given the shadow of a basketball, which direction was the logo facing? It is quickly apparent that this is an impossible question to answer with just the information given by the image and the 3D model. This problem arises when performing optimizing for the post of mediolaterally symmetric tibial implants. Additional information must be used to find the correct pose of the implant.
 
@@ -153,3 +130,8 @@ Then, we obtain the final transformation matrix describing the dual pose of the 
 \end{equation}
 
 Given these two matrices, further exploration can determine which is the correct pose, though this will have to be done using information not directly present in the image contours.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../../Jensen-Lit-Review"
+%%% End:

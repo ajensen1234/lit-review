@@ -1,8 +1,8 @@
-Digital image processing is a field of computer vision that deals with the manipulation, analysis, and interpretation of digital images. It focuses on algorithms and techniques that extract meaningful information from images and to enhance visual quality. In fluoroscopy, image processing can be used to enhance the digital image, or determine important information about it such that a the model-image registration task can be performed efficiently and autonomously.
+Digital image processing is a field of computer vision that deals with the manipulation, analysis, and interpretation of digital images. It focuses on algorithms and techniques that extract meaningful information from images and enhance visual quality. We can leverage these algorithms in order to efficiently and autonomously extract information relevant to model-image registration.
 
 \subsubsection{Filtering and Convolution}
 \label{sec:filtering-convolution}
-We have already seen how image formation yields a collection of 2D points, $\mathbf{x}_{pix}$. We can write the intensity values at each pixel locations as a function, $f(\mathbf{x}_{pix}) = f(i,j)$, where $(i,j)$ represent locations in the image, and the function returns the intensity of the image at that particular pixel location. This allows us to treat images as functions, and perform similar functional operations and analysis to extract meaningful information from them.
+We have already seen how image formation yields a collection of 2D points, $\mathbf{x}_{pix}$. We can write the intensity values at each pixel location as a digital signal, $f(\mathbf{x}_{pix}) = f(i,j)$, where $(i,j)$ represent the pixel locations in the image, and the function returns the intensity value. We can then use standard methods of digital signal processing in order to extract meaningful information from images.
 
 The most widely used filter is a linear filter \cite{szeliskiComputerVisionAlgorithms2022}, where the output is some linear operation on the neighboring pixels (Eq. \ref{eq:convolution}), also known as a \emph{convolution}. In a convolution, the kernel, $h$ is shifted along the input image, $f$, and the resultant image, $g$, is the dot product of those two matrices at that specific location.
 
@@ -16,7 +16,7 @@ The most widely used filter is a linear filter \cite{szeliskiComputerVisionAlgor
     \label{eq:convolution}
 \end{equation}
 
-The convolution operation is \emph{linear shift invariant}, which means that it obeys the superposition principle (Eq. \ref{eq:superposition}) and the shift invariance principle (Eq. \ref{eq:shift-invariance}). This is a powerful property, because it will behave the same everywhere on the input signal/image, which is useful for different types of feature extraction and filtering operations.
+The convolution operation is \emph{linear shift invariant}, which means that it obeys the superposition principle (Eq. \ref{eq:superposition}) and the shift invariance principle (Eq. \ref{eq:shift-invariance}). This is a powerful property, because it will behave the same everywhere on the input signal/image (e.g. an edge detector will detect an edge, no matter where the edge is on the input image)
 
 \begin{equation}
     h *(f + g) = h*f + h*g
@@ -89,7 +89,7 @@ Edge filters can also be created to detect vertical (Eq. \ref{eq:vert-edge-filte
     \label{eq:diag-edge-filter}
 \end{equation}
 
-Lastly, we can use a corner filter to find corners in images (Eq. \ref{eq:corner-filter}).
+Lastly, we can use a corner filter to find corners in images (\cref{eq:corner-filter}).
 
 \begin{equation}
     \text{Corner filter} = \frac{1}{4}\begin{bmatrix}
@@ -102,10 +102,35 @@ Lastly, we can use a corner filter to find corners in images (Eq. \ref{eq:corner
 
 Entire subfields of computer vision and image analysis are devoted to creating increasingly useful and complex filters, or collections of filters. These include steerable filters, which determine information occurring in arbitrary directions \cite{freemanSteerableFiltersLocal1992}, recursive filtering \cite{nielsenRegularizationScalespaceEdge1996}, and non-linear filtering \cite{tomasiBilateralFilteringGray1998}.
 
+\subsubsection{Edge Detection}
+Edge detection is a highly motivated sub-field of image processing in computer vision, due to the immense usefulness of algorithmically determining the edges in a given image. For a human operator, it can be rather easy to find edges of interest, but how much this be incorporated computationally? The first approach might be in viewing an image topologically, with regions of different colors and intensity represented by different ``heights''. Then, an edge simply becomes an area with a steep gradient (\cref{eq:img-grad}).
+
+\begin{equation}
+    \begin{aligned}
+        \mathbf{J}(\mathbf{x}) = \nabla I(\mathbf{x}) = (\frac{\partial I}{\partial x}, \frac{\partial I}{\partial y})(\mathbf{x})
+    \end{aligned}
+    \label{eq:img-grad}
+\end{equation}
+
+Finding the direction of the steepest ascent/descent at any given location will give use the normal to the local edge at that point. However, the derivative operator will accentuate and amplify high frequencies in the image, causing noise to overpower the signal. Removing the high-frequency information (a low-pass filter) in the image results in gradient detection that is much more aligned with the salient edges of the image. The Gaussian kernel is a good option for an isotropic low-pass filter on a 2D signal (image) (\cref{eq:gauss-kernel-grad})
+
+\begin{equation}
+    \begin{aligned}
+        \mathbf{J}_{\sigma}(\mathbf{x}) &= \nabla [G_\sigma (\mathbf{x} * I(\mathbf{x}))] \\
+        &= \nabla G_\sigma (\mathbf{x}) * I(\mathbf{x}) \\
+        &\text{where} \\
+        \nabla G_\sigma (\mathbf{x}) &= (\frac{\partial G_{\sigma}}{\partial x}, \frac{\partial G_{\sigma}}{\partial x}) = [-x - y]\frac{1}{\sigma^{2}}\text{exp}(\frac{-(x^2 + y^2)}{2 \sigma^2})
+    \end{aligned}
+    \label{eq:gauss-kernel-grad}
+\end{equation}
+
+
+The ubiquitous edge detection algorithm was proposed by John Canny in 1986 \cite{cannyComputationalApproachEdge1986}, which utilizes a five-step process. First, a Gaussian kernel is applied as a low-pass filter (\cref{eq:gauss-kernel-grad}), second, directional filters are used to find the gradients in each direction of the image, third, a gradient magnitude threshold is applied to remove noise, fourth, a double threshold is applied to remove both strong and weak edges, and lastly, edges are determined from hysteresis. The prevailing limitation of this algorithm is the need to set kernel size and edge-intensity.
+
 \subsubsection{Binary Image Processing}
 \label{sec:binary-img-proc}
 
-A binary image is a digital image that consists only of black and white pixels. It is often used for labeling or masking an underlying image, where the values of 1 and 0 represent the presence or absence of a particular feature or object. Binary images are often used in computer vision and image processing applications because they can be easily processed and analyzed using algorithms. They are also useful for storing and transmitting large amounts of data, as the use of only two values reduces the amount of information that needs to be stored and transmitted.
+A binary image is a digital image that consists only of black and white pixels. It is often used for labeling or masking an underlying image, where the values of 1 and 0 represent the presence or absence of a particular feature or object. Binary images are often used in computer vision and image processing applications because they can be easily processed and analyzed. They are also useful for storing and transmitting large amounts of data, as the use of only two values reduces the amount of information that needs to be stored and transmitted.
 
 The primary form of processing on binary images is morphological, that is, changing the shape of the ``blob'' in order to extract useful information from it.
 
@@ -115,7 +140,7 @@ The primary form of processing on binary images is morphological, that is, chang
     \label{fig:binary-image-processing}
 \end{figure}
 
-Dilation and erosion are the two main operations that are used in model-image registration (\ref{eq:dilation-erosion}). These functions are ach two-fold: first, a convolution operation is applied to the existing binary image, then a threshold is applied to the convolution output to determine if the central pixel is a zero or 1. If $f$ is the input image, $s$ is the convolution kernel of $1$s, and $c=f\otimes s$ is the number of $1$s in the convolution output, then dilation and erosion can be expressed in the following way.
+Dilation and erosion are the two main operations that are used in model-image registration (\ref{eq:dilation-erosion}). These functions are each two-fold: first, a convolution operation is applied to the existing binary image, then a threshold is applied to the convolution output to determine if the central pixel is a zero or 1. If $f$ is the input image, $s$ is the convolution kernel of $1$s, and $c=f\otimes s$ is the number of $1$s in the convolution output, then dilation and erosion can be expressed in the following way.
 
 \begin{equation}
     \begin{aligned}
@@ -133,3 +158,8 @@ Where $\theta$ represents a thresholding function.
         0 &\text{ else}
     \end{cases}
 \end{equation}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../../Jensen-Lit-Review"
+%%% End:
