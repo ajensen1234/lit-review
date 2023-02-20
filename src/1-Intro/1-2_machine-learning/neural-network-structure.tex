@@ -62,7 +62,7 @@ One of the main limitations of fully-connected networks is exponential increase 
 
 \subsubsection{Convolutional Neural Networks}
 
-Alex Krizhevsky sparked renewed interest in deep learning in 2012 by utilizing a convolutional neural network to win the ImageNet challenge \cite{russakovskyImageNetLargeScale2015} by more than 10 points over second place.Since then, neural networks have found their way into many different computer vision tasks, including those in the medical field. The power of convolutional neural networks lay in their ability to autonomously extract latent features from images useful for many processing and analysis tasks. The medical field has used them to segment and classify differnet bones, structures, and pathologies from a wide array of imaging modalities (CT, x-ray, MRI, etc). In most cases, it can completely rempve the need for human supervision in many repeitive image processing tasks.
+Alex Krizhevsky sparked renewed interest in deep learning in 2012 by utilizing a convolutional neural network to win the ImageNet challenge \cite{russakovskyImageNetLargeScale2015} by more than 10 points over second place.Since then, neural networks have found their way into many different computer vision tasks, including those in the medical field. The power of convolutional neural networks lay in their ability to autonomously extract latent features from images useful for many processing and analysis tasks. The medical field has used them to segment and classify different bones, structures, and pathologies from a wide array of imaging modalities (CT, x-ray, MRI, etc). In most cases, it can completely remove the need for human supervision in many repetitive image processing tasks.
 
 Convolutional neural networks (CNN) utilize the convolution operation (Eq. \ref{eq:convolution}) in order to both reduce the size and complexity of the network and capture spatial information present in images. In the same way that the matrix $W$ in the fully connected network is a learnable parameter in a FCN, the individual kernels are the learnable parameters in a convolution operation. In practice, with the correct cost function and optimization routine, this allows each of the kernels to learn the latent structure in the image and make connections between those structures. At a high level, these kernels often represent feature extractors for edges, lines, corners, curves, and other geometric primitives. However, as one traverses deeper into the network, the combinations of these features are often incomprehensible to a human (Fig. \ref{fig:conv-layers}). 
 
@@ -80,7 +80,8 @@ Typically, these networks will downsample the image to capture the most salient 
     \includegraphics[width=0.7\linewidth]{figs/background/png/u-net.png}
     \caption{A standard U-Net architecture for a convolutional neural network. This architecture is the most common form of network used for biomedical image analysis and processing.}
     \label{fig:unet}
-\end{figure}
+  \end{figure}
+
 
 CNN architecture can be altered by changing the behavior and structure of the underlying kernels, namely size, stride, and shape. Stride controls the discrete steps the kernel takes as it is moving across the input image, and can be used to downsample more aggressively. An atrous convolution involves internally padding the convolution entries with zeros. This also has the effect of more aggressively downsizing an image and capturing a larger region around the center pixel.
 

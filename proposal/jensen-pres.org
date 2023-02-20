@@ -1,0 +1,56 @@
+#+AUTHOR: Andrew Jensen
+#+TITLE: Joint Track Machine Learning
+#+DATE: March 9, 2023
+#+BIBLIOGRAPHY: ../src/myBib.bib
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+HTML_LINK_UP:
+#+HTML_LINK_HOME:
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+
+#+options: H:2
+#+latex_class: beamer
+#+columns: %45ITEM %10BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
+#+beamer_theme: metropolis
+#+beamer_color_theme:
+#+beamer_font_theme:
+#+beamer_inner_theme:
+#+beamer_outer_theme:
+
+* Introduction
+** This is the title of the next slide that I have
+This is some writing that I am doing for my introduction
+CIter this
+Athis
+
+** This is nother slide
+[cite:@banksAccurateMeasurementThreedimensional1996]
+[cite:@banksAccurateMeasurementThreedimensional1996; @jensenJointTrackMachine2022; @cannyFindingEdgesLines1983]
+
+** Adding a slide with columns
+*** Column 1 :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+This is writing in a column
+*** Hello :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.47
+:END:
+More writing in this column
+- Want to type a list here
+- Another item in the list
+- Adding yet another list to the item.
+
+*** Andrew :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.2
+:END:
+I want to write some more here

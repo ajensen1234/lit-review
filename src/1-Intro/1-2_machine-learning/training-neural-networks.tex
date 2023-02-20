@@ -6,22 +6,7 @@ The power of neural networks is that they are able to ``learn'' incredibly compl
 
 The first step in updating a machine learning pipeline is to understand the metric you are trying to minimize (or maximize). This can encode a specific understanding about the task at hand, and it can also be used to promote a specific structure in the network itself (parsimony, sparsity, etc).
 
-The \textbf{cost function} is exactly that metric that the learning algorithm is attempting to minimize. \cref{tab:cost-functions}.
-
-\begin{center}
-  \begin{table}[h!]
-    \centering
-    \begin{tabular}[h!]{c|c|c}
-    \hline
-    {\bf Cost Function} & {\bf Equation} & {\bf Use Cases}  \\ \hline
-    Mean Squared Error ($L_{2}$) & $\sum_{i=1}^{N}(t_{i}-y_{i})^{2}$ & Regression \\ \hline
-    Mean Absolute Error ($L_{1}$) & $\sum_{i=1}^{N}|t_{i} - y_{i}|$ & Regression (promotes sparsity) \\ \hline
-    Binary Cross Entropy & $t_{i}\cdot \log (y_{i}) + (1 - t_{i})\log (1 - y_{i})$ & Binary Categorical Selection \\ \hline
-    \end{tabular}
-    \caption{A collection of cost functions employed by neural networks for a wide variety of tasks.}
-    \label{tab:cost-functions}
-  \end{table}
-\end{center}
+The \textbf{cost function} is exactly that metric that the learning algorithm is attempting to minimize. The application of different cost functions for different tasks in neural networks has been well studied For regression, typically some type of distance metric is employed (mean absolute error, mean squared error, Kullback-Liebler distance), while classification tasks mostly utilize some type of cross-entropy or log likelihood metric \cite{paszkePyTorchImperativeStyle2019}.
 
 \subsubsection{Optimizing and Updating Weights}
 
@@ -41,7 +26,7 @@ For convex problems, there often exists a closed-form solution for the parameter
     \label{eq:chain-rule}
 \end{equation}
 
-One of the main limitations of gradient descent and backpropagation is the need to tune the learning rate. To small a value will cause a network to train extremely slowly and almost always get stuck in local minima. Too large a learning rate can cause the network to ``bounce out'' of the global minima due to the rate of change being too large. Hyperparameter tuning can be a difficult process without a defined methodology beyond trial and error. Some groups have proposed different methods of incorporating dynamically changing update rules in order to incorporate physical properties into the network training stage. The most common is Adaptive Moment Estimation \cite{kingmaAdamMethodStochastic2017}, which incorporates Root Mean Squared Propagation \cite{hinton2012neural} and momentum learning.
+One of the main limitations of gradient descent and backpropagation is the need to tune the learning rate. To small a value will cause a network to train extremely slowly and almost always get stuck in local minima. Too large a learning rate can cause the network to ``bounce out'' of the global minima due to the rate of change being too large. Hyperparameter tuning can be a difficult process without a refined methodology beyond trial and error. Some groups have proposed different methods of incorporating dynamically changing update rules in order to incorporate physical properties into the network training stage. The most common is Adaptive Moment Estimation \cite{kingmaAdamMethodStochastic2017}, which incorporates Root Mean Squared Propagation \cite{hinton2012neural} and momentum learning.
 
 %%% Local Variables:
 %%% mode: latex
