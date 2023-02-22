@@ -22,6 +22,61 @@ One of the more pernicious limitations in single-plane fluoroscopy is an issue t
     \end{definition}
 \end{mdframed}
 
+Based on a weak perspective projection, we can take advantage of the axis-angle rotations (\cref{eq:axis-angle-matrix}) to determine the ``symmetric pose'' for any given orientation of a symmetric object.
+
+\begin{mdframed}
+    \begin{center}
+        {\bf Algorithm for Determining the Dual-Pose of a Symmetric Object}
+    \end{center}
+\begin{enumerate}
+    \item Determine the viewing ray from camera $\rightarrow$ object (Eq. \ref{eq:view-ray}).
+    \item Determine the axis-angle ($m,\theta$) rotation between the viewing ray and the symmetric axis of the object (Eq. \ref{eq:angle-between}, \ref{eq:perp-axis}).
+    \item Rotate the object $-2\theta$ about the same axis, reflecting the rotation about the viewing ray (\cref{eq:axis-angle-matrix}).
+    \item The final orientation of the object is exactly the ``dual pose'', producing indistinguishable projective geometry (Eq. \ref{eq:rotation-matrix-mult}).
+\end{enumerate}
+\end{mdframed}
+
+\begin{equation}
+    \begin{aligned}
+        \text{If $T$ is the homogeneous}& \text{ transformation matrix describing the object} \\
+        \vec{v}' &= T_{1:3,4} \\
+        \vec{v} & = \frac{\vec{v}'}{\|\vec{v}'\|}
+    \end{aligned}
+    \label{eq:view-ray}
+\end{equation}
+
+
+We can use trigonometry to determine the angle (Eq. \ref{eq:angle-between}) and perpendicular axis (Eq. \ref{eq:perp-axis}) between two vectors. For our example, we use the normalized viewing ray and the z-axis (symmetric axis) as the two vectors.
+\begin{equation}
+    \begin{aligned}
+        cos(\theta) &= \vec{v} \cdot \vec{z} \\
+        &\rightarrow \\
+        \theta &= arccos(\vec{v} \cdot \vec{z})
+    \end{aligned}
+    \label{eq:angle-between}
+\end{equation}
+
+\begin{equation}
+    \begin{aligned}
+        \vec{m} = \frac{\vec{v} \times \vec{z}}{\|\vec{v} \times \vec{z}\|}
+    \end{aligned}
+    \label{eq:perp-axis}
+\end{equation}
+
+Then, we can build a rotation matrix using an axis and an angle \cite{craneKinematicAnalysisRobot2008}, (Eq. \ref{eq:axis-angle-matrix}).
+
+Then, we obtain the final transformation matrix describing the dual pose of the object by a post-multiplication of this rotation matrix.
+
+\begin{equation}
+    \begin{aligned}
+        T_{dual} = T_{orig} * \begin{pmatrix}
+            R_{3 \times 3} & \vec{0}_{3 \times 1} \\ \vec{0}_{1 \times 3} & 1
+        \end{pmatrix}
+    \end{aligned}
+    \label{eq:rotation-matrix-mult}
+\end{equation}
+
+
 In order to solve this problem, we must take advantage of a few key pieces of information
 
 \begin{itemize}

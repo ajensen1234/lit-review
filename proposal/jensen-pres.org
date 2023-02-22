@@ -30,10 +30,6 @@ This is some writing that I am doing for my introduction
 CIter this
 Athis
 
-** This is nother slide
-[cite:@banksAccurateMeasurementThreedimensional1996]
-[cite:@banksAccurateMeasurementThreedimensional1996; @jensenJointTrackMachine2022; @cannyFindingEdgesLines1983]
-
 ** Adding a slide with columns
 *** Column 1 :BMCOL:
 :PROPERTIES:
@@ -48,9 +44,5 @@ More writing in this column
 - Want to type a list here
 - Another item in the list
 - Adding yet another list to the item.
-
-*** Andrew :BMCOL:
-:PROPERTIES:
-:BEAMER_col: 0.2
-:END:
-I want to write some more here
+** I want to add a slide here with some citations.
+This is some talking with a citation[cite:@jensenJointTrackMachine2022]. I want to write a little bit afterward as well.
