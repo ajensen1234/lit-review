@@ -11,7 +11,7 @@ First, we need to describe the location and orientation of the object with respe
     \label{eq:4x4-homog-transformation}
 \end{equation}
 
-Then, we use a projective transformation that determines the perspective scaling between the object's location and the image plane at the focal distance. Geometrically, this relationship can be visualized with similar triangles (Fig. \ref{fig:perspective-projection}), and quantified using the ratio of lengths (Eq. \ref{eq:perspective-projection}). In these equations, $f'$ is the focal distance in units of length.
+Then, we use a projective transformation that determines the perspective scaling between the object's location and the image plane at the focal distance. Geometrically, this relationship can be visualized with similar triangles (\cref{fig:perspective-projection}) and quantified using the ratio of lengths (\cref{eq:perspective-projection}). In these equations, $f'$ is the focal distance in units of length.
 
 \begin{figure}[h!]
     \begin{center}
@@ -34,7 +34,7 @@ Then, we use a projective transformation that determines the perspective scaling
     \label{eq:perspective-projection}
 \end{equation}
 
-The standard image reference frame places the origin at the top left corner of the image, with the positive x-direction to the right, and the positive y-direction down. This introduces the idea of the principal point, $(c_x,c_y)$; which is the location where the optical axis of the camera intersects the image plane perpendicularly. In the camera model, the principal point is a translation starting at the image plane's origin (Eq. \ref{eq:principal-point}).
+The standard image reference frame places the origin at the top left corner of the image, with the positive x-direction to the right, and the positive y-direction down. This introduces the idea of the principal point, $(c_x,c_y)$, which is the location where the optical axis of the camera intersects the image plane perpendicularly. In the camera model, the principal point is a translation starting at the image plane's origin (Eq. \ref{eq:principal-point}).
 
 
 \begin{equation}
@@ -69,3 +69,8 @@ Finally, we need to convert the image coordinates, $\tilde{\mathbf{x}}_i$, to pi
 \end{equation}
 
 At this point, we have placed an object in front of a camera using 3D transformations, and then projected the points of that object onto the image plane using a camera matrix and projective transform. A simple silhouette rasterization of the image would simply fill in the pixel values interpolated between each of the discrete points obtained from this projection. Generating a photo-realistic image would involve coloring, shading, and ray tracing, but this is unnecessary for this dissertation, and will not be discussed.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../../Jensen-Lit-Review"
+%%% End:

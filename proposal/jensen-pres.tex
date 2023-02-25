@@ -1,4 +1,4 @@
-% Created 2023-02-20 Mon 14:25
+% Created 2023-02-24 Fri 14:23
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
@@ -12,6 +12,7 @@
 \usepackage{amssymb}
 \usepackage{capt-of}
 \usepackage{hyperref}
+\usetheme[progressbar=foot]{metropolis}
 \usetheme{metropolis}
 \usecolortheme{}
 \usefonttheme{}
@@ -29,6 +30,7 @@
  pdflang={English}}
 \usepackage{biblatex}
 \addbibresource{/home/andrew/repo/lit-review/src/myBib.bib}
+\addbibresource{~/org/biblio.bib}
 \begin{document}
 
 \maketitle
@@ -38,29 +40,29 @@
 
 
 \section{Introduction}
-\label{sec:orgd827ada}
-\begin{frame}[label={sec:orgad2f780}]{This is the title of the next slide that I have}
-This is some writing that I am doing for my introduction
-CIter this
-Athis
-\end{frame}
-
-\begin{frame}[label={sec:orgf143620}]{Adding a slide with columns}
+\label{sec:org25ae222}
+\begin{frame}[label={sec:org3b187f0}]{Two columns}
 \begin{columns}
 \begin{column}{0.4\columnwidth}
-This is writing in a column
-\end{column}
-\begin{column}{0.47\columnwidth}
-More writing in this column
 \begin{itemize}
-\item Want to type a list here
-\item Another item in the list
-\item Adding yet another list to the item.
+\item this slide consists of two columns
+\item the first (left) column has no heading and consists of text
+\item the second (right) column has an image and is enclosed in an
+@example@ block
 \end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{/home/andrew/repo/lit-review/figures/raster/fcn.png}
+\end{center}
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org59c63e9}]{I want to add a slide here with some citations.}
-This is some talking with a citation\autocite{jensenJointTrackMachine2022}. I want to write a little bit afterward as well.
+\begin{frame}[label={sec:orgd961477}]{Another frame here}
+Typing some things here that relate to the research.
+
+\begin{equation*}
+  T = F(s,\theta)
+\end{equation*}
 \end{frame}
 \end{document}

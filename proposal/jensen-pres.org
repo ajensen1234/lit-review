@@ -17,32 +17,35 @@
 
 #+options: H:2
 #+latex_class: beamer
-#+columns: %45ITEM %10BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
+#+columns: %45ITEM %10 BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
 #+beamer_theme: metropolis
+#+latex_header: \usetheme[progressbar=foot]{metropolis}
 #+beamer_color_theme:
 #+beamer_font_theme:
 #+beamer_inner_theme:
 #+beamer_outer_theme:
 
 * Introduction
-** This is the title of the next slide that I have
-This is some writing that I am doing for my introduction
-CIter this
-Athis
+** Two columns
+*** A block :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.4
+    :END:
+    - this slide consists of two columns
+    - the first (left) column has no heading and consists of text
+    - the second (right) column has an image and is enclosed in an
+      @example@ block
+*** A screenshot :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.6
+    :END:
+    #+ATTR_LaTeX: :width \textwidth
+   [[file:~/repo/lit-review/figures/raster/fcn.png]]
+** Another frame here
+Typing some things here that relate to the research.
 
-** Adding a slide with columns
-*** Column 1 :BMCOL:
-:PROPERTIES:
-:BEAMER_col: 0.4
-:END:
-This is writing in a column
-*** Hello :BMCOL:
-:PROPERTIES:
-:BEAMER_col: 0.47
-:END:
-More writing in this column
-- Want to type a list here
-- Another item in the list
-- Adding yet another list to the item.
-** I want to add a slide here with some citations.
-This is some talking with a citation[cite:@jensenJointTrackMachine2022]. I want to write a little bit afterward as well.
+#+begin_src latex
+\begin{equation*}
+  T = F(s,\theta)
+\end{equation*}
+#+end_src

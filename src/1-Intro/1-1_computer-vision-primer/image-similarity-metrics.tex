@@ -2,9 +2,9 @@ One of the key components in model image registration is image similarity. Funda
 
 \subsubsection{Intensity Based}
 \label{sec:img-sim-intensity}
-Intensity based measures are those that utilize specific pixel information in order to determine the difference between two images. This can be either a global image similarity metric, or measure the specfic regions of interest in the given image. 
+Intensity based measures are those that utilize specific pixel information in order to determine the difference between two images. This can be either a global image similarity metric, or a measure of the specfic regions of interest in the given image.
 
-A canonical difference between two images would be the p-norm separating them (Eq. \ref{eq:p-norm}), which iterates through each pixel of the two images and finds the p-norm difference each intensity for the pixel pair. Common p-norms are the $L_1$ norm (\emph{absolute intensity differences} or \emph{mean absolute difference}) \cite{kanadeStereoMatchingAlgorithm1994} ($p=1$) and the $L_{2}$, or Euclidean norm (\emph{squared intensity differences} or \emph{mean squared difference}) \cite{hannahComputerMatchingAreas1977}($p=2$).
+A canonical difference between two images would be the p-norm separating them (Eq. \ref{eq:p-norm}), which iterates through each pixel of the two images and finds the p-norm difference between each pixel pair. Common p-norms are the $L_1$ norm (\emph{absolute intensity differences} or \emph{mean absolute difference}) \cite{kanadeStereoMatchingAlgorithm1994} ($p=1$) and the $L_{2}$ norm, or Euclidean norm (\emph{squared intensity differences} or \emph{mean squared difference}) \cite{hannahComputerMatchingAreas1977}($p=2$).
 
 \begin{equation}
     \|A-B\|_{p} = (\sum_{x=0}^{w}\sum_{y=0}^{h}|a_{xy}-b_{xy}|^{p})^{\frac{1}{p}}
@@ -23,7 +23,7 @@ While conceptually easy to use, the main limitation of p-norm measures is their 
     \label{eq:xcorr}
 \end{equation}
 
-This will have the effect of determining the regions of each image that are similar, causing the correlation function to ``light up'' at those areas in a similar way to the convolutional operation between two images. The normalized cross-correlation can also be used (Eq. \ref{eq:norm-xcorr}), which removes noise coming from each of the original images.
+This will determine the regions of each image that are similar, causing the correlation function to ``light up'' at those areas in a similar way to the convolutional operation between two images. The normalized cross-correlation can also be used (\cref{eq:norm-xcorr}), which removes noise coming from each of the original images.
 
 \begin{equation}
     \begin{aligned}
@@ -33,7 +33,7 @@ This will have the effect of determining the regions of each image that are simi
 
 \subsubsection{Feature Based}
 \label{sec:img-sim-feature}
-Feature based image similarity metrics involve some method of determining key features in images, and using those notable features for measuring the differences between two images. These types of methods almost always involve some type of feature-extraction step, where the various features of interest are calculated and deterimined for subsequent use. The two main classes of features are \emph{keypoints} and \emph{edges}. The simplest method of keypoint detection is using a similar method to intensity-based matching, but having one of the ``images'' as a patch of the desired feature. With keypoints detected in the input image, one could determine the error of the current pose estimate by taking the Euclidean distance between all image keypoints and all projected keypoints: \cite{burtonAutomaticTrackingHealthy2021} (Eq. \ref{eq:kp-error}). With a-priori information about the keypoints, one could attach a weight to every keypoint in order to emphasize specific regions on the image and the model (Eq. \ref{eq:wkp-error})
+Feature based image similarity metrics involve some method of determining key features in images, and using those notable features for measuring the differences between two images. These types of methods almost always involve some type of feature-extraction step, where the various features of interest are calculated and determined for subsequent use. The two main classes of features are \emph{keypoints} and \emph{edges}. The simplest method of keypoint detection is using a similar method to intensity-based matching, but having one of the ``images'' as a patch of the desired feature. With keypoints detected in the input image, one could determine the error of the current pose estimate by taking the Euclidean distance between all image keypoints and all projected keypoints: \cite{burtonAutomaticTrackingHealthy2021} (Eq. \ref{eq:kp-error}). With a-priori information about the keypoints, one could attach a weight to every keypoint in order to emphasize specific regions on the image and the model (Eq. \ref{eq:wkp-error})
 
 \begin{equation}
     \begin{aligned}
