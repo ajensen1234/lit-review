@@ -77,7 +77,7 @@ Then, we obtain the final transformation matrix describing the dual pose of the 
 \end{equation}
 
 
-In order to solve this problem, we must take advantage of a few key pieces of information
+In order to solve this problem, we must take advantage of a few key pieces of information:
 
 \begin{itemize}
     \item We know how humans think when they are performing model-image registration manually
@@ -87,7 +87,7 @@ In order to solve this problem, we must take advantage of a few key pieces of in
 
 Each of these understanding motivates a different method by which we attempt to correct the symmetry trap. This aim serves to expand our understanding of how to overcome single-plane limitations in a rigorous manner.
 
-\subsubsection{Method 1: Artifical Ligaments Using Linear Springs}
+\subsubsection{Method 1: Artificial Ligaments Using Linear Springs}
 The first method involves modifying the cost function in order to incorporate linear springs that adjust for varus/valgus position, in much the same way that medial and lateral collateral ligaments do in human anatomy. First, we measure the relative kinematics between the femoral and tibial components in the current orientation, then use Euler angle decomposition to find the relative varus/valgus between them, and add a linear cost to that angle (\cref{eq:vv-cost-function}). This has the effect of choosing the choice of symmetric pose with a smaller varus/valgus angle, which is how human operators typically distinguish between the two options. The user must set the hyperparameter $\lambda$ such that the function does not prioritize the angle over the contour matching. Once selected, this value does not change.
 
 
@@ -106,15 +106,7 @@ The next method, rather than incorporating varus/valgus information in the objec
 
 \subsubsection{Method 3: Bi-plane Calibration}
 
-\begin{center}
-    \Large{Get figures for this}
-\end{center}
-
-This method utilizes the validation data that we used from Aim 1 (\cref{sec:aim1}) in order to create post-hoc calibration for the position of the implant. First, we compare our single-plane data to gold standard bi-plane data, which represents the ground truth for the position of the implant. Then, using Bland-Altman plot, we can determine a calibration constant for our implant's pose based on group truth data.
-
-\begin{center}
-    \Large{flesh this out a little bit more, not as much info as possible}
-\end{center}
+This method utilizes the validation data that we used from Aim 1 (\cref{sec:aim1}) in order to create post-hoc calibration for the position of the implant. First, we compare our single-plane data to gold standard bi-plane data, which represents the ground truth for the position of the implant. Then, using Bland-Altman plot, we can determine a calibration constant for our implant's pose based on ground truth data. These calibration corrections will be applied after model-image registration has already been completed.
 
 \subsubsection{Method 4: Decision Tree for Binary Selection}
 
@@ -125,7 +117,7 @@ Given the 8000 frames of human-supervised measuring TKA kinematics, there are pl
 \subsubsection{Method 5: Neural Network for Binary Selection}
 This approach is very similar to the decision tree, but a fully connected network (\cref{fig:fcn}) is used to select between the two poses. Rather than a series of binary queries, a densely connected feature space will extract latent decision making for choosing the correct pose.
 
-In order to perform this, first, the process of calculating the symmetric pose will be encoded into the neural network, and those layers will be frozen (i.e. the weights will not be updated during training). Then, each tibiofemoral pose will be randomized between ``true'' and ``symmetric'' for the training set, and represented as a quaternion. The pipeline will then fuse both the current (either true or symmetric) and the secondary pose at the initial layer for a neural network, with the final output as a binary to ``keep' or ``switch'' the pose. Different network weights will be tried, with a final emphasis on parsimony.
+In order to perform this, first, the process of calculating the symmetric pose will be encoded into the neural network, and those layers will be frozen (i.e. the weights will not be updated during training). Then, each tibiofemoral pose will be randomized between ``true'' and ``symmetric'' for the training set, and represented as a quaternion. The pipeline will then fuse both the current (either true or symmetric) and the secondary pose at the initial layer for a neural network, with the final output as a binary to ``keep'' or ``switch'' the pose. Different network weights will be tried, with a final emphasis on parsimony.
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../Jensen-Lit-Review"

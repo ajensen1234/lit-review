@@ -1,9 +1,5 @@
 Determining the location of an object in an image is a historically intractable problem. These are one of those tasks that are often relegated to the corner of ``easy for humans, extremely difficult for computers'', especially when there is very little a-priori information available. However, as discussed in \Cref{sec:deep-learning}, deep learning has paved the way for computer vision programs to be able to performs tasks that were once only possible by humans. Two convolutional neural networks were trained to segment that tibial and femoral components from the single plane fluoroscopic images. The network achitecture used was the High-Resolution Net \cite{wangDeepHighResolutionRepresentation2020}, which leverages low-level features with higher resolution parallel processing in order to better determine the spatial characteristics of the image and produce a better output. At the time of writing, this network sets the state-of-the-art standard for performance on the COCO and ImageNet datasets, demonstrating robustness for use in many different arenas.
 
-\begin{center}
-    \Large{put some pictures here of the segmentation performance of the neural network}
-\end{center}
-
 Many of the historic methods of determining kinematics were limited by the researchers ability to quickly and reliably determine the location in the implant. The contours were either hand-segmented \cite{banksAccurateMeasurementThreedimensional1996, zuffiModelbasedMethodReconstruction1999}, or a normal edge detector was used, which introduces extra tuning parameters for any given study due to variations in image quality.
 
 
