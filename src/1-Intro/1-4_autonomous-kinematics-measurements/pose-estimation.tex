@@ -123,8 +123,13 @@ The $x$ and $y$ translations can be determined using the value of the $z$ transl
         cos(\theta_z) & -sin(\theta_z) \\ sin(\theta_z) & cos(\theta_z)
     \end{pmatrix}\begin{pmatrix}
         Re(S^{lib}_{x,y}(0)) \\ Imag(S^{lib}_{x,y}(0))
-    \end{pmatrix} \times (\frac{z_{est}}{z_{lib}})
+    \end{pmatrix} \times \left(\frac{z_{est}}{z_{lib}}\right)
     \label{eq:x-y-est}
 \end{equation}
 
 Once this step is complete, we have accounted for $x$ and $y$ rotations (\cref{eq:library-min}), $z$ rotations (\cref{eq:z-rot-est}), $x$ and $y$ translations (\cref{eq:x-y-est}), and $z$ translations (\cref{eq:z-est}). This provides a robust initial estimate when the only information available is the implant geometry and the segmentation output from the neural network. Furthermore, this can be done without any human supervision, providing a fully autonomous initialization for any pose refinement strategy, so long as the estimate is within the convergence region.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../../Jensen-Lit-Review"
+%%% End:

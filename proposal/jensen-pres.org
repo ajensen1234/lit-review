@@ -49,3 +49,27 @@ Typing some things here that relate to the research.
   T = F(s,\theta)
 \end{equation*}
 #+end_src
+* Motivation
+** The Problem
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Joints manifest pain during dynamic activity.
++ 20% of patients receiving TKA are dissatisfied.
+  + Instability, pain, unnatural[cite:@bakerRolePainFunction2007; @bournePatientSatisfactionTotal2010; @scottPredictingDissatisfactionFollowing2010].
++ No reliable method of clinically assessing and quantifying joint dynamics.
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+[[file:~/repo/lit-review/figures/raster/hrnet-human-pose.png]]
+* References
+** References
+:PROPERTIES:
+:BEAMER_OPT: fragile, allowframebreaks, label=
+:END:
+#+begin_src latex
+\AtNextBibliography{\tiny}
+\printbibliography
+#+end_src
