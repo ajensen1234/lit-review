@@ -25,30 +25,6 @@
 #+beamer_inner_theme:
 #+beamer_outer_theme:
 
-* Introduction
-** Two columns
-*** A block :BMCOL:
-    :PROPERTIES:
-    :BEAMER_col: 0.4
-    :END:
-    - this slide consists of two columns
-    - the first (left) column has no heading and consists of text
-    - the second (right) column has an image and is enclosed in an
-      @example@ block
-*** A screenshot :BMCOL:
-    :PROPERTIES:
-    :BEAMER_col: 0.6
-    :END:
-    #+ATTR_LaTeX: :width \textwidth
-   [[file:~/repo/lit-review/figures/raster/fcn.png]]
-** Another frame here
-Typing some things here that relate to the research.
-
-#+begin_src latex
-\begin{equation*}
-  T = F(s,\theta)
-\end{equation*}
-#+end_src
 * Motivation
 ** The Problem
 *** :BMCOL:
@@ -57,13 +33,60 @@ Typing some things here that relate to the research.
 :END:
 + Joints manifest pain during dynamic activity.
 + 20% of patients receiving TKA are dissatisfied.
-  + Instability, pain, unnatural[cite:@bakerRolePainFunction2007; @bournePatientSatisfactionTotal2010; @scottPredictingDissatisfactionFollowing2010].
+  + Instability, pain, unnatural [cite:@bakerRolePainFunction2007; @bournePatientSatisfactionTotal2010; @scottPredictingDissatisfactionFollowing2010].
 + No reliable method of clinically assessing and quantifying joint dynamics.
+  + Too much human supervision, too time consuming
 *** :BMCOL:
 :PROPERTIES:
-:BEAMER_col: 0.4
+:BEAMER_col: 0.5
 :END:
-[[file:~/repo/lit-review/figures/raster/hrnet-human-pose.png]]
+#+ATTR_LaTeX: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/Physical_Examination_of_the_knee.jpg]]
+** Our Proposition
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+Orthopaedic surgeons and clinicians would readily adopt a practical and inexpensive technology that allows them to measure a patient's knee kinematics during activities of daily living.
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:END:
+PICTURE HERE WITH RX OF KNEE MOTION STUDY
+** Constraints
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.45
+:END:
++ It must fit within a standard clinical workflow
++ The technology must utilize equipment commonly found in hospitals
++ There must not be significant human supervision nor interaction to generate an examination report.
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:END:
+#+ATTR_LaTeX: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/c-arm-fluoro-machine.jpg]]
+* Background
+** Projective Geometry
+** Camera Intrinsics
+** Model-Image Registration
+
+* Historical Methods
+** Overview
+Many different approaches have attempted to solve the model-image registration problem.
++ Pre-computed projections
++ Skin-mounted motion Capture
++ Biplane Imaging
++ Iterative Projections
+** Pre-Computed Projections
+** Skin-mounted Motion Capture
+** Biplane Imaging
+** Iterative Projections
+** Model-based Radiostereo Photogrammetry (MBRSA)
+* Aims
+
+
 * References
 ** References
 :PROPERTIES:
