@@ -1,4 +1,4 @@
-% Created 2023-03-01 Wed 09:56
+% Created 2023-03-01 Wed 12:02
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
@@ -38,10 +38,14 @@
 \tableofcontents
 \end{frame}
 
-
+\section{Introduction}
+\label{sec:org4c7fb57}
+\begin{frame}[label={sec:org1f648d0}]{Acknowledgments}
+I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
+\end{frame}
 \section{Motivation}
-\label{sec:orgc7d5047}
-\begin{frame}[label={sec:orgee1e668}]{The Problem}
+\label{sec:orgfbc564b}
+\begin{frame}[label={sec:org5b84c64}]{The Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -63,17 +67,19 @@
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgfd495d0}]{Our Proposition}
+\begin{frame}[label={sec:orgc255a83}]{Our Proposition}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 Orthopaedic surgeons and clinicians would readily adopt a practical and inexpensive technology that allows them to measure a patient's knee kinematics during activities of daily living.
 \end{column}
 \begin{column}{0.55\columnwidth}
-PICTURE HERE WITH RX OF KNEE MOTION STUDY
+\begin{center}
+\includegraphics[width=0.85\textwidth]{/home/andrew/repo/lit-review/figures/raster/dynamic-knee-prescription.png}
+\end{center}
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org4ebe99d}]{Constraints}
+\begin{frame}[label={sec:orgee10601}]{Constraints}
 \begin{columns}
 \begin{column}{0.45\columnwidth}
 \begin{itemize}
@@ -90,17 +96,17 @@ PICTURE HERE WITH RX OF KNEE MOTION STUDY
 \end{columns}
 \end{frame}
 \section{Background}
-\label{sec:orgd81d8f8}
-\begin{frame}[label={sec:org89b7d71}]{Projective Geometry}
+\label{sec:org7207dde}
+\begin{frame}[label={sec:org3d0c759}]{Projective Geometry}
 \end{frame}
-\begin{frame}[label={sec:orgb1a1531}]{Camera Intrinsics}
+\begin{frame}[label={sec:org213edb3}]{Camera Intrinsics}
 \end{frame}
-\begin{frame}[label={sec:orgd698d27}]{Model-Image Registration}
+\begin{frame}[label={sec:org6819a4a}]{Model-Image Registration}
 \end{frame}
 
 \section{Historical Methods}
-\label{sec:org5168083}
-\begin{frame}[label={sec:orgcade163}]{Overview}
+\label{sec:orgdd64865}
+\begin{frame}[label={sec:org7c5a29c}]{Overview}
 Many different approaches have attempted to solve the model-image registration problem.
 \begin{itemize}
 \item Pre-computed projections
@@ -109,7 +115,7 @@ Many different approaches have attempted to solve the model-image registration p
 \item Iterative Projections
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org806fcb1}]{Pre-Computed Projections}
+\begin{frame}[label={sec:orgee6dc83}]{Pre-Computed Projections}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -128,7 +134,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org1aee7cb}]{Limitations of Pre-Computed Projections}
+\begin{frame}[label={sec:org654d50a}]{Limitations of Pre-Computed Projections}
 \begin{itemize}
 \item Requires an accurate contour from the input image in order to perform calculations.
 \begin{itemize}
@@ -137,7 +143,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org7886c85}]{Motion Capture (MoCap)}
+\begin{frame}[label={sec:org92a73cc}]{Motion Capture (MoCap)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -157,7 +163,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org64eb674}]{Limitations of Motion Capture}
+\begin{frame}[label={sec:orga1ae908}]{Limitations of Motion Capture}
 Skin Mounted
 \begin{itemize}
 \item Doesn't accurately describe underlying skeletal motion with clinical accuracy \autocites{gaoInvestigationSoftTissue2008}[][]{kuoInfluenceSoftTissue2011}[][]{linEffectsSoftTissue2016}.
@@ -168,7 +174,7 @@ Bone Pins
 \item Need I say more?
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org9ae2216}]{Biplane Imaging}
+\begin{frame}[label={sec:org842c9d4}]{Biplane Imaging}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -189,15 +195,63 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
+\begin{frame}[label={sec:orgd18898a}]{Limitations of Biplane Imaging}
+\begin{itemize}
+\item Not many hospitals have biplane fluoroscopy setups.
+\item Clinically impractical
+\end{itemize}
+\end{frame}
 
-\begin{frame}[label={sec:org364e833}]{Iterative Projections}
+\begin{frame}[label={sec:org7866f20}]{Iterative Projections}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Take advantage of modern computational graphics pipelines to quickly perform projection matching.
+\item Image/Intensity similarity metrics \autocite{mahfouzRobustMethodRegistration2003}
+\item Feature/Contour similarity metrics
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/mahfouz-perspective-projection.png}
+\end{center}
+\begin{center}
+\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/flood-dilated-contour.png}
+\end{center}
+\end{column}
+\end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgc7dd9af}]{Model-based Radiostereo Photogrammetry (MBRSA)}
+\begin{frame}[label={sec:org63d2973}]{Limitations of (historic) Iterative Projection Methods}
+\begin{itemize}
+\item Requires human supervision for:
+\begin{itemize}
+\item Pose initialization
+\item Escaping local minima
+\item Implant detection
+\end{itemize}
+\item Chaotic and Noisy objective function
+\end{itemize}
 \end{frame}
+
+\begin{frame}[label={sec:org99a9022}]{Model-based Roentgen Stereophotogrammetry (MBRSA)}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Uses implanted tantalum beads for motion tracking \autocite{selvikRoentgenStereophotogrammetryMethod1989}
+\item Extremely accurate \autocites{kapteinEvaluationThreePose2004}[][]{saariKneeKinematicsMedial2005}
+\item Gold standard Measurement \autocite{brobergValidationMachineLearning2023}
+\end{itemize}
+\end{column}
+
+\begin{column}{0.6\columnwidth}
+\end{column}
+\end{columns}
+\end{frame}
+
 \section{Aims}
-\label{sec:orgbbd3bdb}
+\label{sec:org1d9eadb}
 
-\begin{frame}[label={sec:org29297cc}]{Aims}
+\begin{frame}[label={sec:org1762f34}]{Aims}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \begin{block}{Aims 1/2}
@@ -216,7 +270,7 @@ Joint Track Auto Toolkit
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org0a8fdf5}]{Aims}
+\begin{frame}[label={sec:org702a9aa}]{Aims}
 \begin{center}
 \begin{tabular}{ll}
 Aim(s) & Goal\\\empty
@@ -229,8 +283,8 @@ Aim(s) & Goal\\\empty
 \end{frame}
 
 \section{References}
-\label{sec:orgd595269}
-\begin{frame}[label={sec:orgb04067c},fragile, allowframebreaks, label=]{References}
+\label{sec:org59b0bed}
+\begin{frame}[label={sec:orga0e9a52},fragile, allowframebreaks, label=]{References}
 \AtNextBibliography{\tiny}
 \printbibliography
 \end{frame}

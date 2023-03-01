@@ -24,7 +24,9 @@
 #+beamer_font_theme:
 #+beamer_inner_theme:
 #+beamer_outer_theme:
-
+* Introduction
+** Acknowledgments
+I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
 * Motivation
 ** The Problem
 *** :BMCOL:
@@ -52,7 +54,8 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 :PROPERTIES:
 :BEAMER_col: 0.55
 :END:
-PICTURE HERE WITH RX OF KNEE MOTION STUDY
+#+ATTR_Latex: :width 0.85\textwidth
+[[file:~/repo/lit-review/figures/raster/dynamic-knee-prescription.png]]
 ** Constraints
 *** :BMCOL:
 :PROPERTIES:
@@ -141,15 +144,43 @@ Bone Pins
 + Clinically impractical
 
 ** Iterative Projections
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 + Take advantage of modern computational graphics pipelines to quickly perform projection matching.
-+ Image/Intensity similarity metrics
++ Image/Intensity similarity metrics [cite:@mahfouzRobustMethodRegistration2003]
 + Feature/Contour similarity metrics
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 2in
+[[file:~/repo/lit-review/figures/raster/mahfouz-perspective-projection.png]]
+[[file:~/repo/lit-review/figures/raster/flood-dilated-contour.png]]
+** Limitations of (historic) Iterative Projection Methods
++ Requires human supervision for:
+  + Pose initialization
+  + Escaping local minima
+  + Implant detection
++ Chaotic and Noisy objective function
 
-** Model-based Radiostereo Photogrammetry (MBRSA)
+** Model-based Roentgen Stereophotogrammetry (MBRSA)
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Uses implanted tantalum beads for motion tracking [cite:@selvikRoentgenStereophotogrammetryMethod1989]
++ Extremely accurate [cite:@kapteinEvaluationThreePose2004; @saariKneeKinematicsMedial2005]
++ Gold standard Measurement [cite:@brobergValidationMachineLearning2023]
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+
 * Aims
-
 ** Aims
-
 *** Aims 1/2 :B_block:BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.3
@@ -168,12 +199,6 @@ Pilot Trials and Standardized Kinematics Exam
 :BEAMER_env: block
 :END:
 Joint Track Auto Toolkit
-** Aims
-| Aim(s) | Goal                                                                          |
-|--------+-------------------------------------------------------------------------------|
-| 1/2    | Joint Track Machine Learning and Overcoming Single-Plane Limitations          |
-| 3/4    | Pilot Trials and Standardized Kinematics Exam                                 |
-| 5      | Joint Track Auto Toolkit: An Open Source Toolkit for Model-Image Registration |
 
 * References
 ** References
