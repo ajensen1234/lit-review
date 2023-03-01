@@ -80,12 +80,77 @@ Many different approaches have attempted to solve the model-image registration p
 + Biplane Imaging
 + Iterative Projections
 ** Pre-Computed Projections
-** Skin-mounted Motion Capture
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Saving space and memory by pre-computing as much as possible.
++ Pre-computed distance maps [cite:@zuffiModelbasedMethodReconstruction1999; @lavalleeRecoveringPositionOrientation1995].
++ Pre-computed shape libraries [cite:@banksAccurateMeasurementThreedimensional1996]
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 2in
+[[file:~/repo/lit-review/figures/raster/lavallee-distance-maps.png]]
+[[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
+** Limitations of Pre-Computed Projections
++ Requires an accurate contour from the input image in order to perform calculations.
+  + Human supervision vs. inaccuracy.
+
+** Motion Capture (MoCap)
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Can measure motion of MoCap beads very accurately.
++ Skin-mounted [cite:@gaoInvestigationSoftTissue2008; @kuoInfluenceSoftTissue2011; @linEffectsSoftTissue2016].
++ Bone pins [cite:@lafortuneThreedimensionalKinematicsHuman1992] (any volunteers?).
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 2in
+[[file:~/repo/lit-review/figures/raster/gao-skin-mocap.png]]
+[[file:~/repo/lit-review/figures/raster/lafortune-bone-mocap.png]]
+** Limitations of Motion Capture
+Skin Mounted
++ Doesn't accurately describe underlying skeletal motion with clinical accuracy [cite:@gaoInvestigationSoftTissue2008; @kuoInfluenceSoftTissue2011; @linEffectsSoftTissue2016].
+Bone Pins
++ Bone Pins
++ Need I say more?
 ** Biplane Imaging
 ** Iterative Projections
 ** Model-based Radiostereo Photogrammetry (MBRSA)
 * Aims
 
+** Aims
+
+*** Aims 1/2 :B_block:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.3
+:BEAMER_env: block
+:END:
+Joint Track Machine Learning and Overcoming Single-Plane Limitations
+*** Aim 3/4 :B_block:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.3
+:BEAMER_env: block
+:END:
+Pilot Trials and Standardized Kinematics Exam
+*** Aim 5 :B_block:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.3
+:BEAMER_env: block
+:END:
+Joint Track Auto Toolkit
+** Aims
+| Aim(s) | Goal                                                                          |
+|--------+-------------------------------------------------------------------------------|
+| 1/2    | Joint Track Machine Learning and Overcoming Single-Plane Limitations          |
+| 3/4    | Pilot Trials and Standardized Kinematics Exam                                 |
+| 5      | Joint Track Auto Toolkit: An Open Source Toolkit for Model-Image Registration |
 
 * References
 ** References

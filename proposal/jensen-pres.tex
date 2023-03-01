@@ -1,4 +1,4 @@
-% Created 2023-02-28 Tue 13:22
+% Created 2023-03-01 Wed 09:39
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
@@ -39,36 +39,9 @@
 \end{frame}
 
 
-\section{Introduction}
-\label{sec:orgf3ea1bf}
-\begin{frame}[label={sec:org87094b2}]{Two columns}
-\begin{columns}
-\begin{column}{0.4\columnwidth}
-\begin{itemize}
-\item this slide consists of two columns
-\item the first (left) column has no heading and consists of text
-\item the second (right) column has an image and is enclosed in an
-@example@ block
-\end{itemize}
-\end{column}
-\begin{column}{0.6\columnwidth}
-\begin{center}
-\includegraphics[width=\textwidth]{/home/andrew/repo/lit-review/figures/raster/fcn.png}
-\end{center}
-\end{column}
-\end{columns}
-\end{frame}
-\begin{frame}[label={sec:org79e39eb}]{Another frame here}
-Typing some things here that relate to the research.
-
-\begin{equation*}
-  T = F(s,\theta)
-\end{equation*}
-\end{frame}
-
 \section{Motivation}
-\label{sec:orgbfe40f4}
-\begin{frame}[label={sec:orgb8cf0ac}]{The Problem}
+\label{sec:org073845d}
+\begin{frame}[label={sec:org080654d}]{The Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -90,7 +63,7 @@ Typing some things here that relate to the research.
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgc6626b1}]{Our Proposition}
+\begin{frame}[label={sec:orgfd8ee84}]{Our Proposition}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 Orthopaedic surgeons and clinicians would readily adopt a practical and inexpensive technology that allows them to measure a patient's knee kinematics during activities of daily living.
@@ -100,7 +73,7 @@ PICTURE HERE WITH RX OF KNEE MOTION STUDY
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org30c8b99}]{Constraints}
+\begin{frame}[label={sec:org4940220}]{Constraints}
 \begin{columns}
 \begin{column}{0.45\columnwidth}
 \begin{itemize}
@@ -117,17 +90,17 @@ PICTURE HERE WITH RX OF KNEE MOTION STUDY
 \end{columns}
 \end{frame}
 \section{Background}
-\label{sec:org834e616}
-\begin{frame}[label={sec:org27ac9db}]{Projective Geometry}
+\label{sec:org3b75111}
+\begin{frame}[label={sec:org165d8e7}]{Projective Geometry}
 \end{frame}
-\begin{frame}[label={sec:org9188a9b}]{Camera Intrinsics}
+\begin{frame}[label={sec:org9f931d3}]{Camera Intrinsics}
 \end{frame}
-\begin{frame}[label={sec:orgc696f3f}]{Model-Image Registration}
+\begin{frame}[label={sec:orgcacc61f}]{Model-Image Registration}
 \end{frame}
 
 \section{Historical Methods}
-\label{sec:org54f4bf4}
-\begin{frame}[label={sec:org7fbe41e}]{Overview}
+\label{sec:org1e14180}
+\begin{frame}[label={sec:org3e03bac}]{Overview}
 Many different approaches have attempted to solve the model-image registration problem.
 \begin{itemize}
 \item Pre-computed projections
@@ -136,23 +109,97 @@ Many different approaches have attempted to solve the model-image registration p
 \item Iterative Projections
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org46401c2}]{Pre-Computed Projections}
+\begin{frame}[label={sec:org5fac2b2}]{Pre-Computed Projections}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Saving space and memory by pre-computing as much as possible.
+\item Pre-computed distance maps \autocites{zuffiModelbasedMethodReconstruction1999}[][]{lavalleeRecoveringPositionOrientation1995}.
+\item Pre-computed shape libraries \autocite{banksAccurateMeasurementThreedimensional1996}
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/lavallee-distance-maps.png}
+\end{center}
+\begin{center}
+\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/banks-nfd-library.png}
+\end{center}
+\end{column}
+\end{columns}
 \end{frame}
-\begin{frame}[label={sec:org9cac4da}]{Skin-mounted Motion Capture}
+\begin{frame}[label={sec:org1959570}]{Limitations of Pre-Computed Projections}
+\begin{itemize}
+\item Requires an accurate contour from the input image in order to perform calculations.
+\begin{itemize}
+\item Human supervision vs. inaccuracy.
+\end{itemize}
+\end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgf25771e}]{Biplane Imaging}
+
+\begin{frame}[label={sec:orgc041cc5}]{Motion Capture (MoCap)}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Can measure motion of MoCap beads very accurately.
+\item Skin-mounted \autocites{gaoInvestigationSoftTissue2008}[][]{kuoInfluenceSoftTissue2011}[][]{linEffectsSoftTissue2016}.
+\item Bone pins \autocite{lafortuneThreedimensionalKinematicsHuman1992} (any volunteers?).
+\end{itemize}
+\end{column}
+
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/gao-skin-mocap.png}
+\end{center}
+\begin{center}
+\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/lafortune-bone-mocap.png}
+\end{center}
+\end{column}
+\end{columns}
 \end{frame}
-\begin{frame}[label={sec:org7f96c1d}]{Iterative Projections}
+\begin{frame}[label={sec:orgf6e51d7}]{Biplane Imaging}
 \end{frame}
-\begin{frame}[label={sec:org7986f53}]{Model-based Radiostereo Photogrammetry (MBRSA)}
+\begin{frame}[label={sec:orga3553dc}]{Iterative Projections}
+\end{frame}
+\begin{frame}[label={sec:orgb35969c}]{Model-based Radiostereo Photogrammetry (MBRSA)}
 \end{frame}
 \section{Aims}
-\label{sec:org9340308}
+\label{sec:orgb8ffe45}
 
+\begin{frame}[label={sec:orgda0f5cb}]{Aims}
+\begin{columns}
+\begin{column}{0.3\columnwidth}
+\begin{block}{Aims 1/2}
+Joint Track Machine Learning and Overcoming Single-Plane Limitations
+\end{block}
+\end{column}
+\begin{column}{0.3\columnwidth}
+\begin{block}{Aim 3/4}
+Pilot Trials and Standardized Kinematics Exam
+\end{block}
+\end{column}
+\begin{column}{0.3\columnwidth}
+\begin{block}{Aim 5}
+Joint Track Auto Toolkit
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:orgaea4034}]{Aims}
+\begin{center}
+\begin{tabular}{ll}
+Aim(s) & Goal\\\empty
+\hline
+1/2 & Joint Track Machine Learning and Overcoming Single-Plane Limitations\\\empty
+3/4 & Pilot Trials and Standardized Kinematics Exam\\\empty
+5 & Joint Track Auto Toolkit: An Open Source Toolkit for Model-Image Registration\\\empty
+\end{tabular}
+\end{center}
+\end{frame}
 
 \section{References}
-\label{sec:orge201e70}
-\begin{frame}[label={sec:orgcfc2455},fragile, allowframebreaks, label=]{References}
+\label{sec:org48dc81c}
+\begin{frame}[label={sec:orgbfac86f},fragile, allowframebreaks, label=]{References}
 \AtNextBibliography{\tiny}
 \printbibliography
 \end{frame}
