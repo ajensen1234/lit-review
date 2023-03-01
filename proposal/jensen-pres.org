@@ -17,6 +17,7 @@
 
 #+options: H:2
 #+latex_class: beamer
+#+LaTeX_CLASS_OPTIONS: [aspectratio=1610]
 #+columns: %45ITEM %10 BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
 #+beamer_theme: metropolis
 #+latex_header: \usetheme[progressbar=foot]{metropolis}
