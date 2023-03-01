@@ -121,7 +121,30 @@ Bone Pins
 + Bone Pins
 + Need I say more?
 ** Biplane Imaging
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+ATTR_LaTeX: :width \textwidth
++ Utilizes multiple cameras to resolve 3D position and orientation[cite:@ivesterReconfigurableHighSpeedStereoRadiography2015; @burtonAutomaticTrackingHealthy2021].
+  + Highly accurate.
+  + Gold Standard.
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 2in
+[[file:~/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png]]
+[[file:~/repo/lit-review/figures/raster/ivester-stereo-projection.png]]
+** Limitations of Biplane Imaging
++ Not many hospitals have biplane fluoroscopy setups.
++ Clinically impractical
+
 ** Iterative Projections
++ Take advantage of modern computational graphics pipelines to quickly perform projection matching.
++ Image/Intensity similarity metrics
++ Feature/Contour similarity metrics
+
 ** Model-based Radiostereo Photogrammetry (MBRSA)
 * Aims
 

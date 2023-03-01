@@ -1,4 +1,4 @@
-% Created 2023-03-01 Wed 09:39
+% Created 2023-03-01 Wed 09:56
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
@@ -40,8 +40,8 @@
 
 
 \section{Motivation}
-\label{sec:org073845d}
-\begin{frame}[label={sec:org080654d}]{The Problem}
+\label{sec:orgc7d5047}
+\begin{frame}[label={sec:orgee1e668}]{The Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -63,7 +63,7 @@
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgfd8ee84}]{Our Proposition}
+\begin{frame}[label={sec:orgfd495d0}]{Our Proposition}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 Orthopaedic surgeons and clinicians would readily adopt a practical and inexpensive technology that allows them to measure a patient's knee kinematics during activities of daily living.
@@ -73,7 +73,7 @@ PICTURE HERE WITH RX OF KNEE MOTION STUDY
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org4940220}]{Constraints}
+\begin{frame}[label={sec:org4ebe99d}]{Constraints}
 \begin{columns}
 \begin{column}{0.45\columnwidth}
 \begin{itemize}
@@ -90,17 +90,17 @@ PICTURE HERE WITH RX OF KNEE MOTION STUDY
 \end{columns}
 \end{frame}
 \section{Background}
-\label{sec:org3b75111}
-\begin{frame}[label={sec:org165d8e7}]{Projective Geometry}
+\label{sec:orgd81d8f8}
+\begin{frame}[label={sec:org89b7d71}]{Projective Geometry}
 \end{frame}
-\begin{frame}[label={sec:org9f931d3}]{Camera Intrinsics}
+\begin{frame}[label={sec:orgb1a1531}]{Camera Intrinsics}
 \end{frame}
-\begin{frame}[label={sec:orgcacc61f}]{Model-Image Registration}
+\begin{frame}[label={sec:orgd698d27}]{Model-Image Registration}
 \end{frame}
 
 \section{Historical Methods}
-\label{sec:org1e14180}
-\begin{frame}[label={sec:org3e03bac}]{Overview}
+\label{sec:org5168083}
+\begin{frame}[label={sec:orgcade163}]{Overview}
 Many different approaches have attempted to solve the model-image registration problem.
 \begin{itemize}
 \item Pre-computed projections
@@ -109,7 +109,7 @@ Many different approaches have attempted to solve the model-image registration p
 \item Iterative Projections
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org5fac2b2}]{Pre-Computed Projections}
+\begin{frame}[label={sec:org806fcb1}]{Pre-Computed Projections}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -128,7 +128,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org1959570}]{Limitations of Pre-Computed Projections}
+\begin{frame}[label={sec:org1aee7cb}]{Limitations of Pre-Computed Projections}
 \begin{itemize}
 \item Requires an accurate contour from the input image in order to perform calculations.
 \begin{itemize}
@@ -137,7 +137,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgc041cc5}]{Motion Capture (MoCap)}
+\begin{frame}[label={sec:org7886c85}]{Motion Capture (MoCap)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -157,16 +157,47 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgf6e51d7}]{Biplane Imaging}
+\begin{frame}[label={sec:org64eb674}]{Limitations of Motion Capture}
+Skin Mounted
+\begin{itemize}
+\item Doesn't accurately describe underlying skeletal motion with clinical accuracy \autocites{gaoInvestigationSoftTissue2008}[][]{kuoInfluenceSoftTissue2011}[][]{linEffectsSoftTissue2016}.
+\end{itemize}
+Bone Pins
+\begin{itemize}
+\item Bone Pins
+\item Need I say more?
+\end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orga3553dc}]{Iterative Projections}
+\begin{frame}[label={sec:org9ae2216}]{Biplane Imaging}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Utilizes multiple cameras to resolve 3D position and orientation\autocites{ivesterReconfigurableHighSpeedStereoRadiography2015}[][]{burtonAutomaticTrackingHealthy2021}.
+\begin{itemize}
+\item Highly accurate.
+\item Gold Standard.
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png}
+\end{center}
+\begin{center}
+\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/ivester-stereo-projection.png}
+\end{center}
+\end{column}
+\end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgb35969c}]{Model-based Radiostereo Photogrammetry (MBRSA)}
+
+\begin{frame}[label={sec:org364e833}]{Iterative Projections}
+\end{frame}
+\begin{frame}[label={sec:orgc7dd9af}]{Model-based Radiostereo Photogrammetry (MBRSA)}
 \end{frame}
 \section{Aims}
-\label{sec:orgb8ffe45}
+\label{sec:orgbbd3bdb}
 
-\begin{frame}[label={sec:orgda0f5cb}]{Aims}
+\begin{frame}[label={sec:org29297cc}]{Aims}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \begin{block}{Aims 1/2}
@@ -185,7 +216,7 @@ Joint Track Auto Toolkit
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgaea4034}]{Aims}
+\begin{frame}[label={sec:org0a8fdf5}]{Aims}
 \begin{center}
 \begin{tabular}{ll}
 Aim(s) & Goal\\\empty
@@ -198,8 +229,8 @@ Aim(s) & Goal\\\empty
 \end{frame}
 
 \section{References}
-\label{sec:org48dc81c}
-\begin{frame}[label={sec:orgbfac86f},fragile, allowframebreaks, label=]{References}
+\label{sec:orgd595269}
+\begin{frame}[label={sec:orgb04067c},fragile, allowframebreaks, label=]{References}
 \AtNextBibliography{\tiny}
 \printbibliography
 \end{frame}
