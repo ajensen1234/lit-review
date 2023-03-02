@@ -1,4 +1,4 @@
-% Created 2023-03-01 Wed 16:44
+% Created 2023-03-02 Thu 13:52
 % Intended LaTeX compiler: pdflatex
 \documentclass[aspectratio=1610]{beamer}
 \usepackage[utf8]{inputenc}
@@ -13,6 +13,8 @@
 \usepackage{capt-of}
 \usepackage{hyperref}
 \usetheme[progressbar=foot]{metropolis}
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty}
 \usetheme{metropolis}
 \usecolortheme{}
 \usefonttheme{}
@@ -38,14 +40,15 @@
 \tableofcontents
 \end{frame}
 
+
 \section{Introduction}
-\label{sec:org21904d6}
-\begin{frame}[label={sec:org763b1f2}]{Acknowledgments}
+\label{sec:org67b971e}
+\begin{frame}[label={sec:org1dd3e2b}]{Acknowledgments}
 I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
 \end{frame}
 \section{Motivation}
-\label{sec:org3ff89b2}
-\begin{frame}[label={sec:orgaacb78e}]{The Problem}
+\label{sec:org94c169f}
+\begin{frame}[label={sec:orga7d9dd4}]{The Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -67,19 +70,19 @@ I would like to thank the McJunkin Family Charitable Foundation for their genero
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orga6f7526}]{Our Proposition}
+\begin{frame}[label={sec:org1b6f1a3}]{Our Proposition}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 Orthopaedic surgeons and clinicians would readily adopt a practical and inexpensive technology that allows them to measure a patient's knee kinematics during activities of daily living.
 \end{column}
 \begin{column}{0.55\columnwidth}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{/home/andrew/repo/lit-review/figures/raster/dynamic-knee-prescription.png}
+\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/dynamic-knee-prescription.png}
 \end{center}
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgbafe68d}]{Constraints}
+\begin{frame}[label={sec:org25f1ab3}]{Constraints}
 \begin{columns}
 \begin{column}{0.45\columnwidth}
 \begin{itemize}
@@ -96,17 +99,191 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{columns}
 \end{frame}
 \section{Background}
-\label{sec:org57e10dd}
-\begin{frame}[label={sec:org212c7de}]{Projective Geometry}
-\end{frame}
-\begin{frame}[label={sec:orgb3276cb}]{Camera Intrinsics}
-\end{frame}
-\begin{frame}[label={sec:orgeca56a8}]{Model-Image Registration}
+\label{sec:orgad67985}
+\begin{frame}[label={sec:orgbb766fd}]{Rigid Body Transformations}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{block}{Homogeneous Transformation Matrix}
+\begin{equation*}
+  T^{A}_{B} =
+  \begin{pmatrix}
+    & R^{A}_{B} & & P^{A}_{B,origin} \\
+    0 & 0 & 0 & 1
+  \end{pmatrix}
+\end{equation*}
+\end{block}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{block}{Rotation Matrices}
+\begin{equation*}
+  \begin{aligned}
+    R_{x} & =
+            \begin{pmatrix}
+              1 & 0 & 0 \\
+              0 & c_{x} & -s_{x}\\
+              0 & s_{x} & c_{x}
+            \end{pmatrix} \\
+    R_{y} &=
+            \begin{pmatrix}
+              s_{y} & 0 & c_{y}\\
+              0 & 1 & 0 \\
+              c_{y} & 0 & -s_{y}
+            \end{pmatrix} \\
+    R_{z} &=
+            \begin{pmatrix}
+              c_{z} & -s_{z} & 0 \\
+              s_{z} & c_{z} & 0 \\
+              0 & 0 & 1
+            \end{pmatrix}
+  \end{aligned}
+\end{equation*}
+\end{block}
+\end{column}
+\end{columns}
 \end{frame}
 
+\begin{frame}[label={sec:org0f100e3}]{Rigid Body Transformations}
+\begin{block}{Translation}
+\begin{equation*}
+  \begin{aligned}
+  \begin{pmatrix}
+    v_{x}' \\ v_{y}'
+  \end{pmatrix} &=
+  \begin{pmatrix}
+    v_{x} \\ v_{y}
+  \end{pmatrix} +
+  \begin{pmatrix}
+    t_{x} \\ t_{y}
+  \end{pmatrix} \\
+                & \rightarrow \\
+    \begin{pmatrix}
+      v_{x}' \\ v_{y}' \\ 1
+    \end{pmatrix} &=
+                    \begin{pmatrix}
+                      1 & 0 & t_{x} \\ 0 & 1 & t_{y} \\ 0 & 0 & 1
+                    \end{pmatrix}
+                                                                \begin{pmatrix}
+                                                                  v_{x} \\ v_{y} \\  1
+                                                                \end{pmatrix}
+\end{aligned}
+\end{equation*}
+\end{block}
+\end{frame}
+
+\begin{frame}[label={sec:org3796a38}]{Rigid Body Transformations}
+\begin{block}{Rotations}
+\begin{equation*}
+  \begin{aligned}
+    R_{x} & =
+            \begin{pmatrix}
+              1 & 0 & 0 \\
+              0 & c_{x} & -s_{x}\\
+              0 & s_{x} & c_{x}
+            \end{pmatrix} \\
+    R_{y} &=
+            \begin{pmatrix}
+              s_{y} & 0 & c_{y}\\
+              0 & 1 & 0 \\
+              c_{y} & 0 & -s_{y}
+            \end{pmatrix} \\
+    R_{z} &=
+            \begin{pmatrix}
+              c_{z} & -s_{z} & 0 \\
+              s_{z} & c_{z} & 0 \\
+              0 & 0 & 1
+            \end{pmatrix}
+  \end{aligned}
+\end{equation*}
+\end{block}
+\end{frame}
+
+\begin{frame}[label={sec:org3238a6c}]{Rigid Body Transformations}
+\begin{block}{Homogeneous Transformation Matrices}
+\begin{equation*}
+  \begin{aligned}
+  \vec{v'} &=
+  \begin{pmatrix}
+    & \mathbf{R}_{3 \times 3} & & \vec{t}_{3 \times 1} \\
+    0 & 0 & 0 & 1
+  \end{pmatrix}\tilde{\vec{v}} \\
+    &= T^{A}_{B} \tilde{\vec{v}}
+  \end{aligned}
+\end{equation*}
+
+Now we have a notation that allows us to describe arbitrary movement between reference frames.
+\end{block}
+\end{frame}
+\begin{frame}[label={sec:org540695f}]{Projective Geometry}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{equation*}
+  \begin{pmatrix}
+    x_{s} \\ y_{s} \\ z_{s} \\ 1
+  \end{pmatrix}_{i} = T^{cam}_{scene} \mathbf{\tilde{p}^{obj}_{i}}
+\end{equation*}
+
+\begin{equation*}
+  \begin{pmatrix}
+    \tilde{x}_{img} \\ \tilde{y}_{img} \\ \tilde{z} \\ 1
+  \end{pmatrix} =
+  \begin{pmatrix}
+    f& 0 & 0 \\ 0 & f & 0 \\ 0 & 0 & 1
+  \end{pmatrix} \vec{x}_{s}
+\end{equation*}
+
+Where
+\begin{equation*}
+  \begin{aligned}
+    x_{img} &= \frac{\tilde{x_{img}}}{\tilde{z}} = \frac{f}{z_{s}}x_{s} \\
+    y_{img} &= \frac{\tilde{y_{img}}}{\tilde{z}} = \frac{f}{z_{s}}y_{s}
+  \end{aligned}
+\end{equation*}
+
+{\tiny Note: We are still in the camera's reference frame}
+\end{column}
+
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/andrew/repo/lit-review/figures/raster/perspective-projection.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:orgd3693ce}]{Pixel Coordinates}
+Convert camera coordinates into image coordinates.
+\begin{equation*}
+  \begin{aligned}
+    p_{x} = k_{x}x_{img} + c_{x} \\
+    p_{y} = k_{y}y_{img} + c_{y}
+  \end{aligned}
+\end{equation*}
+Where
+\begin{equation*}
+  \begin{aligned}
+    k &\equiv \text{ Pixel Spacing }\\
+    c &\equiv \text{ Image Focal Point }
+  \end{aligned}
+\end{equation*}
+\end{frame}
+
+\begin{frame}[label={sec:orgfd7ee34}]{Model-Image Registration}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+If we know the projective parameters of the fluoroscopy machine, can we tinker with \(T^{cam}_{implant}\) so that our virtual projection matches the fluoroscopic image?
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2.5in]{/home/andrew/repo/lit-review/figures/raster/mahfouz-perspective-projection.png}
+\caption{From \autocite{mahfouzRobustMethodRegistration2003}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
 \section{Historical Methods}
-\label{sec:org3e711b6}
-\begin{frame}[label={sec:orgff96ded}]{Overview}
+\label{sec:org5da5081}
+\begin{frame}[label={sec:org2624207}]{Overview}
 Many different approaches have attempted to solve the model-image registration problem.
 \begin{itemize}
 \item Pre-computed projections
@@ -115,7 +292,7 @@ Many different approaches have attempted to solve the model-image registration p
 \item Iterative Projections
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org048b667}]{Pre-Computed Projections}
+\begin{frame}[label={sec:org9e7955a}]{Pre-Computed Projections}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -134,7 +311,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org4647bb5}]{Limitations of Pre-Computed Projections}
+\begin{frame}[label={sec:orgaeaba1d}]{Limitations of Pre-Computed Projections}
 \begin{itemize}
 \item Requires an accurate contour from the input image in order to perform calculations.
 \begin{itemize}
@@ -143,7 +320,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org4435323}]{Motion Capture (MoCap)}
+\begin{frame}[label={sec:org5b44d59}]{Motion Capture (MoCap)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -155,15 +332,15 @@ Many different approaches have attempted to solve the model-image registration p
 
 \begin{column}{0.6\columnwidth}
 \begin{center}
-\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/gao-skin-mocap.png}
+\includegraphics[width=2.5in]{/home/andrew/repo/lit-review/figures/raster/gao-skin-mocap.png}
 \end{center}
 \begin{center}
-\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/lafortune-bone-mocap.png}
+\includegraphics[width=2.5in]{/home/andrew/repo/lit-review/figures/raster/lafortune-bone-mocap.png}
 \end{center}
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgb828fda}]{Limitations of Motion Capture}
+\begin{frame}[label={sec:orge923dea}]{Limitations of Motion Capture}
 Skin Mounted
 \begin{itemize}
 \item Doesn't accurately describe underlying skeletal motion with clinical accuracy \autocites{gaoInvestigationSoftTissue2008}[][]{kuoInfluenceSoftTissue2011}[][]{linEffectsSoftTissue2016}.
@@ -174,7 +351,7 @@ Bone Pins
 \item Need I say more?
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orge785da0}]{Biplane Imaging}
+\begin{frame}[label={sec:org229b898}]{Biplane Imaging}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -195,14 +372,14 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org41288a5}]{Limitations of Biplane Imaging}
+\begin{frame}[label={sec:org04c4481}]{Limitations of Biplane Imaging}
 \begin{itemize}
 \item Not many hospitals have biplane fluoroscopy setups.
 \item Clinically impractical
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgd0b24b4}]{Iterative Projections}
+\begin{frame}[label={sec:orgbb46f10}]{Iterative Projections}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -221,7 +398,7 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org09e882e}]{Limitations of (historic) Iterative Projection Methods}
+\begin{frame}[label={sec:org04d16d4}]{Limitations of (historic) Iterative Projection Methods}
 \begin{itemize}
 \item Requires human supervision for:
 \begin{itemize}
@@ -233,7 +410,7 @@ Bone Pins
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org54d0fe3}]{Model-based Roentgen Stereophotogrammetry (MBRSA)}
+\begin{frame}[label={sec:org1844ed1}]{Model-based Roentgen Stereophotogrammetry (MBRSA)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -244,13 +421,17 @@ Bone Pins
 \end{column}
 
 \begin{column}{0.6\columnwidth}
+\begin{itemize}
+\item Involves additional surgical procedures for inserting tantalum beads
+\item Human supervision
+\item Typically requires bi-plane imaging.
+\end{itemize}
 \end{column}
 \end{columns}
 \end{frame}
-
 \section{Aims}
-\label{sec:org0f5809c}
-\begin{frame}[label={sec:orgc066ea7}]{Aims}
+\label{sec:org704b485}
+\begin{frame}[label={sec:org3326c57}]{Aims}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \begin{block}{Aims 1/2}
@@ -271,8 +452,8 @@ Joint Track Auto Toolkit
 \end{frame}
 
 \section{References}
-\label{sec:org804d59a}
-\begin{frame}[label={sec:org132d6de},fragile, allowframebreaks, label=]{References}
+\label{sec:orgcedc339}
+\begin{frame}[label={sec:org1d57650},fragile, allowframebreaks, label=]{References}
 \AtNextBibliography{\tiny}
 \printbibliography
 \end{frame}

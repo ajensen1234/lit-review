@@ -21,10 +21,13 @@
 #+columns: %45ITEM %10 BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
 #+beamer_theme: metropolis
 #+latex_header: \usetheme[progressbar=foot]{metropolis}
+#+latex_header_extra: \usepackage{caption}
+#+latex_header_extra: \captionsetup[figure]{labelformat=empty}
 #+beamer_color_theme:
 #+beamer_font_theme:
 #+beamer_inner_theme:
 #+beamer_outer_theme:
+
 * Introduction
 ** Acknowledgments
 I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
@@ -55,7 +58,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 :PROPERTIES:
 :BEAMER_col: 0.55
 :END:
-#+ATTR_Latex: :width 0.85\textwidth
+#+ATTR_LaTeX: :width 2in
 [[file:~/repo/lit-review/figures/raster/dynamic-knee-prescription.png]]
 ** Constraints
 *** :BMCOL:
@@ -72,10 +75,197 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 #+ATTR_LaTeX: :width \textwidth
 [[file:~/repo/lit-review/figures/raster/c-arm-fluoro-machine.jpg]]
 * Background
+** Rigid Body Transformations
+:PROPERTIES:
+:END:
+*** Homogeneous Transformation Matrix :B_block:BMCOL:
+:PROPERTIES:
+:BEAMER_OPT: t
+:BEAMER_col: 0.5
+:BEAMER_env: block
+:END:
+#+begin_src latex
+\begin{equation*}
+  T^{A}_{B} =
+  \begin{pmatrix}
+    & R^{A}_{B} & & P^{A}_{B,origin} \\
+    0 & 0 & 0 & 1
+  \end{pmatrix}
+\end{equation*}
+#+end_src
+*** Rotation Matrices :B_block:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_env: block
+:END:
+#+begin_src latex
+\begin{equation*}
+  \begin{aligned}
+    R_{x} & =
+            \begin{pmatrix}
+              1 & 0 & 0 \\
+              0 & c_{x} & -s_{x}\\
+              0 & s_{x} & c_{x}
+            \end{pmatrix} \\
+    R_{y} &=
+            \begin{pmatrix}
+              s_{y} & 0 & c_{y}\\
+              0 & 1 & 0 \\
+              c_{y} & 0 & -s_{y}
+            \end{pmatrix} \\
+    R_{z} &=
+            \begin{pmatrix}
+              c_{z} & -s_{z} & 0 \\
+              s_{z} & c_{z} & 0 \\
+              0 & 0 & 1
+            \end{pmatrix}
+  \end{aligned}
+\end{equation*}
+#+end_src
+** Rigid Body Transformations
+*** Translation :B_block:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+#+begin_src latex
+\begin{equation*}
+  \begin{aligned}
+  \begin{pmatrix}
+    v_{x}' \\ v_{y}'
+  \end{pmatrix} &=
+  \begin{pmatrix}
+    v_{x} \\ v_{y}
+  \end{pmatrix} +
+  \begin{pmatrix}
+    t_{x} \\ t_{y}
+  \end{pmatrix} \\
+                & \rightarrow \\
+    \begin{pmatrix}
+      v_{x}' \\ v_{y}' \\ 1
+    \end{pmatrix} &=
+                    \begin{pmatrix}
+                      1 & 0 & t_{x} \\ 0 & 1 & t_{y} \\ 0 & 0 & 1
+                    \end{pmatrix}
+                                                                \begin{pmatrix}
+                                                                  v_{x} \\ v_{y} \\  1
+                                                                \end{pmatrix}
+\end{aligned}
+\end{equation*}
+#+end_src
+** Rigid Body Transformations
+*** Rotations :B_block:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+#+begin_src latex
+\begin{equation*}
+  \begin{aligned}
+    R_{x} & =
+            \begin{pmatrix}
+              1 & 0 & 0 \\
+              0 & c_{x} & -s_{x}\\
+              0 & s_{x} & c_{x}
+            \end{pmatrix} \\
+    R_{y} &=
+            \begin{pmatrix}
+              s_{y} & 0 & c_{y}\\
+              0 & 1 & 0 \\
+              c_{y} & 0 & -s_{y}
+            \end{pmatrix} \\
+    R_{z} &=
+            \begin{pmatrix}
+              c_{z} & -s_{z} & 0 \\
+              s_{z} & c_{z} & 0 \\
+              0 & 0 & 1
+            \end{pmatrix}
+  \end{aligned}
+\end{equation*}
+#+end_src
+** Rigid Body Transformations
+*** Homogeneous Transformation Matrices :B_block:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+#+begin_src latex
+\begin{equation*}
+  \begin{aligned}
+  \vec{v'} &=
+  \begin{pmatrix}
+    & \mathbf{R}_{3 \times 3} & & \vec{t}_{3 \times 1} \\
+    0 & 0 & 0 & 1
+  \end{pmatrix}\tilde{\vec{v}} \\
+    &= T^{A}_{B} \tilde{\vec{v}}
+  \end{aligned}
+\end{equation*}
+#+end_src
+Now we have a notation that allows us to describe arbitrary movement between reference frames.
 ** Projective Geometry
-** Camera Intrinsics
-** Model-Image Registration
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+begin_src latex
+\begin{equation*}
+  \begin{pmatrix}
+    x_{s} \\ y_{s} \\ z_{s} \\ 1
+  \end{pmatrix}_{i} = T^{cam}_{scene} \mathbf{\tilde{p}^{obj}_{i}}
+\end{equation*}
+#+end_src
+#+begin_src latex
+\begin{equation*}
+  \begin{pmatrix}
+    \tilde{x}_{img} \\ \tilde{y}_{img} \\ \tilde{z} \\ 1
+  \end{pmatrix} =
+  \begin{pmatrix}
+    f& 0 & 0 \\ 0 & f & 0 \\ 0 & 0 & 1
+  \end{pmatrix} \vec{x}_{s}
+\end{equation*}
 
+Where
+\begin{equation*}
+  \begin{aligned}
+    x_{img} &= \frac{\tilde{x_{img}}}{\tilde{z}} = \frac{f}{z_{s}}x_{s} \\
+    y_{img} &= \frac{\tilde{y_{img}}}{\tilde{z}} = \frac{f}{z_{s}}y_{s}
+  \end{aligned}
+\end{equation*}
+
+{\tiny Note: We are still in the camera's reference frame}
+#+end_src
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+[[file:~/repo/lit-review/figures/raster/perspective-projection.png]]
+** Pixel Coordinates
+Convert camera coordinates into image coordinates.
+#+begin_src latex
+\begin{equation*}
+  \begin{aligned}
+    p_{x} = k_{x}x_{img} + c_{x} \\
+    p_{y} = k_{y}y_{img} + c_{y}
+  \end{aligned}
+\end{equation*}
+Where
+\begin{equation*}
+  \begin{aligned}
+    k &\equiv \text{ Pixel Spacing }\\
+    c &\equiv \text{ Image Focal Point }
+  \end{aligned}
+\end{equation*}
+#+end_src
+** Model-Image Registration
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+If we know the projective parameters of the fluoroscopy machine, can we tinker with $T^{cam}_{implant}$ so that our virtual projection matches the fluoroscopic image?
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width 2.5in
+#+CAPTION:From [cite:@mahfouzRobustMethodRegistration2003]
+file:~/repo/lit-review/figures/raster/mahfouz-perspective-projection.png
 * Historical Methods
 ** Overview
 Many different approaches have attempted to solve the model-image registration problem.
@@ -115,7 +305,7 @@ Many different approaches have attempted to solve the model-image registration p
 :PROPERTIES:
 :BEAMER_col: 0.6
 :END:
-#+ATTR_LaTeX: :width 2in
+#+ATTR_LaTeX: :width 2.5in
 [[file:~/repo/lit-review/figures/raster/gao-skin-mocap.png]]
 [[file:~/repo/lit-review/figures/raster/lafortune-bone-mocap.png]]
 ** Limitations of Motion Capture
@@ -179,7 +369,9 @@ Bone Pins
 :PROPERTIES:
 :BEAMER_col: 0.6
 :END:
-
++ Involves additional surgical procedures for inserting tantalum beads
++ Human supervision
++ Typically requires bi-plane imaging.
 * Aims
 ** Aims
 *** Aims 1/2 :B_block:BMCOL:
