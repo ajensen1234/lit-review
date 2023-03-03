@@ -37,7 +37,6 @@ I would like to thank the McJunkin Family Charitable Foundation for their genero
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-+ Joints manifest pain during dynamic activity.
 + 20% of patients receiving TKA are dissatisfied.
   + Instability, pain, unnatural [cite:@bakerRolePainFunction2007; @bournePatientSatisfactionTotal2010; @scottPredictingDissatisfactionFollowing2010].
 + No reliable method of clinically assessing and quantifying joint dynamics.
@@ -75,53 +74,6 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 #+ATTR_LaTeX: :width \textwidth
 [[file:~/repo/lit-review/figures/raster/c-arm-fluoro-machine.jpg]]
 * Background
-** Rigid Body Transformations
-:PROPERTIES:
-:END:
-*** Homogeneous Transformation Matrix :B_block:BMCOL:
-:PROPERTIES:
-:BEAMER_OPT: t
-:BEAMER_col: 0.5
-:BEAMER_env: block
-:END:
-#+begin_src latex
-\begin{equation*}
-  T^{A}_{B} =
-  \begin{pmatrix}
-    & R^{A}_{B} & & P^{A}_{B,origin} \\
-    0 & 0 & 0 & 1
-  \end{pmatrix}
-\end{equation*}
-#+end_src
-*** Rotation Matrices :B_block:BMCOL:
-:PROPERTIES:
-:BEAMER_col: 0.5
-:BEAMER_env: block
-:END:
-#+begin_src latex
-\begin{equation*}
-  \begin{aligned}
-    R_{x} & =
-            \begin{pmatrix}
-              1 & 0 & 0 \\
-              0 & c_{x} & -s_{x}\\
-              0 & s_{x} & c_{x}
-            \end{pmatrix} \\
-    R_{y} &=
-            \begin{pmatrix}
-              s_{y} & 0 & c_{y}\\
-              0 & 1 & 0 \\
-              c_{y} & 0 & -s_{y}
-            \end{pmatrix} \\
-    R_{z} &=
-            \begin{pmatrix}
-              c_{z} & -s_{z} & 0 \\
-              s_{z} & c_{z} & 0 \\
-              0 & 0 & 1
-            \end{pmatrix}
-  \end{aligned}
-\end{equation*}
-#+end_src
 ** Rigid Body Transformations
 *** Translation :B_block:
 :PROPERTIES:
@@ -189,7 +141,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 #+begin_src latex
 \begin{equation*}
   \begin{aligned}
-  \vec{v'} &=
+  \tilde{\vec{v'}} &=
   \begin{pmatrix}
     & \mathbf{R}_{3 \times 3} & & \vec{t}_{3 \times 1} \\
     0 & 0 & 0 & 1
@@ -214,7 +166,7 @@ Now we have a notation that allows us to describe arbitrary movement between ref
 #+begin_src latex
 \begin{equation*}
   \begin{pmatrix}
-    \tilde{x}_{img} \\ \tilde{y}_{img} \\ \tilde{z} \\ 1
+    \tilde{x}_{img} \\ \tilde{y}_{img} \\ \tilde{z}
   \end{pmatrix} =
   \begin{pmatrix}
     f& 0 & 0 \\ 0 & f & 0 \\ 0 & 0 & 1
@@ -273,6 +225,7 @@ Many different approaches have attempted to solve the model-image registration p
 + Skin-mounted motion Capture
 + Biplane Imaging
 + Iterative Projections
++ Model-based Roentgen Stereophotogrammetry
 ** Pre-Computed Projections
 *** :BMCOL:
 :PROPERTIES:
@@ -285,8 +238,12 @@ Many different approaches have attempted to solve the model-image registration p
 :PROPERTIES:
 :BEAMER_col: 0.6
 :END:
-#+ATTR_LaTeX: :width 2in
+#+ATTR_LaTeX: :width 1.75in
+#+CAPTION: From [cite:@lavalleeRecoveringPositionOrientation1995]
 [[file:~/repo/lit-review/figures/raster/lavallee-distance-maps.png]]
+\vspace{-0.25in}
+#+ATTR_LaTeX: :width 1.75in
+#+CAPTION: From [cite:@banksAccurateMeasurementThreedimensional1996]
 [[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
 ** Limitations of Pre-Computed Projections
 + Requires an accurate contour from the input image in order to perform calculations.
@@ -306,7 +263,11 @@ Many different approaches have attempted to solve the model-image registration p
 :BEAMER_col: 0.6
 :END:
 #+ATTR_LaTeX: :width 2.5in
+#+CAPTION: From [cite:@gaoInvestigationSoftTissue2008]
 [[file:~/repo/lit-review/figures/raster/gao-skin-mocap.png]]
+\vspace{-0.25in}
+#+ATTR_LaTeX: :width 2.5in
+#+CAPTION: From [cite:@lafortuneThreedimensionalKinematicsHuman1992]
 [[file:~/repo/lit-review/figures/raster/lafortune-bone-mocap.png]]
 ** Limitations of Motion Capture
 Skin Mounted
@@ -327,8 +288,12 @@ Bone Pins
 :PROPERTIES:
 :BEAMER_col: 0.6
 :END:
-#+ATTR_LaTeX: :width 2in
+#+ATTR_LaTeX: :width 1.75in
+#+CAPTION: Both from [cite:@ivesterReconfigurableHighSpeedStereoRadiography2015]
 [[file:~/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png]]
+\vspace{-0.25in}
+#+ATTR_LaTeX: :width 1.75in
+#+CAPTION:
 [[file:~/repo/lit-review/figures/raster/ivester-stereo-projection.png]]
 ** Limitations of Biplane Imaging
 + Not many hospitals have biplane fluoroscopy setups.
@@ -337,17 +302,20 @@ Bone Pins
 ** Iterative Projections
 *** :BMCOL:
 :PROPERTIES:
-:BEAMER_col: 0.5
+:BEAMER_col: 0.54
 :END:
 + Take advantage of modern computational graphics pipelines to quickly perform projection matching.
-+ Image/Intensity similarity metrics [cite:@mahfouzRobustMethodRegistration2003]
-+ Feature/Contour similarity metrics
+  + Image/Intensity similarity metrics [cite:@mahfouzRobustMethodRegistration2003]
+  + Feature/Contour similarity metrics [cite:@floodAutomatedRegistration3D2018]
 *** :BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.6
 :END:
 #+ATTR_LaTeX: :width 2in
+#+CAPTION: From [cite:@mahfouzRobustMethodRegistration2003]
 [[file:~/repo/lit-review/figures/raster/mahfouz-perspective-projection.png]]
+#+ATTR_LaTeX: :width 2in
+#+CAPTION: From [cite:@floodAutomatedRegistration3D2018]
 [[file:~/repo/lit-review/figures/raster/flood-dilated-contour.png]]
 ** Limitations of (historic) Iterative Projection Methods
 + Requires human supervision for:
@@ -361,7 +329,7 @@ Bone Pins
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-+ Uses implanted tantalum beads for motion tracking [cite:@selvikRoentgenStereophotogrammetryMethod1989]
++ Uses implanted tantalum beads for motion tracking [cite:@vroomanFastAccurateAutomated1998; @selvikRoentgenStereophotogrammetryMethod1989]
 + Extremely accurate [cite:@kapteinEvaluationThreePose2004; @saariKneeKinematicsMedial2005]
 + Gold standard Measurement [cite:@brobergValidationMachineLearning2023]
 
@@ -369,9 +337,14 @@ Bone Pins
 :PROPERTIES:
 :BEAMER_col: 0.6
 :END:
+#+ATTR_latex: :width 3in
+#+CAPTION: From [cite:@vroomanFastAccurateAutomated1998]
+[[file:~/repo/lit-review/figures/raster/vrooman-mbrsa.png]]
+** Limitations of MBRSA
 + Involves additional surgical procedures for inserting tantalum beads
 + Human supervision
 + Typically requires bi-plane imaging.
+
 * Aims
 ** Aims
 *** Aims 1/2 :B_block:BMCOL:

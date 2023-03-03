@@ -1,4 +1,4 @@
-% Created 2023-03-03 Fri 10:52
+% Created 2023-03-03 Fri 11:42
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation, aspectratio=1610]{beamer}
 \usepackage[utf8]{inputenc}
@@ -42,17 +42,16 @@
 
 
 \section{Introduction}
-\label{sec:orgad8dd19}
-\begin{frame}[label={sec:org3d181bb}]{Acknowledgments}
+\label{sec:org1bd7392}
+\begin{frame}[label={sec:org78e8f9d}]{Acknowledgments}
 I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
 \end{frame}
 \section{Motivation}
-\label{sec:org6fad4ec}
-\begin{frame}[label={sec:org58b7f2d}]{The Problem}
+\label{sec:org6c1ea48}
+\begin{frame}[label={sec:org52d5eda}]{The Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
-\item Joints manifest pain during dynamic activity.
 \item 20\% of patients receiving TKA are dissatisfied.
 \begin{itemize}
 \item Instability, pain, unnatural \autocites{bakerRolePainFunction2007}[][]{bournePatientSatisfactionTotal2010}[][]{scottPredictingDissatisfactionFollowing2010}.
@@ -70,7 +69,7 @@ I would like to thank the McJunkin Family Charitable Foundation for their genero
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org3ee0815}]{Our Proposition}
+\begin{frame}[label={sec:org189a99c}]{Our Proposition}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 Orthopaedic surgeons and clinicians would readily adopt a practical and inexpensive technology that allows them to measure a patient's knee kinematics during activities of daily living.
@@ -82,7 +81,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org732e499}]{Constraints}
+\begin{frame}[label={sec:orgfa2baab}]{Constraints}
 \begin{columns}
 \begin{column}{0.45\columnwidth}
 \begin{itemize}
@@ -99,51 +98,8 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{columns}
 \end{frame}
 \section{Background}
-\label{sec:orge74c3f5}
-\begin{frame}[label={sec:org8656fa8}]{Rigid Body Transformations}
-\begin{columns}
-\begin{column}{0.5\columnwidth}
-\begin{block}{Homogeneous Transformation Matrix}
-\begin{equation*}
-  T^{A}_{B} =
-  \begin{pmatrix}
-    & R^{A}_{B} & & P^{A}_{B,origin} \\
-    0 & 0 & 0 & 1
-  \end{pmatrix}
-\end{equation*}
-\end{block}
-\end{column}
-
-\begin{column}{0.5\columnwidth}
-\begin{block}{Rotation Matrices}
-\begin{equation*}
-  \begin{aligned}
-    R_{x} & =
-            \begin{pmatrix}
-              1 & 0 & 0 \\
-              0 & c_{x} & -s_{x}\\
-              0 & s_{x} & c_{x}
-            \end{pmatrix} \\
-    R_{y} &=
-            \begin{pmatrix}
-              s_{y} & 0 & c_{y}\\
-              0 & 1 & 0 \\
-              c_{y} & 0 & -s_{y}
-            \end{pmatrix} \\
-    R_{z} &=
-            \begin{pmatrix}
-              c_{z} & -s_{z} & 0 \\
-              s_{z} & c_{z} & 0 \\
-              0 & 0 & 1
-            \end{pmatrix}
-  \end{aligned}
-\end{equation*}
-\end{block}
-\end{column}
-\end{columns}
-\end{frame}
-
-\begin{frame}[label={sec:org7830973}]{Rigid Body Transformations}
+\label{sec:org77da22b}
+\begin{frame}[label={sec:org226dd98}]{Rigid Body Transformations}
 \begin{block}{Translation}
 \begin{equation*}
   \begin{aligned}
@@ -171,7 +127,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:orged832ca}]{Rigid Body Transformations}
+\begin{frame}[label={sec:org8cb6512}]{Rigid Body Transformations}
 \begin{block}{Rotations}
 \begin{equation*}
   \begin{aligned}
@@ -198,11 +154,11 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:org75ef243}]{Rigid Body Transformations}
+\begin{frame}[label={sec:org872198f}]{Rigid Body Transformations}
 \begin{block}{Homogeneous Transformation Matrices}
 \begin{equation*}
   \begin{aligned}
-  \vec{v'} &=
+  \tilde{\vec{v'}} &=
   \begin{pmatrix}
     & \mathbf{R}_{3 \times 3} & & \vec{t}_{3 \times 1} \\
     0 & 0 & 0 & 1
@@ -214,7 +170,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 Now we have a notation that allows us to describe arbitrary movement between reference frames.
 \end{block}
 \end{frame}
-\begin{frame}[label={sec:org25e0856}]{Projective Geometry}
+\begin{frame}[label={sec:orgb497994}]{Projective Geometry}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{equation*}
@@ -225,7 +181,7 @@ Now we have a notation that allows us to describe arbitrary movement between ref
 
 \begin{equation*}
   \begin{pmatrix}
-    \tilde{x}_{img} \\ \tilde{y}_{img} \\ \tilde{z} \\ 1
+    \tilde{x}_{img} \\ \tilde{y}_{img} \\ \tilde{z}
   \end{pmatrix} =
   \begin{pmatrix}
     f& 0 & 0 \\ 0 & f & 0 \\ 0 & 0 & 1
@@ -250,7 +206,7 @@ Where
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org8b5587b}]{Pixel Coordinates}
+\begin{frame}[label={sec:orga2deea1}]{Pixel Coordinates}
 Convert camera coordinates into image coordinates.
 \begin{equation*}
   \begin{aligned}
@@ -267,7 +223,7 @@ Where
 \end{equation*}
 \end{frame}
 
-\begin{frame}[label={sec:orgca80541}]{Model-Image Registration}
+\begin{frame}[label={sec:org9e970d2}]{Model-Image Registration}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 If we know the projective parameters of the fluoroscopy machine, can we tinker with \(T^{cam}_{implant}\) so that our virtual projection matches the fluoroscopic image?
@@ -282,17 +238,18 @@ If we know the projective parameters of the fluoroscopy machine, can we tinker w
 \end{columns}
 \end{frame}
 \section{Historical Methods}
-\label{sec:orgd62f57d}
-\begin{frame}[label={sec:org4ce88e2}]{Overview}
+\label{sec:org5324994}
+\begin{frame}[label={sec:org1507682}]{Overview}
 Many different approaches have attempted to solve the model-image registration problem.
 \begin{itemize}
 \item Pre-computed projections
 \item Skin-mounted motion Capture
 \item Biplane Imaging
 \item Iterative Projections
+\item Model-based Roentgen Stereophotogrammetry
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org35e2043}]{Pre-Computed Projections}
+\begin{frame}[label={sec:orgf2bc7aa}]{Pre-Computed Projections}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -302,16 +259,21 @@ Many different approaches have attempted to solve the model-image registration p
 \end{itemize}
 \end{column}
 \begin{column}{0.6\columnwidth}
-\begin{center}
-\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/lavallee-distance-maps.png}
-\end{center}
-\begin{center}
-\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/banks-nfd-library.png}
-\end{center}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/andrew/repo/lit-review/figures/raster/lavallee-distance-maps.png}
+\caption{From \autocite{lavalleeRecoveringPositionOrientation1995}}
+\end{figure}
+\vspace{-0.25in}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/andrew/repo/lit-review/figures/raster/banks-nfd-library.png}
+\caption{From \autocite{banksAccurateMeasurementThreedimensional1996}}
+\end{figure}
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgb0ab5db}]{Limitations of Pre-Computed Projections}
+\begin{frame}[label={sec:orgc48ae4a}]{Limitations of Pre-Computed Projections}
 \begin{itemize}
 \item Requires an accurate contour from the input image in order to perform calculations.
 \begin{itemize}
@@ -320,7 +282,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgc3e428a}]{Motion Capture (MoCap)}
+\begin{frame}[label={sec:org2569383}]{Motion Capture (MoCap)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -331,16 +293,21 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 
 \begin{column}{0.6\columnwidth}
-\begin{center}
+\begin{figure}[htbp]
+\centering
 \includegraphics[width=2.5in]{/home/andrew/repo/lit-review/figures/raster/gao-skin-mocap.png}
-\end{center}
-\begin{center}
+\caption{From \autocite{gaoInvestigationSoftTissue2008}}
+\end{figure}
+\vspace{-0.25in}
+\begin{figure}[htbp]
+\centering
 \includegraphics[width=2.5in]{/home/andrew/repo/lit-review/figures/raster/lafortune-bone-mocap.png}
-\end{center}
+\caption{From \autocite{lafortuneThreedimensionalKinematicsHuman1992}}
+\end{figure}
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgb4727d3}]{Limitations of Motion Capture}
+\begin{frame}[label={sec:org731eff2}]{Limitations of Motion Capture}
 Skin Mounted
 \begin{itemize}
 \item Doesn't accurately describe underlying skeletal motion with clinical accuracy \autocites{gaoInvestigationSoftTissue2008}[][]{kuoInfluenceSoftTissue2011}[][]{linEffectsSoftTissue2016}.
@@ -351,7 +318,7 @@ Bone Pins
 \item Need I say more?
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orge4db004}]{Biplane Imaging}
+\begin{frame}[label={sec:orgc503a29}]{Biplane Imaging}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -363,42 +330,52 @@ Bone Pins
 \end{itemize}
 \end{column}
 \begin{column}{0.6\columnwidth}
-\begin{center}
-\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png}
-\end{center}
-\begin{center}
-\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/ivester-stereo-projection.png}
-\end{center}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/andrew/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png}
+\caption{Both from \autocite{ivesterReconfigurableHighSpeedStereoRadiography2015}}
+\end{figure}
+\vspace{-0.25in}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/andrew/repo/lit-review/figures/raster/ivester-stereo-projection.png}
+\end{figure}
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org50becc6}]{Limitations of Biplane Imaging}
+\begin{frame}[label={sec:org7ca7de1}]{Limitations of Biplane Imaging}
 \begin{itemize}
 \item Not many hospitals have biplane fluoroscopy setups.
 \item Clinically impractical
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org6aa1fa5}]{Iterative Projections}
+\begin{frame}[label={sec:orge45aed2}]{Iterative Projections}
 \begin{columns}
-\begin{column}{0.5\columnwidth}
+\begin{column}{0.54\columnwidth}
 \begin{itemize}
 \item Take advantage of modern computational graphics pipelines to quickly perform projection matching.
+\begin{itemize}
 \item Image/Intensity similarity metrics \autocite{mahfouzRobustMethodRegistration2003}
-\item Feature/Contour similarity metrics
+\item Feature/Contour similarity metrics \autocite{floodAutomatedRegistration3D2018}
+\end{itemize}
 \end{itemize}
 \end{column}
 \begin{column}{0.6\columnwidth}
-\begin{center}
+\begin{figure}[htbp]
+\centering
 \includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/mahfouz-perspective-projection.png}
-\end{center}
-\begin{center}
+\caption{From \autocite{mahfouzRobustMethodRegistration2003}}
+\end{figure}
+\begin{figure}[htbp]
+\centering
 \includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/flood-dilated-contour.png}
-\end{center}
+\caption{From \autocite{floodAutomatedRegistration3D2018}}
+\end{figure}
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org0f0d707}]{Limitations of (historic) Iterative Projection Methods}
+\begin{frame}[label={sec:org0a791be}]{Limitations of (historic) Iterative Projection Methods}
 \begin{itemize}
 \item Requires human supervision for:
 \begin{itemize}
@@ -410,28 +387,36 @@ Bone Pins
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org4cd9792}]{Model-based Roentgen Stereophotogrammetry (MBRSA)}
+\begin{frame}[label={sec:orgf672b86}]{Model-based Roentgen Stereophotogrammetry (MBRSA)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
-\item Uses implanted tantalum beads for motion tracking \autocite{selvikRoentgenStereophotogrammetryMethod1989}
+\item Uses implanted tantalum beads for motion tracking \autocites{vroomanFastAccurateAutomated1998}[][]{selvikRoentgenStereophotogrammetryMethod1989}
 \item Extremely accurate \autocites{kapteinEvaluationThreePose2004}[][]{saariKneeKinematicsMedial2005}
 \item Gold standard Measurement \autocite{brobergValidationMachineLearning2023}
 \end{itemize}
 \end{column}
 
 \begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=3in]{/home/andrew/repo/lit-review/figures/raster/vrooman-mbrsa.png}
+\caption{From \autocite{vroomanFastAccurateAutomated1998}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:orga93480c}]{Limitations of MBRSA}
 \begin{itemize}
 \item Involves additional surgical procedures for inserting tantalum beads
 \item Human supervision
 \item Typically requires bi-plane imaging.
 \end{itemize}
-\end{column}
-\end{columns}
 \end{frame}
+
 \section{Aims}
-\label{sec:org8238d3d}
-\begin{frame}[label={sec:orgd8e89f3}]{Aims}
+\label{sec:org713c743}
+\begin{frame}[label={sec:org5c37035}]{Aims}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \begin{block}{Aims 1/2}
@@ -452,8 +437,8 @@ Joint Track Auto Toolkit
 \end{frame}
 
 \section{References}
-\label{sec:orgc387d15}
-\begin{frame}[label={sec:org8dbb5bc},fragile, allowframebreaks, label=]{References}
+\label{sec:org00ca545}
+\begin{frame}[label={sec:org817d7f7},fragile, allowframebreaks, label=]{References}
 \AtNextBibliography{\tiny}
 \printbibliography
 \end{frame}
