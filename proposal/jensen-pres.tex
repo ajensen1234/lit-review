@@ -1,4 +1,4 @@
-% Created 2023-03-02 Thu 13:52
+% Created 2023-03-03 Fri 10:16
 % Intended LaTeX compiler: pdflatex
 \documentclass[aspectratio=1610]{beamer}
 \usepackage[utf8]{inputenc}
@@ -34,6 +34,7 @@
 \addbibresource{/home/andrew/repo/lit-review/src/myBib.bib}
 \addbibresource{~/org/biblio.bib}
 \begin{document}
+\renewcommand*{\bibfont}{\fontsize{10}{18}\selectfont}
 
 \maketitle
 \begin{frame}{Outline}
@@ -42,13 +43,13 @@
 
 
 \section{Introduction}
-\label{sec:org67b971e}
-\begin{frame}[label={sec:org1dd3e2b}]{Acknowledgments}
+\label{sec:org8a3aa1b}
+\begin{frame}[label={sec:org165699c}]{Acknowledgments}
 I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
 \end{frame}
 \section{Motivation}
-\label{sec:org94c169f}
-\begin{frame}[label={sec:orga7d9dd4}]{The Problem}
+\label{sec:org229fbd8}
+\begin{frame}[label={sec:org316163a}]{The Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -70,7 +71,7 @@ I would like to thank the McJunkin Family Charitable Foundation for their genero
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org1b6f1a3}]{Our Proposition}
+\begin{frame}[label={sec:orgabccdce}]{Our Proposition}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 Orthopaedic surgeons and clinicians would readily adopt a practical and inexpensive technology that allows them to measure a patient's knee kinematics during activities of daily living.
@@ -82,7 +83,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org25f1ab3}]{Constraints}
+\begin{frame}[label={sec:orgfdf0b80}]{Constraints}
 \begin{columns}
 \begin{column}{0.45\columnwidth}
 \begin{itemize}
@@ -99,8 +100,8 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{columns}
 \end{frame}
 \section{Background}
-\label{sec:orgad67985}
-\begin{frame}[label={sec:orgbb766fd}]{Rigid Body Transformations}
+\label{sec:org02005f8}
+\begin{frame}[label={sec:org9e9d4e5}]{Rigid Body Transformations}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{block}{Homogeneous Transformation Matrix}
@@ -143,7 +144,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org0f100e3}]{Rigid Body Transformations}
+\begin{frame}[label={sec:org764829d}]{Rigid Body Transformations}
 \begin{block}{Translation}
 \begin{equation*}
   \begin{aligned}
@@ -171,7 +172,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:org3796a38}]{Rigid Body Transformations}
+\begin{frame}[label={sec:org0a15b06}]{Rigid Body Transformations}
 \begin{block}{Rotations}
 \begin{equation*}
   \begin{aligned}
@@ -198,7 +199,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:org3238a6c}]{Rigid Body Transformations}
+\begin{frame}[label={sec:orga750239}]{Rigid Body Transformations}
 \begin{block}{Homogeneous Transformation Matrices}
 \begin{equation*}
   \begin{aligned}
@@ -214,7 +215,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 Now we have a notation that allows us to describe arbitrary movement between reference frames.
 \end{block}
 \end{frame}
-\begin{frame}[label={sec:org540695f}]{Projective Geometry}
+\begin{frame}[label={sec:org71b616c}]{Projective Geometry}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{equation*}
@@ -250,7 +251,7 @@ Where
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgd3693ce}]{Pixel Coordinates}
+\begin{frame}[label={sec:org8cd8fcf}]{Pixel Coordinates}
 Convert camera coordinates into image coordinates.
 \begin{equation*}
   \begin{aligned}
@@ -267,7 +268,7 @@ Where
 \end{equation*}
 \end{frame}
 
-\begin{frame}[label={sec:orgfd7ee34}]{Model-Image Registration}
+\begin{frame}[label={sec:orge2ac747}]{Model-Image Registration}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 If we know the projective parameters of the fluoroscopy machine, can we tinker with \(T^{cam}_{implant}\) so that our virtual projection matches the fluoroscopic image?
@@ -282,8 +283,8 @@ If we know the projective parameters of the fluoroscopy machine, can we tinker w
 \end{columns}
 \end{frame}
 \section{Historical Methods}
-\label{sec:org5da5081}
-\begin{frame}[label={sec:org2624207}]{Overview}
+\label{sec:org432d05b}
+\begin{frame}[label={sec:orgcf46558}]{Overview}
 Many different approaches have attempted to solve the model-image registration problem.
 \begin{itemize}
 \item Pre-computed projections
@@ -292,7 +293,7 @@ Many different approaches have attempted to solve the model-image registration p
 \item Iterative Projections
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org9e7955a}]{Pre-Computed Projections}
+\begin{frame}[label={sec:org42ef2c5}]{Pre-Computed Projections}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -311,7 +312,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgaeaba1d}]{Limitations of Pre-Computed Projections}
+\begin{frame}[label={sec:org0f07c93}]{Limitations of Pre-Computed Projections}
 \begin{itemize}
 \item Requires an accurate contour from the input image in order to perform calculations.
 \begin{itemize}
@@ -320,7 +321,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org5b44d59}]{Motion Capture (MoCap)}
+\begin{frame}[label={sec:org9e472d2}]{Motion Capture (MoCap)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -340,7 +341,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orge923dea}]{Limitations of Motion Capture}
+\begin{frame}[label={sec:orgf36eb73}]{Limitations of Motion Capture}
 Skin Mounted
 \begin{itemize}
 \item Doesn't accurately describe underlying skeletal motion with clinical accuracy \autocites{gaoInvestigationSoftTissue2008}[][]{kuoInfluenceSoftTissue2011}[][]{linEffectsSoftTissue2016}.
@@ -351,7 +352,7 @@ Bone Pins
 \item Need I say more?
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org229b898}]{Biplane Imaging}
+\begin{frame}[label={sec:org67a34ce}]{Biplane Imaging}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -372,14 +373,14 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org04c4481}]{Limitations of Biplane Imaging}
+\begin{frame}[label={sec:orgd16f2e7}]{Limitations of Biplane Imaging}
 \begin{itemize}
 \item Not many hospitals have biplane fluoroscopy setups.
 \item Clinically impractical
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgbb46f10}]{Iterative Projections}
+\begin{frame}[label={sec:org9d8f915}]{Iterative Projections}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -398,7 +399,7 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org04d16d4}]{Limitations of (historic) Iterative Projection Methods}
+\begin{frame}[label={sec:org4ad49cc}]{Limitations of (historic) Iterative Projection Methods}
 \begin{itemize}
 \item Requires human supervision for:
 \begin{itemize}
@@ -410,7 +411,7 @@ Bone Pins
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org1844ed1}]{Model-based Roentgen Stereophotogrammetry (MBRSA)}
+\begin{frame}[label={sec:org43291dc}]{Model-based Roentgen Stereophotogrammetry (MBRSA)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -430,8 +431,8 @@ Bone Pins
 \end{columns}
 \end{frame}
 \section{Aims}
-\label{sec:org704b485}
-\begin{frame}[label={sec:org3326c57}]{Aims}
+\label{sec:org6fbc877}
+\begin{frame}[label={sec:org89f8250}]{Aims}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \begin{block}{Aims 1/2}
@@ -452,8 +453,8 @@ Joint Track Auto Toolkit
 \end{frame}
 
 \section{References}
-\label{sec:orgcedc339}
-\begin{frame}[label={sec:org1d57650},fragile, allowframebreaks, label=]{References}
+\label{sec:org560e5ff}
+\begin{frame}[label={sec:orgbaeca24},fragile, allowframebreaks, label=]{References}
 \AtNextBibliography{\tiny}
 \printbibliography
 \end{frame}

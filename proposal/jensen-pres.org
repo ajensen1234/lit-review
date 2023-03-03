@@ -23,6 +23,7 @@
 #+latex_header: \usetheme[progressbar=foot]{metropolis}
 #+latex_header_extra: \usepackage{caption}
 #+latex_header_extra: \captionsetup[figure]{labelformat=empty}
+#+latex_header_extra:\renewcommand*{\bibfont}{\fontsize{15}{18}\selectfont}
 #+beamer_color_theme:
 #+beamer_font_theme:
 #+beamer_inner_theme:
