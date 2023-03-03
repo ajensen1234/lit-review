@@ -21,11 +21,8 @@
 #+columns: %45ITEM %10 BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
 #+beamer_theme: metropolis
 #+latex_header: \usetheme[progressbar=foot]{metropolis}
-<<<<<<< HEAD
-=======
 #+latex_header_extra: \usepackage{caption}
 #+latex_header_extra: \captionsetup[figure]{labelformat=empty}
->>>>>>> parent of ff89ca4 (Broken references. Need to fix)
 #+beamer_color_theme:
 #+beamer_font_theme:
 #+beamer_inner_theme:
