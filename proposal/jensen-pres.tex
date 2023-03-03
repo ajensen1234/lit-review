@@ -1,4 +1,4 @@
-% Created 2023-03-03 Fri 11:42
+% Created 2023-03-03 Fri 15:44
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation, aspectratio=1610]{beamer}
 \usepackage[utf8]{inputenc}
@@ -42,13 +42,13 @@
 
 
 \section{Introduction}
-\label{sec:org1bd7392}
-\begin{frame}[label={sec:org78e8f9d}]{Acknowledgments}
+\label{sec:orgb2902ec}
+\begin{frame}[label={sec:orgafd70f2}]{Acknowledgments}
 I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
 \end{frame}
 \section{Motivation}
-\label{sec:org6c1ea48}
-\begin{frame}[label={sec:org52d5eda}]{The Problem}
+\label{sec:org001d7c7}
+\begin{frame}[label={sec:org955693d}]{The Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -69,7 +69,7 @@ I would like to thank the McJunkin Family Charitable Foundation for their genero
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org189a99c}]{Our Proposition}
+\begin{frame}[label={sec:orgdb30d3b}]{Our Proposition}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 Orthopaedic surgeons and clinicians would readily adopt a practical and inexpensive technology that allows them to measure a patient's knee kinematics during activities of daily living.
@@ -81,7 +81,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgfa2baab}]{Constraints}
+\begin{frame}[label={sec:org716c681}]{Constraints}
 \begin{columns}
 \begin{column}{0.45\columnwidth}
 \begin{itemize}
@@ -98,8 +98,8 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{columns}
 \end{frame}
 \section{Background}
-\label{sec:org77da22b}
-\begin{frame}[label={sec:org226dd98}]{Rigid Body Transformations}
+\label{sec:org9e35d80}
+\begin{frame}[label={sec:orgecc7171}]{Rigid Body Transformations}
 \begin{block}{Translation}
 \begin{equation*}
   \begin{aligned}
@@ -127,7 +127,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:org8cb6512}]{Rigid Body Transformations}
+\begin{frame}[label={sec:orgdebe1b0}]{Rigid Body Transformations}
 \begin{block}{Rotations}
 \begin{equation*}
   \begin{aligned}
@@ -154,7 +154,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:org872198f}]{Rigid Body Transformations}
+\begin{frame}[label={sec:org32bb84e}]{Rigid Body Transformations}
 \begin{block}{Homogeneous Transformation Matrices}
 \begin{equation*}
   \begin{aligned}
@@ -170,7 +170,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 Now we have a notation that allows us to describe arbitrary movement between reference frames.
 \end{block}
 \end{frame}
-\begin{frame}[label={sec:orgb497994}]{Projective Geometry}
+\begin{frame}[label={sec:org1eab471}]{Projective Geometry}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{equation*}
@@ -206,7 +206,7 @@ Where
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orga2deea1}]{Pixel Coordinates}
+\begin{frame}[label={sec:orgaeb4544}]{Pixel Coordinates}
 Convert camera coordinates into image coordinates.
 \begin{equation*}
   \begin{aligned}
@@ -223,7 +223,7 @@ Where
 \end{equation*}
 \end{frame}
 
-\begin{frame}[label={sec:org9e970d2}]{Model-Image Registration}
+\begin{frame}[label={sec:orgbf5c759}]{Model-Image Registration}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 If we know the projective parameters of the fluoroscopy machine, can we tinker with \(T^{cam}_{implant}\) so that our virtual projection matches the fluoroscopic image?
@@ -238,8 +238,8 @@ If we know the projective parameters of the fluoroscopy machine, can we tinker w
 \end{columns}
 \end{frame}
 \section{Historical Methods}
-\label{sec:org5324994}
-\begin{frame}[label={sec:org1507682}]{Overview}
+\label{sec:orge6e841b}
+\begin{frame}[label={sec:org7427e88}]{Overview}
 Many different approaches have attempted to solve the model-image registration problem.
 \begin{itemize}
 \item Pre-computed projections
@@ -249,7 +249,7 @@ Many different approaches have attempted to solve the model-image registration p
 \item Model-based Roentgen Stereophotogrammetry
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgf2bc7aa}]{Pre-Computed Projections}
+\begin{frame}[label={sec:orgfedbfbf}]{Pre-Computed Projections}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -273,7 +273,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgc48ae4a}]{Limitations of Pre-Computed Projections}
+\begin{frame}[label={sec:org5d209cb}]{Limitations of Pre-Computed Projections}
 \begin{itemize}
 \item Requires an accurate contour from the input image in order to perform calculations.
 \begin{itemize}
@@ -282,7 +282,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org2569383}]{Motion Capture (MoCap)}
+\begin{frame}[label={sec:org39df3e1}]{Motion Capture (MoCap)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -307,7 +307,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org731eff2}]{Limitations of Motion Capture}
+\begin{frame}[label={sec:org1db63e1}]{Limitations of Motion Capture}
 Skin Mounted
 \begin{itemize}
 \item Doesn't accurately describe underlying skeletal motion with clinical accuracy \autocites{gaoInvestigationSoftTissue2008}[][]{kuoInfluenceSoftTissue2011}[][]{linEffectsSoftTissue2016}.
@@ -318,7 +318,7 @@ Bone Pins
 \item Need I say more?
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgc503a29}]{Biplane Imaging}
+\begin{frame}[label={sec:org16c5e1a}]{Biplane Imaging}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -343,14 +343,14 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org7ca7de1}]{Limitations of Biplane Imaging}
+\begin{frame}[label={sec:orgc2e4696}]{Limitations of Biplane Imaging}
 \begin{itemize}
 \item Not many hospitals have biplane fluoroscopy setups.
 \item Clinically impractical
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orge45aed2}]{Iterative Projections}
+\begin{frame}[label={sec:org9ef8460}]{Iterative Projections}
 \begin{columns}
 \begin{column}{0.54\columnwidth}
 \begin{itemize}
@@ -375,7 +375,7 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org0a791be}]{Limitations of (historic) Iterative Projection Methods}
+\begin{frame}[label={sec:org27f211b}]{Limitations of (historic) Iterative Projection Methods}
 \begin{itemize}
 \item Requires human supervision for:
 \begin{itemize}
@@ -387,7 +387,7 @@ Bone Pins
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgf672b86}]{Model-based Roentgen Stereophotogrammetry (MBRSA)}
+\begin{frame}[label={sec:orgbe42b15}]{Model-based Roentgen Stereophotogrammetry (MBRSA)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -406,7 +406,7 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orga93480c}]{Limitations of MBRSA}
+\begin{frame}[label={sec:orgc46e55f}]{Limitations of MBRSA}
 \begin{itemize}
 \item Involves additional surgical procedures for inserting tantalum beads
 \item Human supervision
@@ -414,9 +414,10 @@ Bone Pins
 \end{itemize}
 \end{frame}
 
-\section{Aims}
-\label{sec:org713c743}
-\begin{frame}[label={sec:org5c37035}]{Aims}
+\begin{frame}[label={sec:org13c5a9f}]{Aims page}
+Aims
+\end{frame}
+\begin{frame}[label={sec:org1c23b49}]{Aims}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \begin{block}{Aims 1/2}
@@ -436,9 +437,91 @@ Joint Track Auto Toolkit
 \end{columns}
 \end{frame}
 
+\section{Aim 1 - Joint Track Machine Learning}
+\label{sec:org07b9677}
+\begin{frame}[label={sec:orgc9a3a7c}]{Goal}
+Demonstrate the feasibility of a fully autonomous, model-image registration pipeline.
+\end{frame}
+\begin{frame}[label={sec:orge9959e5}]{Method}
+\begin{itemize}
+\item Three-tiered approach
+\begin{itemize}
+\item Convolutional Neural networks (CNN) for autonomous implant detection
+\item Normalized Fourier Descriptor shape libraries
+\item Robust contour-based global optimization scheme
+\end{itemize}
+\end{itemize}
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/andrew/repo/lit-review/figures/raster/pipeline-nocite.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org19adf55}]{Autonomous Implant Detection Using Convolutional Neural Networks}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item 2 CNNs
+\begin{itemize}
+\item Femoral and Tibial implants
+\end{itemize}
+\item High Resolution Network \autocite{wangDeepHighResolutionRepresentation2020}
+\end{itemize}
+\end{column}
+\begin{column}{0.5\columnwidth}
+\begin{center}
+\includegraphics[width=\columnwidth]{/home/andrew/repo/lit-review/figures/raster/jtml-segmentation.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org4e28048}]{Neural Network Data}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item \textasciitilde{}8000 images
+\begin{itemize}
+\item 7 TKA kinematics studies
+\item PUT DATA INFO HERE!!!!!
+\end{itemize}
+\end{itemize}
+\end{column}
+
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[height=3in]{/home/andrew/repo/lit-review/figures/raster/jtml-data.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org63f306b}]{Neural Network Robustness}
+\begin{itemize}
+\item Additional augmentations introduced during training \autocite{buslaevAlbumentationsFastFlexible2020}.
+\end{itemize}
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/andrew/repo/lit-review/figures/raster/augmentations.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org1cf6e5c}]{Normalized Fourier Descriptor Shape Libraries}
+\begin{columns}
+\begin{column}{0.37\columnwidth}
+\begin{itemize}
+\item Pose initialization using segmentation output.
+\item \(\pm 30^{\circ}\) library span at \(3^{\circ}\) increments.
+\end{itemize}
+\end{column}
+
+\begin{column}{0.7\columnwidth}
+\begin{center}
+\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/banks-nfd-library.png}
+\end{center}
+\begin{center}
+\includegraphics[width=3.25in]{/home/andrew/repo/lit-review/figures/raster/jtml-nfd.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
 \section{References}
-\label{sec:org00ca545}
-\begin{frame}[label={sec:org817d7f7},fragile, allowframebreaks, label=]{References}
+\label{sec:orgadde541}
+\begin{frame}[label={sec:org83615c1},fragile, allowframebreaks, label=]{References}
 \AtNextBibliography{\tiny}
 \printbibliography
 \end{frame}

@@ -345,7 +345,12 @@ Bone Pins
 + Human supervision
 + Typically requires bi-plane imaging.
 
-* Aims
+* Aims :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+** Aims page
+Aims
 ** Aims
 *** Aims 1/2 :B_block:BMCOL:
 :PROPERTIES:
@@ -366,6 +371,64 @@ Pilot Trials and Standardized Kinematics Exam
 :END:
 Joint Track Auto Toolkit
 
+* Aim 1 - Joint Track Machine Learning
+** Goal
+Demonstrate the feasibility of a fully autonomous, model-image registration pipeline.
+** Method
++ Three-tiered approach
+  + Convolutional Neural networks (CNN) for autonomous implant detection
+  + Normalized Fourier Descriptor shape libraries
+  + Robust contour-based global optimization scheme
+[[file:~/repo/lit-review/figures/raster/pipeline-nocite.png]]
+** Autonomous Implant Detection Using Convolutional Neural Networks
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ 2 CNNs
+  + Femoral and Tibial implants
++ High Resolution Network [cite:@wangDeepHighResolutionRepresentation2020]
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+ATTR_latex: :width \columnwidth
+[[file:~/repo/lit-review/figures/raster/jtml-segmentation.png]]
+** Neural Network Data
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ ~8000 images
+  + 7 TKA kinematics studies
+  + PUT DATA INFO HERE!!!!!
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :height 3in
+[[file:~/repo/lit-review/figures/raster/jtml-data.png]]
+** Neural Network Robustness
++ Additional augmentations introduced during training [cite:@buslaevAlbumentationsFastFlexible2020].
+[[file:~/repo/lit-review/figures/raster/augmentations.png]]
+** Normalized Fourier Descriptor Shape Libraries
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.37
+:END:
++ Pose initialization using segmentation output.
++ $\pm 30^{\circ}$ library span at $3^{\circ}$ increments.
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+#+ATTR_latex: :width 2in
+[[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
+#+ATTR_latex: :width 3.25in
+[[file:~/repo/lit-review/figures/raster/jtml-nfd.png]]
 * References
 ** References
 :PROPERTIES:
