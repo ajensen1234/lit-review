@@ -1,4 +1,4 @@
-% Created 2023-03-03 Fri 15:44
+% Created 2023-03-04 Sat 13:53
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation, aspectratio=1610]{beamer}
 \usepackage[utf8]{inputenc}
@@ -15,6 +15,7 @@
 \usetheme[progressbar=foot]{metropolis}
 \usepackage{caption}
 \captionsetup[figure]{labelformat=empty}
+\AtBeginSubsection{\begin{frame}\tableofcontents[currentsection,currentsubsection]\end{frame}}
 \usetheme{metropolis}
 \usecolortheme{}
 \usefonttheme{}
@@ -42,13 +43,13 @@
 
 
 \section{Introduction}
-\label{sec:orgb2902ec}
-\begin{frame}[label={sec:orgafd70f2}]{Acknowledgments}
+\label{sec:orgbe3e9c6}
+\begin{frame}[label={sec:org76192c6}]{Acknowledgments}
 I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
 \end{frame}
 \section{Motivation}
-\label{sec:org001d7c7}
-\begin{frame}[label={sec:org955693d}]{The Problem}
+\label{sec:org7389512}
+\begin{frame}[label={sec:org87bc2b3}]{The Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -69,7 +70,7 @@ I would like to thank the McJunkin Family Charitable Foundation for their genero
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgdb30d3b}]{Our Proposition}
+\begin{frame}[label={sec:orgcc0f94e}]{Our Proposition}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 Orthopaedic surgeons and clinicians would readily adopt a practical and inexpensive technology that allows them to measure a patient's knee kinematics during activities of daily living.
@@ -81,7 +82,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org716c681}]{Constraints}
+\begin{frame}[label={sec:org26a34ce}]{Constraints}
 \begin{columns}
 \begin{column}{0.45\columnwidth}
 \begin{itemize}
@@ -98,8 +99,8 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{columns}
 \end{frame}
 \section{Background}
-\label{sec:org9e35d80}
-\begin{frame}[label={sec:orgecc7171}]{Rigid Body Transformations}
+\label{sec:org37dd528}
+\begin{frame}[label={sec:org40e8fde}]{Rigid Body Transformations}
 \begin{block}{Translation}
 \begin{equation*}
   \begin{aligned}
@@ -127,7 +128,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:orgdebe1b0}]{Rigid Body Transformations}
+\begin{frame}[label={sec:orgb3dddd2}]{Rigid Body Transformations}
 \begin{block}{Rotations}
 \begin{equation*}
   \begin{aligned}
@@ -154,7 +155,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:org32bb84e}]{Rigid Body Transformations}
+\begin{frame}[label={sec:org5220dec}]{Rigid Body Transformations}
 \begin{block}{Homogeneous Transformation Matrices}
 \begin{equation*}
   \begin{aligned}
@@ -170,7 +171,7 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 Now we have a notation that allows us to describe arbitrary movement between reference frames.
 \end{block}
 \end{frame}
-\begin{frame}[label={sec:org1eab471}]{Projective Geometry}
+\begin{frame}[label={sec:org965df0b}]{Projective Geometry}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{equation*}
@@ -206,7 +207,7 @@ Where
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgaeb4544}]{Pixel Coordinates}
+\begin{frame}[label={sec:org1abddd0}]{Pixel Coordinates}
 Convert camera coordinates into image coordinates.
 \begin{equation*}
   \begin{aligned}
@@ -223,7 +224,7 @@ Where
 \end{equation*}
 \end{frame}
 
-\begin{frame}[label={sec:orgbf5c759}]{Model-Image Registration}
+\begin{frame}[label={sec:org41f8f5f}]{Model-Image Registration}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 If we know the projective parameters of the fluoroscopy machine, can we tinker with \(T^{cam}_{implant}\) so that our virtual projection matches the fluoroscopic image?
@@ -238,8 +239,8 @@ If we know the projective parameters of the fluoroscopy machine, can we tinker w
 \end{columns}
 \end{frame}
 \section{Historical Methods}
-\label{sec:orge6e841b}
-\begin{frame}[label={sec:org7427e88}]{Overview}
+\label{sec:orgd229e59}
+\begin{frame}[label={sec:org4a508e7}]{Overview}
 Many different approaches have attempted to solve the model-image registration problem.
 \begin{itemize}
 \item Pre-computed projections
@@ -249,7 +250,7 @@ Many different approaches have attempted to solve the model-image registration p
 \item Model-based Roentgen Stereophotogrammetry
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgfedbfbf}]{Pre-Computed Projections}
+\begin{frame}[label={sec:org2d9f458}]{Pre-Computed Projections}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -273,7 +274,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org5d209cb}]{Limitations of Pre-Computed Projections}
+\begin{frame}[label={sec:org514b876}]{Limitations of Pre-Computed Projections}
 \begin{itemize}
 \item Requires an accurate contour from the input image in order to perform calculations.
 \begin{itemize}
@@ -282,7 +283,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org39df3e1}]{Motion Capture (MoCap)}
+\begin{frame}[label={sec:org9d3df16}]{Motion Capture (MoCap)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -307,7 +308,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org1db63e1}]{Limitations of Motion Capture}
+\begin{frame}[label={sec:orga07473d}]{Limitations of Motion Capture}
 Skin Mounted
 \begin{itemize}
 \item Doesn't accurately describe underlying skeletal motion with clinical accuracy \autocites{gaoInvestigationSoftTissue2008}[][]{kuoInfluenceSoftTissue2011}[][]{linEffectsSoftTissue2016}.
@@ -318,7 +319,7 @@ Bone Pins
 \item Need I say more?
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org16c5e1a}]{Biplane Imaging}
+\begin{frame}[label={sec:orgb2746e8}]{Biplane Imaging}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -343,14 +344,14 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgc2e4696}]{Limitations of Biplane Imaging}
+\begin{frame}[label={sec:org0539054}]{Limitations of Biplane Imaging}
 \begin{itemize}
 \item Not many hospitals have biplane fluoroscopy setups.
 \item Clinically impractical
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org9ef8460}]{Iterative Projections}
+\begin{frame}[label={sec:org24b562f}]{Iterative Projections}
 \begin{columns}
 \begin{column}{0.54\columnwidth}
 \begin{itemize}
@@ -375,7 +376,7 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org27f211b}]{Limitations of (historic) Iterative Projection Methods}
+\begin{frame}[label={sec:orgd974702}]{Limitations of (historic) Iterative Projection Methods}
 \begin{itemize}
 \item Requires human supervision for:
 \begin{itemize}
@@ -387,7 +388,7 @@ Bone Pins
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgbe42b15}]{Model-based Roentgen Stereophotogrammetry (MBRSA)}
+\begin{frame}[label={sec:orgece0814}]{Model-based Roentgen Stereophotogrammetry (MBRSA)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -406,7 +407,7 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgc46e55f}]{Limitations of MBRSA}
+\begin{frame}[label={sec:org859997b}]{Limitations of MBRSA}
 \begin{itemize}
 \item Involves additional surgical procedures for inserting tantalum beads
 \item Human supervision
@@ -414,10 +415,9 @@ Bone Pins
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org13c5a9f}]{Aims page}
-Aims
-\end{frame}
-\begin{frame}[label={sec:org1c23b49}]{Aims}
+\section{Aims}
+\label{sec:org954a37e}
+\begin{frame}[label={sec:org54d731c}]{Aims}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \begin{block}{Aims 1/2}
@@ -437,12 +437,12 @@ Joint Track Auto Toolkit
 \end{columns}
 \end{frame}
 
-\section{Aim 1 - Joint Track Machine Learning}
-\label{sec:org07b9677}
-\begin{frame}[label={sec:orgc9a3a7c}]{Goal}
+\subsection{Aim 1 - Joint Track Machine Learning}
+\label{sec:org81ea5c7}
+\begin{frame}[label={sec:org22990de}]{Goal}
 Demonstrate the feasibility of a fully autonomous, model-image registration pipeline.
 \end{frame}
-\begin{frame}[label={sec:orge9959e5}]{Method}
+\begin{frame}[label={sec:orgd600ab2}]{Method}
 \begin{itemize}
 \item Three-tiered approach
 \begin{itemize}
@@ -455,7 +455,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \includegraphics[width=.9\linewidth]{/home/andrew/repo/lit-review/figures/raster/pipeline-nocite.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org19adf55}]{Autonomous Implant Detection Using Convolutional Neural Networks}
+\begin{frame}[label={sec:org6648818}]{Autonomous Implant Detection Using Convolutional Neural Networks}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -473,7 +473,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org4e28048}]{Neural Network Data}
+\begin{frame}[label={sec:org8a42c60}]{Neural Network Data}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -492,7 +492,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org63f306b}]{Neural Network Robustness}
+\begin{frame}[label={sec:orge5e2c85}]{Neural Network Robustness}
 \begin{itemize}
 \item Additional augmentations introduced during training \autocite{buslaevAlbumentationsFastFlexible2020}.
 \end{itemize}
@@ -500,7 +500,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \includegraphics[width=.9\linewidth]{/home/andrew/repo/lit-review/figures/raster/augmentations.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org1cf6e5c}]{Normalized Fourier Descriptor Shape Libraries}
+\begin{frame}[label={sec:orgb1592c6}]{Normalized Fourier Descriptor Shape Libraries}
 \begin{columns}
 \begin{column}{0.37\columnwidth}
 \begin{itemize}
@@ -519,9 +519,18 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
+\subsection{Aim 2 - Overcoming Single-Plane Symmetry Traps}
+\label{sec:org96c8941}
+\subsection{Aim 3 - Pilot Human Study}
+\label{sec:org9d198fe}
+\subsection{Aim 4 - Standardized Kinematics Exam}
+\label{sec:orgddaed41}
+\subsection{Aim 5 - Joint Track Auto Toolkit}
+\label{sec:org6593dd4}
+
 \section{References}
-\label{sec:orgadde541}
-\begin{frame}[label={sec:org83615c1},fragile, allowframebreaks, label=]{References}
+\label{sec:org2333690}
+\begin{frame}[label={sec:orgde01abc},fragile, allowframebreaks, label=]{References}
 \AtNextBibliography{\tiny}
 \printbibliography
 \end{frame}
