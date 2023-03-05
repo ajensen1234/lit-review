@@ -38,6 +38,7 @@ I would like to thank the McJunkin Family Charitable Foundation for their genero
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
++ By 2030, roughly 3.5 million Total Knee Arthroplasty (TKA) will be performed in the US [cite:@kurtzProjectionsPrimaryRevision2007].
 + 20% of patients receiving TKA are dissatisfied.
   + Instability, pain, unnatural [cite:@bakerRolePainFunction2007; @bournePatientSatisfactionTotal2010; @scottPredictingDissatisfactionFollowing2010].
 + No reliable method of clinically assessing and quantifying joint dynamics.
@@ -377,7 +378,6 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
   + Robust contour-based global optimization scheme
 [[file:~/repo/lit-review/figures/raster/pipeline-nocite.png]]
 *** Autonomous Implant Detection Using Convolutional Neural Networks
-
 **** :BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -425,7 +425,158 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 [[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
 #+ATTR_latex: :width 3.25in
 [[file:~/repo/lit-review/figures/raster/jtml-nfd.png]]
-** Aim 2 - Overcoming Single-Plane Symmetry Traps
+*** Pose Refinement Using Global Optimization
++ Two main features
+  + Objective function
+  + Optimization routine
+*** Contour-based Objective Function
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ With accurate projection, contours provide a strong heuristic for orientation.
++ Overlapping pixels between CNN segmentation and projected implant.
+  + $L_1$ norm has quick parallel computation.
+
+#+begin_src latex
+\begin{equation*}
+  J = \sum_{i \in H}\sum_{j \in W}|I_{ij} - P_{ij}| = L_{1}(I,P)
+\end{equation*}
+#+end_src
++ Sensitive to minor perturbations
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+[[file:~/repo/lit-review/figures/raster/jtml-registered-implant.png]]
+*** Improving Robustness
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+ + Dilation decreases sensitivity to perturbations.
+ + Multi-stage optimization can reduce dilation back to original edges.
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/flood-dilated-contour.png]]
+*** Optimization Routine
++ No analytic form of the objective function exists, it **must** be sampled at points of interest.
+  + Black Box Optimization [cite:@audetDerivativeFreeBlackboxOptimization2017; @bajajBlackBoxOptimizationMethods2021]
+
+*** Lipschitzian Optimization
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Robust, global, black-box optimization routine if Lipschitz constant ($K$) is known [cite:@shubertSequentialMethodSeeking1972].
++ Lipschitz constant bounds the rate of change of a function.
++ What if you don't know the Lipschitz constant?
+
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width 2in
+[[file:~/repo/lit-review/figures/raster/shubert-step1.png]]
+[[file:~/repo/lit-review/figures/raster/shubert-step2.png]]
+[[file:~/repo/lit-review/figures/raster/shubert-step3.png]]
+
+*** Lipschitzian Optimization without the Lipschitz Constant
+#+ATTR_latex: :width 2.5in
+[[file:~/repo/lit-review/figures/raster/jones-direct-title.png]]
++ Sample end-points instead of intersecting lines.
++ Potentially optimal regions based on value at center and total size.
+  + Trisect potentially optimal regions and re-sample centers
+#+ATTR_latex: :width 2.5in
+[[file:~/repo/lit-review/figures/raster/direct-1D.png]]
+*** Determining Potentially Optimal Regions
++ Convex hull of region size vs. center value
+#+ATTR_latex: :width 0.6\textwidth
+[[file:~/repo/lit-review/figures/raster/direct-convex-hull.png]]
+*** DiRECT for Joint Track Machine Learning
++ Search region is along all 6 degrees of freedom.
+  + Normalize to $[0,1]$.
++ Three stages, each with decreasing levels of dilation.
+  + Iteration budget for each stage.
+| Stage      | Budget [Iterations] | Search Range [mm,deg]                      | Dilation (pixels) |
+|------------+---------------------+--------------------------------------------+-------------------|
+| ``Tree''   | ~20,000             | $\pm 45$                                   |                 5 |
+| ``Branch'' | ~20,000             | $\pm 25$                                   |                 3 |
+| ``Leaf''   | ~10,000             | $\pm 100$ $(z_{trans})$ / $\pm 3$ $(else)$ |                 1 |
+
+*** Validation
++ Achieved clinically acceptable accuracy [cite:@brobergValidationMachineLearning2023; @jensenJointTrackMachine2022].
+#+ATTR_latex: :width 0.85\textwidth
+file:~/repo/lit-review/figures/raster/broberg-bland-altmann.png
+*** Awards
+The work presented in this aim won the HAP Paul Award for Best Paper from the International Society for Technology in Arthroplasty's 2022 Annual Meeting.
+
+** Aim 2 - Overcoming Single-Plane Limitations
+*** Goal
++ The goal of this aim is to validation and test methods that can overcome single-plane limitations for model-image registration.
+  + Out-of-plane (OOP) Translation
+  + Symmetry Traps
+
+*** Translation
++ Depth perception is lost when using a single camera.
++ Utilize a virtual ``spring'' to constrain relative OOP translation between implant components.
+
+#+begin_src latex
+\begin{equation*}
+  J = \alpha L_{1}(I,P) + \beta ML(Fem,Tib)
+\end{equation*}
+
+Where
+\begin{equation*}
+  ML \equiv \text{ Relative mediolateral translation }
+\end{equation*}
+#+end_src
+*** Symmetry Traps
+With a symmetric tibial implant, the contour is not always a perfect heuristic for true pose. Human operators typically utilize relative varus-valgus to determine correct pose.
+#+ATTR_Latex: :width 0.8\textwidth
+[[file:~/repo/lit-review/figs/jtml-paper/fig6-symtrap.png]]
+*** Solving the Symmetric Pose
+1. Create a vector from the camera origin to the implant origin (viewing ray).
+2. Determine the axis ($\vec{m}$) and angle ($\theta$) of rotation between the viewing ray and the symmetric (mediolateral) axis.
+3. Rotate the implant $-2\theta$ about the same axis.
+4. The final location is the symmetric pose of the object.
+
+*** Five Approaches
++ Virtual ligaments
++ Binary selection between two poses
++ Bland-Altmann Calibration Constant
++ Random Forest
++ Fully Connected Network
+
+*** Virtual Ligaments
+#+begin_src latex
+\begin{equation*}
+  J = \alpha L_{1}(I,P) + \beta ML(Fem,Tib) + \gamma VV(Fem,Tib)
+\end{equation*}
+
+Where
+
+\begin{equation*}
+  VV \equiv \text{  Relative Varus-Valgus rotation}
+\end{equation*}
+#+end_src
+*** Binary Selection
+1. Determine optimized pose using $L_1 + ML$
+2. Calculate symmetric pose.
+3. Pick pose with lower relative VV
+
+This method can simplify the selection criteria (one fewer hyperparameter).
+*** Bland-Altmann Calibration Constant
++ Utilizing Bland-Altmann plots from gold-standard kinematics, create a ``correction constant'' for relative varus/valgus angles.
++ Notice linear trend in BA plots.
+#+ATTR_latex: :width 0.75\textwidth
+[[file:~/repo/lit-review/figures/raster/broberg-bland-altmann.png]]
+
+
+
 ** Aim 3 - Pilot Human Study
 ** Aim 4 - Standardized Kinematics Exam
 ** Aim 5 - Joint Track Auto Toolkit
