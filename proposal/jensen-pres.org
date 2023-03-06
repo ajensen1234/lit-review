@@ -23,6 +23,8 @@
 #+latex_header: \usetheme[progressbar=foot]{metropolis}
 #+latex_header_extra: \usepackage{caption}
 #+latex_header_extra: \captionsetup[figure]{labelformat=empty}
+#+latex_header_extra: \DeclareMathOperator*{\argmax}{\arg\!max}
+#+latex_header_extra: \DeclareMathOperator*{\argmin}{\arg\!min}
 #+latex_header_extra: \AtBeginSubsection{\begin{frame}\tableofcontents[currentsection,currentsubsection]\end{frame}}
 #+beamer_color_theme:
 #+beamer_font_theme:
@@ -374,9 +376,23 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 #+ATTR_latex: :width 3.25in
 [[file:~/repo/lit-review/figures/raster/jtml-nfd.png]]
 *** Pose Refinement Using Global Optimization
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 + Two main features
   + Objective function
   + Optimization routine
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+begin_src latex
+
+\begin{equation*}
+    \argmin_{x}\{f(x) : x \in \Omega\}
+\end{equation*}
+#+end_src
 *** Contour-based Objective Function
 **** :BMCOL:
 :PROPERTIES:
