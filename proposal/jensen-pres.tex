@@ -1,4 +1,4 @@
-% Created 2023-03-06 Mon 11:16
+% Created 2023-03-06 Mon 15:36
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation, aspectratio=1610]{beamer}
 \usepackage[utf8]{inputenc}
@@ -43,13 +43,13 @@
 
 
 \section{Introduction}
-\label{sec:orga9a763b}
-\begin{frame}[label={sec:org753fa0f}]{Acknowledgments}
+\label{sec:org90aff05}
+\begin{frame}[label={sec:org8ac3493}]{Acknowledgments}
 I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
 \end{frame}
 \section{Motivation}
-\label{sec:org59522e1}
-\begin{frame}[label={sec:org29b467a}]{The Problem}
+\label{sec:org174cea0}
+\begin{frame}[label={sec:orgf1a3c16}]{The Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -71,10 +71,10 @@ I would like to thank the McJunkin Family Charitable Foundation for their genero
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org9b3cacd}]{Our Proposition}
+\begin{frame}[label={sec:orge11abe5}]{Our Proposition}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
-Orthopaedic surgeons and clinicians would readily adopt a practical and inexpensive technology that allows them to measure a patient's knee kinematics during activities of daily living.
+Orthopaedic surgeons and clinicians would readily adopt a \alert{\alert{practical}} and \alert{\alert{inexpensive}} technology that allows them to \alert{\alert{measure}} a patient's knee kinematics during \alert{\alert{activities of daily living}}.
 \end{column}
 \begin{column}{0.55\columnwidth}
 \begin{center}
@@ -83,13 +83,13 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orga1b2a7c}]{Constraints}
+\begin{frame}[label={sec:org81ac375}]{Constraints}
 \begin{columns}
 \begin{column}{0.45\columnwidth}
 \begin{itemize}
-\item It must fit within a standard clinical workflow
-\item The technology must utilize equipment commonly found in hospitals
-\item There must not be significant human supervision nor interaction to generate an examination report.
+\item It must fit within a \alert{\alert{standard clinical workflow}}
+\item The technology must utilize equipment \alert{\alert{commonly found in hospitals}}
+\item There must not be significant \alert{\alert{human supervision}} nor interaction to generate an examination report.
 \end{itemize}
 \end{column}
 \begin{column}{0.55\columnwidth}
@@ -100,79 +100,8 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 \end{columns}
 \end{frame}
 \section{Background}
-\label{sec:org69bdc7e}
-\begin{frame}[label={sec:orgdaf5f31}]{Rigid Body Transformations}
-\begin{block}{Translation}
-\begin{equation*}
-  \begin{aligned}
-  \begin{pmatrix}
-    v_{x}' \\ v_{y}'
-  \end{pmatrix} &=
-  \begin{pmatrix}
-    v_{x} \\ v_{y}
-  \end{pmatrix} +
-  \begin{pmatrix}
-    t_{x} \\ t_{y}
-  \end{pmatrix} \\
-                & \rightarrow \\
-    \begin{pmatrix}
-      v_{x}' \\ v_{y}' \\ 1
-    \end{pmatrix} &=
-                    \begin{pmatrix}
-                      1 & 0 & t_{x} \\ 0 & 1 & t_{y} \\ 0 & 0 & 1
-                    \end{pmatrix}
-                                                                \begin{pmatrix}
-                                                                  v_{x} \\ v_{y} \\  1
-                                                                \end{pmatrix}
-\end{aligned}
-\end{equation*}
-\end{block}
-\end{frame}
-
-\begin{frame}[label={sec:org33d7091}]{Rigid Body Transformations}
-\begin{block}{Rotations}
-\begin{equation*}
-  \begin{aligned}
-    R_{x} & =
-            \begin{pmatrix}
-              1 & 0 & 0 \\
-              0 & c_{x} & -s_{x}\\
-              0 & s_{x} & c_{x}
-            \end{pmatrix} \\
-    R_{y} &=
-            \begin{pmatrix}
-              s_{y} & 0 & c_{y}\\
-              0 & 1 & 0 \\
-              c_{y} & 0 & -s_{y}
-            \end{pmatrix} \\
-    R_{z} &=
-            \begin{pmatrix}
-              c_{z} & -s_{z} & 0 \\
-              s_{z} & c_{z} & 0 \\
-              0 & 0 & 1
-            \end{pmatrix}
-  \end{aligned}
-\end{equation*}
-\end{block}
-\end{frame}
-
-\begin{frame}[label={sec:org28a67bf}]{Rigid Body Transformations}
-\begin{block}{Homogeneous Transformation Matrices}
-\begin{equation*}
-  \begin{aligned}
-  \tilde{\vec{v'}} &=
-  \begin{pmatrix}
-    & \mathbf{R}_{3 \times 3} & & \vec{t}_{3 \times 1} \\
-    0 & 0 & 0 & 1
-  \end{pmatrix}\tilde{\vec{v}} \\
-    &= T^{A}_{B} \tilde{\vec{v}}
-  \end{aligned}
-\end{equation*}
-
-Now we have a notation that allows us to describe arbitrary movement between reference frames.
-\end{block}
-\end{frame}
-\begin{frame}[label={sec:orgfccad6e}]{Projective Geometry}
+\label{sec:orge068d6d}
+\begin{frame}[label={sec:orge12b789}]{Projective Geometry}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{equation*}
@@ -208,7 +137,12 @@ Where
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org3753430}]{Pixel Coordinates}
+\begin{frame}[label={sec:org5cc1d08}]{Projective Geometry}
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/andrew/repo/lit-review/figures/raster/perspective-projection.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org392278b}]{Pixel Coordinates}
 Convert camera coordinates into image coordinates.
 \begin{equation*}
   \begin{aligned}
@@ -225,7 +159,7 @@ Where
 \end{equation*}
 \end{frame}
 
-\begin{frame}[label={sec:org98b33e2}]{Model-Image Registration}
+\begin{frame}[label={sec:org1fb4f11}]{Model-Image Registration}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 If we know the projective parameters of the fluoroscopy machine, can we tinker with \(T^{cam}_{implant}\) so that our virtual projection matches the fluoroscopic image?
@@ -240,8 +174,8 @@ If we know the projective parameters of the fluoroscopy machine, can we tinker w
 \end{columns}
 \end{frame}
 \section{Historical Methods}
-\label{sec:orgafe0075}
-\begin{frame}[label={sec:orgbb165da}]{Overview}
+\label{sec:org733ecda}
+\begin{frame}[label={sec:org0db7101}]{Overview}
 Many different approaches have attempted to solve the model-image registration problem.
 \begin{itemize}
 \item Pre-computed projections
@@ -251,7 +185,7 @@ Many different approaches have attempted to solve the model-image registration p
 \item Model-based Roentgen Stereophotogrammetry
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgecd6676}]{Pre-Computed Projections}
+\begin{frame}[label={sec:org9ef2007}]{Pre-Computed Projections}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -275,16 +209,30 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgf9944d6}]{Limitations of Pre-Computed Projections}
+\begin{frame}[label={sec:orgc52ff3d}]{Limitations of Pre-Computed Projections}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
 \begin{itemize}
 \item Requires an accurate contour from the input image in order to perform calculations.
-\begin{itemize}
-\item Human supervision vs. inaccuracy.
 \end{itemize}
-\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/andrew/repo/lit-review/figures/raster/lavallee-distance-maps.png}
+\caption{From \autocite{lavalleeRecoveringPositionOrientation1995}}
+\end{figure}
+\vspace{-0.25in}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/andrew/repo/lit-review/figures/raster/banks-nfd-library.png}
+\caption{From \autocite{banksAccurateMeasurementThreedimensional1996}}
+\end{figure}
+\end{column}
+\end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org647717f}]{Motion Capture (MoCap)}
+\begin{frame}[label={sec:org0b90d2e}]{Motion Capture (MoCap)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -309,7 +257,9 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgd5ae218}]{Limitations of Motion Capture}
+\begin{frame}[label={sec:orgb06ec3d}]{Limitations of Motion Capture}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
 Skin Mounted
 \begin{itemize}
 \item Doesn't accurately describe underlying skeletal motion with clinical accuracy \autocites{gaoInvestigationSoftTissue2008}[][]{kuoInfluenceSoftTissue2011}[][]{linEffectsSoftTissue2016}.
@@ -319,8 +269,25 @@ Bone Pins
 \item Bone Pins
 \item Need I say more?
 \end{itemize}
+\end{column}
+
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2.5in]{/home/andrew/repo/lit-review/figures/raster/gao-skin-mocap.png}
+\caption{From \autocite{gaoInvestigationSoftTissue2008}}
+\end{figure}
+\vspace{-0.25in}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2.5in]{/home/andrew/repo/lit-review/figures/raster/lafortune-bone-mocap.png}
+\caption{From \autocite{lafortuneThreedimensionalKinematicsHuman1992}}
+\end{figure}
+\end{column}
+\end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgb303897}]{Biplane Imaging}
+
+\begin{frame}[label={sec:orgd2b8c11}]{Biplane Imaging}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -345,14 +312,30 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org2ca8bf0}]{Limitations of Biplane Imaging}
+\begin{frame}[label={sec:org8ef4eb6}]{Limitations of Biplane Imaging}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
 \begin{itemize}
 \item Not many hospitals have biplane fluoroscopy setups.
 \item Clinically impractical
 \end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/andrew/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png}
+\caption{Both from \autocite{ivesterReconfigurableHighSpeedStereoRadiography2015}}
+\end{figure}
+\vspace{-0.25in}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/andrew/repo/lit-review/figures/raster/ivester-stereo-projection.png}
+\end{figure}
+\end{column}
+\end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgb8017e8}]{Iterative Projections}
+\begin{frame}[label={sec:orgcc871c4}]{Iterative Projections}
 \begin{columns}
 \begin{column}{0.54\columnwidth}
 \begin{itemize}
@@ -377,7 +360,9 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgf4b3b2b}]{Limitations of (historic) Iterative Projection Methods}
+\begin{frame}[label={sec:orgaa2fb86}]{Limitations of (historic) Iterative Projection Methods}
+\begin{columns}
+\begin{column}{0.54\columnwidth}
 \begin{itemize}
 \item Requires human supervision for:
 \begin{itemize}
@@ -387,9 +372,23 @@ Bone Pins
 \end{itemize}
 \item Chaotic and Noisy objective function
 \end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/mahfouz-perspective-projection.png}
+\caption{From \autocite{mahfouzRobustMethodRegistration2003}}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2in]{/home/andrew/repo/lit-review/figures/raster/flood-dilated-contour.png}
+\caption{From \autocite{floodAutomatedRegistration3D2018}}
+\end{figure}
+\end{column}
+\end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org9def569}]{Model-based Roentgen Stereophotogrammetry (MBRSA)}
+\begin{frame}[label={sec:orgdc6ef9d}]{Roentgen Stereophotogrammetry (RSA)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -408,17 +407,28 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orge7a8e21}]{Limitations of MBRSA}
+\begin{frame}[label={sec:org98627db}]{Limitations of RSA}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
 \begin{itemize}
-\item Involves additional surgical procedures for inserting tantalum beads
+\item Involves additional surgical procedures for inserting tantalum beads.
 \item Human supervision
-\item Typically requires bi-plane imaging.
+\item Bi-plane imaging
 \end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=3in]{/home/andrew/repo/lit-review/figures/raster/vrooman-mbrsa.png}
+\caption{From \autocite{vroomanFastAccurateAutomated1998}}
+\end{figure}
+\end{column}
+\end{columns}
 \end{frame}
 
 \section{Aims}
-\label{sec:org9bfa3c7}
-\begin{frame}[label={sec:orge1f656c}]{Aims}
+\label{sec:org26cc95d}
+\begin{frame}[label={sec:org18db167}]{Aims}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \begin{block}{Aims 1/2}
@@ -439,11 +449,11 @@ Joint Track Auto Toolkit
 \end{frame}
 
 \subsection{Aim 1 - Joint Track Machine Learning}
-\label{sec:org5cd27f6}
-\begin{frame}[label={sec:orga061756}]{Goal}
+\label{sec:org98f7c55}
+\begin{frame}[label={sec:org5086add}]{Goal}
 Demonstrate the feasibility of a fully autonomous, model-image registration pipeline.
 \end{frame}
-\begin{frame}[label={sec:org490be81}]{Method}
+\begin{frame}[label={sec:org9d581c6}]{Method}
 \begin{itemize}
 \item Three-tiered approach
 \begin{itemize}
@@ -453,10 +463,10 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{itemize}
 \end{itemize}
 \begin{center}
-\includegraphics[width=.9\linewidth]{/home/andrew/repo/lit-review/figures/raster/pipeline-nocite.png}
+\includegraphics[width=\textwidth]{/home/andrew/repo/lit-review/figures/raster/pipeline-nocite.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org70d231f}]{Autonomous Implant Detection Using Convolutional Neural Networks}
+\begin{frame}[label={sec:org7565bac}]{Autonomous Implant Detection Using Convolutional Neural Networks}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -474,7 +484,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgbf2e1bd}]{Neural Network Data}
+\begin{frame}[label={sec:org3ac1792}]{Neural Network Data}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -498,7 +508,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org5993bef}]{Neural Network Robustness}
+\begin{frame}[label={sec:org83f1c9c}]{Neural Network Robustness}
 \begin{itemize}
 \item Additional augmentations introduced during training \autocite{buslaevAlbumentationsFastFlexible2020}.
 \end{itemize}
@@ -506,7 +516,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \includegraphics[width=.9\linewidth]{/home/andrew/repo/lit-review/figures/raster/augmentations.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgf922f1c}]{Normalized Fourier Descriptor Shape Libraries}
+\begin{frame}[label={sec:org2655113}]{Normalized Fourier Descriptor Shape Libraries}
 \begin{columns}
 \begin{column}{0.37\columnwidth}
 \begin{itemize}
@@ -525,7 +535,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org10e9e22}]{Pose Refinement Using Global Optimization}
+\begin{frame}[label={sec:org1d27ac7}]{Pose Refinement Using Global Optimization}
 \begin{itemize}
 \item Two main features
 \begin{itemize}
@@ -534,7 +544,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org2a8f913}]{Contour-based Objective Function}
+\begin{frame}[label={sec:org067fba0}]{Contour-based Objective Function}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -560,7 +570,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgf542ab6}]{Improving Robustness}
+\begin{frame}[label={sec:org9bd96c1}]{Improving Robustness}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -575,7 +585,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgb01ff1c}]{Optimization Routine}
+\begin{frame}[label={sec:org555de2b}]{Optimization Routine}
 \begin{itemize}
 \item No analytic form of the objective function exists, it \alert{\alert{must}} be sampled at points of interest.
 \begin{itemize}
@@ -584,7 +594,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org0f9cd95}]{Lipschitzian Optimization}
+\begin{frame}[label={sec:orgde4cd28}]{Lipschitzian Optimization}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -608,7 +618,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org699f03e}]{Lipschitzian Optimization without the Lipschitz Constant}
+\begin{frame}[label={sec:orgbf477cf}]{Lipschitzian Optimization without the Lipschitz Constant}
 \begin{center}
 \includegraphics[width=2.5in]{/home/andrew/repo/lit-review/figures/raster/jones-direct-title.png}
 \end{center}
@@ -623,7 +633,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \includegraphics[width=2.5in]{/home/andrew/repo/lit-review/figures/raster/direct-1D.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org08ff5e8}]{Determining Potentially Optimal Regions}
+\begin{frame}[label={sec:org122d685}]{Determining Potentially Optimal Regions}
 \begin{itemize}
 \item Convex hull of region size vs. center value
 \end{itemize}
@@ -631,7 +641,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \includegraphics[width=0.6\textwidth]{/home/andrew/repo/lit-review/figures/raster/direct-convex-hull.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org7e610f9}]{DiRECT for Joint Track Machine Learning}
+\begin{frame}[label={sec:org76d75af}]{DiRECT for Joint Track Machine Learning}
 \begin{itemize}
 \item Search region is along all 6 degrees of freedom.
 \begin{itemize}
@@ -652,22 +662,34 @@ Stage & Budget [Iterations] & Search Range [mm,deg] & Dilation (pixels)\\\empty
 \end{tabular}
 \end{center}
 \end{frame}
-
-\begin{frame}[label={sec:org5885b5d}]{Validation}
+\begin{frame}[label={sec:org6859577}]{Testing Performance}
+Now that we have our refined poses, how well does out system perform?
+\begin{center}
+\includegraphics[width=\textwidth]{/home/andrew/repo/lit-review/figures/raster/pipeline-nocite.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org5b6cffa}]{Validation}
 \begin{itemize}
+\item Independent research group using Model-Based RSA.
+\item Determine the level of concordance between the two measurement systems
+\begin{itemize}
+\item Bland-Altmann Plots
+\end{itemize}
 \item Achieved clinically acceptable accuracy \autocites{brobergValidationMachineLearning2023}[][]{jensenJointTrackMachine2022}.
 \end{itemize}
 \begin{center}
-\includegraphics[width=0.85\textwidth]{/home/andrew/repo/lit-review/figures/raster/broberg-bland-altmann.png}
+\includegraphics[width=0.77\textwidth]{/home/andrew/repo/lit-review/figures/raster/broberg-bland-altmann.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org0a62a86}]{Awards}
+\begin{frame}[label={sec:org45abba8}]{Awards}
 The work presented in this aim won the HAP Paul Award for Best Paper from the International Society for Technology in Arthroplasty's 2022 Annual Meeting.
+\begin{center}
+\includegraphics[width=0.7\textwidth]{/home/andrew/repo/lit-review/figures/raster/ista-map-paul-talk.jpg}
+\end{center}
 \end{frame}
-
 \subsection{Aim 2 - Overcoming Single-Plane Limitations}
-\label{sec:org9d3ae23}
-\begin{frame}[label={sec:orgf7e4769}]{Goal}
+\label{sec:org117c56b}
+\begin{frame}[label={sec:org6bfc9e2}]{Goal}
 \begin{itemize}
 \item The goal of this aim is to validate and test methods that can overcome single-plane limitations for model-image registration.
 \begin{itemize}
@@ -677,7 +699,7 @@ The work presented in this aim won the HAP Paul Award for Best Paper from the In
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org1b5be3e}]{Translation}
+\begin{frame}[label={sec:orgd9c2a30}]{Translation}
 \begin{itemize}
 \item Depth perception is lost when using a single camera.
 \item Utilize a virtual ``spring'' to constrain relative OOP translation between implant components.
@@ -693,7 +715,7 @@ Where
 \end{equation*}
 \end{frame}
 
-\begin{frame}[label={sec:org51a012c}]{Symmetry Traps}
+\begin{frame}[label={sec:org0654ebf}]{Symmetry Traps}
 With a symmetric tibial implant, the contour is not always a perfect heuristic for true pose. Human operators typically utilize relative varus-valgus to determine correct pose.
 
 Found ``ambiguous zone'' within \(3^{\circ}\) of pure lateral pose with high propensity for symmetry traps \autocite{jensenJointTrackMachine2022}.
@@ -702,7 +724,7 @@ Found ``ambiguous zone'' within \(3^{\circ}\) of pure lateral pose with high pro
 \includegraphics[width=0.7\textwidth]{/home/andrew/repo/lit-review/figs/jtml-paper/fig6-symtrap.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org647c124}]{Solving the Symmetric Pose}
+\begin{frame}[label={sec:org6e467a8}]{Solving the Symmetric Pose}
 \begin{enumerate}
 \item Create a vector from the camera origin to the implant origin (viewing ray).
 \item Determine the axis (\(\vec{m}\)) and angle (\(\theta\)) of rotation between the viewing ray and the symmetric (mediolateral) axis.
@@ -711,7 +733,7 @@ Found ``ambiguous zone'' within \(3^{\circ}\) of pure lateral pose with high pro
 \end{enumerate}
 \end{frame}
 
-\begin{frame}[label={sec:org9afd31c}]{Five Approaches}
+\begin{frame}[label={sec:org0d070e7}]{Five Approaches}
 \begin{itemize}
 \item Virtual ligaments
 \item Binary selection between two poses
@@ -721,7 +743,7 @@ Found ``ambiguous zone'' within \(3^{\circ}\) of pure lateral pose with high pro
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgd5014cc}]{Virtual Ligaments}
+\begin{frame}[label={sec:orgbebd5ff}]{Virtual Ligaments}
 \begin{equation*}
   J = \alpha L_{1}(I,P) + \beta ML(Fem,Tib) + \gamma VV(Fem,Tib)
 \end{equation*}
@@ -733,7 +755,7 @@ Where
 \end{equation*}
 \end{frame}
 
-\begin{frame}[label={sec:org95a65b2}]{Binary Selection}
+\begin{frame}[label={sec:orged00c5c}]{Binary Selection}
 \begin{enumerate}
 \item Determine optimized pose using \(L_1 + ML\)
 \item Calculate symmetric pose.
@@ -742,7 +764,7 @@ Where
 
 This method can simplify the selection criteria (one fewer hyperparameter).
 \end{frame}
-\begin{frame}[label={sec:orge3efbe1}]{Bland-Altmann Calibration Constant}
+\begin{frame}[label={sec:orgf559ce2}]{Bland-Altmann Calibration Constant}
 \begin{itemize}
 \item Utilizing Bland-Altmann plots from gold-standard kinematics, create a ``correction constant'' for relative varus/valgus (ad/abduction) angles.
 \item Notice linear trend in BA plots.
@@ -752,19 +774,17 @@ This method can simplify the selection criteria (one fewer hyperparameter).
 \end{center}
 \end{frame}
 
-
-\begin{frame}[label={sec:org7785781}]{Random Forest}
-Train a random forest with femoral implant pose and both symmetric tibial poses.
-\begin{center}
-\includegraphics[width=.9\linewidth]{/home/andrew/repo/lit-review/figures/raster/random-forest.png}
-\end{center}
-\end{frame}
-\begin{frame}[label={sec:org40256cc}]{Fully Connected Network}
+\begin{frame}[label={sec:orgeb4908c}]{Fully Connected Network}
 \begin{itemize}
 \item Encode symmetric pose calculation into FCN.
-\item Feed femoral and tibial pose into network.
+\item Feed femoral and tibial \alert{\alert{pose}} into network.
 \begin{itemize}
 \item ``Keep'' or ``Switch''
+\end{itemize}
+\item Could incorporate categorical features as well
+\begin{itemize}
+\item Weightbearing vs non-weightbearing
+\item Activity (walking, stair, lunge, etc)
 \end{itemize}
 \end{itemize}
 \begin{center}
@@ -772,9 +792,28 @@ Train a random forest with femoral implant pose and both symmetric tibial poses.
 \end{center}
 \end{frame}
 
+
+\begin{frame}[label={sec:org8d57691}]{Timeline}
+\begin{itemize}
+\item All kinematics data has already been collected.
+\item Completed Methods
+\begin{itemize}
+\item Virtual Ligaments
+\end{itemize}
+\item Pending Methods
+\begin{itemize}
+\item Binary Selection
+\item Bland-Altmann Calibration
+\item Fully Connected Network
+\end{itemize}
+\end{itemize}
+
+Journal paper will be ready for submission by June.
+\end{frame}
+
 \subsection{Aim 3 - Pilot Human Study}
-\label{sec:orgcad91d2}
-\begin{frame}[label={sec:orgaa473de}]{Goal}
+\label{sec:org13353bf}
+\begin{frame}[label={sec:orgb6552c1}]{Goal}
 No kinematics studies have exclusively utilized Joint Track Machine Learning; let's be the first.
 
 What are we measuring?
@@ -789,13 +828,26 @@ What are we measuring?
 \end{itemize}
 \end{frame}
 
+\begin{frame}[label={sec:org79c2ce4}]{Methods}
+\begin{itemize}
+\item 20-30 patients
+\item \textasciitilde{}Dozen activities with fluoroscopic machine
+\begin{itemize}
+\item Weightbearing and Non-weightbearing
+\item Static and Dynamic
+\end{itemize}
+\end{itemize}
+
+IRB approval \textasciitilde{}4 months out.
+\end{frame}
+
 
 \subsection{Aim 4 - Standardized Kinematics Exam}
-\label{sec:org75b8995}
-\begin{frame}[label={sec:org3e1e05d}]{Goal}
-Anatomically and statistically determine the highest yield movements to measure to establish a ``standard kinematics exam''.
+\label{sec:orgbc3fd0e}
+\begin{frame}[label={sec:orgc02c756}]{Goal}
+Establish a ``standard kinematics exam'' by determining the most statistically and anatomically relevent fluoroscopic image(s) to capture during a clinical visit.
 \end{frame}
-\begin{frame}[label={sec:org4ded23e}]{Motivation}
+\begin{frame}[label={sec:org22f1df2}]{Motivation}
 \begin{itemize}
 \item We have standardized pain/outcome scores
 \begin{itemize}
@@ -808,12 +860,12 @@ Anatomically and statistically determine the highest yield movements to measure 
 \end{itemize}
 \end{itemize}
 
-Autonomous kinematics measurements allow researchers to spend more time asking questions, rather than fiddling with annoying software.
+Autonomous kinematics measurements allow researchers to spend more time asking and answering questions rather than fiddling with annoying software.
 \end{frame}
 
-\begin{frame}[label={sec:org14165e9}]{Method}
+\begin{frame}[label={sec:org0cd8f7f}]{Method}
 \begin{itemize}
-\item Consult with clinicians and researchers to determine wide ranging motions and static poses.
+\item Use images and kinematics from Aim 3.
 \item Utilize statistical methods to determine covariance and causal/corollary relationships.
 \begin{itemize}
 \item Clustering
@@ -822,13 +874,13 @@ Autonomous kinematics measurements allow researchers to spend more time asking q
 \end{itemize}
 \end{frame}
 \subsection{Aim 5 - Joint Track Auto Toolkit}
-\label{sec:org6f3367b}
-\begin{frame}[label={sec:orgf282929}]{Goal}
+\label{sec:org03634c1}
+\begin{frame}[label={sec:orgba89acd}]{Goal}
 Create a freely available Python library that allows other researchers to utilize JTML's model-image registration framework. Extra emphasis will be placed on extensibility to allow other researchers to compose their own registration pipelines.
 \end{frame}
 \section{References}
-\label{sec:org717e92c}
-\begin{frame}[label={sec:org6740542},fragile, allowframebreaks, label=]{References}
+\label{sec:org2741416}
+\begin{frame}[label={sec:org3a28dc4},fragile, allowframebreaks, label=]{References}
 \AtNextBibliography{\tiny}
 \printbibliography
 \end{frame}

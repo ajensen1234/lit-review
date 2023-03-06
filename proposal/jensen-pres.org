@@ -54,7 +54,7 @@ I would like to thank the McJunkin Family Charitable Foundation for their genero
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-Orthopaedic surgeons and clinicians would readily adopt a practical and inexpensive technology that allows them to measure a patient's knee kinematics during activities of daily living.
+Orthopaedic surgeons and clinicians would readily adopt a **practical** and **inexpensive** technology that allows them to **measure** a patient's knee kinematics during **activities of daily living**.
 **** :BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.55
@@ -66,9 +66,9 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 :PROPERTIES:
 :BEAMER_col: 0.45
 :END:
-+ It must fit within a standard clinical workflow
-+ The technology must utilize equipment commonly found in hospitals
-+ There must not be significant human supervision nor interaction to generate an examination report.
++ It must fit within a **standard clinical workflow**
++ The technology must utilize equipment **commonly found in hospitals**
++ There must not be significant **human supervision** nor interaction to generate an examination report.
 **** :BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.55
@@ -76,137 +76,9 @@ Orthopaedic surgeons and clinicians would readily adopt a practical and inexpens
 #+ATTR_LaTeX: :width \textwidth
 [[file:~/repo/lit-review/figures/raster/c-arm-fluoro-machine.jpg]]
 * Background
-*** Rigid Body Transformations
-**** Translation :B_block:
-:PROPERTIES:
-:BEAMER_env: block
-:END:
-#+begin_src latex
-\begin{equation*}
-  \begin{aligned}
-  \begin{pmatrix}
-    v_{x}' \\ v_{y}'
-  \end{pmatrix} &=
-  \begin{pmatrix}
-    v_{x} \\ v_{y}
-  \end{pmatrix} +
-  \begin{pmatrix}
-    t_{x} \\ t_{y}
-  \end{pmatrix} \\
-                & \rightarrow \\
-    \begin{pmatrix}
-      v_{x}' \\ v_{y}' \\ 1
-    \end{pmatrix} &=
-                    \begin{pmatrix}
-                      1 & 0 & t_{x} \\ 0 & 1 & t_{y} \\ 0 & 0 & 1
-                    \end{pmatrix}
-                                                                \begin{pmatrix}
-                                                                  v_{x} \\ v_{y} \\  1
-                                                                \end{pmatrix}
-\end{aligned}
-\end{equation*}
-#+end_src
-*** Rigid Body Transformations
-**** Rotations :B_block:
-:PROPERTIES:
-:BEAMER_env: block
-:END:
-#+begin_src latex
-\begin{equation*}
-  \begin{aligned}
-    R_{x} & =
-            \begin{pmatrix}
-              1 & 0 & 0 \\
-              0 & c_{x} & -s_{x}\\
-              0 & s_{x} & c_{x}
-            \end{pmatrix} \\
-    R_{y} &=
-            \begin{pmatrix}
-              s_{y} & 0 & c_{y}\\
-              0 & 1 & 0 \\
-              c_{y} & 0 & -s_{y}
-            \end{pmatrix} \\
-    R_{z} &=
-            \begin{pmatrix}
-              c_{z} & -s_{z} & 0 \\
-              s_{z} & c_{z} & 0 \\
-              0 & 0 & 1
-            \end{pmatrix}
-  \end{aligned}
-\end{equation*}
-#+end_src
-*** Rigid Body Transformations
-**** Homogeneous Transformation Matrices :B_block:
-:PROPERTIES:
-:BEAMER_env: block
-:END:
-#+begin_src latex
-\begin{equation*}
-  \begin{aligned}
-  \tilde{\vec{v'}} &=
-  \begin{pmatrix}
-    & \mathbf{R}_{3 \times 3} & & \vec{t}_{3 \times 1} \\
-    0 & 0 & 0 & 1
-  \end{pmatrix}\tilde{\vec{v}} \\
-    &= T^{A}_{B} \tilde{\vec{v}}
-  \end{aligned}
-\end{equation*}
-#+end_src
-Now we have a notation that allows us to describe arbitrary movement between reference frames.
 *** Projective Geometry
-**** :BMCOL:
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-#+begin_src latex
-\begin{equation*}
-  \begin{pmatrix}
-    x_{s} \\ y_{s} \\ z_{s} \\ 1
-  \end{pmatrix}_{i} = T^{cam}_{scene} \mathbf{\tilde{p}^{obj}_{i}}
-\end{equation*}
-#+end_src
-#+begin_src latex
-\begin{equation*}
-  \begin{pmatrix}
-    \tilde{x}_{img} \\ \tilde{y}_{img} \\ \tilde{z}
-  \end{pmatrix} =
-  \begin{pmatrix}
-    f& 0 & 0 \\ 0 & f & 0 \\ 0 & 0 & 1
-  \end{pmatrix} \vec{x}_{s}
-\end{equation*}
-
-Where
-\begin{equation*}
-  \begin{aligned}
-    x_{img} &= \frac{\tilde{x_{img}}}{\tilde{z}} = \frac{f}{z_{s}}x_{s} \\
-    y_{img} &= \frac{\tilde{y_{img}}}{\tilde{z}} = \frac{f}{z_{s}}y_{s}
-  \end{aligned}
-\end{equation*}
-
-{\tiny Note: We are still in the camera's reference frame}
-#+end_src
-**** :BMCOL:
-:PROPERTIES:
-:BEAMER_col: 0.6
-:END:
+#+ATTR_latex: :width 0.8\textwidth
 [[file:~/repo/lit-review/figures/raster/perspective-projection.png]]
-*** Pixel Coordinates
-Convert camera coordinates into image coordinates.
-#+begin_src latex
-\begin{equation*}
-  \begin{aligned}
-    p_{x} = k_{x}x_{img} + c_{x} \\
-    p_{y} = k_{y}y_{img} + c_{y}
-  \end{aligned}
-\end{equation*}
-Where
-\begin{equation*}
-  \begin{aligned}
-    k &\equiv \text{ Pixel Spacing }\\
-    c &\equiv \text{ Image Focal Point }
-  \end{aligned}
-\end{equation*}
-#+end_src
 *** Model-Image Registration
 **** :BMCOL:
 :PROPERTIES:
@@ -248,8 +120,22 @@ Many different approaches have attempted to solve the model-image registration p
 #+CAPTION: From [cite:@banksAccurateMeasurementThreedimensional1996]
 [[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
 *** Limitations of Pre-Computed Projections
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 + Requires an accurate contour from the input image in order to perform calculations.
-  + Human supervision vs. inaccuracy.
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 1.75in
+#+CAPTION: From [cite:@lavalleeRecoveringPositionOrientation1995]
+[[file:~/repo/lit-review/figures/raster/lavallee-distance-maps.png]]
+\vspace{-0.25in}
+#+ATTR_LaTeX: :width 1.75in
+#+CAPTION: From [cite:@banksAccurateMeasurementThreedimensional1996]
+[[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
 
 *** Motion Capture (MoCap)
 **** :BMCOL:
@@ -272,11 +158,28 @@ Many different approaches have attempted to solve the model-image registration p
 #+CAPTION: From [cite:@lafortuneThreedimensionalKinematicsHuman1992]
 [[file:~/repo/lit-review/figures/raster/lafortune-bone-mocap.png]]
 *** Limitations of Motion Capture
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 Skin Mounted
 + Doesn't accurately describe underlying skeletal motion with clinical accuracy [cite:@gaoInvestigationSoftTissue2008; @kuoInfluenceSoftTissue2011; @linEffectsSoftTissue2016].
 Bone Pins
 + Bone Pins
 + Need I say more?
+
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 2.5in
+#+CAPTION: From [cite:@gaoInvestigationSoftTissue2008]
+[[file:~/repo/lit-review/figures/raster/gao-skin-mocap.png]]
+\vspace{-0.25in}
+#+ATTR_LaTeX: :width 2.5in
+#+CAPTION: From [cite:@lafortuneThreedimensionalKinematicsHuman1992]
+[[file:~/repo/lit-review/figures/raster/lafortune-bone-mocap.png]]
+
 *** Biplane Imaging
 **** :BMCOL:
 :PROPERTIES:
@@ -298,8 +201,24 @@ Bone Pins
 #+CAPTION:
 [[file:~/repo/lit-review/figures/raster/ivester-stereo-projection.png]]
 *** Limitations of Biplane Imaging
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+ATTR_LaTeX: :width \textwidth
 + Not many hospitals have biplane fluoroscopy setups.
 + Clinically impractical
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 1.75in
+#+CAPTION: Both from [cite:@ivesterReconfigurableHighSpeedStereoRadiography2015]
+[[file:~/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png]]
+\vspace{-0.25in}
+#+ATTR_LaTeX: :width 1.75in
+#+CAPTION:
+[[file:~/repo/lit-review/figures/raster/ivester-stereo-projection.png]]
 
 *** Iterative Projections
 **** :BMCOL:
@@ -320,13 +239,27 @@ Bone Pins
 #+CAPTION: From [cite:@floodAutomatedRegistration3D2018]
 [[file:~/repo/lit-review/figures/raster/flood-dilated-contour.png]]
 *** Limitations of (historic) Iterative Projection Methods
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.54
+:END:
 + Requires human supervision for:
   + Pose initialization
   + Escaping local minima
   + Implant detection
 + Chaotic and Noisy objective function
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 2in
+#+CAPTION: From [cite:@mahfouzRobustMethodRegistration2003]
+[[file:~/repo/lit-review/figures/raster/mahfouz-perspective-projection.png]]
+#+ATTR_LaTeX: :width 2in
+#+CAPTION: From [cite:@floodAutomatedRegistration3D2018]
+[[file:~/repo/lit-review/figures/raster/flood-dilated-contour.png]]
 
-*** Model-based Roentgen Stereophotogrammetry (MBRSA)
+*** Roentgen Stereophotogrammetry (RSA)
 **** :BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -342,10 +275,21 @@ Bone Pins
 #+ATTR_latex: :width 3in
 #+CAPTION: From [cite:@vroomanFastAccurateAutomated1998]
 [[file:~/repo/lit-review/figures/raster/vrooman-mbrsa.png]]
-*** Limitations of MBRSA
-+ Involves additional surgical procedures for inserting tantalum beads
+*** Limitations of RSA
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Involves additional surgical procedures for inserting tantalum beads.
 + Human supervision
-+ Typically requires bi-plane imaging.
++ Bi-plane imaging
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width 3in
+#+CAPTION: From [cite:@vroomanFastAccurateAutomated1998]
+[[file:~/repo/lit-review/figures/raster/vrooman-mbrsa.png]]
 
 * Aims
 *** Aims
@@ -376,6 +320,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
   + Convolutional Neural networks (CNN) for autonomous implant detection
   + Normalized Fourier Descriptor shape libraries
   + Robust contour-based global optimization scheme
+#+ATTR_latex: :width \textwidth
 [[file:~/repo/lit-review/figures/raster/pipeline-nocite.png]]
 *** Autonomous Implant Detection Using Convolutional Neural Networks
 **** :BMCOL:
@@ -509,14 +454,21 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 | ``Tree''   | ~20,000             | $\pm 45$                                   |                 5 |
 | ``Branch'' | ~20,000             | $\pm 25$                                   |                 3 |
 | ``Leaf''   | ~10,000             | $\pm 100$ $(z_{trans})$ / $\pm 3$ $(else)$ |                 1 |
-
+*** Testing Performance
+Now that we have our refined poses, how well does out system perform?
+#+ATTR_latex: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/pipeline-nocite.png]]
 *** Validation
++ Independent research group using Model-Based RSA.
++ Determine the level of concordance between the two measurement systems
+  + Bland-Altmann Plots
 + Achieved clinically acceptable accuracy [cite:@brobergValidationMachineLearning2023; @jensenJointTrackMachine2022].
-#+ATTR_latex: :width 0.85\textwidth
+#+ATTR_latex: :width 0.77\textwidth
 file:~/repo/lit-review/figures/raster/broberg-bland-altmann.png
 *** Awards
 The work presented in this aim won the HAP Paul Award for Best Paper from the International Society for Technology in Arthroplasty's 2022 Annual Meeting.
-
+#+ATTR_latex: :width 0.7\textwidth
+[[file:~/repo/lit-review/figures/raster/ista-map-paul-talk.jpg]]
 ** Aim 2 - Overcoming Single-Plane Limitations
 *** Goal
 + The goal of this aim is to validate and test methods that can overcome single-plane limitations for model-image registration.
@@ -581,16 +533,27 @@ This method can simplify the selection criteria (one fewer hyperparameter).
 #+ATTR_latex: :width 0.75\textwidth
 [[file:~/repo/lit-review/figures/raster/broberg-bland-altmann.png]]
 
-
-*** Random Forest
-Train a random forest with femoral implant pose and both symmetric tibial poses.
-[[file:~/repo/lit-review/figures/raster/random-forest.png]]
 *** Fully Connected Network
 + Encode symmetric pose calculation into FCN.
-+ Feed femoral and tibial pose into network.
++ Feed femoral and tibial **pose** into network.
   + ``Keep'' or ``Switch''
++ Could incorporate categorical features as well
+  + Weightbearing vs non-weightbearing
+  + Activity (walking, stair, lunge, etc)
 #+ATTR_latex: :width  2.2in
 [[file:~/repo/lit-review/figures/raster/fcn.png]]
+
+
+*** Timeline
++ All kinematics data has already been collected.
++ Completed Methods
+  + Virtual Ligaments
++ Pending Methods
+  + Binary Selection
+  + Bland-Altmann Calibration
+  + Fully Connected Network
+
+Journal paper will be ready for submission by June.
 
 ** Aim 3 - Pilot Human Study
 *** Goal
@@ -603,10 +566,18 @@ What are we measuring?
   + Usage hiccups
   + Symmetry traps
 
+*** Methods
++ 20-30 patients
++ ~Dozen activities with fluoroscopic machine
+  + Weightbearing and Non-weightbearing
+  + Static and Dynamic
+
+IRB approval ~4 months out.
+
 
 ** Aim 4 - Standardized Kinematics Exam
 *** Goal
-Anatomically and statistically determine the highest yield movements to measure to establish a ``standard kinematics exam''.
+Establish a ``standard kinematics exam'' by determining the most statistically and anatomically relevent fluoroscopic image(s) to capture during a clinical visit.
 *** Motivation
 + We have standardized pain/outcome scores
   + KOOS, KSS, FJS, etc..
@@ -614,10 +585,10 @@ Anatomically and statistically determine the highest yield movements to measure 
   + Per-study differences
   + No reason to standardize
 
-Autonomous kinematics measurements allow researchers to spend more time asking questions, rather than fiddling with annoying software.
+Autonomous kinematics measurements allow researchers to spend more time asking and answering questions rather than fiddling with annoying software.
 
 *** Method
-+ Consult with clinicians and researchers to determine wide ranging motions and static poses.
++ Use images and kinematics from Aim 3.
 + Utilize statistical methods to determine covariance and causal/corollary relationships.
   + Clustering
   + Transformers [cite:@carionEndtoEndObjectDetection2020; @vaswaniAttentionAllYou2017; @guoAttentionMechanismsComputer2021; @dosovitskiyImageWorth16x162021] (``translating'' movements into outcomes and other movements)
