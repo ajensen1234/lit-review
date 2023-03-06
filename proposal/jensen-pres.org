@@ -397,8 +397,11 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 :BEAMER_col: 0.5
 :END:
 + ~8000 images
-  + 7 TKA kinematics studies
-  + PUT DATA INFO HERE!!!!!
+   + 7 TKA kinematics studies
+    + 71 subjects
+    + 7 implant manufacturers
+    + 36 distinct implants
+    + Squat, lunge, kneel, stair ascent
 
 **** :BMCOL:
 :PROPERTIES:
@@ -516,7 +519,7 @@ The work presented in this aim won the HAP Paul Award for Best Paper from the In
 
 ** Aim 2 - Overcoming Single-Plane Limitations
 *** Goal
-+ The goal of this aim is to validation and test methods that can overcome single-plane limitations for model-image registration.
++ The goal of this aim is to validate and test methods that can overcome single-plane limitations for model-image registration.
   + Out-of-plane (OOP) Translation
   + Symmetry Traps
 
@@ -536,7 +539,10 @@ Where
 #+end_src
 *** Symmetry Traps
 With a symmetric tibial implant, the contour is not always a perfect heuristic for true pose. Human operators typically utilize relative varus-valgus to determine correct pose.
-#+ATTR_Latex: :width 0.8\textwidth
+
+Found ``ambiguous zone'' within $3^{\circ}$ of pure lateral pose with high propensity for symmetry traps [cite:@jensenJointTrackMachine2022].
+
+#+ATTR_Latex: :width 0.7\textwidth
 [[file:~/repo/lit-review/figs/jtml-paper/fig6-symtrap.png]]
 *** Solving the Symmetric Pose
 1. Create a vector from the camera origin to the implant origin (viewing ray).
@@ -570,17 +576,54 @@ Where
 
 This method can simplify the selection criteria (one fewer hyperparameter).
 *** Bland-Altmann Calibration Constant
-+ Utilizing Bland-Altmann plots from gold-standard kinematics, create a ``correction constant'' for relative varus/valgus angles.
++ Utilizing Bland-Altmann plots from gold-standard kinematics, create a ``correction constant'' for relative varus/valgus (ad/abduction) angles.
 + Notice linear trend in BA plots.
 #+ATTR_latex: :width 0.75\textwidth
 [[file:~/repo/lit-review/figures/raster/broberg-bland-altmann.png]]
 
 
+*** Random Forest
+Train a random forest with femoral implant pose and both symmetric tibial poses.
+[[file:~/repo/lit-review/figures/raster/random-forest.png]]
+*** Fully Connected Network
++ Encode symmetric pose calculation into FCN.
++ Feed femoral and tibial pose into network.
+  + ``Keep'' or ``Switch''
+#+ATTR_latex: :width  2.2in
+[[file:~/repo/lit-review/figures/raster/fcn.png]]
 
 ** Aim 3 - Pilot Human Study
-** Aim 4 - Standardized Kinematics Exam
-** Aim 5 - Joint Track Auto Toolkit
+*** Goal
+No kinematics studies have exclusively utilized Joint Track Machine Learning; let's be the first.
 
+What are we measuring?
++ Kinematics
++ Time to full examination report
+  + Time/frame
+  + Usage hiccups
+  + Symmetry traps
+
+
+** Aim 4 - Standardized Kinematics Exam
+*** Goal
+Anatomically and statistically determine the highest yield movements to measure to establish a ``standard kinematics exam''.
+*** Motivation
++ We have standardized pain/outcome scores
+  + KOOS, KSS, FJS, etc..
++ No standardized kinematics examination
+  + Per-study differences
+  + No reason to standardize
+
+Autonomous kinematics measurements allow researchers to spend more time asking questions, rather than fiddling with annoying software.
+
+*** Method
++ Consult with clinicians and researchers to determine wide ranging motions and static poses.
++ Utilize statistical methods to determine covariance and causal/corollary relationships.
+  + Clustering
+  + Transformers [cite:@carionEndtoEndObjectDetection2020; @vaswaniAttentionAllYou2017; @guoAttentionMechanismsComputer2021; @dosovitskiyImageWorth16x162021] (``translating'' movements into outcomes and other movements)
+** Aim 5 - Joint Track Auto Toolkit
+*** Goal
+Create a freely available Python library that allows other researchers to utilize JTML's model-image registration framework. Extra emphasis will be placed on extensibility to allow other researchers to compose their own registration pipelines.
 * References
 *** References
 :PROPERTIES:
