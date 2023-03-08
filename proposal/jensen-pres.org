@@ -5,7 +5,7 @@
 #+DESCRIPTION:
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   H:2 num:t toc:f \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
@@ -21,6 +21,7 @@
 #+columns: %45ITEM %10 BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
 #+beamer_theme: metropolis
 #+latex_header: \usetheme[progressbar=foot]{metropolis}
+#+latex_header: \usepackage[sorting=ynt]{biblatex}
 #+latex_header_extra: \usepackage{caption}
 #+latex_header_extra: \captionsetup[figure]{labelformat=empty}
 #+latex_header_extra: \DeclareMathOperator*{\argmax}{\arg\!max}
@@ -31,10 +32,20 @@
 #+beamer_inner_theme:
 #+beamer_outer_theme:
 
-* Introduction
+* Introduction :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
 *** Acknowledgments
+:PROPERTIES:
+:BEAMER_OPT: standout
+:END:
 I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
-* Motivation
+
+* Motivation :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
 *** The Problem
 **** :BMCOL:
 :PROPERTIES:
@@ -44,7 +55,9 @@ I would like to thank the McJunkin Family Charitable Foundation for their genero
 + 20% of patients receiving TKA are dissatisfied.
   + Instability, pain, unnatural [cite:@bakerRolePainFunction2007; @bournePatientSatisfactionTotal2010; @scottPredictingDissatisfactionFollowing2010].
 + No reliable method of clinically assessing and quantifying joint dynamics.
-  + Too much human supervision, too time consuming
+  + Human supervision
+  + Time consuming
+  + Specialized equipment
 **** :BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -77,11 +90,14 @@ Orthopaedic surgeons and clinicians would readily adopt a **practical** and **in
 :END:
 #+ATTR_LaTeX: :width \textwidth
 [[file:~/repo/lit-review/figures/raster/c-arm-fluoro-machine.jpg]]
-* Background
-*** Projective Geometry
+* Background :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+*** Background - Projective Geometry
 #+ATTR_latex: :width 0.8\textwidth
 [[file:~/repo/lit-review/figures/raster/perspective-projection.png]]
-*** Model-Image Registration
+*** Background - Model-Image Registration
 **** :BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -94,14 +110,17 @@ If we know the projective parameters of the fluoroscopy machine, can we tinker w
 #+ATTR_latex: :width 2.5in
 #+CAPTION:From [cite:@mahfouzRobustMethodRegistration2003]
 file:~/repo/lit-review/figures/raster/mahfouz-perspective-projection.png
-* Historical Methods
-*** Overview
+* Historical Methods :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+*** Historical Overview
 Many different approaches have attempted to solve the model-image registration problem.
 + Pre-computed projections
 + Skin-mounted motion Capture
 + Biplane Imaging
 + Iterative Projections
-+ Model-based Roentgen Stereophotogrammetry
++ Roentgen Stereophotogrammetry
 *** Pre-Computed Projections
 **** :BMCOL:
 :PROPERTIES:
@@ -127,6 +146,8 @@ Many different approaches have attempted to solve the model-image registration p
 :BEAMER_col: 0.5
 :END:
 + Requires an accurate contour from the input image in order to perform calculations.
+  + Human supervision for isolated contour
+  + Inaccuaracy with naive edge detection
 **** :BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.6
@@ -146,7 +167,7 @@ Many different approaches have attempted to solve the model-image registration p
 :END:
 + Can measure motion of MoCap beads very accurately.
 + Skin-mounted [cite:@gaoInvestigationSoftTissue2008; @kuoInfluenceSoftTissue2011; @linEffectsSoftTissue2016].
-+ Bone pins [cite:@lafortuneThreedimensionalKinematicsHuman1992] (any volunteers?).
++ Bone pins [cite:@lafortuneThreedimensionalKinematicsHuman1992].
 
 **** :BMCOL:
 :PROPERTIES:
@@ -167,8 +188,7 @@ Many different approaches have attempted to solve the model-image registration p
 Skin Mounted
 + Doesn't accurately describe underlying skeletal motion with clinical accuracy [cite:@gaoInvestigationSoftTissue2008; @kuoInfluenceSoftTissue2011; @linEffectsSoftTissue2016].
 Bone Pins
-+ Bone Pins
-+ Need I say more?
++ Any volunteers?
 
 **** :BMCOL:
 :PROPERTIES:
@@ -412,7 +432,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 :PROPERTIES:
 :BEAMER_col: 0.6
 :END:
-[[file:~/repo/lit-review/figures/raster/jtml-registered-implant.png]]
+[[file:~/repo/lit-review/figures/raster/registered-tka.png]]
 *** Improving Robustness
 **** :BMCOL:
 :PROPERTIES:
@@ -456,8 +476,66 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
   + Trisect potentially optimal regions and re-sample centers
 #+ATTR_latex: :width 2.5in
 [[file:~/repo/lit-review/figures/raster/direct-1D.png]]
+*** Trisecting Region
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+begin_src latex
+\begin{equation*}
+  \begin{bmatrix}
+    f(x=c_{1}) & d(c_{1})\\
+    f(x=c_{2}) & d(c_{2})\\
+    \vdots & \vdots \\
+    f(x=c_{N}) & d(c_{N})
+  \end{bmatrix}
+\end{equation*}
+Where
+
+\begin{align*}
+  f(x=c_{i}) &\equiv \text{Sampled function value} \\
+  d(c_{i}) & \equiv \text{ Sub-domain size } \\
+  & \text{ for } i \in [1,N]
+\end{align*}
+#+end_src
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/direct-1D-stage1.png]]
+*** Another Iteration
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+begin_src latex
+\begin{equation*}
+  \begin{bmatrix}
+    f(x=c_{1}) & d(c_{1})\\
+    f(x=c_{2}) & d(c_{2})\\
+    \vdots & \vdots \\
+    f(x=c_{N}) & d(c_{N})
+  \end{bmatrix}
+\end{equation*}
+Where
+
+\begin{align*}
+  f(x=c_{i}) &\equiv \text{Sampled function value} \\
+  d(c_{i}) & \equiv \text{ Sub-domain size } \\
+  & \text{ for } i \in [1,N]
+\end{align*}
+#+end_src
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/direct-1D-stage2.png]]
+
 *** Determining Potentially Optimal Regions
-+ Convex hull of region size vs. center value
++ Convex hull [cite:@grahamEfficientAlgorithDetermining1972; @jarvisIdentificationConvexHull1973; @chanOptimalOutputsensitiveConvex1996; @barberQuickhullAlgorithmConvex1996] of region size vs. center value
+
 #+ATTR_latex: :width 0.6\textwidth
 [[file:~/repo/lit-review/figures/raster/direct-convex-hull.png]]
 *** DiRECT for Joint Track Machine Learning
@@ -479,7 +557,9 @@ Now that we have our refined poses, how well does out system perform?
 + Determine the level of concordance between the two measurement systems
   + Bland-Altmann Plots
 + Achieved clinically acceptable accuracy [cite:@brobergValidationMachineLearning2023; @jensenJointTrackMachine2022].
-#+ATTR_latex: :width 0.77\textwidth
++ Highly repeatable
+
+#+ATTR_latex: :width 0.7\textwidth
 file:~/repo/lit-review/figures/raster/broberg-bland-altmann.png
 *** Awards
 The work presented in this aim won the HAP Paul Award for Best Paper from the International Society for Technology in Arthroplasty's 2022 Annual Meeting.
@@ -513,16 +593,24 @@ Found ``ambiguous zone'' within $3^{\circ}$ of pure lateral pose with high prope
 #+ATTR_Latex: :width 0.7\textwidth
 [[file:~/repo/lit-review/figs/jtml-paper/fig6-symtrap.png]]
 *** Solving the Symmetric Pose
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 1. Create a vector from the camera origin to the implant origin (viewing ray).
 2. Determine the axis ($\vec{m}$) and angle ($\theta$) of rotation between the viewing ray and the symmetric (mediolateral) axis.
 3. Rotate the implant $-2\theta$ about the same axis.
 4. The final location is the symmetric pose of the object.
-
-*** Five Approaches
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width 0.6\textwidth
+[[file:~/repo/lit-review/figures/raster/sym-trap.png]]
+*** Four Approaches
 + Virtual ligaments
 + Binary selection between two poses
 + Bland-Altmann Calibration Constant
-+ Random Forest
 + Fully Connected Network
 
 *** Virtual Ligaments
@@ -550,22 +638,31 @@ This method can simplify the selection criteria (one fewer hyperparameter).
 [[file:~/repo/lit-review/figures/raster/broberg-bland-altmann.png]]
 
 *** Fully Connected Network
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 + Encode symmetric pose calculation into FCN.
 + Feed femoral and tibial **pose** into network.
   + ``Keep'' or ``Switch''
 + Could incorporate categorical features as well
   + Weightbearing vs non-weightbearing
   + Activity (walking, stair, lunge, etc)
+
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
 #+ATTR_latex: :width  2.2in
 [[file:~/repo/lit-review/figures/raster/fcn.png]]
-
 
 *** Timeline
 + All kinematics data has already been collected.
 + Completed Methods
   + Virtual Ligaments
-+ Pending Methods
++ In Progress
   + Binary Selection
++ Pending Methods
   + Bland-Altmann Calibration
   + Fully Connected Network
 
@@ -590,7 +687,6 @@ What are we measuring?
 
 IRB approval ~4 months out.
 
-
 ** Aim 4 - Standardized Kinematics Exam
 *** Goal
 Establish a ``standard kinematics exam'' by determining the most statistically and anatomically relevent fluoroscopic image(s) to capture during a clinical visit.
@@ -609,8 +705,59 @@ Autonomous kinematics measurements allow researchers to spend more time asking a
   + Clustering
   + Transformers [cite:@carionEndtoEndObjectDetection2020; @vaswaniAttentionAllYou2017; @guoAttentionMechanismsComputer2021; @dosovitskiyImageWorth16x162021] (``translating'' movements into outcomes and other movements)
 ** Aim 5 - Joint Track Auto Toolkit
-*** Goal
+*** Joint Track Auto Toolkit (JTAT)
 Create a freely available Python library that allows other researchers to utilize JTML's model-image registration framework. Extra emphasis will be placed on extensibility to allow other researchers to compose their own registration pipelines.
+* Publications and Presentations :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+*** Presentations
+:PROPERTIES:
+:BEAMER_OPT: fragile, allowframebreaks, label=
+:END:
+#+begin_src latex
+\begin{refsection}
+  \input{nocites-pres}
+  \printbibliography[title=Presentations]
+\end{refsection}
+#+end_src
+
+*** Publications
+:PROPERTIES:
+:BEAMER_OPT: fragile, allowframebreaks, label=
+:END:
+#+begin_src latex
+\begin{refsection}
+  \input{nocites-pubs}
+  \printbibliography[title=Publications]
+\end{refsection}
+#+end_src
+* Timeline :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+*** Timeline
+| Date(s)                    | Event                                                  |
+|----------------------------+--------------------------------------------------------|
+| 2015-2019                  | Mech. Eng. B.S, Magna Cum Laude, UF                    |
+| April 2019 - April 2020    | Internship at Exactech                                 |
+| April 2020                 | Started in Miller Lab                                  |
+| August 2020                | Officially Started PhD at UF                           |
+| November 2021              | Best Presentation Award at ISTA: Emerging Technologies |
+| April 2022                 | Submitted JTML for HAP Paul Award                      |
+| September 2022             | HAP Paul Award at ISTA 2022                            |
+|----------------------------+--------------------------------------------------------|
+| June 2023                  | Single-plane limitations paper submitted               |
+| July 2023                  | Est. IRB Approval                                      |
+| August 2023                | v1.0 JTAT                                              |
+| December 2023 ~ May 2024   | Patient Data Fully Collected (Aims 3/4)                |
+| August 2024                | Papers for Aims 3/4 Submitted                          |
+| December 2024 - April 2025 | Est. Graduation                                        |
+*** Thank you!
+:PROPERTIES:
+:BEAMER_OPT: standout
+:END:
+Thanks for listening!!
 * References
 *** References
 :PROPERTIES:
