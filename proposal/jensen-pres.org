@@ -109,6 +109,19 @@ If we know the projective parameters of the fluoroscopy machine, can we tinker w
 :END:
 #+ATTR_latex: :width 2.5in
 #+CAPTION:From [cite:@mahfouzRobustMethodRegistration2003]
+[[file:~/repo/lit-review/figures/raster/registered-tka.png]]
+*** Background - Model-Image Registration
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+If we know the projective parameters of the fluoroscopy machine, can we tinker with $T^{cam}_{implant}$ so that our virtual projection matches the fluoroscopic image?
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width 2.5in
+#+CAPTION:From [cite:@mahfouzRobustMethodRegistration2003]
 file:~/repo/lit-review/figures/raster/mahfouz-perspective-projection.png
 * Historical Methods :B_ignoreheading:
 :PROPERTIES:
