@@ -356,7 +356,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
   + Normalized Fourier Descriptor shape libraries
   + Robust contour-based global optimization scheme
 #+ATTR_latex: :width \textwidth
-[[file:~/repo/lit-review/figures/raster/pipeline-nocite.png]]
+[[file:~/repo/lit-review/figures/raster/jtml-pipeline.png]]
 *** Autonomous Implant Detection Using Convolutional Neural Networks
 **** :BMCOL:
 :PROPERTIES:
@@ -564,7 +564,7 @@ Where
 *** Testing Performance
 Now that we have our refined poses, how well does out system perform?
 #+ATTR_latex: :width \textwidth
-[[file:~/repo/lit-review/figures/raster/pipeline-nocite.png]]
+[[file:~/repo/lit-review/figures/raster/jtml-pipeline.png]]
 *** Validation
 + Independent research group using Model-Based RSA.
 + Determine the level of concordance between the two measurement systems
@@ -577,7 +577,7 @@ file:~/repo/lit-review/figures/raster/broberg-bland-altmann.png
 *** Awards
 The work presented in this aim won the HAP Paul Award for Best Paper from the International Society for Technology in Arthroplasty's 2022 Annual Meeting.
 #+ATTR_latex: :width 0.7\textwidth
-[[file:~/repo/lit-review/figures/raster/ista-map-paul-talk.jpg]]
+file:~/repo/lit-review/figures/raster/ista-hap-paul-talk.png
 ** Aim 2 - Overcoming Single-Plane Limitations
 *** Goal
 + The goal of this aim is to validate and test methods that can overcome single-plane limitations for model-image registration.
@@ -610,16 +610,17 @@ Found ``ambiguous zone'' within $3^{\circ}$ of pure lateral pose with high prope
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-1. Create a vector from the camera origin to the implant origin (viewing ray).
-2. Determine the axis ($\vec{m}$) and angle ($\theta$) of rotation between the viewing ray and the symmetric (mediolateral) axis.
-3. Rotate the implant $-2\theta$ about the same axis.
-4. The final location is the symmetric pose of the object.
+Algorithm devised to "flip" pose into symmetric counterpart.
+1. Determine viewing ray from camera to implant centroid, denote $\vec{v}$, normalize.
+2. Denote symmetric-plane normal vector $\vec{s}$, normalize.
+3. Measure relative "off-lateral" orientation of implant, $\cos(\theta) = \dfrac{\vec{v} \cdot \vec{s}}{||\vec{v} || ||\vec{s} || }$
+4. Apply body-centered rotation to implant about $\vec{m} = \vec{s} \times \vec{v}$ by $\psi = 2\theta$.
 **** :BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.6
 :END:
 #+ATTR_latex: :width 0.6\textwidth
-[[file:~/repo/lit-review/figures/raster/sym-trap.png]]
+[[file:~/figures/raster/symmetry_flipper.png]]
 *** Four Approaches
 + Virtual ligaments
 + Binary selection between two poses
