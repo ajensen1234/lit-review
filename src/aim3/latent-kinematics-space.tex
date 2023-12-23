@@ -6,8 +6,17 @@ In kinematics, each movement pattern can be thought of as a unique ``expression'
 By exploring the latent kinematics space, we aim to reduce the number of movements required for a comprehensive kinematics evaluation without losing the predictive power or statistical significance of the evaluation.
 This approach is based on the hypothesis that certain movement patterns contain redundant information, which could be inferred from other, more distinct movements.
 For instance, we might predict the kinematics of a ``stair rise'' from the ``walking'' pattern, assuming that the essential biomechanical information is embedded within the walking movement.
+sing Emacs, you could try the following regex replace
+To achieve this, we explore the use of signal processing techniques that could ``translate'' kinematics from one movement to another.
+This technique is somewhat similar to how language translation models work in NLP.
+The goal is to start with a maximal set of kinematics measurements for a wide array of movements, and remove those that can be inferred from the rest.
 
-Test
+\subsection{Brief Mathematical Preliminary and Notation}
+Let $\mathcal{X}_{mvt}$ be the ambient kinematics space from which a particular sample is measured, where $mvt \in \{\text{stair},\text{walk}, \text{lunge}, \cdots\}$.
+Essentially, this is the space of all possible kinematics patterns for a particular movement.
+For simplicity, we can assume that this space $\mathcal{X}_{mvt}$ follows some distribution, $\mu_{mvt}$.
+The ``latent space'' of our kinematics is $\mathcal{Z}$ and follows some fixed distribution, $\xi$.
+For a universal translator, wherein the expressiveness of outputs resembles the underlying musculoskeletal system of that particular patient, you would not have a latent space for each movement, ($\mathcal{Z}_{mvt}$), but rather, the single latent space would (hopefully) encode all relevant information about the patient.
 
 %%% Local Variables:
 %%% mode: latex
