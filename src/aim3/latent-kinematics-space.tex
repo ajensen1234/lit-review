@@ -18,7 +18,28 @@ For simplicity, we can assume that this space $\mathcal{X}_{mvt}$ follows some d
 The ``latent space'' of our kinematics is $\mathcal{Z}$ and follows some fixed distribution, $\xi$.
 For a universal translator, wherein the expressiveness of outputs resembles the underlying musculoskeletal system of that particular patient, you would not have a latent space for each movement, ($\mathcal{Z}_{mvt}$), but rather, the single latent space would (hopefully) encode all relevant information about the patient.
 
-Mathematically, we can view some translator function, $T$, typically recommended as some neural network with parameters $\Theta$.
+Mathematically, we can view this translator as a collection of an encoder, $F$, which takes us from the ambient space to the latent space, $F: \mathcal{X}_{mvt,1} \mapsto \mathcal{Z}$, and a decoder, $G$ which takes us from the latent space back to our ambient space, $G: \mathcal{Z} \mapsto \mathcal{X}_{mvt,2}$. The encoder-decoder architecture is a design decision outside the scope of this dissertation, but common choices include Variational Autoencoder (VAE) and Transformer-based networks \cite{vaswaniAttentionAllYou2017}.
+However, we can generally say that our encoder architecture is parametrized by some collection of variables, $\phi$, and our decoder parametrized by $\theta$.
+And so, notationally, we can view this problem as minimizing the distance between $\xi_{\phi} = F_{\phi}\mu_{mvt}$ and $\xi$, as well as minimizing the distance between $\mu_{mvt,\theta} = G_{\theta}\xi_{\phi}$.
+The specifics of the math are outside the scope of this dissertation, but for interested readers, I recommend reading Jong Le's Geometry of Deep Learning, Chapter 13 \cite{yeGeometryDeepLearning2022}, which discusses metrics on probability spaces, multiple forms of divergence, and the requisite geometric and statistical intuition behind how these types of architectures work.
+
+\subsection{A Kinematics Translator}
+The main goal behind a kinematics translator is to build up a rich enough representation of the latent space of a patients kinematics, $\mathcal{Z}$, with the smallest possible number of images required.
+A ``translator'' achieves this by being able to determine, for example, the ``stair rise'' kinematics from the ``walking'' kinematics, without ever needing to actually capture a patient walking up the stairs.
+This has obvious benefits if one is trying to reduce the clinical footprint of autonomous kinematics measurements.
+
+\subsubsection{Methods and Data}
+The training data used to build this network would come from the same published studies used for training our segmentation neural network and validating our autonomous algorithm (\Cref{sec:jtml}).
+To start, kinematics were grouped by movement (e.g. walking, stair rise, lunge, etc.), and then we created ``translation pairs'' for different movements from each patients.
+We standardized all kinematics data using B-splines and interpolation so that each movement was represented with 100 points.
+These 100 points at each anatomic rotation/translation measurement can be thought of as a ``word'' in our translation paradigm, meaning that for any given translation task, we are translating six ``words'' into six ``words''.
+Each of these 6 kinematics measurements for movement one would be the input to our network, and the desired output are the six kinematics measurements from movement two.
+With a sufficient amount of data, this would build up a rich representation of our latent space, $\mathcal{Z}$, such that it can be directly sampled or analyzed to learn about the underlying kinematics of a patient.
+Unfortunately, a lack of standardization caused three major problems when performing this analysis: (1) Different groups calling the different movements the same thing, (2) Different groups using different movements, and (3) Different groups measuring kinematics at different and non-standard flexion angles.
+
+\subsection{Problem 1: Groups calling different movements the same thing}
+\subsection{Problem 2: No standardized set of movements to measure}
+\subsection{Problem 3: Groups measuring kinematics at different flexion angles}
 
 %%% Local Variables:
 %%% mode: latex
