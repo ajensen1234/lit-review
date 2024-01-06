@@ -47,7 +47,22 @@ When images were shown, the width of the feet ranged from nearly back-toe touchi
 
 A squat was t
 \subsection{Problem 2: No standardized set of movements to measure}
+
 \subsection{Problem 3: Groups measuring kinematics at different flexion angles}
+Another key issue in the proposed datasets is the flexion-angle resolution at which different groups measure kinematics.
+Some groups measure kinematics at every $n^{th}$ frame, typically resulting in a flexion resolution of $2-5^{\circ}$.
+These measurements are able to accurately capture the knee during the entire range of motion, and hopefully, provide a robust analysis of small kinematics changes between patients.
+
+However, other groups only measure kinematics at prescribed flexion angles (typically $30,60,90,120$), which loses resolution and comparative power for small motions.
+If, for example, the main difference between a healthy and pathological post-operative knee occurs between $30-60^{\circ}$, then these lower resolution measurements will be relatively useless at providing meaningful data for a comprehensive database or kinematics translation paradigm.
+The interpolated values between these two extrema of measurement would fill the latent space with, at best, useless, at worst, completely
+incorrect, values.
+
+Of note, one of the main reasons for the choice of performing measurements at these prescribed angles, which typically only requires $3/4$ measurements per movement sequence, is the time to generate a report.
+Manual registration is time-consuming, and some groups do not feel that the extra time to measure the entirety of the movement is worth the additional accuracy.
+However, with widespread adoption of the proposed Joint Track Machine Learning (\Cref{sec:jtml}), the human supervision for these measurements is completely eliminated, allowing these groups to take more robust measurements without the previously necessary manual registration.
+
+
 
 %%% Local Variables:
 %%% mode: latex
