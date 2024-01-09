@@ -7,13 +7,6 @@ While establishing a pipeline for the fully autonomous measurements of TKA kinem
     \end{definition}
 \end{mdframed}
 
-However, we are equipped with a-priori information about human anatomy that can dictate a set of rules and procedures to follow in order to overcome some of the different limitations present in using single-plane fluoroscopy.
-
-\subsection{Depth Perception}
-One of the most apparent limitations is depth perception. When you only have a single camera to resolve the pose of your object, sensitivity parallel to the focal ray becomes increasingly difficult. However, when dealing with anatomic structures, we know that there are specific poses that are, at the very least, pathological, and at most, downright impossible. In the objective function used during our black-box optimization, we add linear constraints to the relative mediolateral translation between the two implants, simulating the role of ligaments and soft tissue structures. 
-
-\subsection{Projection Ambiguities and Symmetry Traps}
-
 One of the more pernicious limitations in single-plane fluoroscopy is an issue that we've dubbed the ``symmetry trap'', which causes multiple global minima when using a strictly contour-based objective function. The major contributor to these issues is symmetric tibial implants, which are mediolaterally symmetric (i.e. no different between right and left implants).
 
 \begin{mdframed}
@@ -22,102 +15,8 @@ One of the more pernicious limitations in single-plane fluoroscopy is an issue t
     \end{definition}
 \end{mdframed}
 
-Based on a weak perspective projection, we can take advantage of the axis-angle rotations (\cref{eq:axis-angle-matrix}) to determine the ``symmetric pose'' for any given orientation of a symmetric object.
+This aim focuses on establishing a post-processing pipeline that can be used to address symmetry traps fully autonomously, solving an issue facing researchers studying single-plane kinematics for nearly 30 years! We also propose imaging recommendations to reduce the occurrence of symmetry traps in clinical data.
 
-\begin{mdframed}
-    \begin{center}
-        {\bf Algorithm for Determining the Dual-Pose of a Symmetric Object}
-    \end{center}
-\begin{enumerate}
-    \item Determine the viewing ray from camera $\rightarrow$ object (Eq. \ref{eq:view-ray}).
-    \item Determine the axis-angle ($m,\theta$) rotation between the viewing ray and the symmetric axis of the object (Eq. \ref{eq:angle-between}, \ref{eq:perp-axis}).
-    \item Rotate the object $-2\theta$ about the same axis, reflecting the rotation about the viewing ray (\cref{eq:axis-angle-matrix}).
-    \item The final orientation of the object is exactly the ``dual pose'', producing indistinguishable projective geometry (Eq. \ref{eq:rotation-matrix-mult}).
-\end{enumerate}
-\end{mdframed}
-
-\begin{equation}
-    \begin{aligned}
-        \text{If $T$ is the homogeneous}& \text{ transformation matrix describing the object} \\
-        \vec{v}' &= T_{1:3,4} \\
-        \vec{v} & = \frac{\vec{v}'}{\|\vec{v}'\|}
-    \end{aligned}
-    \label{eq:view-ray}
-\end{equation}
-
-
-We can use trigonometry to determine the angle (Eq. \ref{eq:angle-between}) and perpendicular axis (Eq. \ref{eq:perp-axis}) between two vectors. For our example, we use the normalized viewing ray and the z-axis (symmetric axis) as the two vectors.
-\begin{equation}
-    \begin{aligned}
-        cos(\theta) &= \vec{v} \cdot \vec{z} \\
-        &\rightarrow \\
-        \theta &= arccos(\vec{v} \cdot \vec{z})
-    \end{aligned}
-    \label{eq:angle-between}
-\end{equation}
-
-\begin{equation}
-    \begin{aligned}
-        \vec{m} = \frac{\vec{v} \times \vec{z}}{\|\vec{v} \times \vec{z}\|}
-    \end{aligned}
-    \label{eq:perp-axis}
-\end{equation}
-
-Then, we can build a rotation matrix using an axis and an angle \cite{craneKinematicAnalysisRobot2008}, (Eq. \ref{eq:axis-angle-matrix}).
-
-Then, we obtain the final transformation matrix describing the dual pose of the object by a post-multiplication of this rotation matrix.
-
-\begin{equation}
-    \begin{aligned}
-        T_{dual} = T_{orig} * \begin{pmatrix}
-            R_{3 \times 3} & \vec{0}_{3 \times 1} \\ \vec{0}_{1 \times 3} & 1
-        \end{pmatrix}
-    \end{aligned}
-    \label{eq:rotation-matrix-mult}
-\end{equation}
-
-
-In order to solve this problem, we must take advantage of a few key pieces of information:
-
-\begin{itemize}
-    \item We know how humans think when they are performing model-image registration manually
-    \item We know the mechanical properties of the soft tissue surrounding the knee, and can emulate these problems algebraically
-    \item We can measure the relative performance between single-plane and bi-plane imaging, and create a ``correction factor'' to adjust single-plane measurements.
-\end{itemize}
-
-Each of these understanding motivates a different method by which we attempt to correct the symmetry trap. This aim serves to expand our understanding of how to overcome single-plane limitations in a rigorous manner.
-
-\subsubsection{Method 1: Artificial Ligaments Using Linear Springs}
-The first method involves modifying the cost function in order to incorporate linear springs that adjust for varus/valgus position, in much the same way that medial and lateral collateral ligaments do in human anatomy. First, we measure the relative kinematics between the femoral and tibial components in the current orientation, then use Euler angle decomposition to find the relative varus/valgus between them, and add a linear cost to that angle (\cref{eq:vv-cost-function}). This has the effect of choosing the choice of symmetric pose with a smaller varus/valgus angle, which is how human operators typically distinguish between the two options. The user must set the hyperparameter $\lambda$ such that the function does not prioritize the angle over the contour matching. Once selected, this value does not change.
-
-
-\begin{equation}
-    \begin{aligned}
-        J &= L_1 + \lambda|\theta_{VV}| & \\
-        & \text{where} & L_1 = \cref{eq:contour-diff}
-    \end{aligned}
-    \label{eq:vv-cost-function}
-\end{equation}
-
-\subsubsection{Method 2: Binary Selection Between Symmetric Poses}
-This method relies on the fact that, given the pose of an object and the axis of symmetry, we can determine the symmetric pose of that object that will produce the same projective geometry.
-
-The next method, rather than incorporating varus/valgus information in the objective function, simply calculates the angle for the current pose and it's symmetric pose, then picks the orientation that has the smaller absolute value. This can be more applicable than incorporating into the objective, because no hyperparameters need to be set, and the only information determining the correct orientation is the contour matching.
-
-\subsubsection{Method 3: Bi-plane Calibration}
-
-This method utilizes the validation data that we used from Aim 1 (\cref{sec:aim1}) in order to create post-hoc calibration for the position of the implant. First, we compare our single-plane data to gold standard bi-plane data, which represents the ground truth for the position of the implant. Then, using Bland-Altman plot, we can determine a calibration constant for our implant's pose based on ground truth data. These calibration corrections will be applied after model-image registration has already been completed.
-
-\subsubsection{Method 4: Decision Tree for Binary Selection}
-
-Next, we turn to machine learning in order to determine the correct pose of the object. A decision tree is a type of data structure that traverses through a series of binary choices in order to arrive at some classification. One might imagine that Method 2 is a decision tree with a single query that is used to select the correct pose from the incorrect pose. 
-
-Given the 8000 frames of human-supervised measuring TKA kinematics, there are plenty of samples that can be used to train this decision tree. The driving force behind this method is capturing the latent human intuition used to make decisions for the correct pose when given two symmetric poses. Though we claim that varus/valgus is typically used, perhaps there are edge cases using different criteria that this formalism might elucidate.
-
-\subsubsection{Method 5: Neural Network for Binary Selection}
-This approach is very similar to the decision tree, but a fully connected network (\cref{fig:fcn}) is used to select between the two poses. Rather than a series of binary queries, a densely connected feature space will extract latent decision making for choosing the correct pose.
-
-In order to perform this, first, the process of calculating the symmetric pose will be encoded into the neural network, and those layers will be frozen (i.e. the weights will not be updated during training). Then, each tibiofemoral pose will be randomized between ``true'' and ``symmetric'' for the training set, and represented as a quaternion. The pipeline will then fuse both the current (either true or symmetric) and the secondary pose at the initial layer for a neural network, with the final output as a binary to ``keep'' or ``switch'' the pose. Different network weights will be tried, with a final emphasis on parsimony.
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../Jensen-Lit-Review"

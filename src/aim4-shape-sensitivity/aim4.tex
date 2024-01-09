@@ -8,7 +8,14 @@ Though the exact numbers differ from TKA outcomes, there is still a large percen
 For the past twenty years, researchers have explored both anatomical and reverse total shoulder arthroplasty kinematics \cite{kijimaVivo3dimensionalAnalysis2015,matsukiVivo3DAnalysis2014,matsukiDynamicVivoGlenohumeral2012,sugiComparingVivoThreedimensional2021,burtonFullyAutomaticTracking2023}, attempting to draw connections between different implants and surgical techniques to postoperative shoulder dynamics and range of motion.
 For the same reasons that a reliable, fast, clinically practical, and fully-autonomous kinematics measurement platform would be desirable for clinicians operating on post-operative total knee arthroplasty (\cref{sec:jtml}), it would also be desirable for clinicians working on total shoulder arthroplasty.
 
+Unfortunately, applying the same pipeline to shoulder implants did not work.
+This dissertation chapter is divided into three sections.
+First, I will discuss the methods and results of applying our existing framework to the problem of measuring TSA implant kinematics, and explain some of the pitfalls.
+Second, I will dive into some of the modifications made to the model-image registration cost-function to try and overcome some of the TSA kinematics limitations.
+Last, I will discuss a first-principles approach used to dive even deeper into diagnosing the inherent kinematics measurement issues, and propose of methodological recommendations for others wishing to perform these measurements. This last chapter will be converted into a paper for hopeful publication.
 
+\section{Joint Track Machine Learning on Total Shoulder Arthroplasty Implants}
+\input{src/aim4-shape-sensitivity/jtml-on-tsa}
 \section{Improving Model-Image Registration}
 \input{src/aim4-shape-sensitivity/new-metrics}
 \section{2D Shape Projection Sensitivity Analysis}
