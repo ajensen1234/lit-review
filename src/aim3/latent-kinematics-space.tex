@@ -20,7 +20,7 @@ For a universal translator, wherein the expressiveness of outputs resembles the 
 
 Mathematically, we can view this translator as a collection of an encoder, $F$, which takes us from the ambient space to the latent space, $F: \mathcal{X}_{mvt,1} \mapsto \mathcal{Z}$, and a decoder, $G$ which takes us from the latent space back to our ambient space, $G: \mathcal{Z} \mapsto \mathcal{X}_{mvt,2}$. The encoder-decoder architecture is a design decision outside the scope of this dissertation, but common choices include Variational Autoencoder (VAE) and Transformer-based networks \cite{vaswaniAttentionAllYou2017}.
 However, we can generally say that our encoder architecture is parametrized by some collection of variables, $\phi$, and our decoder parametrized by $\theta$.
-And so, notationally, we can view this problem as minimizing the distance between $\xi_{\phi} = F_{\phi}\mu_{mvt}$ and $\xi$, as well as minimizing the distance between $\mu_{mvt,\theta} = G_{\theta}\xi_{\phi}$.
+And so, notationally, we can view this problem as minimizing the distance between $\xi_{\phi} = F_{\phi}\mu_{mvt}$ and $\xi$, as well as minimizing the distance between $\mu_{mvt,\theta} = G_{\theta}\xi_{\phi}$ and $\mu$.
 The specifics of the math are outside the scope of this dissertation, but for interested readers, I recommend reading Jong Le's Geometry of Deep Learning, Chapter 13 \cite{yeGeometryDeepLearning2022}, which discusses metrics on probability spaces, multiple forms of divergence, and the requisite geometric and statistical intuition behind how these types of architectures work.
 
 \subsection{A Kinematics Translator}
@@ -45,8 +45,16 @@ Typically, research done by the same group was standardized, but between groups 
 A lunge ranged between both feet on the floor, to a raised stair of variable height. The distance between the feet was typically not specified.
 When images were shown, the width of the feet ranged from nearly back-toe touching front-heel, to a more standard lunge with at least a foot between the back foot and front foot.
 
-A squat was t
+A squat typically involves both feet next to each other, and the participants bending down as far as they can.
+However, the placement of the feet with respect to each other (narrow or wide), and the direction of the toes (straight forward or pointed outward) were often not specified.
+Additionally, some groups defined a squat as having staggered feet, which bears striking similarity to what other groups appear to call a ``deep knee bend''.
+Unfortunately, the specifications of the movements were often not provided, just the name, causing tremendous difficulty is pairing different kinematics sequences between research groups.
 \subsection{Problem 2: No standardized set of movements to measure}
+Because kinematics measurements are primarily a research tool and have not been adopted as a clinical standard of care, the activities performed are entirely at the discretion of the research group.
+This leads to different research groups having their study participants perform different sets of activities.
+When trying to build a universal translator, one of the key components is having a large enough set of paired movements from single patients.
+For example, a large set of both ``walking'' and ``stair rise'' kinematics are needed to reliably build a network that could translate between the two.
+Unfortunately, few groups measured the same two movements reliably, leading to a paucity of paired kinematics data on which a translation algorithm could be built.
 
 \subsection{Problem 3: Groups measuring kinematics at different flexion angles}
 Another key issue in the proposed datasets is the flexion-angle resolution at which different groups measure kinematics.
