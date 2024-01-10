@@ -56,20 +56,39 @@ This encounters the same issue as the Mean Average Surface Distance, requiring s
   \label{fig:ASSD}
 \end{figure}
 
-The last is the Hausdorf Distance (\Cref{fig:HD}) \cite{huttenlocherMultiresolutionTechniqueComparing1993,felzenszwalbDistanceTransformsSampled2012,huttenlocherComparingImagesUsing1993}.
-The Hausdorf distance is the maximum distance from a point on one boundary to the nearest point on another boundary. Typically the Hausdorf distance for an entire countour is taken as the average of the Hausdorf distances for a series of sampled points on the target contour.
+The last is the Hausdorff Distance (\Cref{fig:HD}) \cite{huttenlocherMultiresolutionTechniqueComparing1993,felzenszwalbDistanceTransformsSampled2012,huttenlocherComparingImagesUsing1993}.
+The Hausdorff distance is the maximum distance from a point on one boundary to the nearest point on another boundary. Typically the Hausdorf distance for an entire countour is taken as the average of the Hausdorff distances for a series of sampled points on the target contour.
 Like the previous two, the Hamming distance requires sub-kernels for every sampled point, and so it is not feasible.
 
-At this point, all recommended distance metrics do not satisfy our criteria for a feasible cost function that introduces an error gradient.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{~/figures/raster/HausdorfDistance.png}
-  \caption{A graphical representation of the Hausdorf Distance, taken from \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}}.
+  \caption{A graphical representation of the Hausdorff Distance, taken from \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}}.
   \label{fig:HD}
 \end{figure}
 
+At this point, all recommended distance metrics do not satisfy our criteria for a feasible cost function that introduces an error gradient.
+Based on the pitfalls of each of the above, the ability to pre-compute as many values as possible in order to reduce the algorithmic load during optimization seems ideal.
+In previous work, 3D distance maps were pre-computed to perform medical model-image registration \cite{lavalleeRecoveringPositionOrientation1995,zuffiModelbasedMethodReconstruction1999}.
+And so, a cost function was devised that can utilized pre-computed distance maps to introduce an error gradient, without needing to spawn multiple kernels during each iteration of optimization.
 
+\subsection{Modified Mean Distance Cost Function}
+First, rather than looking at an average distance of all points on the target (a process which spawns multiple sub-kernels), we introduce a distance map which encodes the distance to the \emph{closest point} on the target contour.
+
+With an arbitrary image point defined as $p_{xy}$, and the target contour defined as $T$, we can express this distance map as a grid, $\displaystyle DM_{xy}(T) = \min_{t\in T}d(p_{xy},t)$, where $d(p_{xy},t)$ is any distance function that you want to use. In our case, we use the $L_{1}$-distance for efficient computation.
+
+And then, one can express a notion of distance between the projected contour and the target contour by taking the average of the element-wise multiplication between the projection and the pre-calculated distance map (\cref{eq:DMCF}).
+This has the major benefit of only needing a single kernel for each iteration (we are only iterating once per projection and performing a multiplication and atomic addition in memory) as well as sharing a minimum with the Hamming distance.
+We can see this by noticing that $DM_{x,y}=0$ for points on the target contour, and so, if $Proj_{x,y}$ were perfectly aligned with this contour, our summation would simply be adding zeros.
+
+\begin{equation}
+  \label{eq:DMCF}
+  J = \dfrac{ \sum_{(x,y) \in \text{Image}} Proj_{x,y}DM_{x,y} }{\sum_{(x,y)\in \text{Image}}Proj_{x,y}}
+\end{equation}
+
+Unfortunately, the results of this endeavor do not improve the overall performance of the DIRECT algorithm in finding a global minima for rTSA implants.
+The performance is very similar to the poor performance noticed during the Hamming distance.
 
 
 %%% Local Variables:
