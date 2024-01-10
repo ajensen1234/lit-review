@@ -1,3 +1,76 @@
+\subsection{Introduction}
+Due to the relatively poor performance of the standard optimization algorithm (DIRECT \cite{jonesLipschitzianOptimizationLipschitz1993,floodAutomatedRegistration3D2018}) and the cost function ($L_{1}$-distance or Hamming Distance \cite{floodAutomatedRegistration3D2018}), the first step was to determine whether a more robust representation of image similarity might offer a stronger performance (\cref{sec:image-similarity}).
+There are a few approaches that were used to determine a more robust image similarity description that might make it easier to find a global minima for this model-image registration problem.
+
+Firstly, we considered enhancing the convexity of the problem.
+In the current formulation, the cost is at its maximum error ($\sum I + P$) when there is no overlap between the projection and the CNN, regardless of whether the projection is off by 5 pixels or 500 pixels.
+This issue necessitates a more nuanced error gradient.
+
+Secondly, we delved into the psychology of shape.
+Since manual registration serves as the benchmark for ground-truth kinematics, understanding human perception of shape differences and overlaps is crucial.
+
+Lastly, consultations with surgeons and engineers experienced in manual kinematics measurements were sought. Their insights into effective procedures and features for accurate registration are invaluable for refining our approach.
+
+There were some constraints when exploring the addition of new cost parameters for Joint Track Machine Learning.
+Primarily, no new cost functions could conflict with the established Hamming Distance, meaning all additional metrics must reach their minimum concurrently with the Hamming distance.
+Additionally, the algorithm needed to support parallel processing in CUDA without significantly increasing the computational load per image.
+Maintaining the current efficiency, where only one error kernel is required per iteration, was crucial to preserve application performance.
+
+\subsection{Improving Error Gradient}
+In order to improve the gradient, some notion of ``closeness'' and ``farness'' needs to be established in the image plane, beyond just ``hits'' and ``misses'' that are counted during the Hamming distance.
+
+The general class of functions that satisfy this propery, while also offering consistent minima with the Hamming distance are called \textit{surface distances} \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}.
+A surface distance is exactly the mathematical formulation that captures this notion of ``closeness'' or ``farness'' from one contour to another contour in an image plane.
+A sub-distinction of surface distances are \emph{symmetric surface distances}, in which $d(a,b) = d(b,a)$, but this need not be the case for a useful metric.
+There are four main recommended metrics for evaluating the surface distance.
+
+The first is the Normalized Surface Distance or Normalized Surface Dice (\Cref{fig:surfDICE}) \cite{nikolovClinicallyApplicableSegmentation2021} .
+Unfortunately, surface DICE runs into the same issue as Hamming distance where it is maximized at points of no overlap, but does not make true distinctions between closer and farther estimations.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{~/figures/raster/NSD.png}
+  \caption{A graphical representation of the Normalized Surface Distance from \cite{reinkeUnderstandingMetricrelatedPitfalls2023,reinkeCommonLimitationsImage2023}}.
+  \label{fig:surfDICE}
+\end{figure}
+
+The second is the Mean Average Surface Distance or Mean Surface Distance (\Cref{fig:MASD}) \cite{benesPerformanceEvaluationImage2015}.
+This measures the \emph{mean} of the \emph{averages} over all shortest distances from all points on one boundary to any point on another boundary \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}.
+A major pitfall of this method is that calculating the average distance to the estimation would require spawning one sub-kernel per sampled pixel on the target and estimated contour, which would increase the number of computations by multiple orders of magnitude.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{~/figures/raster/MASD.png}
+  \caption{A graphical representation of the Mean Average Surface Distance from \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}}.
+  \label{fig:MASD}
+\end{figure}
+
+The third is the Average Symmetric Surface Distance (\Cref{fig:ASSD}) \cite{yeghiazaryanFamilyBoundaryOverlap2018}.
+This is a symmetric variation of the mean average surface distance, which does not take the mean of the average shortest distances, but rather just the average distance from both contours to the other contour.
+This encounters the same issue as the Mean Average Surface Distance, requiring sub-kernels to calculate distances for each sampled point, drastically increasing the required number of computations per iteration.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{~/figures/raster/ASSD.png}
+  \caption{A graphical representation of the Average Symmetric Surface Distance from \cite{reinkeUnderstandingMetricrelatedPitfalls2023,reinkeCommonLimitationsImage2023}}.
+  \label{fig:ASSD}
+\end{figure}
+
+The last is the Hausdorf Distance (\Cref{fig:HD}) \cite{huttenlocherMultiresolutionTechniqueComparing1993,felzenszwalbDistanceTransformsSampled2012,huttenlocherComparingImagesUsing1993}.
+The Hausdorf distance is the maximum distance from a point on one boundary to the nearest point on another boundary. Typically the Hausdorf distance for an entire countour is taken as the average of the Hausdorf distances for a series of sampled points on the target contour.
+Like the previous two, the Hamming distance requires sub-kernels for every sampled point, and so it is not feasible.
+
+At this point, all recommended distance metrics do not satisfy our criteria for a feasible cost function that introduces an error gradient.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{~/figures/raster/HausdorfDistance.png}
+  \caption{A graphical representation of the Hausdorf Distance, taken from \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}}.
+  \label{fig:HD}
+\end{figure}
+
+
+
 
 %%% Local Variables:
 %%% mode: latex
