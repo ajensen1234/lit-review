@@ -30,7 +30,7 @@ Unfortunately, surface DICE runs into the same issue as Hamming distance where i
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{~/figures/raster/NSD.png}
-  \caption{A graphical representation of the Normalized Surface Distance from \cite{reinkeUnderstandingMetricrelatedPitfalls2023,reinkeCommonLimitationsImage2023}}.
+  \caption{A graphical representation of the Normalized Surface Distance from \cite{reinkeUnderstandingMetricrelatedPitfalls2023,reinkeCommonLimitationsImage2023}.}
   \label{fig:surfDICE}
 \end{figure}
 
@@ -41,7 +41,7 @@ A major pitfall of this method is that calculating the average distance to the e
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{~/figures/raster/MASD.png}
-  \caption{A graphical representation of the Mean Average Surface Distance from \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}}.
+  \caption{A graphical representation of the Mean Average Surface Distance from \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}.}
   \label{fig:MASD}
 \end{figure}
 
@@ -52,7 +52,7 @@ This encounters the same issue as the Mean Average Surface Distance, requiring s
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{~/figures/raster/ASSD.png}
-  \caption{A graphical representation of the Average Symmetric Surface Distance from \cite{reinkeUnderstandingMetricrelatedPitfalls2023,reinkeCommonLimitationsImage2023}}.
+  \caption{A graphical representation of the Average Symmetric Surface Distance from \cite{reinkeUnderstandingMetricrelatedPitfalls2023,reinkeCommonLimitationsImage2023}.}
   \label{fig:ASSD}
 \end{figure}
 
@@ -64,11 +64,11 @@ Like the previous two, the Hamming distance requires sub-kernels for every sampl
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{~/figures/raster/HausdorfDistance.png}
-  \caption{A graphical representation of the Hausdorff Distance, taken from \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}}.
+  \caption{A graphical representation of the Hausdorff Distance, taken from \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}.}
   \label{fig:HD}
 \end{figure}
 
-At this point, all recommended distance metrics do not satisfy our criteria for a feasible cost function that introduces an error gradient.
+At this point, none of the recommended distance metrics satisfy our criteria for a feasible cost function that introduces an error gradient.
 Based on the pitfalls of each of the above, the ability to pre-compute as many values as possible in order to reduce the algorithmic load during optimization seems ideal.
 In previous work, 3D distance maps were pre-computed to perform medical model-image registration \cite{lavalleeRecoveringPositionOrientation1995,zuffiModelbasedMethodReconstruction1999}.
 And so, a cost function was devised that can utilized pre-computed distance maps to introduce an error gradient, without needing to spawn multiple kernels during each iteration of optimization.
@@ -76,7 +76,7 @@ And so, a cost function was devised that can utilized pre-computed distance maps
 \subsection{Modified Mean Distance Cost Function}
 First, rather than looking at an average distance of all points on the target (a process which spawns multiple sub-kernels), we introduce a distance map which encodes the distance to the \emph{closest point} on the target contour.
 
-With an arbitrary image point defined as $p_{xy}$, and the target contour defined as $T$, we can express this distance map as a grid, $\displaystyle DM_{xy}(T) = \min_{t\in T}d(p_{xy},t)$, where $d(p_{xy},t)$ is any distance function that you want to use. In our case, we use the $L_{1}$-distance for efficient computation.
+With an arbitrary image point defined as $p_{xy}$, and the target contour defined as $T$, we can express this distance map as a grid, $\displaystyle DM_{xy}(T) = \min_{t\in T}d(p_{xy},t)$, where $d(p_{xy},t)$ is any distance function that you want to use. In our case, we use the $L_{1}$-distance for efficient computation. We use OpenCV's \texttt{distanceTransform()} function for this \cite{bradskiOpenCVLibrary2000}.
 
 And then, one can express a notion of distance between the projected contour and the target contour by taking the average of the element-wise multiplication between the projection and the pre-calculated distance map (\cref{eq:DMCF}).
 This has the major benefit of only needing a single kernel for each iteration (we are only iterating once per projection and performing a multiplication and atomic addition in memory) as well as sharing a minimum with the Hamming distance.
@@ -88,7 +88,147 @@ We can see this by noticing that $DM_{x,y}=0$ for points on the target contour, 
 \end{equation}
 
 Unfortunately, the results of this endeavor do not improve the overall performance of the DIRECT algorithm in finding a global minima for rTSA implants.
-The performance is very similar to the poor performance noticed during the Hamming distance.
+The performance is very similar to the poor performance while using the Hamming distance cost function.
+
+\subsection{The Psychology of Shape and Mimicking Human Operators}
+Early research in computer vision was closely tied to the psychology and neurology of human perception.
+Humans possess a remarkable ability to describe what they see, either through language or mathematical notation.
+This skill remains a challenge to replicate programmatically in computers.
+Although some multi-modal speech/vision models show promise in a general sense, they lack a deep technical understanding of the visual content they process.
+
+Historically, the first attempts to mathematically describe shapes, vision, images, and curves were rooted in psychological literature \cite{attneaveInformationalAspectsVisual1954,attneaveQuantitativeStudyShape1956,koenderinkStructureImages1984,koenderinkSurfaceShapeCurvature1992}.
+This foundation seems appropriate for enhancing reverse Total Shoulder Arthroplasty (rTSA) model-image registration.
+The task essentially involves breaking down a contour into its basic shape and elemental components.
+
+In the mid-1950s, psychologist Fred Attneave made significant contributions to understanding visual information redundancy and identifying regions in images and shapes that humans perceive as highly salient \cite{attneaveQuantitativeStudyShape1956,attneaveInformationalAspectsVisual1954}.
+He found that humans could recognize most images even when the shapes were significantly simplified, retaining only the most relevant features.
+Attneave pinpointed regions of high curvature, areas with a relatively high change in the normal vector, as those carrying the most information about a shape (\cref{fig:attneave}).
+He noted that most other line segments were superfluous for shape recognition.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.45\textwidth]{~/figures/raster/attneave-blob-points.png}
+  \includegraphics[width=0.45\textwidth]{~/figures/raster/attneave-cat-contour.png}
+  \caption{Some representative examples of the experiences that Fred Attneave performed to establish the primacy of high curvature as salient in shape recreation and recognition, from \cite{attneaveInformationalAspectsVisual1954}.}
+  \label{fig:attneave}
+\end{figure}
+
+This understanding resonates with surgeons and engineers experienced in manual registration of rTSA implants.
+They report that transitioning an image frame from “good” to “great” hinges on achieving visually precise alignment between the corners and edges of the projected 3D model and the fluoroscopic image.
+Their emphasis on the importance of accurately aligning high-curvature regions aligns with Attneave's findings.
+
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.3\textwidth]{~/figures/raster/TSA_original.png}
+  \includegraphics[width=0.3\textwidth]{~/figures/raster/TSA_transparent.png}
+  \includegraphics[width=0.3\textwidth]{~/figures/raster/TSA_solid.png}
+  \caption{Some different model views of a manually registered humeral and glenoid implant in an rTSA system. Of note, each view gives the user a different type of feature to focus on. The original view allows the user to determine the relative orientation based on shading, the transparent view allows the user to see the underlying fluoroscopic image, and the solid view allows the user to focus on specific regions of error. Each is crucial to performing manual registration.}
+  \label{fig:TSA-multiview}
+\end{figure}
+
+\subsection{Developing a Cost Function for Aligning High-Curvature Regions}
+
+Informed by these findings, I aimed to develop a cost function that facilitates the alignment of high-curvature regions between the target shape and the projected shape.
+The constraints, as outlined in the previous chapter, remain: any new cost functions must reach a global minimum concurrently with the Hamming distance, and computational efficiency is paramount.
+
+
+Given that there is a finite number of high-curvature regions for any given implant, and that their total count can be limited, the disadvantages associated with many surface distances seem mitigatable.
+This mitigation strategy would involve focusing exclusively on these high-curvature regions rather than every pixel along the surface.
+However, this approach introduces the challenge of having to spawn sub-kernels for each iteration.
+
+To circumvent this, an \emph{asymmetric surface distance}, where $d(a,b) \ne d(b,a)$, becomes necessary.
+Such a distance metric would allow for the pre-computation of a distance map based on the target shape.
+Since this target does not change with each iteration, and memory usage is manageable due to the small number of points required for distance calculation, this approach seems promising.
+By focusing on pre-computed distances for critical high-curvature points, we can maintain computational efficiency while potentially improving the accuracy of alignment.
+
+\subsubsection{Finding Regions of High Curvature}
+The first step to implementing this cost function is determining the regions with high curvature in the contour, which is not as simple as it seems.
+To do this, one requires a contour-extraction algorithm, a discrete curvature equation, and a method for automatically selecting regions of high curvature.
+
+OpenCV provides a \texttt{findContours} function \cite{bradskiOpenCVLibrary2000} that provides a pre-specified number of contiguous contour points following an algorithm proposed by Suzuki and Abe \cite{suzukiTopologicalStructuralAnalysis1985}.
+For our implementation, we extract 200 contour points.
+
+For a discrete implementation of curvature, we turn to Menger's Algorithm \cite{legerMengerCurvatureRectifiability1999}.
+This method defines the discrete curvature as the reciprocal of the radius of a circle fit through three points along the contour (\cref{eq:menger}).
+Typically, a window of size $t$ is defined to expand the proximity of the three points along the curvature and make the calculations more robust to noise. In our implementation, $t=18$.
+
+\begin{equation}
+  \label{eq:menger}
+  \begin{split}
+  C_{i} &= \dfrac{1}{radius(p_{i-t},p_{i},p_{i+t})}\\
+        &\text{where} \\
+        radius(x,y,z) &= \dfrac{4 \cdot Area}{|x-y||y-z||z-x|}
+  \end{split}
+\end{equation}
+
+Because we are using a neural network segmentation as the contour, there will naturally be some noise in our contour (\cref{fig:tsa-curv}), which leads to noise in the curvature calculations.
+We removed noise by applying a 1-D Gaussian convolution to the array of curvature values using a 9-wide Gaussian kernel.
+Regions of the highest curvature will be represented as peaks along our plot (\cref{fig:tsa-curv}).
+
+To extract the regions with high curvature programmatically, we do two things.
+First, we filter out curvature values where $c_{i} \le \mu_{curvature} + 1.5\sigma_{curvature}$ to ensure that we are only selecting high curvature points.
+Then, we find the inflection points of the first derivative to find regions where our curvature moves from a positive derivative to a negative derivative, indicating the ``peak'' of that curvature region.
+The points retrieved by this algorithm are exactly the points at which the specific contour has the highest curvature.
+These points were consistent with the regions that human operators intuitively selected as high curvature regions.
+
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{~/figures/raster/TSA_curvature.png}
+  \caption{A plot demonstrating the values of the Menger Curvature along the contour of an rTSA humeral implant. The regions of high curvature are the peaks of the plot.}
+  \label{fig:tsa-curv}
+\end{figure}
+
+
+
+\subsubsection{Modified Asymmetric Surface Distance}
+Once we have established a set of keypoints representing the regions of the highest curvature, we must determine a pre-computable distance metric for creating a cost function.
+We can rule out the Hausdorff distance because we want each point to contribute to the overall distance, not just the point that has the maximum distance.
+We can rule out the Symmetric distance, because we are looking for an asymmetric function to avoid spawning sub-kernels in our iteration call.
+Thus, the Mean Surface Distance remains.
+Our modified version removes the distance calculations from the projection to the target (creating asymmetry) and only calculates distances centered at the selected keypoints.
+We pre-compute the distance maps to each keypoint using OpenCV's \texttt{distanceTransform()}, and apply element-wise multiplication to find the nearest projected point to each keypoint (\cref{eq:curv-keypoint}).
+
+\begin{equation}
+  \label{eq:curv-keypoint}
+  \begin{split}
+    \displaystyle J &= \dfrac{\sum_{k \in \mathbb{K}}(\min_{p\in Proj}(p \cdot DM_{k}))}{N} \\
+      &\text{where}\\
+    \mathbb{K} &= \text{Set of all keypoints} \\
+    N &= \text{Number of keypoints} \\
+    DM_{k} &= \text{Distance map for keypoint $k$} \\
+    p &= \text{Single point on projection silhouette}
+  \end{split}
+\end{equation}
+
+Unfortunately, this too yields rather poor performance.
+Despite algorithmically identifying salient features in the image and minimizing the distance of these points to the estimation, the optimization routine is still unable to accurately find a solution that matches human-supervised registration.
+
+\subsection{Discussion}
+This section presented an in-depth exploration of my efforts toward applying Joint Track Machine Learning to reverse Total Shoulder Arthroplasty implants.
+Although none of the applications offered a successful solution for rTSA model-image registration, they still showed promise in growing the overall body of knowledge in the field.
+
+First, all of the algorithms were tested on TKA implant registration to ensure that none altered the previous performance of JTML.
+Additionally, because of the listed strengths for each of the algorithms, they might even offer stronger and more robust performance than the traditional Hamming distance for TKA implants.
+This hypothesis needs to be tested and evaluated, but, in my estimation, we would drastically improve the speed of convergence and overall accuracy of JTML with the described additions.
+
+Additionally, though none of the methods were successful in aligned rTSA implants, they still demonstrate a depth of knowledge and a valuable resource for anyone performing model-image registration.
+The thought process demonstrates a methodical and calculated approach to applying a wide array of mathematical tools to a difficult problem, which is valuable for anyone attempting a similar technical hurdle.
+
+Lastly, the inability of any of the previous methods to accurately perform model-image registration demonstrates a deficiency in the overall pipeline.
+One deficiency might be a ceiling effect of the performance of the CNN segmentation.
+This is unlikely, as all IOU scores were in the mid- to high- 90s, which is state of the art performance.
+Augmenting the neural network error functions with a surface-based metric might yield a more robust segmentation for our purposes.
+Another potential deficiency is the choice of Euler-angles in the optimization process, rather than a more robust rotation parametrization, like Quaternions.
+Due to the non-commutativity of Euler angles, we might be finding that the relative orientation of the humeral implants is at a sub-optimal region in the cost-space.
+The final possible deficiency is the shape itself.
+Compared to TKA implants, which have numerous projections and sharp curves, a humeral implant is relatively ``cylindrical''.
+This would mean that minor changes in orientation would not yield large changes in the projected shape, causing optimization troubles.
+
+Each identified deficiency represents a promising avenue for future research and development.
+The exploration of these potential areas of improvement could lead to significant advancements in model-image registration techniques.
+The final section of this chapter will address the potential sensitivity of the projected shape to input orientation, further exploring the nuances of this complex and evolving area of study.
 
 
 %%% Local Variables:
