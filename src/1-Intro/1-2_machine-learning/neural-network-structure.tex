@@ -18,7 +18,14 @@ The most basic unit of a neural network is the perceptron (or neuron), which is 
     \label{eq:neuron}
 \end{equation}
 
-Activation functions are a crucial component in neural networks as they allow for the introduction of non-linearity, which is essential for the network's ability to learn complex representations of the input data. Without activation functions, a neural network would only be able to learn linear relationships between the input and output. However, many real-world problems involve non-linear relationships that cannot be captured by a linear model alone. Activation functions provide a way to move beyond a linear relationship, allowing the neural network to learn more nuanced mappings between the input and output. The choice of activation function depends on the specific problem you are trying to solve and the architecture of your network. Some activation functions introduce more non-linearity than others and some trade-off between non-linearity and computational efficiency. Experimenting with different activation functions and observing the impact on the network's performance can be a useful technique for optimizing the performance of a neural network. A list of common activation functions and their equations is shown in Table \ref{tab:activation-functions}.
+Activation functions are a crucial component in neural networks as they allow for the introduction of non-linearity, which is essential for the network's ability to learn complex representations of the input data.
+Without activation functions, a neural network would only be able to learn linear relationships between the input and output.
+However, many real-world problems involve non-linear relationships that cannot be captured by a linear model alone.
+Activation functions provide a way to move beyond a linear relationship, allowing the neural network to learn more nuanced mappings between the input and output.
+The choice of activation function depends on the specific problem you are trying to solve and the architecture of your network.
+Some activation functions introduce more non-linearity than others and some trade-off between non-linearity and computational efficiency.
+Experimenting with different activation functions and observing the impact on the network's performance can be a useful technique for optimizing the performance of a neural network.
+A list of common activation functions and their equations is shown in Table \ref{tab:activation-functions}.
 
 \begin{table}[H]
     \caption{A list of activation functions and their corresponding mathematical formula} \label{tab:activation-functions}
@@ -34,7 +41,10 @@ Activation functions are a crucial component in neural networks as they allow fo
 \end{table}
 
 \subsubsection{Fully Connected Network}
-The fully connected network, also known as the multi-layer perceptron, is a basic type of neural network that utilizes the neurons previously discussed as building blocks. Its schematic representation is a familiar image to many when considering neural networks. By stacking the summations and multiplications of each neuron, we can derive the equation for a single layer of a fully connected network, which is simply a matrix multiplication (\cref{eq:fcn}). In this equation, $W$ represents the collection of weights for each neuron, $a$ represents the input, $b$ represents the bias, and $\phi$ represents the activation function.
+The fully connected network, also known as the multi-layer perceptron, is a basic type of neural network that utilizes the neurons previously discussed as building blocks.
+Its schematic representation is a familiar image to many when considering neural networks.
+By stacking the summations and multiplications of each neuron, we can derive the equation for a single layer of a fully connected network, which is simply a matrix multiplication (\cref{eq:fcn}).
+In this equation, $W$ represents the collection of weights for each neuron, $a$ represents the input, $b$ represents the bias, and $\phi$ represents the activation function.
 
 One of the key strengths of this type of network is the utilization of non-linear activation functions. A well-chosen activation function can greatly impact the network's performance and ability to achieve specific tasks. For example, in a binary classification task, the sigmoid activation function can be used at the output layer, constraining the output between $0$ (false) and $1$ (true). The output can then represent the probability of the given input being classified as 'true'. The ReLU activation function is another popular choice because it is computationally efficient and often used in hidden layers of deep networks. Additionally, the hyperbolic tangent (tanh) activation function is used in the context of a model where data follows a Gaussian distribution.
 
