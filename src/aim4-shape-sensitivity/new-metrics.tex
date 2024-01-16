@@ -218,12 +218,12 @@ The thought process demonstrates a methodical and calculated approach to applyin
 
 Lastly, the inability of any of the previous methods to accurately perform model-image registration demonstrates a deficiency in the overall pipeline.
 One deficiency might be a ceiling effect of the performance of the CNN segmentation.
-This is unlikely, as all IOU scores were in the mid- to high- 90s, which is state of the art performance.
+This is unlikely, as all IOU scores were in the mid- to high-90s, which is state of the art performance.
 Augmenting the neural network error functions with a surface-based metric might yield a more robust segmentation for our purposes.
 Another potential deficiency is the choice of Euler-angles in the optimization process, rather than a more robust rotation parametrization, like Quaternions.
 Due to the non-commutativity of Euler angles, we might be finding that the relative orientation of the humeral implants is at a sub-optimal region in the cost-space.
 The final possible deficiency is the shape itself.
-Compared to TKA implants, which have numerous projections and sharp curves, a humeral implant is relatively ``cylindrical''.
+Compared to TKA implants, which have numerous and sharp curves and protrusions, a humeral implant is relatively ``cylindrical''.
 This would mean that minor changes in orientation would not yield large changes in the projected shape, causing optimization troubles.
 
 Each identified deficiency represents a promising avenue for future research and development.
@@ -233,5 +233,5 @@ The final section of this chapter will address the potential sensitivity of the 
 
 %%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "../../Jensen-Lit-Review"
+%%% TeX-master: "../../Andrew_Jensen_Dissertation"
 %%% End:
