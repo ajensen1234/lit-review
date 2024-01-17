@@ -1,5 +1,23 @@
-JTML on TSA
+\subsection{Introduction}
+The successful application of Joint Track Machine Learning (JTML) to Total Knee Arthroplasty (TKA) implants suggested potential applicability to other implant types and joints.
+This hypothesis was supported by JTML's robust performance across varied TKA implant styles, including posterior stabilized and cruciate retaining designs, and differences in the peg design of the tibial baseplate.
+Consequently, we replicated the TKA experimentation framework, applying it to Total Shoulder Arthroplasty (TSA) implant data, to assess whether this success could be mirrored in a different joint context.
 
+\subsection{Methods}
+We sourced 823 post-operative reverse TSA (rTSA) images with human-supervised kinematics from Nagoya University, adhering to IRB guidelines.
+These images were obtained using single-plane fluoroscopy to measure glenohumeral kinematics in patients performing anonymized movements.
+The collected data for each patient included deidentified radiographic images, imaging calibration files, and manufacturer-supplied glenoid and humeral implant surface geometry files.
+
+
+We employed the same convolutional neural network (CNN) architecture previously used for TKA implants \cite{wangDeepHighResolutionRepresentation2020} (\cref{sec:jtml}) maintaining an 80/20 training/testing split.
+A key consideration was the relative scarcity of rTSA images compared to TKA.
+To address this, we augmented the training set with non-affine transformations, specifically grid distortion and elastic transform \cite{buslaevAlbumentationsFastFlexible2020}.
+While such transformations increased training times in the TKA pipeline, their computational intensity was manageable given the smaller rTSA image dataset, enhancing the network's generalization capability for rTSA image segmentation.
+
+Next, we applied the DIRECT-JTA algorithm from the JTML suite to rTSA images, evaluating our autonomous kinematics measurement platform.
+The efficacy of the algorithms will be assessed by comparing the root-mean-square difference between autonomous and human-supervised kinematic measurements on this novel test set.
+
+\subsection{Results}
 
 %%% Local Variables:
 %%% mode: latex
