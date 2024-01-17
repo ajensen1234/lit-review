@@ -18,6 +18,18 @@ Next, we applied the DIRECT-JTA algorithm from the JTML suite to rTSA images, ev
 The efficacy of the algorithms will be assessed by comparing the root-mean-square difference between autonomous and human-supervised kinematic measurements on this novel test set.
 
 \subsection{Results}
+{\Huge TODO - need to get the data from JTML, but not running neural networks}
+\subsection{Discussion}
+These results were...not good, to say the least, which defied our general intuition that with a robust segmentation network, the rest would follow naturally.
+It seems like this falls into a similar problem as the tibial implant ``symmetry trap'', wherein a symmetric axis in a 3D object presents difficult in model-image registration optimization.
+Broadly, the errors fell into two main categories.
+The first was around the internal/external rotation axis.
+This is very likely due to the semi-cylindrical shape of the humeral implant along that axis, causing a decreased sensitivity in the change of shape during these different rotation angles.
+This decreased shape sensitivity, along with any imperfections in the segmentation, would make it extremely difficult for our optimization routine to find the global minima.
+These considerations are addressed in a shape sensitivity analysis study later in this chapter (\cref{sec:shape-sensitivity}).
+The second was the distal end of the humeral implant registering correctly, but the proximal articular surface would be off.
+This is likely due to the image similarity cost function having no overall preference for any particular region along the contour, thus causing it to get trapped in a semi-reasonable local minima.
+These considerations are taken into account and used to create novel cost functions later in this chapter (\cref{sec:new-image-metrics})
 
 %%% Local Variables:
 %%% mode: latex

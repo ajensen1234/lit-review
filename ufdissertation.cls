@@ -164,8 +164,8 @@
 %%% They want Times New Roman, or Arial. 
 %%% Times New Roman is loaded by default, uncomment the \renewcommand below to switch it to Arial.
 
-\usepackage{mlmodern}
-%\RequirePackage{mathptmx}%  This is required to load and convert to times new roman
+%\usepackage{mlmodern}
+\RequirePackage{mathptmx}%  This is required to load and convert to times new roman
 %\RequirePackage{helvet}%    This is required to load Arial Font
 %\renewcommand{\familydefault}{\sfdefault}% Converts default to actual Arial
 
@@ -1077,8 +1077,26 @@
 % End of authorRemark
 
 
+\usepackage{listings}
+\usepackage{color}
 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
 
-
-
-
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=4
+}
