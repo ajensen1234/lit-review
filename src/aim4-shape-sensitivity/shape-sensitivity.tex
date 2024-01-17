@@ -25,16 +25,32 @@ Hu moments \cite{huVisualPatternRecognition1962}, the Hough Transform \cite{ball
 The central inquiry of this chapter is whether a robust binary shape descriptor can elucidate the relative underperformance of model-image registration for rTSA implants compared to TKA implants. This question not only addresses a specific technical challenge but also aims to contribute to the broader understanding of shape analysis in medical imaging.
 
 \subsection{Methods}
+\subsubsection{Data Collection}
 First, we collected one manufacturer-provided model from each of: rTSA humeral implant, rTSA glenosphere implant, TKA femoral implant, and TKA tibial implant for testing shape sensitivity.
+\subsubsection{Image Generation}
 The binary silhouette of each implant was rendered using an in-house CUDA camera model (CUDA Version 12.1) \cite{nickollsScalableParallelProgramming2008} to a $1024\times 1024$ image plane.
 The focal length of the pinhole camera model was 1000mm and each pixel was 0.3mm.
+All CUDA programming was performed on an NVIDIA Quadro P2200 GPU.
+\subsubsection{Shape Descriptor and Shape Differences}
+Due to the our desire to explore the sensitivity of rotational orientation to the shape sensitivity, we choose the Invariant Angular Radial Transform Descriptor (IARTD) as the shape descriptor, because this specifically addresses the radial aspects of the problem, ensuring strict invariance with respect to in-plane rotation \cite{leeNewShapeDescription2012}.
+For clarity in representation, successive rotations were denoted as subscripts, such that $R_{z}R_{x}R_{y} = R_{z,x,y}$. The application of the IARTD equation to an implant at a specific input orientation $R_{z,x,y}$ was represented as $IARTD(R_{z,x,y})$.
 
-In order to determine the ``shape sensitivity'' for a given input orientation, the central difference equation was applied to the shape descriptor for each of the three rotations
+Shape differences were calculated using the central difference equation on the IARTD vector produced from two different orientations.
+The grid of starting orientations was $\pm 30$ with a step size of $5$ for each of the $x$, $y$, and $z$ axes.
+The ``differences'' along each axes were computed by applying a positive and negative rotation ($\pm \delta $) of 1 degree.
+And so, for every input $x,y,z$ rotation, there will be three shape differences, one for each $\delta_{x}$, $\delta_{y}$ or $\delta_{z}$ (\cref{eq:shape-derivative}).
+
+
 
 \begin{equation}
   \label{eq:shape-derivative}
-  \Delta SD_{x,y,\delta_{i}} = SD_{R_{z}R_{x}R_{y}R_{+\delta_{i}}} - SD_{R_{z}R_{x}R_{y}R_{-\delta_{i}}}
+    \Delta IARTD(R_{z,x,y}) = IARTD(R_{z,x,y,+\delta}) - IARTD(R_{z,x,y,-\delta})
 \end{equation}
+
+Because each element of the IARTD vector is at a different scale, we must standardize each element in order to ensure accurate assessment of global behavior without analysis being dominated by a single value.
+We use z
+
+\subsubsection{Shape Sensitivity}
 
 
 \subsubsection{Code Examples}
