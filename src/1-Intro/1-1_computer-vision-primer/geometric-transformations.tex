@@ -11,7 +11,15 @@ In N-dimensional space, a point is represented as a set of N scalars, each repre
     \label{eq:point}
 \end{equation}
 
-Homogeneous coordinates provide a way to represent points with an additional scale factor, $\tilde{w}$. This allows us to perform rotations and translations simultaneously and successively using matrix multiplications. Homogeneous coordinates for a point in N-dimensional space are represented as a column vector with N+1 elements (\cref{eq:homog-point}). In most model-image registration applications, the scale factor $\tilde{w}$ is set to 1. When dealing with homogeneous coordinates, $\mathbf{\tilde{x}} = \tilde{w}\mathbf{\bar{x}}$, where $\mathbf{\tilde{x}}$ is the scaled version of $\bar{\mathbf{x}}$, and $\bar{\mathbf{x}}$ is simply the original vector, $\mathbf{x}$, with a $1$ appended.
+
+Homogeneous coordinates provide a way to represent points with an additional scale factor, $\tilde{w}$.
+This allows us to perform rotations and translations simultaneously and successively using matrix multiplications.
+The scale factor lets us handle projections and other transformations cleanly through linear algebra operations, even if the final result is not a vector in the original coordinate space.
+For example, a point $x = [2,3]^{T}$ in 2D can be converted to homogeneous coordinates as $\tilde{x} = [2,3,1]^{T}$.
+The $1$ is a placeholder for the scale term that allows matrix transformations like rotations and translations to be applied while preserving the original Cartesian coordinates stored in the first two elements.
+After the transformations, we can recover the Cartesian coordinates by dividing through by the final scale factor $\tilde{w}$.
+Homogeneous coordinates for a point in N-dimensional space are represented as a column vector matrix with N+1 elements (\cref{eq:homog-point}).
+When dealing with homogeneous coordinates, $\mathbf{\tilde{x}} = \tilde{w}\mathbf{\bar{x}}$, where $\mathbf{\tilde{x}}$ is the scaled version of $\bar{\mathbf{x}}$, and $\bar{\mathbf{x}}$ is simply the original vector, $\mathbf{x}$, with a $1$ appended.
 
 \begin{equation}
     \tilde{\mathbf{x}} = \begin{bmatrix}
@@ -85,7 +93,8 @@ where
 
 This will rotate an object by $\theta$ in the counter clockwise direction. 
 
-It's also possible to perform a rotation and a translation at the same time, by replacing the identity matrix $\mathbf{I}$ in Equation \ref{eq:translation} with the rotation matrix $\mathbf{R}$ from Equation \ref{eq:2d-rot-mat}. This results in a transformation that preserves lengths and angles while rotating and translating the rigid object (\cref{eq:2d-rot-trans}).
+It is also possible to perform a rotation and a translation at the same time, by replacing the identity matrix $\mathbf{I}$ in \Cref{eq:translation} with the rotation matrix $\mathbf{R}$ from \Cref{eq:2d-rot-mat}.
+This results in a transformation that preserves lengths and angles while rotating and translating the rigid object (\cref{eq:2d-rot-trans}).
 
 \begin{equation}
     \mathbf{x}' = \begin{bmatrix}
@@ -95,7 +104,7 @@ It's also possible to perform a rotation and a translation at the same time, by 
 \end{equation}
 
 
-A scaled rotation will change the size of the object by some scaler factor, $s$ (\cref{eq:2d-scaled-rot}); this transformation preserves angles.
+A scaled rotation will change the size of the object by some scalar factor, $s$ (\cref{eq:2d-scaled-rot}); this transformation preserves angles.
 
 \begin{equation}
     \mathbf{x}' = \begin{bmatrix}
@@ -104,7 +113,8 @@ A scaled rotation will change the size of the object by some scaler factor, $s$ 
     \label{eq:2d-scaled-rot}
 \end{equation}
 
-An affine transformation preserves parallelism, and is simply a pre-multiplication by an arbitrary $2 \times 3$ matrix (\cref{eq:2d-affine}).
+An affine transformation preserves parallel lines.
+It applies a general linear transformation defined by an arbitrary $2 \times 3$ matrix(\cref{eq:2d-affine}).
 
 \begin{equation}
     \begin{aligned}
@@ -117,7 +127,7 @@ An affine transformation preserves parallelism, and is simply a pre-multiplicati
     \label{eq:2d-affine}
 \end{equation}
 
-A projection matrix (or perspective transformation) is one that operates on homogeneous coordinates (\cref{eq:2d-projection}).
+A perspective transformation uses homogeneous coordinates to apply projections that handle depth and perspective foreshortening. This simulates a camera projection (\cref{eq:2d-projection}).
 
 \begin{equation}
     \begin{aligned}
@@ -192,7 +202,7 @@ In computer graphics, one of the most basic methods of projecting three-dimensio
 \end{equation}
 
 \paragraph*{Perspective Projection} 
-The most common 3D-2D projection is \emph{perspective projection}, which accounts for depth perception. This can be done by scaling each point by it's $z$ position relative to the camera (Eq. \ref{eq:perspective-proj}). This necessitates using homogeneous coordinates (Eq. \ref{eq:perspective-matrix}).
+The most common 3D-2D projection is \emph{perspective projection}, which accounts for depth perception. This can be done by scaling each point by its $z$ position relative to the camera (Eq. \ref{eq:perspective-proj}). This necessitates using homogeneous coordinates (Eq. \ref{eq:perspective-matrix}).
 
 \begin{equation}
     \bar{\mathbf{x}} = \mathcal{P}_z(\mathbf{p}) = \begin{bmatrix}

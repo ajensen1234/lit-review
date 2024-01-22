@@ -1,8 +1,13 @@
-Using our knowledge of geometric transformations and projective geometries, we can build up a model of a camera step by step. We standardize our reference frame by having the $z$ direction along the focal direction of the camera, the $x$ direction to the right, and the $y$ direction such that the right-hand rule is maintained. The origin is at the center of the camera.
+Using our knowledge of geometric transformations and projective geometries, we can build up a model of a camera step by step.
+We standardize our reference frame by having the $z$ direction along the focal direction of the camera, the $x$ direction to the right, and the $y$ direction such that the right-hand rule is maintained.
+The origin is at the center of the camera.
 
-We will describe the object of interest as a collection of points, $\mathbf{p}_i =  [x_i, y_i, z_i, 1] \text{ for } i = 1,2,\cdots,N$. For a complete picture, any given operation will be performed on all points. For simplicity, the following equations will demonstrate the process on a single point of the object.
+We will describe the object of interest as a collection of points, $\mathbf{p}_i =  [x_i, y_i, z_i, 1] \text{ for } i = 1,2,\cdots,N$.
+For a complete picture, any given operation will be performed on all points.
+For simplicity, the following equations will demonstrate the process on a single point of the object.
 
-First, we need to describe the location and orientation of the object with respect to the camera. This can be done with a 3D homogeneous transformation matrix (translation and rotation) (Eq. \ref{eq:4x4-homog-transformation}).
+First, we need to describe the location and orientation of the object with respect to the camera.
+This can be done with a 3D homogeneous transformation matrix (translation and rotation) (\cref{eq:4x4-homog-transformation}).
 
 \begin{equation}
     \tilde{\mathbf{p}}' = \begin{bmatrix}
@@ -11,7 +16,9 @@ First, we need to describe the location and orientation of the object with respe
     \label{eq:4x4-homog-transformation}
 \end{equation}
 
-Then, we use a projective transformation that determines the perspective scaling between the object's location and the image plane at the focal distance. Geometrically, this relationship can be visualized with similar triangles (\cref{fig:perspective-projection}) and quantified using the ratio of lengths (\cref{eq:perspective-projection}). In these equations, $f'$ is the focal distance in units of length.
+Then, we use a projective transformation that determines the perspective scaling between the object's location and the image plane at the focal distance.
+Geometrically, this relationship can be visualized with similar triangles (\cref{fig:perspective-projection}) and quantified using the ratio of lengths (\cref{eq:perspective-projection}).
+In these equations, $f'$ is the focal distance in units of length.
 
 \begin{figure}[h!]
     \begin{center}
@@ -34,7 +41,9 @@ Then, we use a projective transformation that determines the perspective scaling
     \label{eq:perspective-projection}
 \end{equation}
 
-The standard image reference frame places the origin at the top left corner of the image, with the positive x-direction to the right, and the positive y-direction down. This introduces the idea of the principal point, $(c_x,c_y)$, which is the location where the optical axis of the camera intersects the image plane perpendicularly. In the camera model, the principal point is a translation starting at the image plane's origin (Eq. \ref{eq:principal-point}).
+The standard image reference frame places the origin at the top left corner of the image, with the positive x-direction to the right, and the positive y-direction down.
+This introduces the idea of the principal point, $(c_x,c_y)$, which is the location where the optical axis of the camera intersects the image plane perpendicularly.
+In the camera model, the principal point is a translation starting at the image plane's origin (Eq. \ref{eq:principal-point}).
 
 
 \begin{equation}
@@ -49,7 +58,9 @@ The standard image reference frame places the origin at the top left corner of t
     \label{eq:principal-point}
 \end{equation}
 
-Finally, we need to convert the image coordinates, $\tilde{\mathbf{x}}_i$, to pixel coordinates using the pixel scale factor (Eq.\ref{eq:pixel-scaling}). The pixel scale factor is defined by the parameters $k_x$ and $k_y$, which represent the number of pixels per unit distance in the x and y directions, respectively. By multiplying the perspective projection matrix by the pixel scale factor, we can obtain a new matrix that maps 3D points in world coordinates directly to pixel coordinates on the image.
+Finally, we need to convert the image coordinates, $\tilde{\mathbf{x}}_i$, to pixel coordinates using the pixel scale factor (Eq.\ref{eq:pixel-scaling}).
+The pixel scale factor is defined by the parameters $k_x$ and $k_y$, which represent the number of pixels per unit distance in the x and y directions, respectively.
+By multiplying the perspective projection matrix by the pixel scale factor, we can obtain a new matrix that maps 3D points in world coordinates directly to pixel coordinates on the image.
 
 \begin{equation}
     \begin{aligned}
@@ -68,7 +79,9 @@ Finally, we need to convert the image coordinates, $\tilde{\mathbf{x}}_i$, to pi
     \label{eq:pixel-scaling}
 \end{equation}
 
-At this point, we have placed an object in front of a camera using 3D transformations, and then projected the points of that object onto the image plane using a camera matrix and projective transform. A simple silhouette rasterization of the image would simply fill in the pixel values interpolated between each of the discrete points obtained from this projection. Generating a photo-realistic image would involve coloring, shading, and ray tracing, but this is unnecessary for this dissertation, and will not be discussed.
+At this point, we have placed an object in front of a camera using 3D transformations, and then projected the points of that object onto the image plane using a camera matrix and projective transform.
+A simple silhouette rasterization of the image would simply fill in the pixel values interpolated between each of the discrete points obtained from this projection.
+Generating a photo-realistic image would involve coloring, shading, and ray tracing, but this is unnecessary for this dissertation, and will not be discussed.
 
 %%% Local Variables:
 %%% mode: latex

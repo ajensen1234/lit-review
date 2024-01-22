@@ -1,16 +1,24 @@
 \subsection{Training Neural Networks}
 
-The power of neural networks is that they are able to ``learn'' incredibly complex mappings from a set of training data. But how \emph{exactly} do they learn?
+The power of neural networks is that they are able to ``learn'' incredibly complex mappings from a set of training data.
+But how \emph{exactly} do they learn?
 
 \subsubsection{Neural Network Cost Functions}
 
-The first step in updating a machine learning pipeline is to understand the metric you are trying to minimize (or maximize). This can encode a specific understanding about the task at hand, and it can also be used to promote a specific structure in the network itself (parsimony, sparsity, etc).
+The initial step in refining a machine learning pipeline is to identify the metric you aim to minimize (or maximize).
+This metric can encode specific insights about the task at hand, and it can also be used to promote a specific structure in the network itself (parsimony, sparsity, etc).
 
-The \textbf{cost function} is exactly the metric that the learning algorithm is attempting to minimize. The application of different cost functions for different tasks in neural networks has been well studied. For regression, typically some type of distance metric is employed (mean absolute error, mean squared error, Kullback-Liebler distance), while classification tasks mostly utilize some type of cross-entropy or log likelihood metric \cite{paszkePyTorchImperativeStyle2019}.
+The \textbf{cost function} is exactly the metric that the learning algorithm is attempting to minimize.
+The application of different cost functions for different tasks in neural networks has been well studied.
+For regression, typically some type of distance metric is employed (mean absolute error, mean squared error, Kullback-Liebler distance), while classification tasks mostly utilize some type of cross-entropy or log likelihood metric \cite{paszkePyTorchImperativeStyle2019}.
 
 \subsubsection{Optimizing and Updating Weights}
 
-For convex problems, there often exists a closed-form solution for the parameters that minimize a given objective function. However, neural networks are highly non-linear and non-convex, forcing researchers to employ different methods of updating parameter values in a direction of minimizing the objective function. Backpropagation has become the ubiquitous choice for updating these highly non-linear systems. \cite{rumelhartLearningRepresentationsBackpropagating1986}. This utilizes gradient descent (\cref{eq:grad-descent}) and the chain rule (\cref{eq:chain-rule}) in order to calculate the affect that each node has on the final output, and update it in the direction that maximally minimizes the current error. Researchers can control how aggressive the update is by changing the learning rate, $\eta$.
+For convex problems, there often exists a closed-form solution for the parameters that minimize a given objective function.
+However, neural networks are highly non-linear and non-convex, forcing researchers to employ different methods of updating parameter values in a direction of minimizing the objective function.
+Backpropagation has emerged as the ubiquitous method for updating these highly non-linear systems \cite{rumelhartLearningRepresentationsBackpropagating1986}.
+This utilizes gradient descent (\cref{eq:grad-descent}) and the chain rule (\cref{eq:chain-rule}) in order to calculate the affect that each node has on the final output, and update it in the direction that maximally minimizes the current error.
+Researchers can control how aggressive the update is by changing the learning rate, $\eta$.
 
 \begin{equation}
     \begin{aligned}
@@ -26,7 +34,12 @@ For convex problems, there often exists a closed-form solution for the parameter
     \label{eq:chain-rule}
 \end{equation}
 
-One of the main limitations of gradient descent and backpropagation is the need to tune the learning rate. To small a value will cause a network to train extremely slowly and almost always get stuck in local minima. Too large a learning rate can cause the network to ``bounce out'' of the global minima due to the rate of change being too large. Hyperparameter tuning can be a difficult process without a refined methodology beyond trial and error. Some groups have proposed different methods of incorporating dynamically changing update rules in order to incorporate physical properties into the network training stage. The most common is Adaptive Moment Estimation \cite{kingmaAdamMethodStochastic2017}, which incorporates Root Mean Squared Propagation \cite{hinton2012neural} and momentum learning.
+One of the main limitations of gradient descent and backpropagation is the need to tune the learning rate.
+Too small a learning rate will result in extremely slow training of the network and almost always get stuck in local minima.
+Too large a learning rate can cause the network to ``bounce out'' of the global minima due to the rate of change being too large.
+Hyperparameter tuning often presents challenges, frequently relying on methodologies that extend beyond simple trial and error.
+Some groups have proposed different methods of incorporating dynamically changing update rules in order to incorporate physical properties into the network training stage.
+The most common is Adaptive Moment Estimation \cite{kingmaAdamMethodStochastic2017}, which incorporates Root Mean Squared Propagation \cite{hinton2012neural} and momentum learning.
 
 %%% Local Variables:
 %%% mode: latex

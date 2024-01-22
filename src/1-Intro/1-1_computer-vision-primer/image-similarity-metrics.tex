@@ -1,10 +1,15 @@
-One of the key components in model image registration is image similarity. Fundamentally, this is the method of determining how well the user's synthetic image matches with the actual fluoroscopic image. The choice of similarity metric is going to be determined by many key factors such as the a-priori availability of implant/bone geometry and knowledge of the image quality and contrast. Broadly, there are two classes of image similarity when performing model-image registration: intenisty-based and feature-based.
+One of the key components in model image registration is image similarity.
+This fundamentally involves determining how closely the user's synthetic image matches the actual fluoroscopic image.
+The choice of similarity metric will be influenced by several key factors, including the a-priori availability of implant/bone geometry and the knowledge of image quality and contrast.
+Broadly, there are two classes of image similarity when performing model-image registration: intenisty-based and feature based.
 
 \subsubsection{Intensity Based}
 \label{sec:img-sim-intensity}
-Intensity based measures are those that utilize specific pixel information in order to determine the difference between two images. This can be either a global image similarity metric, or a measure of the specfic regions of interest in the given image.
+Intensity based measures are those that utilize specific pixel information in order to determine the difference between two images.
+This can be either a global image similarity metric or a measure of specific regions of interest within the image.
 
-A canonical difference between two images would be the p-norm separating them (Eq. \ref{eq:p-norm}), which iterates through each pixel of the two images and finds the p-norm difference between each pixel pair. Common p-norms are the $L_1$ norm (\emph{absolute intensity differences} or \emph{mean absolute difference}) \cite{kanadeStereoMatchingAlgorithm1994} ($p=1$) and the $L_{2}$ norm, or Euclidean norm (\emph{squared intensity differences} or \emph{mean squared difference}) \cite{hannahComputerMatchingAreas1977}($p=2$).
+A canonical difference between two images would be the p-norm separating them (\cref{eq:p-norm}), which iterates through each pixel of the two images and finds the p-norm difference between each pixel pair.
+Common p-norms are the $L_1$ norm (\emph{absolute intensity differences} or \emph{mean absolute difference}) \cite{kanadeStereoMatchingAlgorithm1994} ($p=1$) and the $L_{2}$ norm, or Euclidean norm (\emph{squared intensity differences} or \emph{mean squared difference}) \cite{hannahComputerMatchingAreas1977}($p=2$).
 
 \begin{equation}
     \|A-B\|_{p} = (\sum_{x=0}^{w}\sum_{y=0}^{h}|a_{xy}-b_{xy}|^{p})^{\frac{1}{p}}
@@ -13,7 +18,10 @@ A canonical difference between two images would be the p-norm separating them (E
 
 In Equation \cref{eq:p-norm}, $A$ and $B$ are the two images being compared, $w$ and $h$ are the width and height of the images, and $a_{xy}$ and $b_{xy}$ are the intensity values at pixel $(x,y)$ in the two images, respectively.
 
-While conceptually easy to use, the main limitation of p-norm measures is their lack of spatial information. For example, an image that has been shifted by a linear transformation would not score well using a p-norm, despite the two images containing only a minor shift, scale, or rotation. One method for overcoming this limitation is to use the cross-correlation, or sliding dot product, between images \cite{bendatRandomDataAnalysis2010,hannahComputerMatchingAreas1977} (Eq. \ref{eq:xcorr}). When used in conjunction with projective geometry, this can help locate regions of interest for a model-based registration pipeline. The cross-correlation is calculated using the following equation:
+While conceptually easy to use, the main limitation of p-norm measures is their lack of spatial information.
+For example, an image that has been shifted by a linear transformation would not score well using a p-norm, despite the two images containing only a minor shift, scale, or rotation. One method for overcoming this limitation is to use the cross-correlation, or sliding dot product, between images \cite{bendatRandomDataAnalysis2010,hannahComputerMatchingAreas1977} (\cref{eq:xcorr}).
+When used in conjunction with projective geometry, this can help locate regions of interest for a model-based registration pipeline.
+The cross-correlation is calculated using the following equation:
 
 \begin{equation}
     \begin{aligned}
@@ -23,7 +31,8 @@ While conceptually easy to use, the main limitation of p-norm measures is their 
     \label{eq:xcorr}
 \end{equation}
 
-This will determine the regions of each image that are similar, causing the correlation function to ``light up'' at those areas in a similar way to the convolutional operation between two images. The normalized cross-correlation can also be used (\cref{eq:norm-xcorr}), which removes noise coming from each of the original images.
+This will determine the regions of each image that are similar, causing the correlation function to ``light up'' at those areas in a similar way to the convolutional operation between two images.
+The normalized cross-correlation can also be used (\cref{eq:norm-xcorr}), which removes noise coming from each of the original images.
 
 \begin{equation}
     \begin{aligned}
@@ -33,7 +42,12 @@ This will determine the regions of each image that are similar, causing the corr
 
 \subsubsection{Feature Based}
 \label{sec:img-sim-feature}
-Feature based image similarity metrics involve some method of determining key features in images, and using those notable features for measuring the differences between two images. These types of methods almost always involve some type of feature-extraction step, where the various features of interest are calculated and determined for subsequent use. The two main classes of features are \emph{keypoints} and \emph{edges}. The simplest method of keypoint detection is using a similar method to intensity-based matching, but having one of the ``images'' as a patch of the desired feature. With keypoints detected in the input image, one could determine the error of the current pose estimate by taking the Euclidean distance between all image keypoints and all projected keypoints: \cite{burtonAutomaticTrackingHealthy2021} (Eq. \ref{eq:kp-error}). With a-priori information about the keypoints, one could attach a weight to every keypoint in order to emphasize specific regions on the image and the model (Eq. \ref{eq:wkp-error})
+Feature based image similarity metrics involve methods for identifying key features in images and using these features to measure differences between two images.
+These types of methods almost always involve some type of feature-extraction step, where the various features of interest are calculated and determined for subsequent use.
+The two main classes of features are \emph{keypoints} and \emph{edges}.
+The simplest method of keypoint detection is using a similar method to intensity-based matching, but having one of the ``images'' as a patch of the desired feature.
+With keypoints detected in the input image, one could determine the error of the current pose estimate by taking the Euclidean distance between all image keypoints and all projected keypoints: \cite{burtonAutomaticTrackingHealthy2021} (\cref{eq:kp-error}).
+With a-priori information about the keypoints, weights could be assigned to each keypoint in order to emphasize specific regions on the image and the model (\cref{eq:wkp-error})
 
 \begin{equation}
     \begin{aligned}
@@ -49,15 +63,22 @@ Feature based image similarity metrics involve some method of determining key fe
     \label{eq:wkp-error}
 \end{equation}
 
-Keypoints are particularly useful when there are invariant features in images and 3D models, like morphological aspects of bones. However, if these features will not, or cannot always be detected, then other measures must be utilized.
+Keypoints are particularly useful when there are invariant features in images and 3D models, like morphological aspects of bones.
+However, if these features cannot be detected, alternative measures must be utilized.
 
 \paragraph*{Edges as Features}
-Edges are a natural choice of feature when determining image similarity. Similar to intensity-based image similarity, the similarity between the contours of two images offers a promising metric for determining the overall similarity between two images. In model-image registration, the contours of the input image and the projected model can easily be compared, which presents a reliable scheme for measuring their similarity. When the edges are aligned, you can say that the model is \textit{properly registered} to the image. However, how can we determine when the edges are aligned?
+Edges are a natural choice of feature when determining image similarity.
+Similar to intensity-based image similarity, the similarity between the contours of two images offers a promising metric for determining the overall similarity between two images.
+In model-image registration, the contours of the input image and the projected model can easily be compared, which presents a reliable scheme for measuring their similarity.
+When the edges are aligned, we say that the model is \textit{properly registered} to the image.
+However, how can we determine when the edges are aligned?
 
-As always, the simplest approach is to take the p-norm between the model and image contours (\cref{eq:p-norm}), where instead of taking the difference between the two original images, one is taking the difference of the edges of the images. This function will be minimized when there is complete overlap between image and model contours.
+As always, the simplest approach is to take the p-norm between the model and image contours (\cref{eq:p-norm}), where instead of taking the difference between the two original images, one is taking the difference of the edges of the images.
+This function will be minimized when there is complete overlap between image and model contours.
 
 \paragraph{Drawback of Feature Based Similarity Metrics}
-While they can be much more informative and specific, the main drawback of feature based image similarity metrics is the need for feature selection and extraction from the input image. Historically, this required an immense amount of domain-specific knowledge, and the image processing used to extract those features was often relatively limited in scope.
+While they can be much more informative and specific, the main drawback of feature based image similarity metrics is the need for feature selection and extraction from the input image.
+Historically, this required an immense amount of domain-specific knowledge, and the image processing used to extract those features was often relatively limited in scope.
 
 
 %%% Local Variables:
