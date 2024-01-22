@@ -1,6 +1,6 @@
 \subsection{Introduction}
 Due to the relatively poor performance of the standard optimization algorithm (DIRECT \cite{jonesLipschitzianOptimizationLipschitz1993,floodAutomatedRegistration3D2018}) and the cost function ($L_{1}$-distance or Hamming Distance \cite{floodAutomatedRegistration3D2018}), the first step was to determine whether a more robust representation of image similarity might offer a stronger performance (\cref{sec:image-similarity}).
-There are a few approaches that were used to determine a more robust image similarity description that might make it easier to find a global minima for this model-image registration problem.
+Several approaches were explored to enhance image similarity representation, aiming to facilitate the identification of global minima in this model-image registration challenge.
 
 Firstly, we considered enhancing the convexity of the problem.
 In the current formulation, the cost is at its maximum error ($\sum I + P$) when there is no overlap between the projection and the CNN, regardless of whether the projection is off by 5 pixels or 500 pixels.
@@ -19,7 +19,7 @@ Maintaining the current efficiency, where only one error kernel is required per 
 \subsection{Improving Error Gradient}
 In order to improve the gradient, some notion of ``closeness'' and ``farness'' needs to be established in the image plane, beyond just ``hits'' and ``misses'' that are counted during the Hamming distance.
 
-The general class of functions that satisfy this propery, while also offering consistent minima with the Hamming distance are called \textit{surface distances} \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}.
+The class of functions satisfying this property and offering consistent minima with the Hamming distance are termed \textit{surface distances} \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}.
 A surface distance is exactly the mathematical formulation that captures this notion of ``closeness'' or ``farness'' from one contour to another contour in an image plane.
 A sub-distinction of surface distances are \emph{symmetric surface distances}, in which $d(a,b) = d(b,a)$, but this need not be the case for a useful metric.
 There are four main recommended metrics for evaluating the surface distance.
@@ -74,7 +74,7 @@ In previous work, 3D distance maps were pre-computed to perform medical model-im
 And so, a cost function was devised that can utilized pre-computed distance maps to introduce an error gradient, without needing to spawn multiple kernels during each iteration of optimization.
 
 \subsection{Modified Mean Distance Cost Function}
-First, rather than looking at an average distance of all points on the target (a process which spawns multiple sub-kernels), we introduce a distance map which encodes the distance to the \emph{closest point} on the target contour.
+Initially, instead of considering the average distance across all target points – a process that necessitates spawning multiple sub-kernels – we introduce a distance map encoding the distance to the \emph{nearest point} on the target contour.
 
 With an arbitrary image point defined as $p_{xy}$, and the target contour defined as $T$, we can express this distance map as a grid, $\displaystyle DM_{xy}(T) = \min_{t\in T}d(p_{xy},t)$, where $d(p_{xy},t)$ is any distance function that you want to use. In our case, we use the $L_{1}$-distance for efficient computation. We use OpenCV's \texttt{distanceTransform()} function for this \cite{bradskiOpenCVLibrary2000}.
 
@@ -93,7 +93,7 @@ The performance is very similar to the poor performance while using the Hamming 
 \subsection{The Psychology of Shape and Mimicking Human Operators}
 Early research in computer vision was closely tied to the psychology and neurology of human perception.
 Humans possess a remarkable ability to describe what they see, either through language or mathematical notation.
-This skill remains a challenge to replicate programmatically in computers.
+Replicating this skill in computers programmatically continues to present significant challenges.
 Although some multi-modal speech/vision models show promise in a general sense, they lack a deep technical understanding of the visual content they process.
 
 Historically, the first attempts to mathematically describe shapes, vision, images, and curves were rooted in psychological literature \cite{attneaveInformationalAspectsVisual1954,attneaveQuantitativeStudyShape1956,koenderinkStructureImages1984,koenderinkSurfaceShapeCurvature1992}.
@@ -209,7 +209,7 @@ Despite algorithmically identifying salient features in the image and minimizing
 This section presented an in-depth exploration of my efforts toward applying Joint Track Machine Learning to reverse Total Shoulder Arthroplasty implants.
 Although none of the applications offered a successful solution for rTSA model-image registration, they still showed promise in growing the overall body of knowledge in the field.
 
-First, all of the algorithms were tested on TKA implant registration to ensure that none altered the previous performance of JTML.
+First, all algorithms were rigorously tested on TKA implant registration to verify that they did not negatively impact the established performance of JTML.
 Additionally, because of the listed strengths for each of the algorithms, they might even offer stronger and more robust performance than the traditional Hamming distance for TKA implants.
 This hypothesis needs to be tested and evaluated, but, in my estimation, we would drastically improve the speed of convergence and overall accuracy of JTML with the described additions.
 
@@ -220,7 +220,7 @@ Lastly, the inability of any of the previous methods to accurately perform model
 One deficiency might be a ceiling effect of the performance of the CNN segmentation.
 This is unlikely, as all IOU scores were in the mid- to high-90s, which is state of the art performance.
 Augmenting the neural network error functions with a surface-based metric might yield a more robust segmentation for our purposes.
-Another potential deficiency is the choice of Euler-angles in the optimization process, rather than a more robust rotation parametrization, like Quaternions.
+Another potential limitation is the use of Euler angles in the optimization process, as opposed to a more robust rotation parametrization, such as Quaternions.
 Due to the non-commutativity of Euler angles, we might be finding that the relative orientation of the humeral implants is at a sub-optimal region in the cost-space.
 The final possible deficiency is the shape itself.
 Compared to TKA implants, which have numerous and sharp curves and protrusions, a humeral implant is relatively ``cylindrical''.

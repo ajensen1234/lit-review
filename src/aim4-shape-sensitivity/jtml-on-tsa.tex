@@ -1,16 +1,17 @@
 \subsection{Introduction}
 The successful application of Joint Track Machine Learning (JTML) to Total Knee Arthroplasty (TKA) implants suggested potential applicability to other implant types and joints.
-This hypothesis was supported by JTML's robust performance across varied TKA implant styles, including posterior stabilized and cruciate retaining designs, and differences in the peg design of the tibial baseplate.
+This hypothesis gained credence from JTML's consistent performance across diverse TKA implant styles, spanning posterior stabilized and cruciate retaining designs, as well as variations in the peg design of the tibial baseplate.
 Consequently, we replicated the TKA experimentation framework, applying it to Total Shoulder Arthroplasty (TSA) implant data, to assess whether this success could be mirrored in a different joint context.
+This section systematically categorizes the challenges encountered in adapting JTML for TSA, detailing each issue and its implications on our results.
 
 \subsection{Methods}
-We sourced 823 post-operative reverse TSA (rTSA) images with human-supervised kinematics from Nagoya University, adhering to IRB guidelines.
+Our study utilized 823 post-operative reverse TSA (rTSA) images, complete with human-supervised kinematics, sourced from Nagoya University in compliance with IRB guidelines.
 These images were obtained using single-plane fluoroscopy to measure glenohumeral kinematics in patients performing anonymized movements.
 The collected data for each patient included deidentified radiographic images, imaging calibration files, and manufacturer-supplied glenoid and humeral implant surface geometry files.
 
 
 We employed the same convolutional neural network (CNN) architecture previously used for TKA implants \cite{wangDeepHighResolutionRepresentation2020} (\cref{sec:jtml}) maintaining an 80/20 training/testing split.
-A key consideration was the relative scarcity of rTSA images compared to TKA.
+A key consideration in our methodology was limited availablity of human-supervised rTSA images with kinematics compared to TKA.
 To address this, we augmented the training set with non-affine transformations, specifically grid distortion and elastic transform \cite{buslaevAlbumentationsFastFlexible2020}.
 While such transformations increased training times in the TKA pipeline, their computational intensity was manageable given the smaller rTSA image dataset, enhancing the network's generalization capability for rTSA image segmentation.
 
@@ -24,12 +25,12 @@ These results were...not good, to say the least, which defied our general intuit
 It seems like this falls into a similar problem as the tibial implant ``symmetry trap'', wherein a symmetric axis in a 3D object presents difficult in model-image registration optimization.
 Broadly, the errors fell into two main categories.
 The first was around the internal/external rotation axis.
-This is very likely due to the semi-cylindrical shape of the humeral implant along that axis, causing a decreased sensitivity in the change of shape during these different rotation angles.
+A likely cause for this issue is the semi-cylindrical shape of the humeral implant along the internal/external rotation axis, causing a decreased sensitivity in the change of shape during these different rotation angles.
 This decreased shape sensitivity, along with any imperfections in the segmentation, would make it extremely difficult for our optimization routine to find the global minima.
-These considerations are addressed in a shape sensitivity analysis study later in this chapter (\cref{sec:shape-sensitivity}).
+To address the decreased shape sensitivity issue, we embark on a first-principles geometric approach to shape descriptors, which will be elaborated upon in the Shape Sensitivity Analysis study (\cref{sec:shape-sensitivity}).
 The second was the distal end of the humeral implant registering correctly, but the proximal articular surface would be off.
-This is likely due to the image similarity cost function having no overall preference for any particular region along the contour, thus causing it to get trapped in a semi-reasonable local minima.
-These considerations are taken into account and used to create novel cost functions later in this chapter (\cref{sec:new-image-metrics})
+This issue may stem from the image similarity cost function lacking a preference for any specific region along the implant's contour, thus causing it to get trapped in a semi-reasonable local minima.
+To mitigate the issue of the cost function's non-preferential contour treatment, novel cost functions are being developed, as discussed in the subsequent section (\cref{sec:new-image-metrics}).
 
 %%% Local Variables:
 %%% mode: latex

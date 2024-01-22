@@ -1,15 +1,14 @@
-The concept of latent space in kinematics is analogous to the latent spaces found in other domains, such as natural language processing (NLP).
-In NLP, latent space refers to the underlying, hidden structure in language data that algorithms attempt to uncover \cite{jurafskySpeechLanguageProcessing2009}.
-This is where the power of transformers \cite{vaswaniAttentionAllYou2017} in NLP becomes relevant to our study of kinematics.
+In the field of Natural Language Processing (NLP), the concept of a `latent space' is used to represent the underlying structure and meaning of language, beyond what is explicitly observable in the text \cite{jurafskySpeechLanguageProcessing2009}.
+For instance, in NLP, words are transformed into vectors in a high-dimensional space, where the distances and directions between these vectors capture the subtle relationships and contextual nuances of language.
+This transformation enables algorithms to `understand' and process language in a way that mirrors human comprehension.
 
-In kinematics, each movement pattern can be thought of as a unique ``expression'' of the underlying musculoskeletal system, akin to how sentences are expressions of underlying linguistic rules and meanings in language.
-By exploring the latent kinematics space, we aim to reduce the number of movements required for a comprehensive kinematics evaluation without losing the predictive power or statistical significance of the evaluation.
-This approach is based on the hypothesis that certain movement patterns contain redundant information, which could be inferred from other, more distinct movements.
-For instance, we might predict the kinematics of a ``stair rise'' from the ``walking'' pattern, assuming that the essential biomechanical information is embedded within the walking movement.
-sing Emacs, you could try the following regex replace
-To achieve this, we explore the use of signal processing techniques that could ``translate'' kinematics from one movement to another.
-This technique is somewhat similar to how language translation models work in NLP.
-The goal is to start with a maximal set of kinematics measurements for a wide array of movements, and remove those that can be inferred from the rest.
+Drawing a parallel to kinematics, we can view each movement pattern as a `sentence' composed of `words' that are the discrete kinematic data points (such as angles, velocities, and accelerations).
+Just as sentences in language express complex ideas constructed from simpler words, movement patterns in kinematics are complex expressions composed of simpler biomechanical elements.
+These elements interact in a high-dimensional `kinematic space,' analogous to the latent space in NLP.
+The goal of our kinematics translator, then, is akin to a language translator in NLP.
+It seeks to understand the `grammar' of movement in this latent space, allowing us to translate one set of movements (like walking) into another (like stair climbing), based on their underlying biomechanical structure.
+This could enable clinicians to infer a wide range of kinematic patterns from a limited set of observed movements, much like how a skilled linguist might infer meaning from a limited set of words or sentences.
+
 
 \subsection{Brief Mathematical Preliminary and Notation}
 Let $\mathfrak{X}_{mvt}$ be the ambient kinematics space from which a particular sample is measured, where $mvt \in \{\text{stair},\text{walk}, \text{lunge}, \cdots\}$.
@@ -24,8 +23,8 @@ And so, notationally, we can view this problem as minimizing the distance betwee
 The specifics of the math are outside the scope of this dissertation, but for interested readers, I recommend reading Jong Le's Geometry of Deep Learning, Chapter 13 \cite{yeGeometryDeepLearning2022}, which discusses metrics on probability spaces, multiple forms of divergence, and the requisite geometric and statistical intuition behind how these types of architectures work.
 
 \subsection{A Kinematics Translator}
-The main goal behind a kinematics translator is to build up a rich enough representation of the latent space of a patients kinematics, $\mathfrak{Z}$, with the smallest possible number of images required.
-A ``translator'' achieves this by being able to determine, for example, the ``stair rise'' kinematics from the ``walking'' kinematics, without ever needing to actually capture a patient walking up the stairs.
+The primary goal of a kinematics translator is to develop a sufficiently rich representation of a patient's latent kinematic space, $\mathfrak{Z}$, with the smallest possible number of images required.
+This is achieved by enabliung the ``translator'' to decude, for example, ``stair rise'' kinematics from ``walking'' kinematics without needing to explicitly measure ``walking'' kinematics.
 This has obvious benefits if one is trying to reduce the clinical footprint of autonomous kinematics measurements.
 
 \subsubsection{Methods and Data}
