@@ -1,0 +1,63 @@
+\subsection{Introduction}
+Understanding the in-vivo kinematics of total joint replacement has been essential in implant design, post-operative assessment, and predicting wear and failure patterns for nearly three decades \cite{freglyComputationalWearPrediction2005,banks2003HapPaul2004,banksRationaleResultsFixedBearing2019}.
+Recent advancements in computer vision and machine learning have enabled these analyses for total knee arthroplasty (TKA) in a fully autonomous and clinically practical setting, utilizing single-plane fluoroscopy \cite{brobergValidationMachineLearning2023,jensenJointTrackMachine2023}.
+However, using only a single camera inherently limits the optimization due to loss of depth perception and the introduction of ambiguous projected shapes during optimization \cite{floodAutomatedRegistration3D2018,mahfouzRobustMethodRegistration2003,zuffiModelbasedMethodReconstruction1999,banksAccurateMeasurementThreedimensional1996}.
+The observed limitation, predominantly impacting mediolaterally symmetric tibial implants, led to a phenomenon termed “symmetry traps.”
+In such instances, two distinct three-dimensional orientations of the implant produce indistinguishable two-dimensional projected geometries.
+A machine learning algorithm was developed to address these symmetry traps. This algorithm was trained to recognize accurate anatomic orientations and correct images caught in optimization minima \cite{jensenCorrectingSymmetricImplantInReview}.
+However, this approach required the symmetric implant to optimize into one of the two potential local minima, each corresponding to a distinct “symmetry trap.”
+
+The application of the same optimization routine and cost function \cite{floodAutomatedRegistration3D2018,jensenJointTrackMachine2023} to reverse total shoulder arthroplasty (rTSA) resulted in significantly lower performance compared to its application in total knee arthroplasty implants.
+This suboptimal performance manifested in two primary ways.
+First, there was a consistent error along the internal/external rotation axis.
+This axis, characterized by near-rotational symmetry, frequently has features occluded by the glenosphere implant in frontal-plane fluoroscopy.
+Second, the optimization led to a distal shift of the implant.
+This shift meant that while the local minima correctly registered the humeral stem, they failed to do so for the humeral cup.
+
+This pattern of failure prompted a deeper exploration into the perceptual psychology of shape \cite{attneaveInformationalAspectsVisual1954,attneaveQuantitativeStudyShape1956}, underscoring the significance of high curvature as a salient feature in binary shapes.
+Additionally, binary distance metric studies \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023} emphasized the need to align the cost-function metric with the problem, considering the data's underlying structure.
+In response to these new findings and to address the challenges identified with rTSA kinematics optimization, we developed two novel cost functions.
+
+
+Menger’s discrete curvature algorithm \cite{legerMengerCurvatureRectifiability1999} was applied to the projected implant's contour to isolate keypoints of the highest curvature.
+Subsequently, a distance map ($DM_{k}$) for each keypoint was calculated, enabling rapid computation of Euclidean distances to these points.
+The high-curvature distance maps were then integrated into a \emph{Modified Asymmetric Surface Distance}, focusing solely on the identified keypoints (\cref{eq:curv-keypoint}).
+In this process, the minimum values from the element-wise multiplication of each distance map ($DM_{k}$) with the projection estimate ($p$) were averaged.
+An error value of 0 would indicate a direct overlap of the estimated projection with all keypoints, confirming accurate registration in high-curvature regions.
+However, this approach, when applied to humeral implants, mirrored previously encountered errors, resulting in poor performance.
+
+\begin{equation}
+	\label{eq:curv-keypoint}
+	\begin{split}
+		\displaystyle J & = \dfrac{\sum_{k \in \mathbb{K}}(\min_{p\in Proj}(p \cdot DM_{k}))}{N} \\
+		                & \text{where}                                                           \\
+		\mathbb{K}      & = \text{Set of all high-curvature keypoints}                           \\
+		N               & = \text{Number of high-curvature keypoints}                            \\
+		DM_{k}          & = \text{Distance map for keypoint $k$}                                 \\
+		p               & = \text{Single point on projection estimate}
+	\end{split}
+\end{equation}
+
+In response to the Modified Asymmetric Surface Distance cost function's limitations, there was a shifted focus to refining the Hamming Distance \cite{floodAutomatedRegistration3D2018,jensenJointTrackMachine2023}, especially due to its uniform error in non-overlapping scenarios between the estimate and target mask.
+To overcome this limitation, a \emph{Modified Mean Surface Distance} was developed.
+This involved the element-wise multiplication of the projection estimate ($Proj_{x,y}$) with the global distance map of the target ($DM_{x,y}$) (\cref{eq:DMCF}).
+Similar to the \emph{Modified Asymmetric Surface Distance}, this approach also led to poor results.
+\begin{equation}
+	\label{eq:DMCF}
+	J = \dfrac{ \sum_{(x,y) \in \text{Image}} Proj_{x,y}DM_{x,y} }{\sum_{(x,y)\in \text{Image}}Proj_{x,y}}
+\end{equation}
+
+
+The current investigation delves into the fundamental shape aspects of each arthroplasty system, with a focus on developing a method for autonomously measuring rTSA kinematics from single-plane images.
+Central to this is the use of Invariant Shape Descriptors, particularly the Invariant Angular Radial Transform Descriptor (IARTD), which offers a mathematically robust approach to describe object shapes.
+These descriptors are immune to variations in scale, translation, or orientation \cite{zhangReviewShapeRepresentation2004}, and are adept at quantifying the relative ``nearness'', ``farness'', and ``uniqueness'' of shapes as vector differences.
+Such properties are valuable for object categorization \cite{richardIdentificationThreeDimensionalObjects1974,wallaceAnalysisThreedimensionalMovement1980,wallaceEfficientThreedimensionalAircraft1980} and kinematics measurement \cite{banksAccurateMeasurementThreedimensional1996}, with IARTD's sensitivity to radial shape differences \cite{leeNewShapeDescription2012} being particularly beneficial for detailed contour analysis.
+
+The focus of this analysis is on the sensitivity of projected 2D shapes, as depicted by IARTD, to changes in their 3D orientation.
+This is key to understanding the impact of subtle orientation variations on the projected shape, an aspect integral to shape-based optimization metrics.
+The ultimate aim is to highlight performance differences in autonomous kinematics measurements between TKA and rTSA implant systems.
+Additionally, the study seeks to identify areas where imaging methods can be improved to boost the algorithm's performance.
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../Jensen_Shape_Sensitivity"
+%%% End:

@@ -1,31 +1,29 @@
 \subsection{Introduction}
-Due to the relatively poor performance of the standard optimization algorithm (DIRECT \cite{jonesLipschitzianOptimizationLipschitz1993,floodAutomatedRegistration3D2018}) and the cost function ($L_{1}$-distance or Hamming Distance \cite{floodAutomatedRegistration3D2018}), the first step was to determine whether a more robust representation of image similarity might offer a stronger performance (\cref{sec:image-similarity}).
-Several approaches were explored to enhance image similarity representation, aiming to facilitate the identification of global minima in this model-image registration challenge.
+Given the standard optimization algorithm's relatively poor performance (DIRECT \cite{jonesLipschitzianOptimizationLipschitz1993,floodAutomatedRegistration3D2018}) and the cost function ($L_{1}$-distance or Hamming Distance \cite{floodAutomatedRegistration3D2018}), this study first investigated whether a more robust image similarity representation could enhance performance (\cref{sec:image-similarity}).
+To facilitate the identification of global minima in this model-image registration challenge, several approaches for enhancing image similarity representation were explored.
 
-Firstly, we considered enhancing the convexity of the problem.
-In the current formulation, the cost is at its maximum error ($\sum I + P$) when there is no overlap between the projection and the CNN, regardless of whether the projection is off by 5 pixels or 500 pixels.
+The initial approach involved enhancing the convexity of the problem.
+Under the current formulation, the cost reaches maximum error ($\sum I + P$) when the projection and the CNN have no overlap, irrespective of the projection's deviation, whether by 5 or 500 pixels.
 This issue necessitates a more nuanced error gradient.
 
-Secondly, we delved into the psychology of shape.
+Secondly, an exploration into the perceptual psychology of shape was conducted \cite{attneaveInformationalAspectsVisual1954,attneaveQuantitativeStudyShape1956}.
 Since manual registration serves as the benchmark for ground-truth kinematics, understanding human perception of shape differences and overlaps is crucial.
 
-Lastly, consultations with surgeons and engineers experienced in manual kinematics measurements were sought. Their insights into effective procedures and features for accurate registration are invaluable for refining our approach.
+Consultations with surgeons and engineers provided invaluable insights for refining the registration approach with emphasis on effective procedures and features.
 
 There were some constraints when exploring the addition of new cost parameters for Joint Track Machine Learning.
-Primarily, no new cost functions could conflict with the established Hamming Distance, meaning all additional metrics must reach their minimum concurrently with the Hamming distance.
+It was imperative that the introduction of new cost functions did not conflict with the Hamming Distance, necessitating concurrent minimization with the Hamming Distance for all additional metrics.
 Additionally, the algorithm needed to support parallel processing in CUDA without significantly increasing the computational load per image.
-Maintaining the current efficiency, where only one error kernel is required per iteration, was crucial to preserve application performance.
-
+Lastly, it was crucial to maintain the existing efficiency, characterized by the requirement of only one error kernel per iteration, to preserve application performance.
 \subsection{Improving Error Gradient}
-In order to improve the gradient, some notion of ``closeness'' and ``farness'' needs to be established in the image plane, beyond just ``hits'' and ``misses'' that are counted during the Hamming distance.
-
-The class of functions satisfying this property and offering consistent minima with the Hamming distance are termed \textit{surface distances} \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}.
-A surface distance is exactly the mathematical formulation that captures this notion of ``closeness'' or ``farness'' from one contour to another contour in an image plane.
-A sub-distinction of surface distances are \emph{symmetric surface distances}, in which $d(a,b) = d(b,a)$, but this need not be the case for a useful metric.
-There are four main recommended metrics for evaluating the surface distance.
+For gradient enhancement, it is essential to establish notions of \emph{closeness} and \emph{farness} in the image plane, which transcends the basic \emph{hits} and \emph{misses} of the Hamming distance calculation.
+Functions that satisfy this property and provide consistent minima with the Hamming distance are defined as \textit{surface distances} \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}.
+A surface distance represents the mathematical formulation which captures the concept of closeness or farness between contours in an image plane.
+Within surface distances, a notable subcategory is \emph{symmetric surface distances}, characterized by the equality $d(a,b) = d(b,a)$; however, this symmetry is not a prerequisite for a metric to be useful.
+Four primary metrics are widely recommended for the evaluation of surface distance \cite{reinkeUnderstandingMetricrelatedPitfalls2023,reinkeCommonLimitationsImage2023}.
 
 The first is the Normalized Surface Distance or Normalized Surface Dice (\Cref{fig:surfDICE}) \cite{nikolovClinicallyApplicableSegmentation2021} .
-Unfortunately, surface DICE runs into the same issue as Hamming distance where it is maximized at points of no overlap, but does not make true distinctions between closer and farther estimations.
+However, surface DICE encounters a similar limitation as the Hamming distance, being maximized at points of no overlap, without discerning between closer and farther estimations.
 
 \begin{figure}[h!]
   \centering
@@ -35,8 +33,8 @@ Unfortunately, surface DICE runs into the same issue as Hamming distance where i
 \end{figure}
 
 The second is the Mean Average Surface Distance or Mean Surface Distance (\Cref{fig:MASD}) \cite{benesPerformanceEvaluationImage2015}.
-This measures the \emph{mean} of the \emph{averages} over all shortest distances from all points on one boundary to any point on another boundary \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}.
-A major pitfall of this method is that calculating the average distance to the estimation would require spawning one sub-kernel per sampled pixel on the target and estimated contour, which would increase the number of computations by multiple orders of magnitude.
+This metric calculates the average of the mean shortest distances from every point on one boundary to any point on the other boundary \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}.
+A significant drawback of this method lies in its requirement to spawn a sub-kernel for each sampled pixel on the target and estimated contour, substantially increasing the computational load.
 
 \begin{figure}[h!]
   \centering
@@ -46,8 +44,8 @@ A major pitfall of this method is that calculating the average distance to the e
 \end{figure}
 
 The third is the Average Symmetric Surface Distance (\Cref{fig:ASSD}) \cite{yeghiazaryanFamilyBoundaryOverlap2018}.
-This is a symmetric variation of the mean average surface distance, which does not take the mean of the average shortest distances, but rather just the average distance from both contours to the other contour.
-This encounters the same issue as the Mean Average Surface Distance, requiring sub-kernels to calculate distances for each sampled point, drastically increasing the required number of computations per iteration.
+This metric represents a symmetric variation of the mean average surface distance, calculating the average distance from each contour to the other, rather than the mean of the average shortest distances.
+Similar to the Mean Average Surface Distance, this metric also necessitates sub-kernels for each sampled point, significantly increasing the computational requirements per iteration.
 
 \begin{figure}[h!]
   \centering

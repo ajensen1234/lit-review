@@ -1,0 +1,42 @@
+\subsection{Discussion}
+The findings correspond closely with initial expectations regarding the sensitivity measurement of projected shapes relative to 3D object orientation and are consistent with areas challenging for JTML optimization.
+Specifically, the humeral implant showed a generally smooth and minimal shape sensitivity profile, particularly for $\delta_{y}$ rotations (\cref{tab:ss-vals}).
+Along this axis, the humeral implant is the most cylindrical, meaning we would not expect to see a significant change in the shape descriptor with minor $\delta_{y}$ rotations.
+Furthermore, it is noteworthy that this axis presented the most significant difficulties in JTML optimization.
+
+Similar intuitive outcomes are observed with the glenosphere implant, which exhibited the lowest average $\mathbb{S}(\delta)$ among all the implant types.
+This implant primarily consists of an articulation surface closely approximating a spherical shape.
+Given that the projection of a sphere (a circle) remains constant regardless of the sphere's orientation, the closer a shape is to a spherical form, the lower its overall shape sensitivity is expected to be.
+
+The observed shape sensitivity of the tibial implant with respect to $\delta_{y}$ rotation aligns with the concept of symmetry traps.
+There is a consistently low shape sensitivity along the line where $x=0$.
+This axis, associated with internal/external rotation, is the same one that contributes to symmetry traps, where two different 3D orientations result in an identical projected shape.
+In terms of this analysis, the $\Delta S$ value would be $0$ for these two orientations of the tibial implant.
+
+This study sheds light on an important aspect of Joint Track Machine Learning, particularly the use of Euler angles in the DIRECT-JTA optimization routine.
+Currently, the optimization does not involve independently varying all angles within a body-centered reference frame, as this approach is not conducive to hyperbox creation \cite{floodAutomatedRegistration3D2018,jonesLipschitzianOptimizationLipschitz1993}.
+Instead, optimization is performed over a range of ordered rotations, projected through the sequence $R_{z}R_{x}R_{y}$.
+The challenges the humeral implant encounters in aligning the $y$-axis illustrate that this ordered sequence, especially with a symmetric final axis, can hinder the convergence process.
+
+Beyond the inherent shape sensitivities, such optimization limitations motivate exploring alternatives to Euler angles.
+Performing registration optimization directly on the Special Orthogonal group $SO(3)$ poses an intriguing direction.
+$SO(3)$ encapsulates all possible 3D rotations in a mathematically convenient structure (A \emph{Lie Group}, which is both a manifold and a group) \cite{zillerLieGroupsRepresentation2010,serreLieAlgebrasLie1992}.
+By optimizing on this manifold instead of Euler angle parametrizations, issues with gimbal lock and cascading rotation effects can be avoided.
+However, most manifold optimization is specifically gear toward derivative-based optimization, which is not the currently supported by the DIRECT-JTA algorithm that Joint Track Machine Learning incorporates \cite{jensenJointTrackMachine2023,jonesLipschitzianOptimizationLipschitz1993,floodAutomatedRegistration3D2018}.
+This limitation motivates either a restructuring of the current optimization methods to incorporate derivative information, or to explore the potentials of derivative-free (black-box) optimization \cite{audetDerivativeFreeBlackboxOptimization2017} over manifolds.
+
+
+Historical manual registration software heavily relied on bony landmarks within images to disentangle challenging poses.
+As landmarks, the tibial tuberosity, fibula, and bicepital groove were vital in identifying the specific orientation of implants.
+To accurately assess implant kinematics in highly symmetric unicompartmental knee arthroplasty, surface meshes of femoral and tibial components were incorporated into the registration process \cite{banksComparingVivoKinematics2005}.
+These bone models were particularly beneficial in addressing implants' internal/external rotation along semi-symmetric axes.
+Additionally, the use of densely selected keypoints in the precise measurement of preoperative shoulder kinematics through biplane fluoroscopy has been documented \cite{burtonFullyAutomaticTracking2023}, with keypoint registration achieved via a modified Perspective-N-Points optimization routine.
+Furthermore, intensity-based metrics have played a crucial role in the accurate determination of non-operative tibiofemoral kinematics \cite{bakaStatisticalShapeModelBased2012}.
+Rather than minimizing the Euclidean distance of projected model keypoints, these methods leverage digitally reconstructed radiographs and directly compare the intensity values of the x-ray image and the projection estimate.
+Thus, utilizing bony landmarks for measuring implant kinematics presents a robust and reliable approach to measuring accurate joint kinematics in clinical environments.
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% End:
