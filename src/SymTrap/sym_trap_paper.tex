@@ -123,35 +123,88 @@ This test set has robustly quantified the presence of “symmetry traps”, and 
 
 \section{Results}
 \subsection{Machine Learning Classification Performance}
-Classification accuracy on the internal test set ranged from 87.8\% to 94.0\%, sensitivity ranged from 92.9\% to 94.7\%, and specificity ranged from 83.5\% to 93.6\% for all eight methods evaluated (Table 1).
+Classification accuracy on the internal test set ranged from 87.8\% to 94.0\%, sensitivity ranged from 92.9\% to 94.7\%, and specificity ranged from 83.5\% to 93.6\% for all eight methods evaluated (\cref{tab:symtrap-ml-results}).
 Stacked generalization and the voting classifier tended to outperform the other classifiers, as they both incorporated a combination of the other models in their decision-making.
 For the external test set, accuracy ranged from 90.9\% to 94.2\%, sensitivity from 93.6\% to 97\%, and specificity from 88.4\% to 91.9\%  (Table 1).
 The SVM with Radial Basis Function kernel had the highest accuracy and F1 score, at 94\% and 0.94 respectively. Stacked generalization performed slightly worse in the external test set.
 Overall, the performance in the external test set was comparable to the performance on the internal test set, with some classifiers seeing decreased performance (K-Nearest-Neighbors, Stacked Generalization), and others seeing slightly increased performance (Support Vector Machines, AdaBoost, Voting Classifier).
 
-\begin{table}
-	\centering
-	\includegraphics*[width=0.95\linewidth]{./figures/raster/sym-trap-ML-table.png}
-\end{table}
+% \begin{table}
+% 	\centering
+% 	\includegraphics*[width=0.95\linewidth]{./figures/raster/sym-trap-ML-table.png}
+% \end{table}
+
+\begin{landscape}
+	\begin{table}[h]
+		\caption{Machine Learning Classifier Performance}
+		\label{tab:symtrap-ml-results}
+		\small
+		\centering
+		\begin{tabularx}{1.0\linewidth}{XXXXXXX}
+			\hline
+			Classifier                                                   & Hyperparameters                       & Test Set & Accuracy (\%)    & Sensitivity (\%) & Specificity (\%) & F1-Score        \\ \hline
+			\multirow{2}{*}{\parbox{3cm}{Support Vector Machine (RBF)}}  & \multirow{2}{*}{$C=1000$}             & Internal & $92.08$          & $94.75$          & $89.73$          & $0.92$          \\
+			                                                             &                                       & External & $\mathbf{94.21}$ & $97.12$          & $91.64$          & $\mathbf{0.94}$ \\
+			                                                             & \vspace{1cm}                                                                                                                \\
+			\multirow{2}{*}{\parbox{3cm}{Support Vector Machine (Poly)}} & \multirow{2}{*}{\parbox{3cm}{$C=1000$                                                                                       \\Poly Degree $=2$}}& Internal & $87.65$      & $92.54$         &  $83.8$                & $0.87$                          \\
+			                                                             &                                       & External & $92.08$          & $96.58$          & $88.38$          & $0.92$          \\
+			                                                             & \vspace{1cm}                                                                                                                \\
+			\multirow{2}{*}{\parbox{3cm}{K-Nearest-Neighbors}}           & \multirow{2}{*}{\parbox{3cm}{$N=4$                                                                                          \\Minkowski Dist.}} & Internal & $93.12$     & $93.96$          & $92.32$                 &  $0.93$                          \\
+			                                                             &                                       & External & $90.93$          & $93.62$          & $88.55$          & $0.91$          \\
+			                                                             & \vspace{1cm}                                                                                                                \\
+			\multirow{2}{*}{\parbox{3cm}{AdaBoost}}                      & \multirow{2}{*}{$N=200$}              & Internal & $88.78$          & $91.08$          & $86.74$          & $0.88$          \\
+			                                                             &                                       & External & $92.86$          & $\mathbf{97.23}$ & $89.22$          & $0.93$          \\
+			                                                             & \vspace{1cm}                                                                                                                \\
+			\multirow{2}{*}{\parbox{3cm}{Histogram Gradient Boosting}}   & \multirow{2}{*}{$L.R. = 0.1$}         & Internal & $93.11$          & $94.98$          & $91.4$           & $0.93$          \\
+			                                                             &                                       & External & $93.24$          & $96.67$          & $90.29$          & $0.93$          \\
+			                                                             & \vspace{1cm}                                                                                                                \\
+			\multirow{2}{*}{\parbox{3cm}{Bagging Estimator}}             & \multirow{2}{*}{$N=500$}              & Internal & $93.32$          & $94.28$          & $92.41$          & $0.93$          \\
+			                                                             &                                       & External & $93.82$          & $95.95$          & $\mathbf{91.88}$ & $0.94$          \\
+			                                                             & \vspace{1cm}                                                                                                                \\
+			\multirow{2}{*}{\parbox{3cm}{Stacked Generalization}}        & \multirow{2}{*}{N/A}                  & Internal & $\mathbf{94.3}$  & $94.78$          & $\mathbf{93.84}$ & $\mathbf{0.94}$ \\
+			                                                             &                                       & External & $92.86$          & $94.94$          & $90.96$          & $0.93$          \\
+			                                                             & \vspace{1cm}                                                                                                                \\
+			\multirow{2}{*}{\parbox{3cm}{Majority Voting Classifier}}    & \multirow{2}{*}{N/A}                  & Internal & $92.63$          & $\mathbf{95.85}$ & $89.86$          & $0.92$          \\
+			                                                             &                                       & External & $93.34$          & $96.87$          & $90.31$          & $0.93$          \\ \hline
+		\end{tabularx}
+	\end{table}
+	\begin{table}[h]
+		\caption{Stratified-$\psi$ test set stacked generalization classification performance}
+		\label{tab:strat-psi}
+		\centering
+		\begin{tabularx}{1.0\linewidth}{XXXXXX}
+			\hline
+			Psi Range        & Sample Size & Accuracy (\%) & Sensitivity (\%) & Specificity (\%) & F1-Score \\
+			\hline
+			$0-5^{\circ}$    & 488         & $71.04$       & $71.43$          & $70.7$           & $0.69$   \\
+			$5-10^{{\circ}}$ & 1132        & $88.21$       & $90.53$          & $85.98$          & $0.88$   \\
+			$10-15^{\circ}$  & 1224        & $93.0$        & $92.78$          & $93.2$           & $0.93$   \\
+			$15-20^{\circ}$  & 1107        & $96.13$       & $96.97$          & $95.31$          & $0.96$   \\
+			$>20^{\circ}$    & 3568        & $98.28$       & $98.32$          & $98.24$          & $0.98$   \\
+			\hline
+		\end{tabularx}
+	\end{table}
+\end{landscape}
 
 \subsection{Stratified $\psi$ Test Set Performance}
-As the value of $\psi$ increases, the performance of stacked generalization classification increases (Table 2).
-At values closer to a pure-lateral view (~$0^{\circ}$), accuracy is roughly 71\%, and once the implants exceed 5 off-lateral, accuracy increases to above 88\%.
+As the value of $\psi$ increases, the performance of stacked generalization classification increases (\cref{tab:strat-psi}).
+At values closer to a pure-lateral view (~$0^{\circ}$), accuracy is roughly 71\%, and once the implants exceed $5^{\circ}$ off-lateral, accuracy increases to above 88\%.
 
-\begin{figure}
-	\centering
-	\includegraphics*[width=0.95\linewidth]{./figures/raster/stratified-psi-ML-table.png}
-\end{figure}
+% \begin{figure}
+% 	\centering
+% 	\includegraphics*[width=0.95\linewidth]{./figures/raster/stratified-psi-ML-table.png}
+% \end{figure}
+
 
 \subsection{Symmetry Trap Correction Performance}
 When applying the procedure to correct symmetry traps, we achieve an accuracy of 91.1\%, a sensitivity of 67.4\% and a specificity of 94\% on an external test set.
-The average “distance to symmetric pose” ($\psi$) was $16.6^{circ}$ for the images correctly classified, and $7.12^{\circ}$ for the images incorrectly classified.
+The average “distance to symmetric pose” ($\psi$) was $16.6^{\circ}$ for the images correctly classified, and $7.12^{\circ}$ for the images incorrectly classified.
 For our initial internal test set, the distance to the symmetric pose was $25.6^{\circ}$ for images correctly classified, and $9.65^{\circ}$ for incorrectly classified images.
 Thus, the incorrect images are closer to a true lateral single-plane image, meaning the difference between the symmetric dyad of poses is smaller.
 
 \section{Discussion}
 Orthopaedic surgeons desire a practical method to clinically quantify TKA kinematics for post-operative assessment or exploration of unsatisfactory outcomes \cite{banksWhatPostoperativeOutcome2017}.
-To date, manual methods for quantifying TKA kinematics from single-plane radiographic images have been too time-consuming for clinical use. However, the application of machine learning methods has significantly enhanced their convenience\cite{jensenJointTrackMachine2023}.
+To date, manual methods for quantifying TKA kinematics from single-plane radiographic images have been too time-consuming for clinical use. However, the application of machine learning methods has significantly enhanced their convenience \cite{jensenJointTrackMachine2023}.
 Modern autonomous kinematics measurement software, implemented on a modest laptop with a dedicated graphics card, demonstrats efficient processing capabilities, requiring approximately 5–15 seconds for analyzing a single image \cite{jensenJointTrackMachine2023}.
 A critical step in making this technology ready for clinical use is to address the pose ambiguity issue that arises from single-camera views of symmetric tibial implant components in a time-efficient manner.
 We found that several machine learning algorithms were able to robustly identify and correct symmetric erroneous poses with greater than 90\% accuracy, making these measurement methods sufficiently autonomous and robust to be considered for clinical use.
@@ -188,7 +241,7 @@ This study has some limitations. In this study, we use human-supervised kinemati
 
 The correction algorithm recommended in this study assumes that the femoral implant has been properly registered with correct kinematics. While this is typically a good assumption because most femoral implants are asymmetric, and have an extremely low likelihood of falling into their own “symmetry traps” \cite{jensenJointTrackMachine2023}, improper registration of both a symmetric tibial implant and symmetric femoral implant would decrease the feasibility of the proposed procedure.
 
-\section{Conclusion}
+\section{Concluding Remarks}
 This study presents a novel method of overcoming one of the most pernicious issues facing researchers measuring TKA kinematics from single-plane fluoroscopy.
 Our algorithm combines 3 elements (1) calculating “symmetry trap” poses from “true” poses, (2) classical machine learning algorithms to classify a single pose as “true” or “symmetry trap” and (3) a procedure that applies those machine learning outputs to a contiguous sequence of kinematics to construct a spline and correct symmetry traps in real-world data.
 Additionally, the “symmetric flipper” algorithm provides a strong foundational approach for any symmetric object in a weak-perspective paradigm and can drastically reduce the complexity of many optimization algorithms by reducing the search space.
