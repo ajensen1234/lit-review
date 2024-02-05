@@ -1,7 +1,7 @@
 \subsection{Introduction}
-The successful application of JointTrack Machine Learning (JTML) to Total Knee Arthroplasty (TKA) implants suggested potential applicability to other implant types and joints.
+The successful application of JTML to TKA implants suggested potential applicability to other implant types and joints.
 This hypothesis gained credence from JTML's consistent performance across diverse TKA implant styles, spanning posterior stabilized and cruciate retaining designs, as well as variations in the peg design of the tibial baseplate.
-Consequently, the TKA experimentation framework was replicated, applying it to Total Shoulder Arthroplasty (TSA) implant data, to assess whether this success could be mirrored in a different joint context.
+Consequently, the TKA experimentation framework was replicated, applying it to TSA implant data, to assess whether this success could be mirrored in a different joint context.
 This section systematically categorizes the challenges encountered in adapting JTML for TSA, detailing each issue and its implications on the results.
 
 \subsection{Methods}
@@ -10,7 +10,7 @@ These images were obtained using single-plane fluoroscopy to measure glenohumera
 The collected data for each patient included deidentified radiographic images, imaging calibration files, and manufacturer-supplied glenoid and humeral implant surface geometry files.
 
 
-The same convolutional neural network (CNN) architecture previously used for TKA implants \cite{wangDeepHighResolutionRepresentation2020} (\cref{sec:jtml}) was employed, maintaining an 80/20 training/testing split.
+The same CNN architecture previously used for TKA implants \cite{wangDeepHighResolutionRepresentation2020} (\cref{sec:jtml}) was employed, maintaining an 80/20 training/testing split.
 A key consideration in the methodology was the limited availability of human-supervised rTSA images with kinematics compared to TKA.
 To address this, the training set was augmented with non-affine transformations, specifically grid distortion and elastic transform \cite{buslaevAlbumentationsFastFlexible2020}.
 While such transformations increased training times in the TKA pipeline, their computational intensity was manageable given the smaller rTSA image dataset, enhancing the network's generalization capability for rTSA image segmentation.
@@ -28,24 +28,12 @@ The efficacy of the algorithms will be assessed by comparing the root-mean-squar
 		Femoral            & 0.57             & 0.39             & 26.95            & 0.66                 & 0.73                 & 0.60                 \\\hline
 		Tibial             & 0.67             & 0.64             & 27.17            & 1.63                 & 2.74                 & 0.66                 \\\hline
 	\end{tabularx}
-  \end{table}
-
-\subsection{Discussion}
-The results obtained were suboptimal, defying the general intuition that a robust segmentation network would naturally lead to successful outcomes.
-It seems like this falls into a similar problem as the tibial implant ``symmetry trap'', wherein a symmetric axis in a 3D object presents difficult in model-image registration optimization.
-Broadly, the errors were categorized into two main groups.
-The first category related to the internal/external rotation axis.
-The semi-cylindrical shape of the humeral implant along the internal/external rotation axis is likely to decrease sensitivity to changes in shape during different rotation angles.
-This decreased shape sensitivity, compounded by any imperfections in the segmentation, likely made it extremely difficult for the optimization routine to identify the global minima.
-To address the decreased shape sensitivity issue, we embark on a first-principles geometric approach to shape descriptors, which will be elaborated upon in the Shape Sensitivity Analysis study (\cref{sec:shape-sensitivity}).
-The second was the distal end of the humeral implant registering correctly, but the proximal articular surface would be off.
-This issue may stem from the image similarity cost function lacking a preference for any specific region along the implant's contour, thus causing it to get trapped in a semi-reasonable local minima.
-To mitigate the issue of the cost function's non-preferential contour treatment, novel cost functions are being developed, as discussed in the subsequent section (\cref{sec:new-image-metrics}).
+\end{table}
 
 
 \subsection{Discussion}
 The results obtained were suboptimal, defying the general intuition that a robust segmentation network would naturally lead to successful outcomes.
-It appears this challenge is akin to the so-called "symmetry trap" encountered with tibial implants, where a symmetric axis in a 3D object presents difficulties in model-image registration optimization.
+It appears this challenge is akin to the so-called ``symmetry trap'' encountered with tibial implants, where a symmetric axis in a 3D object presents difficulties in model-image registration optimization.
 Broadly, the errors were categorized into two main groups.
 The first category related to the internal/external rotation axis.
 The semi-cylindrical shape of the humeral implant along the internal/external rotation axis is likely to decrease sensitivity to changes in shape during different rotation angles.

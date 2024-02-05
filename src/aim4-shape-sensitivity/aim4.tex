@@ -1,7 +1,5 @@
 \chapter{This Will Definitely Work on Shoulder Implants, Right?\protect\footnotemark}
 \footnotetext{No}
-
-\section{Introduction}
 Another common arthroplasty (TSA) procedure is total shoulder replacement, which involves the removal and replacement of the distal end of the glenoid/scapula and the proximal end of the humeral head.
 Researchers, implant manufacturers, and surgeons, driven by similar motivations for understanding post-operative Total Knee Arthroplasty (TKA) kinematics, show equal interest in examining post-operative TSA kinematics.
 Despite differing from TKA outcomes, a significant portion of TSA patients report dissatisfaction, predominantly attributing it to mechanical limitations or instability.
@@ -9,12 +7,11 @@ Despite differing from TKA outcomes, a significant portion of TSA patients repor
 For the past twenty years, researchers have explored both anatomical and reverse total shoulder arthroplasty kinematics \cite{kijimaVivo3dimensionalAnalysis2015,matsukiVivo3DAnalysis2014,matsukiDynamicVivoGlenohumeral2012,sugiComparingVivoThreedimensional2021,burtonFullyAutomaticTracking2023}, attempting to draw connections between different implants and surgical techniques to postoperative shoulder dynamics and range of motion.
 For the same reasons that a reliable, fast, clinically practical, and fully-autonomous kinematics measurement platform would be desirable for clinicians operating on post-operative total knee arthroplasty (\cref{sec:jtml}), it would also be desirable for clinicians working on total shoulder arthroplasty.
 
-Unfortunately, applying the same pipeline to shoulder implants did not work.
-This dissertation chapter is divided into three sections.
-First, I will discuss the methods and results of applying our existing framework to the problem of measuring TSA implant kinematics, and explain some of the pitfalls.
-Second, I will dive into some of the modifications made to the model-image registration cost-function to try and overcome some of the TSA kinematics limitations.
-Last, I will discuss a geometric first-principles approach used to dive even deeper into diagnosing the inherent kinematics measurement issues, and propose of methodological recommendations for others wishing to perform these measurements.
-This last chapter will be converted into a paper for hopeful publication.
+Unfortunately, the direct application of the same pipeline to shoulder implants proved unsuccessful.
+This dissertation chapter is structured into three sections. Initially, the methods and results of applying the existing framework to measuring TSA implant kinematics will be discussed, including an exploration of encountered pitfalls.
+Subsequently, modifications made to the model-image registration cost function aimed at addressing some of the limitations specific to TSA kinematics will be examined.
+Finally, a geometric first-principles approach adopted to further diagnose inherent issues in kinematics measurement will be detailed, along with methodological recommendations for others interested in conducting similar measurements.
+The concluding chapter is currently under review for publication in the Journal of Computers in Biology and Medicine.
 
 \section{JointTrack Machine Learning on Total Shoulder Arthroplasty Implants}
 \input{src/aim4-shape-sensitivity/jtml-on-tsa}
