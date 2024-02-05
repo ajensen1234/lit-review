@@ -1,21 +1,5 @@
 \chapter{Correcting Symmetric Implant Ambiguity in Measuring Total Knee Arthroplasty Kinematics from Single-Plane Fluoroscopy}
 
-\section{Abstract}
-Recent advancements in computer vision and machine learning enable autonomous measurement of total knee arthroplasty kinematics through single-plane fluoroscopy.
-However, symmetric implants present challenges in optimization routines, causing “symmetry traps” and ambiguous poses.
-Achieving clinically robust kinematics measurement requires addressing this issue.
-We devised an algorithm that converts a “true” pose to its corresponding “symmetry trap” orientation.
-From a dataset of nearly 13,000 human supervised kinematics, this algorithm constructs an augmented dataset of “true” and “symmetry trap” kinematics, used to train eight classification machine learning algorithms.
-The outputs from the highest-performing algorithm classify kinematics sequences as ``obviously true'' or 'potentially ambiguous.'
-We construct a spline through 'obviously true' poses, and 'ambiguous' poses are compared to the spline to determine correct orientation.
-The machine learning algorithms achieved 88-94\% accuracy on our internal test set and 91-93\% on our external test set.
-Applying our spline algorithm to kinematics sequences yielded 91.1\% accuracy, 94\% specificity, but 67\% sensitivity.
-The accuracy of standard ML algorithms for implants within 5 degrees of a pure-lateral view was 71\%, rising to 88\% beyond 5 degrees.
-This pioneering study systematizes addressing model-image registration issues with symmetric tibial implants.
-High accuracy suggests potential use of ML algorithms to mitigate shape-ambiguity errors in pose measurements from single-plane fluoroscopy.
-Our results also suggest an imaging protocol for measuring kinematics that favors more oblique viewing angles, which could further disambiguate “true” and “symmetry trap” poses.
-
-\section{Introduction}
 Measuring total knee arthroplasty (TKA) kinematics from fluoroscopic images has been an important contributor to knee implant design, post-operative assessment, and predictive modeling for wear and failure patterns for nearly 30 years \cite{banksRationaleResultsFixedBearing2019,banks2003HapPaul2004,freglyComputationalWearPrediction2005}.
 However, the application of this technology has been limited to research use by the challenges of performing these measurements quickly and reliably, as they often require expensive equipment and time-consuming processes \cite{banksAccurateMeasurementThreedimensional1996,lafortuneThreedimensionalKinematicsHuman1992,zuffiModelbasedMethodReconstruction1999,mahfouzRobustMethodRegistration2003}.
 Recent advancements in computer vision and machine learning have opened up the possibility of using a single fluoro-camera for fully autonomous TKA kinematic measurement \cite{brobergValidationMachineLearning2023,jensenJointTrackMachine2023}, making it more accessible and cost-effective for hospitals and clinics.
@@ -28,10 +12,10 @@ Human-supervised kinematics measurements for TKA with symmetric tibial implants 
 Unfortunately, fully autonomous solutions can’t utilize this reference point, causing difficulty in algorithmic implementation.
 
 \begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.78\textwidth]{~/figures/raster/sym-trap-quadrants-no-captions.png}
-  \caption{Two examples of symmetry pose dyads with the correct (left) and symmetry trap (right) kinematics. For some orientations, the symmetry trap is obviously incorrect (top), and for others, it is more ambiguous (bottom).}
-  \label{fig:symmetry-trap-quadrants}
+	\centering
+	\includegraphics[width=0.78\textwidth]{~/figures/raster/sym-trap-quadrants-no-captions.png}
+	\caption{Two examples of symmetry pose dyads with the correct (left) and symmetry trap (right) kinematics. For some orientations, the symmetry trap is obviously incorrect (top), and for others, it is more ambiguous (bottom).}
+	\label{fig:symmetry-trap-quadrants}
 \end{figure}
 
 
@@ -58,23 +42,23 @@ We completely withheld data from one study \cite{okamotoVivoKneeKinematics2011} 
 First, ``symmetry trap'' poses were identified from ``true'' poses through a novel algorithm devised to “flip” any given pose into its symmetric counterpart (\cref{fig:sym-flipper-alg}). The algorithm proceeds as follows:
 
 \begin{enumerate}
-  \item Determine the viewing ray from the object origin to the camera origin. Denote this as $\vec{v}$, where $||\vec{v}|| = 1$.
-  \item Determine the symmetric axis of the object, $\vec{s}$, where $||\vec{s}|| = 1$. This symmetric axis is equivalent to the normal vector of the ``mirror plane'' of symmetry for the object.
-  \item Determine the axis and angle of rotation between $\vec{s}$ and $\vec{v}$ and construct the equivalent rotation matrix.
-        \begin{enumerate}
-          \item The axis is the cross product, $\vec{m} = \vec{v} \times \vec{s}$.
-          \item The angle is the normalized dot product, $\psi = 2 \times \cos^{-1}\dfrac{\vec{v} \cdot \vec{s}}{||\vec{v}||||\vec{s}||}$
-        \end{enumerate}
-  \item Apply body-centered rotation to the symmetric object about $\vec{m}$ by $\psi$.
+	\item Determine the viewing ray from the object origin to the camera origin. Denote this as $\vec{v}$, where $||\vec{v}|| = 1$.
+	\item Determine the symmetric axis of the object, $\vec{s}$, where $||\vec{s}|| = 1$. This symmetric axis is equivalent to the normal vector of the ``mirror plane'' of symmetry for the object.
+	\item Determine the axis and angle of rotation between $\vec{s}$ and $\vec{v}$ and construct the equivalent rotation matrix.
+	      \begin{enumerate}
+		      \item The axis is the cross product, $\vec{m} = \vec{v} \times \vec{s}$.
+		      \item The angle is the normalized dot product, $\psi = 2 \times \cos^{-1}\dfrac{\vec{v} \cdot \vec{s}}{||\vec{v}||||\vec{s}||}$
+	      \end{enumerate}
+	\item Apply body-centered rotation to the symmetric object about $\vec{m}$ by $\psi$.
 \end{enumerate}
 
 For each projective geometry, there exist exactly two poses (i.e., a dyad) that produce it, thus applying this algorithm twice will return the original pose.
 
 \begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.8\linewidth]{./figures/raster/symmetry_flipper.png}
-  \caption{A visualization of the ``symmetry flipper'' algorithm that converts 3D orientations into their symmetric counterpart.}
-  \label{fig:sym-flipper-alg}
+	\centering
+	\includegraphics[width=0.8\linewidth]{./figures/raster/symmetry_flipper.png}
+	\caption{A visualization of the ``symmetry flipper'' algorithm that converts 3D orientations into their symmetric counterpart.}
+	\label{fig:sym-flipper-alg}
 \end{figure}
 
 \subsection{Constructing Dataset}
@@ -87,10 +71,10 @@ Data from one study \cite{okamotoVivoKneeKinematics2011} was completely withheld
 Thus, for each sample, the input was $\{\theta_{Int/Ext}, \theta_{Flx/Ext}, \theta_{Var/Val}, \psi\}$ with $\theta_{Int/Ext}, \theta_{Flx/Ext}, \theta_{Var/Val}$ representing anatomic internal/external rotation, flexion/extension, and varus/valgus respectively. The target was either `true' or `symmetry trap'.
 
 \begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.85\textwidth]{./figures/raster/symmetry-trap-dataset.png}
-  \caption{A 3D scatter plot of our training data with `true' poses in orange and `symmetry trap' poses in blue. Of note, there are distinct regions of exclusively `symmetry trap' poses, while the region of predominately `true' poises (orange cylinder along Flexion/Extension axis) also has many `symmetry trap' poses.}
-  \label{fig:sym-trap-dataset}
+	\centering
+	\includegraphics[width=0.85\textwidth]{./figures/raster/symmetry-trap-dataset.png}
+	\caption{A 3D scatter plot of our training data with `true' poses in orange and `symmetry trap' poses in blue. Of note, there are distinct regions of exclusively `symmetry trap' poses, while the region of predominately `true' poises (orange cylinder along Flexion/Extension axis) also has many `symmetry trap' poses.}
+	\label{fig:sym-trap-dataset}
 \end{figure}
 \subsection{Classification Algorithms}
 In this study, we implemented a selection of classification algorithms that use a range of different learning strategies (Table 1) from Scikit-learn \cite{scikit-learn} to classify any individual input pose as  ``true'' or ``symmetry trap''.
@@ -113,24 +97,24 @@ However, due to the inability to know a-priori which poses are “true” or in 
 Thus, for every kinematics sequence we employ the following procedure:
 
 \begin{enumerate}
-  \item Determining Ambiguous and Non-ambiguous Poses for each image
-        \begin{enumerate}
-          \item For each image, we generate the `symmetric' pose corresponding to the input pose.
-          \item We run both the input and its symmetric pose through the highest performing classification algorithm.
-          \item If the input pose and its symmetric pose are differently labeled by the classifier (i.e., one is labeled ``true'', and the other ``symmetry trap''), take the pose labeled ``true'' as the actual pose.
-          \item If both poses return the same label (i.e., both ``true'' or both ``symmetry trap''), label the pose as “ambiguous” and move to step 2.
-          \item If no poses were labeled “ambiguous”, the procedure is finished.
-        \end{enumerate}
-  \item Constuction of 3-Dimensional cubic b-spline of the movement
-        \begin{enumerate}
-          \item A spline is individually fit through the flexion/extension, internal/external rotation, and adduction/abduction angles for all images that were {\bf not} labeled ambiguous.
-        \end{enumerate}
-  \item Correcting Ambiguous Poses
-        \begin{enumerate}
-          \item We sample the cubic spline at image locations of ambiguous poses.
-          \item We compare the solid-angle difference between the input and symmetric pose to the pose at the sampled spline location.
-          \item Whichever pose is closer to the spline, we take this as the `true' pose.
-        \end{enumerate}
+	\item Determining Ambiguous and Non-ambiguous Poses for each image
+	      \begin{enumerate}
+		      \item For each image, we generate the `symmetric' pose corresponding to the input pose.
+		      \item We run both the input and its symmetric pose through the highest performing classification algorithm.
+		      \item If the input pose and its symmetric pose are differently labeled by the classifier (i.e., one is labeled ``true'', and the other ``symmetry trap''), take the pose labeled ``true'' as the actual pose.
+		      \item If both poses return the same label (i.e., both ``true'' or both ``symmetry trap''), label the pose as “ambiguous” and move to step 2.
+		      \item If no poses were labeled “ambiguous”, the procedure is finished.
+	      \end{enumerate}
+	\item Constuction of 3-Dimensional cubic b-spline of the movement
+	      \begin{enumerate}
+		      \item A spline is individually fit through the flexion/extension, internal/external rotation, and adduction/abduction angles for all images that were {\bf not} labeled ambiguous.
+	      \end{enumerate}
+	\item Correcting Ambiguous Poses
+	      \begin{enumerate}
+		      \item We sample the cubic spline at image locations of ambiguous poses.
+		      \item We compare the solid-angle difference between the input and symmetric pose to the pose at the sampled spline location.
+		      \item Whichever pose is closer to the spline, we take this as the `true' pose.
+	      \end{enumerate}
 \end{enumerate}
 
 To evaluate this procedure, we used a dataset of kinematics generated from a fully autonomous method \cite{jensenJointTrackMachine2023} to emulate the real-world use case of this algorithm as a post-processing operation.
@@ -146,8 +130,8 @@ The SVM with Radial Basis Function kernel had the highest accuracy and F1 score,
 Overall, the performance in the external test set was comparable to the performance on the internal test set, with some classifiers seeing decreased performance (K-Nearest-Neighbors, Stacked Generalization), and others seeing slightly increased performance (Support Vector Machines, AdaBoost, Voting Classifier).
 
 \begin{table}
-  \centering
-  \includegraphics*[width=0.95\linewidth]{./figures/raster/sym-trap-ML-table.png}
+	\centering
+	\includegraphics*[width=0.95\linewidth]{./figures/raster/sym-trap-ML-table.png}
 \end{table}
 
 \subsection{Stratified $\psi$ Test Set Performance}
@@ -155,8 +139,8 @@ As the value of $\psi$ increases, the performance of stacked generalization clas
 At values closer to a pure-lateral view (~$0^{\circ}$), accuracy is roughly 71\%, and once the implants exceed 5 off-lateral, accuracy increases to above 88\%.
 
 \begin{figure}
-  \centering
-  \includegraphics*[width=0.95\linewidth]{./figures/raster/stratified-psi-ML-table.png}
+	\centering
+	\includegraphics*[width=0.95\linewidth]{./figures/raster/stratified-psi-ML-table.png}
 \end{figure}
 
 \subsection{Symmetry Trap Correction Performance}
