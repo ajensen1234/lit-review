@@ -11,7 +11,7 @@ Since manual registration serves as the benchmark for ground-truth kinematics, u
 
 Consultations with surgeons and engineers provided invaluable insights for refining the registration approach with emphasis on effective procedures and features.
 
-There were some constraints when exploring the addition of new cost parameters for Joint Track Machine Learning.
+There were some constraints when exploring the addition of new cost parameters for JointTrack Machine Learning.
 It was imperative that the introduction of new cost functions did not conflict with the Hamming Distance, necessitating concurrent minimization with the Hamming Distance for all additional metrics.
 Additionally, the algorithm needed to support parallel processing in CUDA without significantly increasing the computational load per image.
 Lastly, it was crucial to maintain the existing efficiency, characterized by the requirement of only one error kernel per iteration, to preserve application performance.
@@ -204,7 +204,7 @@ Unfortunately, this too yields rather poor performance.
 Despite algorithmically identifying salient features in the image and minimizing the distance of these points to the estimation, the optimization routine is still unable to accurately find a solution that matches human-supervised registration.
 
 \subsection{Discussion}
-This section presented an in-depth exploration of my efforts toward applying Joint Track Machine Learning to reverse Total Shoulder Arthroplasty implants.
+This section presented an in-depth exploration of my efforts toward applying JointTrack Machine Learning to reverse Total Shoulder Arthroplasty implants.
 Although none of the applications offered a successful solution for rTSA model-image registration, they still showed promise in growing the overall body of knowledge in the field.
 
 First, all algorithms were rigorously tested on TKA implant registration to verify that they did not negatively impact the established performance of JTML.

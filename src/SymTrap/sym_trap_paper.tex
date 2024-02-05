@@ -29,7 +29,7 @@ Unfortunately, fully autonomous solutions can’t utilize this reference point, 
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.78\textwidth]{./figures/raster/sym-trap-quadrants.png}
+  \includegraphics[width=0.78\textwidth]{~/figures/raster/sym-trap-quadrants-no-captions.png}
   \caption{Two examples of symmetry pose dyads with the correct (left) and symmetry trap (right) kinematics. For some orientations, the symmetry trap is obviously incorrect (top), and for others, it is more ambiguous (bottom).}
   \label{fig:symmetry-trap-quadrants}
 \end{figure}
@@ -65,7 +65,7 @@ First, ``symmetry trap'' poses were identified from ``true'' poses through a nov
           \item The axis is the cross product, $\vec{m} = \vec{v} \times \vec{s}$.
           \item The angle is the normalized dot product, $\psi = 2 \times \cos^{-1}\dfrac{\vec{v} \cdot \vec{s}}{||\vec{v}||||\vec{s}||}$
         \end{enumerate}
-  \item Apply body-centered rotation to the symmetric obhject about $\vec{m}$ by $\psi$.
+  \item Apply body-centered rotation to the symmetric object about $\vec{m}$ by $\psi$.
 \end{enumerate}
 
 For each projective geometry, there exist exactly two poses (i.e., a dyad) that produce it, thus applying this algorithm twice will return the original pose.
@@ -145,10 +145,10 @@ For the external test set, accuracy ranged from 90.9\% to 94.2\%, sensitivity fr
 The SVM with Radial Basis Function kernel had the highest accuracy and F1 score, at 94\% and 0.94 respectively. Stacked generalization performed slightly worse in the external test set.
 Overall, the performance in the external test set was comparable to the performance on the internal test set, with some classifiers seeing decreased performance (K-Nearest-Neighbors, Stacked Generalization), and others seeing slightly increased performance (Support Vector Machines, AdaBoost, Voting Classifier).
 
-\begin{figure}
+\begin{table}
   \centering
   \includegraphics*[width=0.95\linewidth]{./figures/raster/sym-trap-ML-table.png}
-\end{figure}
+\end{table}
 
 \subsection{Stratified $\psi$ Test Set Performance}
 As the value of $\psi$ increases, the performance of stacked generalization classification increases (Table 2).

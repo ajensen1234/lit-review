@@ -1,5 +1,5 @@
 \subsection{Introduction}
-The successful application of Joint Track Machine Learning (JTML) to Total Knee Arthroplasty (TKA) implants suggested potential applicability to other implant types and joints.
+The successful application of JointTrack Machine Learning (JTML) to Total Knee Arthroplasty (TKA) implants suggested potential applicability to other implant types and joints.
 This hypothesis gained credence from JTML's consistent performance across diverse TKA implant styles, spanning posterior stabilized and cruciate retaining designs, as well as variations in the peg design of the tibial baseplate.
 Consequently, we replicated the TKA experimentation framework, applying it to Total Shoulder Arthroplasty (TSA) implant data, to assess whether this success could be mirrored in a different joint context.
 This section systematically categorizes the challenges encountered in adapting JTML for TSA, detailing each issue and its implications on our results.
@@ -19,7 +19,17 @@ Next, we applied the DIRECT-JTA algorithm from the JTML suite to rTSA images, ev
 The efficacy of the algorithms will be assessed by comparing the root-mean-square difference between autonomous and human-supervised kinematic measurements on this novel test set.
 
 \subsection{Results}
-{\Huge TODO - need to get the data from JTML, but not running neural networks}
+\begin{table}[h!]
+	\caption{Root mean squared differences between JointTrack Machine Learning optimized kinematics and manually registered kinematics on single-plane fluoroscopy} \label{tab:jtml-tsa-tka-vals}
+	\begin{tabularx}{\linewidth}{|X|X|X|X|X|X|X|}\hline
+		{\bf Implant Type} & $x_{trans} (mm)$ & $y_{trans} (mm)$ & $z_{trans} (mm)$ & $x_{rot} (^{\circ})$ & $y_{rot} (^{\circ})$ & $z_{rot} (^{\circ})$ \\ \hline
+		Humeral            & 8.46             & 8.64             & 152.78           & 22.59                & 64.74                & 11.81                \\\hline
+		Glenosphere        & 0.97             & 1.44             & 32.58            & 13.72                & 26.40                & 8.30                 \\\hline
+		Femoral            & 0.57             & 0.39             & 26.95            & 0.66                 & 0.73                 & 0.60                 \\\hline
+		Tibial             & 0.67             & 0.64             & 27.17            & 1.63                 & 2.74                 & 0.66                 \\\hline
+	\end{tabularx}
+  \end{table}
+
 \subsection{Discussion}
 These results were...not good, to say the least, which defied our general intuition that with a robust segmentation network, the rest would follow naturally.
 It seems like this falls into a similar problem as the tibial implant ``symmetry trap'', wherein a symmetric axis in a 3D object presents difficult in model-image registration optimization.

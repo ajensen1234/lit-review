@@ -6,11 +6,12 @@ The observed limitation, predominantly impacting mediolaterally symmetric tibial
 In such instances, two distinct three-dimensional orientations of the implant produce indistinguishable two-dimensional projected geometries.
 A machine learning algorithm was developed to address these symmetry traps in symmetric tibial implants.
 This algorithm was trained to recognize accurate anatomic orientations and correct images caught in optimization minima \cite{jensenCorrectingSymmetricImplantInReview}.
-However, this approach required the symmetric implant to optimize into one of the two potential local minima, each corresponding to a distinct “symmetry trap.”
+However, this approach required the symmetric implant to register into one of the two potential local minima, each corresponding to a distinct “symmetry trap.”
 
-The application of the same optimization routine and cost function \cite{floodAutomatedRegistration3D2018,jensenJointTrackMachine2023} to reverse total shoulder arthroplasty (rTSA) resulted in significantly lower performance compared to its application in TKA implants.
+The application of the same optimization routine and cost function \cite{floodAutomatedRegistration3D2018,jensenJointTrackMachine2023} to reverse total shoulder arthroplasty (rTSA) resulted in significantly lower performance compared to its application in TKA implants (\cref{tab:jtml-tsa-tka-vals}) \cite{jensenJointTrackMachine2023}.
 This suboptimal performance manifested primarily along the internal/external rotation axis, which has salient features often occluded by the glenosphere implant in frontal-plane fluoroscopy (\cref{fig:bad_ie_hum}).
 Additionally, this axis is nearly rotationally symmetric for both the humeral and glenospere implants.
+Poor rotation registration also increases translation errors, as the silhouette shape of the estimated pose is wholly different from the fluoroscopic image, causing imprecise translation alignment along all axes.
 In a manual registration setting \cite{muJointTrackOpenSourceEasily2007}, different combinations of model and image views are utilized to overcome these limitations (\cref{fig:TSA-multiview}).
 
 \begin{figure}[h!]
@@ -32,5 +33,5 @@ Additionally, the study seeks to identify areas where imaging methods can be imp
 
 %%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "../Jensen_Shape_Sensitivity"
+%%% TeX-master: "../../../Andrew_Jensen_Dissertation"
 %%% End:
