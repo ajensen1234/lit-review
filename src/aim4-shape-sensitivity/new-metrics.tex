@@ -1,4 +1,3 @@
-\subsection{Introduction}
 Given the relatively poor performance of the standard optimization algorithm (DIRECT \cite{jonesLipschitzianOptimizationLipschitz1993,floodAutomatedRegistration3D2018}) and the cost function ($L_{1}$-distance or Hamming Distance \cite{floodAutomatedRegistration3D2018}), this study initially investigated the potential for a more robust image similarity representation to enhance performance (\cref{sec:image-similarity}).
 The identification of global minima in this model-image registration challenge was facilitated by exploring several approaches to enhance image similarity representation.
 
@@ -158,10 +157,6 @@ This requires a contour-extraction algorithm, a discrete curvature equation, and
 OpenCV's \texttt{findContours} function \cite{bradskiOpenCVLibrary2000} is utilized, which provides a pre-specified number of contiguous contour points following an algorithm proposed by Suzuki and Abe \cite{suzukiTopologicalStructuralAnalysis1985}.
 For the implementation at hand, 200 contour points are extracted.
 
-
-For a discrete implementation of curvature, we turn to Menger's Algorithm \cite{legerMengerCurvatureRectifiability1999}.
-This method defines the discrete curvature as the reciprocal of the radius of a circle fit through three points along the contour (\cref{eq:menger}).
-Typically, a window of size $t$ is defined to expand the proximity of the three points along the curvature and make the calculations more robust to noise. In our implementation, $t=18$.
 
 For a discrete implementation of curvature, Menger's Algorithm \cite{legerMengerCurvatureRectifiability1999} is implemented.
 This method defines the discrete curvature as the reciprocal of the radius of a circle fit through three points along the contour (\cref{eq:menger}).

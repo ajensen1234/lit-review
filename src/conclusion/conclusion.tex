@@ -1,0 +1,85 @@
+\chapter{Conclusion}
+
+This dissertation addresses the technological advancements in measuring fully autonomous kinematics from single-plane fluoroscopic images.
+The significance of this method lies in its potential to enable clinicians and surgeons to incorporate precise, quantitative data into the standard care protocol for patients undergoing total joint replacement.
+This approach paves the way for data-driven treatment options, particularly beneficial for addressing the complications that arise from dynamic activities in daily living.
+
+This work focuses on four major areas.
+The first is establishing a robust algorithm and pipeline that can accurately perform model-image registration with single-plane fluoroscopic images and the associated implant geometries.
+Of crucial importance is the accuracy of these measurements compared to existing gold-standard ground truth measurements.
+The second is addressing the geometric issues that arise from symmetric implant models, creating multiple local minima during optimization.
+This is an issue that has plagued researchers studying kinematics from single-plane images for three decades, and a simple post-processing solution would alleviate many of these issues.
+The third is the author's unpublished thoughts on the difficulties in moving joint replacement kinematics measurements into the world of ``big data'', especially as it pertains to standardized kinematics exams and creating synthetic kinematics data.
+Lastly, this work address the fundamental issues surrounding the relative performance of the established optimization routine on accurately measuring different implant geometries.
+A first principles approach is undertaken to align quantifiable measurements with intuitive aspects about relative registration performance.
+
+\section{Summary and Implications of Key Findings}
+\subsection{JointTrack Machine Learning}
+JointTrack Machine Learning is the software platform that provides fully-autonomous measurement of arthroplasty implant kinematics from single-plane fluoroscopic images.
+A convolutional neural network was used to segment the specific implant of interest.
+On the internal test set (containing images from the same studies used during training), the Jaccard Index was $0.936$ and $0.883$ for the femoral and tibial components, respectively.
+On the external test set (containing images exclusively from a surgeon and machine that was not part of training), the Jaccard Index was $0.715$ and $0.753$.
+The DIRECT-JTA optimization algorithm, utilizing the Hamming Distance to align contours, achieved registration errors of sub-mm for each translation axis, and $<1.2^{\circ}$ for each rotation axis.
+One-hundred thirteen image pairs from an RSA study of TKA were used to independently assess the accuracy of the autonomous kinematics measurement for single-plane lateral TKA images.
+RMS errors were 0.8mm for AP translation, 0.5mm for SI translation, 2.6mm for ML translation, 1.0° for flexion/extension, 1.2° for abduction/adduction, and 1.7° for internal/external rotation.
+At a different institution, 45 single-plane radiographic images were acquired with an instrumented sawbones phantom that was independently tracked using motion capture.
+Comparing the motion capture and autonomously measured radiographic kinematics, the RMS errors were 0.72mm for AP translation, 0.31mm for SI translation, 1.82mm for ML translation, 0.56° for flexion-extension, 0.63° for abduction-adduction, and 0.84° for internal-external rotation.
+An increase in error for images within $3^{\circ}$ of a pure-lateral view was noted, dubbed the ``ambiguous zone''.
+
+The strong performance demonstrated by JTML highlights a path forward for fully autonomous and clinically practical kinematics measurements during activities of daily living.
+Furthermore, the inclusion of a wide range of imaging qualities and high performance across the entire range lower the barriers to entry for using this technology in a clinical setting.
+One does not need the newest and most powerful equipment in order to accurately perform these measurements.
+
+
+\subsection{Correcting Symmetric Pose Ambiguities in Kinematics Measurement from Single-Plane Fluoroscopy}
+A significant challenge in single-plane kinematics measurement is the existence of distinct 3D orientations that produce indistinguishable 2D projections.
+An algorithm was developed to address this which can convert any given pose into its symmetric counterpart.
+Then, a series of classical machine learning algorithms were trained to distinguish between a set of normal and ``symmetric poses''.
+Stacked generalization achieved the highest performance with $94.3\%$ accuracy and $0.94$ F1 score.
+It was also shown that the accuracy of stacked generalization increased from $71\%$ to $88\%$ when the imaging view exceeds $5^{\circ}$ off-lateral.
+This suggests that ``symmetry traps'' are much harder to correct within $5^{\circ}$ pure-lateral viewing, and offer a suggested viewing angle for clinical measurement.
+
+The strong performance of these algorithms demonstrates that incorporating existing anatomical data into implant kinematics post-processing offers a robust solution to intrinsic geometric difficulties.
+Additionally, the methods utilized in this study are geometry-agnostic, and could be used to solve a wide range of computer vision problems arising from symmetric geometries.
+
+\subsection{Shape Sensitivity of Projected Implant Geometries}
+When the same optimization routine was applied to reverse total shoulder arthroplasty implants, the results were sub-optimal, prompting further exploration of the intrinsic differences between the geometric properties of different implant systems.
+A study was conducted that compares the sensitivity of the projected 2D shape with respect to different 3D orientations.
+The invariant angular radial transform descriptor (IARTD) was used to describe each shape as a vector.
+The central difference algorithm was applied to these vectors for minor perturbations in the rotation of the input shape, and the overall shape difference was calculated as the norm of the resultant difference vector.
+It was shown that ``symmetry traps'' and semi-symmetric axes of each implant demonstrated the lowest overall sensitivity with respect to rotation perturbations.
+These axes also aligned with higher registration errors when applying JointTrack Machine Learning to that particular implant.
+
+These results demonstrate that there exist some intrinsic difficulties when optimizing specific implant geometries, regardless of the strength of a CNN for segmentation, or a robust contour-based cost function.
+It highlights the necessity of implementing anatomic landmarks into the registration process for specific total shoulder replacement implants.
+
+
+\section{Limitations and Future Research Directions}
+The limitations predominantly stem from the current state of algorithms and technologies employed for segmentation and registration, which, while effective, present opportunities for significant enhancements.
+
+The convolutional neural network (CNN) deployed for implant segmentation was developed in 2018, a point to consider given the rapid advancements in the fields of neural networks and computer vision.
+It is plausible that newer algorithms could surpass the performance of the current system.
+Although enhancing segmentation accuracy could theoretically improve the overall efficacy of these pipelines, it remains to be assessed whether such improvements would translate to clinically meaningful enhancements in registration accuracy.
+
+Another technological improvement would be the introduction of more robust cost functions that can more accurately mimic a human operator during the manual registration process.
+There are many subtle details that are difficult to capture algorithmically (e.g. small screw holes in implants, the location of anatomic features, etc.) which are invaluable for human supervised kinematics measurements, but aren't yet captured mathematically.
+A systematic effort toward determining the best way to incorporate these features into a robust cost function would drastically improve the algorithmic performance of these registration pipelines.
+
+A notable limitation within the existing optimization framework is its reliance on Euler-angle representation for determining implant orientation.
+Although Euler angles provide a convenient method for clinical descriptions, they do not represent the most effective parameterization for 3D rotations.
+Exploring optimization techniques over a manifold—considering that the set of all 3D rotations constitutes a manifold—offers a promising research direction.
+Such approaches could potentially facilitate more accurate and efficient optimization processes, leveraging the mathematical properties of manifolds to overcome the limitations inherent in current methodologies.
+
+\section{Theoretical and Practical Contributions}
+This work presented in this dissertation offer many avenues of theoretical and practical contributions.
+Notably, this presents the fully end-to-end algorithm for autonomously measuring joint replacement kinematics from single-plane images.
+The software is open source, with both American and international users.
+The algorithm for determining symmetric orientations is entirely novel.
+This provides a method for simplifying optimization for any model-image registration task, not limited to those in the orthopaedic domain.
+Lastly, the rigorous approach established to measure the sensitivity of projected shape is the first of it's kind.
+While there exists no precedent for the analysis of these data, this provides a simple methodology to study the benefits and limitations of specific imaging protocols for measuring joint replacement kinematics.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../Andrew_Jensen_Dissertation"
+%%% End:

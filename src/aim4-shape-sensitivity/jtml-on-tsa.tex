@@ -1,4 +1,3 @@
-\subsection{Introduction}
 The successful application of JTML to TKA implants suggested potential applicability to other implant types and joints.
 This hypothesis gained credence from JTML's consistent performance across diverse TKA implant styles, spanning posterior stabilized and cruciate retaining designs, as well as variations in the peg design of the tibial baseplate.
 Consequently, the TKA experimentation framework was replicated, applying it to TSA implant data, to assess whether this success could be mirrored in a different joint context.
@@ -21,11 +20,11 @@ The efficacy of the algorithms will be assessed by comparing the root-mean-squar
 \subsection{Results}
 \begin{table}[h!]
 	\caption{Root mean squared differences between JointTrack Machine Learning optimized kinematics and manually registered kinematics on single-plane fluoroscopy} \label{tab:jtml-tsa-tka-vals}
-	\begin{tabularx}{\linewidth}{|X|X|X|X|X|X|X|}\hline
-		{\bf Implant Type} & $x_{trans} (mm)$ & $y_{trans} (mm)$ & $z_{trans} (mm)$ & $x_{rot} (^{\circ})$ & $y_{rot} (^{\circ})$ & $z_{rot} (^{\circ})$ \\ \hline
-		Humeral            & 8.46             & 8.64             & 152.78           & 22.59                & 64.74                & 11.81                \\\hline
-		Glenosphere        & 0.97             & 1.44             & 32.58            & 13.72                & 26.40                & 8.30                 \\\hline
-		Femoral            & 0.57             & 0.39             & 26.95            & 0.66                 & 0.73                 & 0.60                 \\\hline
+	\begin{tabularx}{\linewidth}{V{10cm}XXXXXX}\hline
+		 Implant Type & $x_{trans} (mm)$ & $y_{trans} (mm)$ & $z_{trans} (mm)$ & $x_{rot} (^{\circ})$ & $y_{rot} (^{\circ})$ & $z_{rot} (^{\circ})$ \\ \hline
+		Humeral            & 8.46             & 8.64             & 152.78           & 22.59                & 64.74                & 11.81                \\
+		Glenosphere        & 0.97             & 1.44             & 32.58            & 13.72                & 26.40                & 8.30                 \\
+		Femoral            & 0.57             & 0.39             & 26.95            & 0.66                 & 0.73                 & 0.60                 \\
 		Tibial             & 0.67             & 0.64             & 27.17            & 1.63                 & 2.74                 & 0.66                 \\\hline
 	\end{tabularx}
 \end{table}

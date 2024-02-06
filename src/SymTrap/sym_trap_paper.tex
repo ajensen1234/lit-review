@@ -140,30 +140,30 @@ Overall, the performance in the external test set was comparable to the performa
 		\label{tab:symtrap-ml-results}
 		\small
 		\centering
-		\begin{tabularx}{1.0\linewidth}{XXXXXXX}
+		\begin{tabularx}{1.0\linewidth}{V{12cm}X X X X V{3cm} V{3cm} V{3cm}}
 			\hline
 			Classifier                                                   & Hyperparameters                       & Test Set & Accuracy (\%)    & Sensitivity (\%) & Specificity (\%) & F1-Score        \\ \hline
 			\multirow{2}{*}{\parbox{3cm}{Support Vector Machine (RBF)}}  & \multirow{2}{*}{$C=1000$}             & Internal & $92.08$          & $94.75$          & $89.73$          & $0.92$          \\
 			                                                             &                                       & External & $\mathbf{94.21}$ & $97.12$          & $91.64$          & $\mathbf{0.94}$ \\
-			                                                             & \vspace{1cm}                                                                                                                \\
+			                                                             & \vspace{0.5cm}                                                                                                              \\
 			\multirow{2}{*}{\parbox{3cm}{Support Vector Machine (Poly)}} & \multirow{2}{*}{\parbox{3cm}{$C=1000$                                                                                       \\Poly Degree $=2$}}& Internal & $87.65$      & $92.54$         &  $83.8$                & $0.87$                          \\
 			                                                             &                                       & External & $92.08$          & $96.58$          & $88.38$          & $0.92$          \\
-			                                                             & \vspace{1cm}                                                                                                                \\
+			                                                             & \vspace{0.5cm}                                                                                                              \\
 			\multirow{2}{*}{\parbox{3cm}{K-Nearest-Neighbors}}           & \multirow{2}{*}{\parbox{3cm}{$N=4$                                                                                          \\Minkowski Dist.}} & Internal & $93.12$     & $93.96$          & $92.32$                 &  $0.93$                          \\
 			                                                             &                                       & External & $90.93$          & $93.62$          & $88.55$          & $0.91$          \\
-			                                                             & \vspace{1cm}                                                                                                                \\
+			                                                             & \vspace{0.5cm}                                                                                                              \\
 			\multirow{2}{*}{\parbox{3cm}{AdaBoost}}                      & \multirow{2}{*}{$N=200$}              & Internal & $88.78$          & $91.08$          & $86.74$          & $0.88$          \\
 			                                                             &                                       & External & $92.86$          & $\mathbf{97.23}$ & $89.22$          & $0.93$          \\
-			                                                             & \vspace{1cm}                                                                                                                \\
+			                                                             & \vspace{0.5cm}                                                                                                              \\
 			\multirow{2}{*}{\parbox{3cm}{Histogram Gradient Boosting}}   & \multirow{2}{*}{$L.R. = 0.1$}         & Internal & $93.11$          & $94.98$          & $91.4$           & $0.93$          \\
 			                                                             &                                       & External & $93.24$          & $96.67$          & $90.29$          & $0.93$          \\
-			                                                             & \vspace{1cm}                                                                                                                \\
+			                                                             & \vspace{0.5cm}                                                                                                              \\
 			\multirow{2}{*}{\parbox{3cm}{Bagging Estimator}}             & \multirow{2}{*}{$N=500$}              & Internal & $93.32$          & $94.28$          & $92.41$          & $0.93$          \\
 			                                                             &                                       & External & $93.82$          & $95.95$          & $\mathbf{91.88}$ & $0.94$          \\
-			                                                             & \vspace{1cm}                                                                                                                \\
+			                                                             & \vspace{0.5cm}                                                                                                              \\
 			\multirow{2}{*}{\parbox{3cm}{Stacked Generalization}}        & \multirow{2}{*}{N/A}                  & Internal & $\mathbf{94.3}$  & $94.78$          & $\mathbf{93.84}$ & $\mathbf{0.94}$ \\
 			                                                             &                                       & External & $92.86$          & $94.94$          & $90.96$          & $0.93$          \\
-			                                                             & \vspace{1cm}                                                                                                                \\
+			                                                             & \vspace{0.5cm}                                                                                                              \\
 			\multirow{2}{*}{\parbox{3cm}{Majority Voting Classifier}}    & \multirow{2}{*}{N/A}                  & Internal & $92.63$          & $\mathbf{95.85}$ & $89.86$          & $0.92$          \\
 			                                                             &                                       & External & $93.34$          & $96.87$          & $90.31$          & $0.93$          \\ \hline
 		\end{tabularx}
