@@ -65,9 +65,10 @@
 \setAcknowledgementsFile{./src/0-Preamble/acknowledgementsFile}%     Acknowledgements Page
 \setAbstractFile{./src/0-Preamble/abstractFile}%                     Abstract Page (This should only include the abstract itself)
 %\setReferenceFile{./src/myBib.bib}{IEEEtran}%         References. First argument is your bibtex source file
-\setReferenceFile{./src/myBib.bib}{amsplain}%         References. First argument is your bibtex source file
+\setReferenceFile{./src/myBib.bib}%         References. First argument is your bibtex source file
 %\setReferenceFile{./src/myBib.bib}{abbrvbib}
-%                                                       the second argument is your bibtex style file.
+% the second argument is your bibtex style file.
+\addbibresource{\referenceFile}
 \setBiographicalFile{./src/0-Preamble/biographyFile}%                Biography file of the Author (you).
 
 %%% These are NOT required, so only use them if you actually need/have them.

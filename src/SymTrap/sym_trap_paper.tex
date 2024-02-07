@@ -19,7 +19,7 @@ Unfortunately, fully autonomous solutions can’t utilize this reference point, 
 \end{figure}
 
 
-In this paper, we utilize 12,592 images from seven studies that utilized human-supervised TKA kinematics \cite{jennyREGISTRATIONKNEEKINEMATICS2015,kefalaAssessmentKneeKinematics2017,okamotoVivoKneeKinematics2011,palm-vlasakMinimalVariationTop2022,scottCanTotalKnee2016,watanabeKneeKinematicsAnterior2013,watanabeInvivoKinematicsHighflex2016} to explore the potential of a novel method to classify and correct ``symmetry trap'' poses in single-plane TKA kinematic measurements.
+In this paper, we utilize 12,592 images from seven studies that utilized human-supervised TKA kinematics \cite{jennyRegistrationKneeKinematics2015,kefalaAssessmentKneeKinematics2017,okamotoVivoKneeKinematics2011,palm-vlasakMinimalVariationTop2022,scottCanTotalKnee2016,watanabeKneeKinematicsAnterior2013,watanabeInvivoKinematicsHighflex2016} to explore the potential of a novel method to classify and correct ``symmetry trap'' poses in single-plane TKA kinematic measurements.
 The goal is to improve the accuracy and resolution of single-plane TKA measurements and enable more accessible and reliable kinematic data for orthopaedic applications.
 
 This research paper will answer two key questions:  (1) How effectively can machine learning methods distinguish between ``true'' and 'symmetry trap' poses in cases involving symmetric implants? (2) How well can we systematically correct ``symmetry traps'' arising in kinematics sequences obtained from fluoroscopic images?
@@ -35,7 +35,7 @@ To account for these, we then take the highest performing classifier and use it 
 We report the performance of our cubic spline correction algorithm on a dataset of autonomously measured kinematics \cite{jensenJointTrackMachine2023}.
 All programs were written in Python 3.10.
 
-The dataset used for development of the methodology comprises seven total studies \cite{jennyREGISTRATIONKNEEKINEMATICS2015,kefalaAssessmentKneeKinematics2017,okamotoVivoKneeKinematics2011,palm-vlasakMinimalVariationTop2022,scottCanTotalKnee2016,watanabeKneeKinematicsAnterior2013,watanabeInvivoKinematicsHighflex2016} comprising 12,592 images of radiographic data.
+The dataset used for development of the methodology comprises seven total studies \cite{jennyRegistrationKneeKinematics2015,kefalaAssessmentKneeKinematics2017,okamotoVivoKneeKinematics2011,palm-vlasakMinimalVariationTop2022,scottCanTotalKnee2016,watanabeKneeKinematicsAnterior2013,watanabeInvivoKinematicsHighflex2016} comprising 12,592 images of radiographic data.
 We completely withheld data from one study \cite{okamotoVivoKneeKinematics2011} during training to use later as an external test set.
 
 \subsection{Determining Symmetric Orientations}
