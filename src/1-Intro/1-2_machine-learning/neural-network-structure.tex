@@ -1,9 +1,9 @@
 \subsection{Neural Network Structure}
-Neural networks generally have the same constitutive elements, mixed and matched based on the desired performance and complexity of the model that you are trying to build.
+The architecture of neural networks generally comprises the same fundamental components, which can be combined in various configurations based on the desired complexity and performance of the model.
 
 \subsubsection{Neural network building blocks}
-Generally, neural networks are formed by collections of foundational units, which can generate increasingly complex architectures and yield incredible performance.
-However, it is always important to start with the fundamental ``atoms'' of the neural network.
+In general, neural networks are formed by an integration of foundational units, enabling the development of increasingly intricate architectures with enhanced capabilities.
+However, an understanding of the underlying ``atoms'' constituting neural networks remains essential.
 
 The fundamental unit of a neural network is the perceptron (or neuron) (\cref{fig:neuron}), comprising a summation of inputs each multiplied by their respective weights, a bias term, and typically a non-linear activation function.
 
@@ -20,14 +20,10 @@ The fundamental unit of a neural network is the perceptron (or neuron) (\cref{fi
     \label{eq:neuron}
 \end{equation}
 
-Activation functions are a crucial component in neural networks as they allow for the introduction of non-linearity, which is essential for the network's ability to learn complex representations of the input data.
-Without activation functions, a neural network would only be able to learn linear relationships between the input and output.
-However, many real-world problems involve non-linear relationships that cannot be captured by a linear model alone.
-Activation functions provide a way to move beyond a linear relationship, allowing the neural network to learn more nuanced mappings between the input and output.
-The choice of activation function depends on the specific problem you are trying to solve and the architecture of your network.
-Some activation functions introduce more non-linearity than others and some trade-off between non-linearity and computational efficiency.
-Experimenting with different activation functions and observing the impact on the network's performance can be a useful technique for optimizing the performance of a neural network.
-A list of common activation functions and their equations is shown in Table \ref{tab:activation-functions}.
+Activation functions constitute a vital aspect of neural networks, allowing for non-linearity that enables learning of intricate representations of input data.
+Without activation functions, neural networks would only capture linear relationships between inputs and outputs, which is insufficient for many real-world problems.
+The optimal activation function is problem- and architecture-specific, with functions introducing varying degrees of non-linearity and computational efficiency.
+A list of common activation functions is provided in \Cref{tab:activation-functions}.
 
 \begin{table}[H]
     \caption{A list of activation functions and their corresponding mathematical formula} \label{tab:activation-functions}
@@ -45,14 +41,14 @@ A list of common activation functions and their equations is shown in Table \ref
 \subsubsection{Fully connected network}
 The fully connected network, also known as the multi-layer perceptron, is a basic type of neural network that utilizes the neurons previously discussed as building blocks.
 Its schematic representation is a familiar image to many when considering neural networks.
-By stacking the summations and multiplications of each neuron, we can derive the equation for a single layer of a fully connected network, which is simply a matrix multiplication (\cref{eq:fcn}).
+Stacking neurons' operations enables formulation of single-layer equations as matrix multiplications (\cref{eq:fcn}).
 In this equation, $W$ represents the collection of weights for each neuron, $a$ represents the input, $b$ represents the bias, and $\phi$ represents the activation function.
 
 A key strength of this network type is its utilization of non-linear activation functions, enabling the modeling of complex, non-linear relationships in data.
 A well-chosen activation function can greatly impact the network's performance and ability to achieve specific tasks.
-For example, in a binary classification task, the sigmoid activation function can be used at the output layer, constraining the output between $0$ (false) and $1$ (true).
-The output can then represent the probability of the given input being classified as 'true'.
-The ReLU activation function is another popular choice because it is computationally efficient and often used in hidden layers of deep networks. Additionally, the hyperbolic tangent (tanh) activation function is used in the context of a model where data follows a Gaussian distribution.
+In binary classification contexts, sigmoid activation functions are often effective as output layers, constraining predictions between 0 and 1, interpretable as probabilities.
+Rectified linear unit (ReLU) functions frequently optimize hidden layer efficiency.
+When operating upon data following gaussian distributions, the hyperbolic tangent (tanh) activation can better match associated non-linearities.
 
 \begin{figure}[h!]
     \centering
@@ -73,9 +69,9 @@ Additional layers can be added by taking the output of one layer and sending tha
     \label{eq:2-layer-fcn}
 \end{equation}
 
-One of the main limitations of fully-connected networks is exponential increase in computational complexity as your input grows.
-For a standard 1024 $\times$ 1024 image, you have roughly 1 million input nodes, which can lead to hundreds of millions of parameters that need to be learned depending on the depth of the network.
-We can use standard image processing techniques to overcome some of these limitations as we explore different network architectures.
+One of the main limitations of fully-connected networks is exponential increase in computational complexity as the input grows.
+For a standard $1024 \times 1024$ image, there are roughly 1 million input nodes, which can lead to hundreds of millions of parameters that need to be learned.
+Different neural network architectures have been created that employ standard image processing techniques, overcoming many of these limitations.
 
 \subsubsection{Convolutional neural networks}
 

@@ -46,9 +46,10 @@ This normalization ensures that the correlation measure is predominantly influen
 Feature-based image similarity metrics utilize methods that identify key features within images, employing these features to gauge differences between two images.
 These approaches typically require a feature-extraction phase, during which the relevant features are identified and quantified for later analysis.
 The two main classes of features are \emph{keypoints} and \emph{edges}.
-The simplest method of keypoint detection is using a similar method to intensity-based matching, but having one of the ``images'' as a patch of the desired feature.
-With keypoints detected in the input image, one could determine the error of the current pose estimate by taking the Euclidean distance between all image keypoints and all projected keypoints: \cite{burtonAutomaticTrackingHealthy2021} (\cref{eq:kp-error}).
-With a-priori information about the keypoints, weights could be assigned to each keypoint in order to emphasize specific regions on the image and the model (\cref{eq:wkp-error})
+One of the simplest forms of keypoint detection is hand-crafting a convolution kernel containing the desired feature.
+The convolution operation will yield regions in the image containing that particular feature, which then become keypoints.
+With keypoints detected in the input image, one could determine the error of the current pose estimate by taking the Euclidean distance between all image keypoints and all projected keypoints \cite{burtonAutomaticTrackingHealthy2021} (\cref{eq:kp-error}).
+With a-priori information about the keypoints, weights could be assigned to each keypoint in order to emphasize specific regions on the image and the model (\cref{eq:wkp-error}).
 
 \begin{equation}
     \begin{aligned}
