@@ -86,7 +86,6 @@
 	url=false,
 	isbn=false,
 	doi=false,
-	eprint=false
 ]{biblatex}
 %\RequirePackage{natbib}
 

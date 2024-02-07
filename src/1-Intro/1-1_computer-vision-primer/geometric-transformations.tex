@@ -1,8 +1,12 @@
-Geometric primitives, such as points, are fundamental building blocks for representing shapes and objects in computer graphics. In this section, we will discuss how points can be represented in 2D and 3D space, along with the different mathematical operations that you can perform on those points.
+Geometric primitives, including points, serve as the fundamental building blocks for representing shapes and objects in computer graphics.
+This section presents methodologies for representing points in two and three-dimensional spaces, alongside an exploration of the mathematical operations applicable to these points.
 
 \subsubsection{2D and 3D points}
 \label{sec:geometric-points}
-In N-dimensional space, a point is represented as a set of N scalars, each representing a magnitude in a particular direction. This can be represented mathematically as a column vector (\cref{eq:point}). In two dimensions, a point is represented with two elements, $\mathbf{x} = [x , y]^{T}$. Similarly, in three dimensions, a point is represented with three elements, $\mathbf{x} = [x , y , z]^{T}$.
+In N-dimensional space, a point is represented as a set of N scalars, each indicating a magnitude along a specific axis.
+Mathematically, this representation corresponds to a column vector, as shown in Equation \ref{eq:point}.
+In two dimensions, a point is composed of two elements, denoted as $\mathbf{x} = [x , y]^{T}$.
+Similarly, in three dimensions, a point consists of three elements, expressed as $\mathbf{x} = [x , y , z]^{T}$.
 
 \begin{equation}
     \mathbf{x} = \begin{bmatrix}
@@ -12,14 +16,12 @@ In N-dimensional space, a point is represented as a set of N scalars, each repre
 \end{equation}
 
 
-Homogeneous coordinates provide a way to represent points with an additional scale factor, $\tilde{w}$.
-This allows us to perform rotations and translations simultaneously and successively using matrix multiplications.
-The scale factor lets us handle projections and other transformations cleanly through linear algebra operations, even if the final result is not a vector in the original coordinate space.
-For example, a point $x = [2,3]^{T}$ in 2D can be converted to homogeneous coordinates as $\tilde{x} = [2,3,1]^{T}$.
-The $1$ is a placeholder for the scale term that allows matrix transformations like rotations and translations to be applied while preserving the original Cartesian coordinates stored in the first two elements.
-After the transformations, we can recover the Cartesian coordinates by dividing through by the final scale factor $\tilde{w}$.
-Homogeneous coordinates for a point in N-dimensional space are represented as a column vector matrix with N+1 elements (\cref{eq:homog-point}).
-When dealing with homogeneous coordinates, $\mathbf{\tilde{x}} = \tilde{w}\mathbf{\bar{x}}$, where $\mathbf{\tilde{x}}$ is the scaled version of $\bar{\mathbf{x}}$, and $\bar{\mathbf{x}}$ is simply the original vector, $\mathbf{x}$, with a $1$ appended.
+Homogeneous coordinates introduce an additional scaling parameter, $\tilde{w}$, facilitating simultaneous and successive rotations and translations via matrix multiplications.
+This augmentation enables the integration of projections and other transformations into linear algebra operations, even when the final outcome does not conform to the original vector space.
+For example, the conversion of a two-dimensional point, represented by $x = [2,3]^{T}$, into homogeneous coordinates results in $\tilde{x} = [2,3,1]^{T}$, where "1" serves as a placeholder accommodating the scale factor and preserving the original Cartesian coordinates during subsequent matrix transformations.
+The restoration of Cartesian coordinates post-transformations occurs through division by the final scale factor, $\tilde{w}$.
+Homogeneous coordinates for a point in N-dimensional space are encapsulated within a column vector matrix comprising N+1 elements, as shown in Equation \ref{eq:homog-point}.
+Notably, the relationship $\mathbf{\tilde{x}} = \tilde{w}\mathbf{\bar{x}}$ signifies the scaled form of $\bar{\mathbf{x}}$, with $\bar{\mathbf{x}}$ representing the original vector $\mathbf{x}$ appended with a ``1''.
 
 \begin{equation}
     \tilde{\mathbf{x}} = \begin{bmatrix}
@@ -32,7 +34,8 @@ When dealing with homogeneous coordinates, $\mathbf{\tilde{x}} = \tilde{w}\mathb
 
 \subsubsection{2D transformations}
 \label{sec:2d-transformations}
-Transformations are operations that change the position, orientation, or shape of an object in 2D space. One of the most basic transformations is a translation, which moves an object by adding a displacement vector to its position (\cref{eq:translation}).
+Transformations alter the position, orientation, or shape of an object in 2D space.
+One of the most basic transformations is a translation, which moves an object by adding a displacement vector to its position.
 
 \begin{equation}
     \begin{aligned}
@@ -55,7 +58,8 @@ Transformations are operations that change the position, orientation, or shape o
     \label{eq:translation}
 \end{equation}
 
-In this equation, $\mathbf{x}$ is the original position of the object, $\mathbf{x'}$ is the transformed position, and $\mathbf{t}$ is the displacement vector that specifies the amount of translation in the $x$ and $y$ directions. Using homogeneous coordinates and matrix multiplication allows for the convenient representation of multiple transformations as a single matrix multiplication, as well as for the composition of multiple transformations (\cref{eq:mult-translation}). 
+In this equation, $\mathbf{x}$ represents the original position of the object, $\mathbf{x'}$ denotes the transformed position, and $\mathbf{t}$ is the displacement vector specifying the translation amount in the $x$ and $y$ directions.
+Leveraging homogeneous coordinates and matrix multiplication allows for the representation of multiple transformations as a single matrix multiplication and enables the composition of multiple transformations.
 
 \begin{equation}
     \begin{aligned}
@@ -74,7 +78,7 @@ In this equation, $\mathbf{x}$ is the original position of the object, $\mathbf{
     \label{eq:mult-translation}
 \end{equation}
 
-The next type of 2D transformation is a rotation, which changes the orientation of an object, but not its shape (\cref{eq:2d-rot,eq:2d-rot-mat}). 
+The next type of 2D transformation is a rotation, which changes the orientation of an object, but not its shape (\cref{eq:2d-rot,eq:2d-rot-mat}).
 
 \begin{equation}
     \begin{aligned}
@@ -113,8 +117,7 @@ A scaled rotation will change the size of the object by some scalar factor, $s$ 
     \label{eq:2d-scaled-rot}
 \end{equation}
 
-An affine transformation preserves parallel lines.
-It applies a general linear transformation defined by an arbitrary $2 \times 3$ matrix(\cref{eq:2d-affine}).
+An affine transformation preserves parallel lines and applies a general linear transformation defined by an arbitrary $2 \times 3$ matrix (\cref{eq:2d-affine}).
 
 \begin{equation}
     \begin{aligned}
@@ -127,7 +130,7 @@ It applies a general linear transformation defined by an arbitrary $2 \times 3$ 
     \label{eq:2d-affine}
 \end{equation}
 
-A perspective transformation uses homogeneous coordinates to apply projections that handle depth and perspective foreshortening. This simulates a camera projection (\cref{eq:2d-projection}).
+A perspective transformation uses homogeneous coordinates to apply projections that handle depth and perspective foreshortening, simulating a camera projection (\cref{eq:2d-projection}).
 
 \begin{equation}
     \begin{aligned}
@@ -136,7 +139,8 @@ A perspective transformation uses homogeneous coordinates to apply projections t
     \label{eq:2d-projection}
 \end{equation}
 
-To obtain inhomogeneous results, the resultant $\tilde{\mathbf{x}}'$ must be normalized (\cref{eq:2d-homog-norm}). A projective transformation preserves straight lines.
+To obtain inhomogeneous results, the resultant $\tilde{\mathbf{x}}'$ must be normalized (\cref{eq:2d-homog-norm}).
+A projective transformation preserves straight lines.
 
 \begin{equation}
     \begin{aligned}
@@ -149,7 +153,10 @@ To obtain inhomogeneous results, the resultant $\tilde{\mathbf{x}}'$ must be nor
 
 \subsubsection{3D transformations}
 \label{sec:3d-transformations}
-Transformations in three dimensions are extremely similar to their two dimensional counterpart, except the dimensionality of each transformation is increased by one. However, three dimensional rotations introduce added complexity, due to multiple axes of rotation, and the non-commutativity of those rotations. We handle this by utilizing Euler angles \cite{groodJointCoordinateSystem1983}, which decomposes the final orientation of an object as a combination of rotations about the three coordinate axes. Each rotation about an axis is represented with a matrix (\cref{eq:euler-angles}), and the final rotation matrix is represented as the order of the rotations that produced it (e.g. Z-X-Y rotation).
+Transformations in three dimensions are similar to their two-dimensional counterparts but with an increased dimensionality.
+Three-dimensional rotations introduce added complexity due to multiple axes of rotation and the non-commutativity of those rotations.
+Euler angles decompose the final orientation of an object as a combination of rotations about the three coordinate axes \cite{groodJointCoordinateSystem1983}.
+Each rotation about an axis is represented with a matrix (\cref{eq:euler-angles}), and the final rotation matrix is represented as the order of the rotations that produced it (e.g. Z-X-Y rotation).
 
 \begin{equation}
     \begin{aligned}
@@ -166,9 +173,11 @@ Transformations in three dimensions are extremely similar to their two dimension
     \label{eq:euler-angles}
 \end{equation}
 
-Anatomically, the rotations can be chosen such that they align with the anatomic axes of the joint. This allows for congruence between the mathematical notation used to represent an object in space, and the medical notation used by orthopaedic practitioners (i.e. aligning a Z-X-Y rotation decomposition with the flexion-abduction-external rotation order used by orthopaedic surgeons).
+Anatomically, the rotations can be chosen such that they align with the anatomic axes of the joint.
+This allows for congruence between the mathematical notation used to represent an object in space, and the medical notation used by orthopaedic practitioners (i.e. aligning a Z-X-Y rotation decomposition with the flexion-abduction-external rotation order used by orthopaedic surgeons).
 
-For simplicity, we can also represent 3D rotations as an axis-angle decomposition, which describes the transformation as a single rotation about an arbitrary axis \cite{craneKinematicAnalysisRobot2008} (\cref{eq:axis-angle-matrix}). You can use trigonometric identities to determine the axis and angle given an arbitrary rotation matrix.
+For simplicity, 3D rotations can also be represented as an axis-angle decomposition, which describes the transformation as a single rotation about an arbitrary axis \cite{craneKinematicAnalysisRobot2008} (\cref{eq:axis-angle-matrix}).
+Trigonometric identities can be used to determine the axis and angle given an arbitrary rotation matrix.
 
 \begin{equation}
     \begin{aligned}
@@ -190,9 +199,16 @@ For simplicity, we can also represent 3D rotations as an axis-angle decompositio
 
 
 \paragraph*{3D to 2D projections}
-Geometric primitives, such as points, lines, and polygons, are the building blocks of computer graphics. These basic shapes can be transformed and combined in various ways to create more complex objects and scenes. In order to represent these 3D primitives and objects in 2D image space, we must apply transformations that manipulate their position, orientation, and other properties. By using these transformations, we can create the illusion of depth and spatial relationships on a flat display. Understanding how to work with primitives and transform them is crucial for creating a wide range of visual effects and graphics in computer graphics.
+Geometric primitives, such as points, lines, and polygons, serve as the foundational elements of computer graphics.
+These fundamental shapes undergo transformations and combinations to generate more intricate objects and scenes.
+To depict these 3D primitives and objects in 2D image space, transformations are employed to manipulate their position, orientation, and other attributes.
+Through these transformations, the illusion of depth and spatial relationships is achieved on a planar display.
+Proficiency in manipulating primitives and applying transformations is essential for producing a diverse array of visual effects and graphics in computer graphics.
 
-In computer graphics, one of the most basic methods of projecting three-dimensional objects onto a two-dimensional image plane is an orthographic projection. This projection simply drops the depth component of the object and flattens it onto the image plane (\cref{eq:orthographic-proj}). This can be thought of as mimicking a camera with a long focal length, or when the depth of the object is shallow compared to its distance from the camera (also known as a weak perspective projection). In this equation, $\mathbf{p}$ represents a point in 3D space and $\mathbf{x}$ represents the projected point in 2D image space. The $\tilde{\cdot}$ still represents the point in homogeneous coordinates.
+In computer graphics, one of the fundamental methods for projecting three-dimensional objects onto a two-dimensional image plane is an orthographic projection.
+This projection simplifies the object by disregarding its depth component and flattening it onto the image plane (\cref{eq:orthographic-proj}).
+This process emulates a camera with an extensive focal length or when the object's depth is relatively shallow compared to its distance from the camera, a condition also referred to as a weak perspective projection.
+In the equation, $\mathbf{p}$ denotes a point in 3D space, and $\mathbf{x}$ signifies the projected point in 2D image space. The symbol $\tilde{\cdot}$ denotes the point in homogeneous coordinates.
 
 \begin{equation}
     \tilde{\mathbf{x}} = \begin{bmatrix}
@@ -202,7 +218,9 @@ In computer graphics, one of the most basic methods of projecting three-dimensio
 \end{equation}
 
 \paragraph*{Perspective projection}
-The most common 3D-2D projection is \emph{perspective projection}, which accounts for depth perception. This can be done by scaling each point by its $z$ position relative to the camera (Eq. \ref{eq:perspective-proj}). This necessitates using homogeneous coordinates (Eq. \ref{eq:perspective-matrix}).
+The most prevalent 3D-2D projection is the perspective projection, which incorporates depth perception.
+This projection involves scaling each point by its $z$ position relative to the camera (Equation \ref{eq:perspective-proj}).
+The utilization of homogeneous coordinates is necessary for this operation (Equation \ref{eq:perspective-matrix}).
 
 \begin{equation}
     \bar{\mathbf{x}} = \mathcal{P}_z(\mathbf{p}) = \begin{bmatrix}
@@ -218,7 +236,8 @@ The most common 3D-2D projection is \emph{perspective projection}, which account
     \label{eq:perspective-matrix}
 \end{equation}
 
-The perspective projection is the cornerstone of model-image registration. If a matrix mimics the fluoroscopic projective geometry in the clinic, then this offers a strong possibility of re-creating a virtual scene with the same geometry as the actual scene.
+The perspective projection serves as the cornerstone of model-image registration, providing a method for aligning virtual models with clinical images.
+When a matrix accurately emulates the fluoroscopic projective geometry in the clinic, it offers us a means of virtually recreating the geometry depicted in the fluoroscopic images.
 
 %%% Local Variables:
 %%% mode: latex
