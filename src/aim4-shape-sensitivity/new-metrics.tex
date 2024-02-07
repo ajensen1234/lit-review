@@ -117,7 +117,7 @@ He observed that most other line segments were superfluous for shape recognition
   \centering
   \includegraphics[width=0.45\textwidth]{~/figures/raster/attneave-blob-points.png}
   \includegraphics[width=0.45\textwidth]{~/figures/raster/attneave-cat-contour.png}
-  \caption{Some representative examples of the experiences that Fred Attneave performed to establish the primacy of high curvature as salient in shape recreation and recognition, from \cite{attneaveInformationalAspectsVisual1954}.}
+  \caption{Some representative examples of the experiments that Fred Attneave performed to establish the primacy of high curvature as salient in shape recreation and recognition, from \cite{attneaveInformationalAspectsVisual1954}.}
   \label{fig:attneave}
 \end{figure}
 
@@ -131,7 +131,7 @@ Their emphasis on the importance of accurately aligning high-curvature regions a
   \includegraphics[width=0.3\textwidth]{~/figures/raster/TSA_original.png}
   \includegraphics[width=0.3\textwidth]{~/figures/raster/TSA_transparent.png}
   \includegraphics[width=0.3\textwidth]{~/figures/raster/TSA_solid.png}
-  \caption{Some different model views of a manually registered humeral and glenoid implant in an rTSA system. Of note, each view gives the user a different type of feature to focus on. The original view allows the user to determine the relative orientation based on shading, the transparent view allows the user to see the underlying fluoroscopic image, and the solid view allows the user to focus on specific regions of error. Each is crucial to performing manual registration.}
+  \caption[Some different model views of a manually registered humeral and glenoid implant in an rTSA system]{Some different model views of a manually registered humeral and glenoid implant in an rTSA system. Of note, each view gives the user a different type of feature to focus on. The original view allows the user to determine the relative orientation based on shading, the transparent view allows the user to see the underlying fluoroscopic image, and the solid view allows the user to focus on specific regions of error. Each is crucial to performing manual registration.}
   \label{fig:TSA-multiview}
 \end{figure}
 
@@ -150,7 +150,7 @@ Since this target does not change with each iteration, and memory usage is manag
 By focusing on pre-computed distances for critical high-curvature points, it was possible to maintain computational efficiency while potentially improving the accuracy of alignment.
 
 
-\subsubsection{Finding Regions of High Curvature}
+\subsubsection{Finding regions of high curvature}
 The first step in implementing this cost function involves determining the regions with high curvature in the contour, a task that is not as straightforward as it may appear.
 This requires a contour-extraction algorithm, a discrete curvature equation, and a method for automatically selecting regions of high curvature.
 
@@ -192,7 +192,7 @@ The points identified by this algorithm correspond precisely to the points where
 
 
 
-\subsubsection{Modified Asymmetric Surface Distance}
+\subsubsection{Modified asymmetric surface distance}
 Upon establishing a set of keypoints representing the regions of the highest curvature, the next step involved determining a pre-computable distance metric for creating a cost function.
 The Hausdorff distance was ruled out due to its focus on the maximum distance point rather than incorporating each point's contribution to the overall distance.
 The Symmetric distance was also dismissed in favor of seeking an asymmetric function to avoid the necessity of spawning sub-kernels during iteration calls.

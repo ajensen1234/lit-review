@@ -27,7 +27,7 @@ The primary goal of a kinematics translator is to develop a sufficiently rich re
 This is achieved by enabliung the ``translator'' to decude, for example, ``stair rise'' kinematics from ``walking'' kinematics without needing to explicitly measure ``walking'' kinematics.
 This has obvious benefits if one is trying to reduce the clinical footprint of autonomous kinematics measurements.
 
-\subsubsection{Methods and Data}
+\subsubsection{Methods and data}
 The training data used to build this network would come from the same published studies used for training our segmentation neural network and validating our autonomous algorithm (\Cref{sec:jtml}).
 To start, kinematics were grouped by movement (e.g. walking, stair rise, lunge, etc.), and then we created ``translation pairs'' for different movements from each patients.
 We standardized all kinematics data using B-splines and interpolation so that each movement was represented with 100 points.

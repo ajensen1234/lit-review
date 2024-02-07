@@ -3,7 +3,7 @@ This fundamentally involves determining how closely the user's synthetic image m
 The choice of similarity metric will be influenced by several key factors, including the a-priori availability of implant/bone geometry and the knowledge of image quality and contrast.
 Broadly, there are two classes of image similarity when performing model-image registration: intenisty-based and feature based.
 
-\subsubsection{Intensity Based}
+\subsubsection{Intensity based}
 \label{sec:img-sim-intensity}
 Intensity based measures are those that utilize specific pixel information in order to determine the difference between two images.
 This can be either a global image similarity metric or a measure of specific regions of interest within the image.
@@ -40,7 +40,7 @@ The normalized cross-correlation can also be used (\cref{eq:norm-xcorr}), which 
     \end{aligned}\label{eq:norm-xcorr}
 \end{equation}
 
-\subsubsection{Feature Based}
+\subsubsection{Feature based}
 \label{sec:img-sim-feature}
 Feature based image similarity metrics involve methods for identifying key features in images and using these features to measure differences between two images.
 These types of methods almost always involve some type of feature-extraction step, where the various features of interest are calculated and determined for subsequent use.
@@ -66,7 +66,7 @@ With a-priori information about the keypoints, weights could be assigned to each
 Keypoints are particularly useful when there are invariant features in images and 3D models, like morphological aspects of bones.
 However, if these features cannot be detected, alternative measures must be utilized.
 
-\paragraph*{Edges as Features}
+\paragraph*{Edges as features}
 Edges are a natural choice of feature when determining image similarity.
 Similar to intensity-based image similarity, the similarity between the contours of two images offers a promising metric for determining the overall similarity between two images.
 In model-image registration, the contours of the input image and the projected model can easily be compared, which presents a reliable scheme for measuring their similarity.
@@ -76,7 +76,7 @@ However, how can we determine when the edges are aligned?
 As always, the simplest approach is to take the p-norm between the model and image contours (\cref{eq:p-norm}), where instead of taking the difference between the two original images, one is taking the difference of the edges of the images.
 This function will be minimized when there is complete overlap between image and model contours.
 
-\paragraph{Drawback of Feature Based Similarity Metrics}
+\paragraph{Drawback of feature based similarity metrics}
 While they can be much more informative and specific, the main drawback of feature based image similarity metrics is the need for feature selection and extraction from the input image.
 Historically, this required an immense amount of domain-specific knowledge, and the image processing used to extract those features was often relatively limited in scope.
 

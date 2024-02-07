@@ -1,6 +1,6 @@
 Geometric primitives, such as points, are fundamental building blocks for representing shapes and objects in computer graphics. In this section, we will discuss how points can be represented in 2D and 3D space, along with the different mathematical operations that you can perform on those points.
 
-\subsubsection{2D and 3D Points}
+\subsubsection{2D and 3D points}
 \label{sec:geometric-points}
 In N-dimensional space, a point is represented as a set of N scalars, each representing a magnitude in a particular direction. This can be represented mathematically as a column vector (\cref{eq:point}). In two dimensions, a point is represented with two elements, $\mathbf{x} = [x , y]^{T}$. Similarly, in three dimensions, a point is represented with three elements, $\mathbf{x} = [x , y , z]^{T}$.
 
@@ -30,7 +30,7 @@ When dealing with homogeneous coordinates, $\mathbf{\tilde{x}} = \tilde{w}\mathb
     \label{eq:homog-point}
 \end{equation}
 
-\subsubsection{2D Transformations}
+\subsubsection{2D transformations}
 \label{sec:2d-transformations}
 Transformations are operations that change the position, orientation, or shape of an object in 2D space. One of the most basic transformations is a translation, which moves an object by adding a displacement vector to its position (\cref{eq:translation}).
 
@@ -147,7 +147,7 @@ To obtain inhomogeneous results, the resultant $\tilde{\mathbf{x}}'$ must be nor
 \end{equation}
 
 
-\subsubsection{3D Transformations}
+\subsubsection{3D transformations}
 \label{sec:3d-transformations}
 Transformations in three dimensions are extremely similar to their two dimensional counterpart, except the dimensionality of each transformation is increased by one. However, three dimensional rotations introduce added complexity, due to multiple axes of rotation, and the non-commutativity of those rotations. We handle this by utilizing Euler angles \cite{groodJointCoordinateSystem1983}, which decomposes the final orientation of an object as a combination of rotations about the three coordinate axes. Each rotation about an axis is represented with a matrix (\cref{eq:euler-angles}), and the final rotation matrix is represented as the order of the rotations that produced it (e.g. Z-X-Y rotation).
 
@@ -189,7 +189,7 @@ For simplicity, we can also represent 3D rotations as an axis-angle decompositio
 
 
 
-\paragraph*{3D to 2D Projections}
+\paragraph*{3D to 2D projections}
 Geometric primitives, such as points, lines, and polygons, are the building blocks of computer graphics. These basic shapes can be transformed and combined in various ways to create more complex objects and scenes. In order to represent these 3D primitives and objects in 2D image space, we must apply transformations that manipulate their position, orientation, and other properties. By using these transformations, we can create the illusion of depth and spatial relationships on a flat display. Understanding how to work with primitives and transform them is crucial for creating a wide range of visual effects and graphics in computer graphics.
 
 In computer graphics, one of the most basic methods of projecting three-dimensional objects onto a two-dimensional image plane is an orthographic projection. This projection simply drops the depth component of the object and flattens it onto the image plane (\cref{eq:orthographic-proj}). This can be thought of as mimicking a camera with a long focal length, or when the depth of the object is shallow compared to its distance from the camera (also known as a weak perspective projection). In this equation, $\mathbf{p}$ represents a point in 3D space and $\mathbf{x}$ represents the projected point in 2D image space. The $\tilde{\cdot}$ still represents the point in homogeneous coordinates.
@@ -201,7 +201,7 @@ In computer graphics, one of the most basic methods of projecting three-dimensio
     \label{eq:orthographic-proj}
 \end{equation}
 
-\paragraph*{Perspective Projection} 
+\paragraph*{Perspective projection}
 The most common 3D-2D projection is \emph{perspective projection}, which accounts for depth perception. This can be done by scaling each point by its $z$ position relative to the camera (Eq. \ref{eq:perspective-proj}). This necessitates using homogeneous coordinates (Eq. \ref{eq:perspective-matrix}).
 
 \begin{equation}

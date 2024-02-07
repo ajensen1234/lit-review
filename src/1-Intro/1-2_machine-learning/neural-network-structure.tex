@@ -1,7 +1,7 @@
 \subsection{Neural Network Structure}
 Neural networks generally have the same constitutive elements, mixed and matched based on the desired performance and complexity of the model that you are trying to build.
 
-\subsubsection{Neural Network Building Blocks}
+\subsubsection{Neural network building blocks}
 Generally, neural networks are formed by collections of foundational units, which can generate increasingly complex architectures and yield incredible performance.
 However, it is always important to start with the fundamental ``atoms'' of the neural network.
 
@@ -42,7 +42,7 @@ A list of common activation functions and their equations is shown in Table \ref
     \end{tabularx}
 \end{table}
 
-\subsubsection{Fully Connected Network}
+\subsubsection{Fully connected network}
 The fully connected network, also known as the multi-layer perceptron, is a basic type of neural network that utilizes the neurons previously discussed as building blocks.
 Its schematic representation is a familiar image to many when considering neural networks.
 By stacking the summations and multiplications of each neuron, we can derive the equation for a single layer of a fully connected network, which is simply a matrix multiplication (\cref{eq:fcn}).
@@ -57,7 +57,7 @@ The ReLU activation function is another popular choice because it is computation
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.7\linewidth]{figs/background/png/fcn.png}
-    \caption{A basic fully connected network with a single hidden layer. Each of the neurons are exactly the same as the neurons shown in figure \ref{fig:neuron}}
+    \caption[A basic fully connected network with a single hidden layer]{A basic fully connected network with a single hidden layer. Each of the neurons are exactly the same as the neurons shown in figure \ref{fig:neuron}}
     \label{fig:fcn}
 \end{figure}
 
@@ -77,7 +77,7 @@ One of the main limitations of fully-connected networks is exponential increase 
 For a standard 1024 $\times$ 1024 image, you have roughly 1 million input nodes, which can lead to hundreds of millions of parameters that need to be learned depending on the depth of the network.
 We can use standard image processing techniques to overcome some of these limitations as we explore different network architectures.
 
-\subsubsection{Convolutional Neural Networks}
+\subsubsection{Convolutional neural networks}
 
 Alex Krizhevsky significantly renewed interest in deep learning in 2012 by employing a convolutional neural network to win the ImageNet challenge. \cite{russakovskyImageNetLargeScale2015} by more than 10 points over second place.
 Since then, neural networks have found their way into many different computer vision tasks, including those in the medical field.
@@ -94,7 +94,7 @@ However, as one traverses deeper into the network, the combinations of these fea
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.7\linewidth]{figs/background/png/conv-layers.png}
-    \caption{An example of extracted features from a convolutional neural network. As shown, the deeper into the network one explores, the combination of core features start to create higher level features that might represent the shape of a specific animal \cite{schulzDeepLearningLayerWise2012}.}
+    \caption[An example of extracted features from a convolutional neural network]{An example of extracted features from a convolutional neural network. As shown, the deeper into the network one explores, the combination of core features start to create higher level features that might represent the shape of a specific animal \cite{schulzDeepLearningLayerWise2012}.}
     \label{fig:conv-layers}
 \end{figure}
 
@@ -105,7 +105,7 @@ Each of the layers is composed of a collection of convolution kernels, and the d
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.7\linewidth]{figs/background/png/u-net.png}
-    \caption{A standard U-Net architecture for a convolutional neural network. This architecture is the most common form of network used for biomedical image analysis and processing.}
+    \caption[A standard U-Net architecture for a convolutional neural network]{A standard U-Net architecture for a convolutional neural network. This architecture is the most common form of network used for biomedical image analysis and processing.}
     \label{fig:unet}
   \end{figure}
 

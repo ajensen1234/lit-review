@@ -2,7 +2,7 @@ Digital image processing is a field of computer vision that deals with the manip
 It focuses on algorithms and techniques that extract meaningful information from images and enhance visual quality.
 We can leverage these algorithms to efficiently and autonomously extract information relevant to model-image registration.
 
-\subsubsection{Filtering and Convolution}
+\subsubsection{Filtering and convolution}
 \label{sec:filtering-convolution}
 As previously discussed, image formation yields a collection of 2D points, $\mathbf{x}_{pix}$.
 We can write the intensity values at each pixel location as a digital signal, $f(\mathbf{x}_{pix}) = f(i,j)$, where $(i,j)$ represents the pixel locations in the image, and the function returns the intensity value.
@@ -112,7 +112,7 @@ Lastly, we can use a corner filter to find corners in images (\cref{eq:corner-fi
 
 Entire subfields of computer vision and image analysis are devoted to creating increasingly useful and complex filters, or collections of filters. These include steerable filters, which determine information occurring in arbitrary directions \cite{freemanSteerableFiltersLocal1992}, recursive filtering \cite{nielsenRegularizationScalespaceEdge1996}, and non-linear filtering \cite{tomasiBilateralFilteringGray1998}.
 
-\subsubsection{Edge Detection}
+\subsubsection{Edge detection}
 Edge detection is a highly motivated sub-field of image processing in computer vision due to the immense usefulness of algorithmically determining the edges in a given image.
 For a human operator, it can be relatively easy to identify edges of interest, but how can this be achieved computationally?
 The first approach might be in viewing an image topographically, with regions of different colors and intensity represented by different ``heights''.
@@ -144,7 +144,7 @@ Second, directional filters are used to find the gradients in each direction of 
 Third, a gradient magnitude threshold is applied to remove noise. Fourth, a double threshold is applied to remove both strong and weak edges.
 Last, edges are determined from hysteresis. The prevailing limitation of this algorithm is the need to set kernel size and edge-intensity.
 
-\subsubsection{Binary Image Processing}
+\subsubsection{Binary image processing}
 \label{sec:binary-img-proc}
 
 A binary image is a digital image that consists only of black and white pixels.
@@ -156,7 +156,7 @@ The primary method of processing binary images is morphological, which involves 
 
 \begin{figure}[h!]
     \includegraphics[width = \linewidth]{figs/background/png/binary-image-processing.jpg}
-    \caption{A collection of morphological operations on a binary image: (a) original image; (b) dilation; (c) erosion; (d) majority; (e) opening; (f) closing. Image from \cite{szeliskiComputerVisionAlgorithms2022}}
+    \caption[A collection of morphological operations on a binary image]{A collection of morphological operations on a binary image: (a) original image; (b) dilation; (c) erosion; (d) majority; (e) opening; (f) closing. Image from \cite{szeliskiComputerVisionAlgorithms2022}}
     \label{fig:binary-image-processing}
 \end{figure}
 

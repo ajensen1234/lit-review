@@ -3,7 +3,7 @@
 The power of neural networks is that they are able to ``learn'' incredibly complex mappings from a set of training data.
 But how \emph{exactly} do they learn?
 
-\subsubsection{Neural Network Cost Functions}
+\subsubsection{Neural network cost functions}
 
 The initial step in refining a machine learning pipeline is to identify the metric you aim to minimize (or maximize).
 This metric can encode specific insights about the task at hand, and it can also be used to promote a specific structure in the network itself (parsimony, sparsity, etc).
@@ -12,7 +12,7 @@ The \textbf{cost function} is exactly the metric that the learning algorithm is 
 The application of different cost functions for different tasks in neural networks has been well studied.
 For regression, typically some type of distance metric is employed (mean absolute error, mean squared error, Kullback-Liebler distance), while classification tasks mostly utilize some type of cross-entropy or log likelihood metric \cite{paszkePyTorchImperativeStyle2019}.
 
-\subsubsection{Optimizing and Updating Weights}
+\subsubsection{Optimizing and updating weights}
 
 For convex problems, there often exists a closed-form solution for the parameters that minimize a given objective function.
 However, neural networks are highly non-linear and non-convex, forcing researchers to employ different methods of updating parameter values in a direction of minimizing the objective function.
