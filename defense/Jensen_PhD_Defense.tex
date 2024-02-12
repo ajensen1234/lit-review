@@ -1,0 +1,853 @@
+% Created 2024-02-12 Mon 10:17
+% Intended LaTeX compiler: xelatex
+\documentclass[presentation, aspectratio=1610]{beamer}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\definecolor{UFBLUE}{HTML}{5d89cb}
+\setbeamercolor{frametitle}{bg=UFBLUE}
+\usepackage{graphicx}
+\usetheme[progressbar=foot]{metropolis}
+\usepackage[sorting=ynt,backend=biber,style=ieee]{biblatex}
+\addbibresource{../src/myBib.bib}
+\usepackage{threeparttable}
+\usepackage{multirow}
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty}
+\DeclareMathOperator*{\argmax}{\arg\!max}
+\DeclareMathOperator*{\argmin}{\arg\!min}
+\AtBeginSubsection{\begin{frame}\tableofcontents[currentsection,currentsubsection]\end{frame}}
+\usepackage{tcolorbox}
+\tcbuselibrary{fitting}
+\usetheme{metropolis}
+\usecolortheme{}
+\usefonttheme{}
+\useinnertheme{}
+\useoutertheme{}
+\author{Andrew Jensen}
+\date{March 9, 2023}
+\title{Joint Track Machine Learning}
+\hypersetup{
+ pdfauthor={Andrew Jensen},
+ pdftitle={Joint Track Machine Learning},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 29.1 (Org mode 9.7)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+
+\begin{frame}[label={sec:org2f91b13}]{Acknowledgments}
+I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
+\end{frame}
+\begin{frame}[label={sec:orgfc0fbb8}]{The Problem}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item By 2030, roughly 3.5 million Total Knee Arthroplasty (TKA) will be performed in the US \autocite{kurtzProjectionsPrimaryRevision2007}.
+\item 20\% of patients receiving TKA are dissatisfied.
+\begin{itemize}
+\item Instability, pain, unnatural \autocites{bakerRolePainFunction2007}[][]{bournePatientSatisfactionTotal2010}[][]{scottPredictingDissatisfactionFollowing2010}.
+\end{itemize}
+\item No reliable method of clinically assessing and quantifying joint dynamics.
+\begin{itemize}
+\item Human supervision
+\item Time consuming
+\item Specialized equipment
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.5\columnwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/Physical_Examination_of_the_knee.jpg}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org86170fc}]{Our Proposition}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+Orthopaedic surgeons and clinicians would readily adopt a \alert{\alert{practical}} and \alert{\alert{inexpensive}} technology that allows them to \alert{\alert{measure}} a patient's knee kinematics during \alert{\alert{activities of daily living}}.
+\end{column}
+\begin{column}{0.55\columnwidth}
+\begin{center}
+\includegraphics[width=2in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/dynamic-knee-prescription.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org3b4ed12}]{Constraints}
+\begin{columns}
+\begin{column}{0.45\columnwidth}
+\begin{itemize}
+\item It must fit within a \alert{\alert{standard clinical workflow}}
+\item The technology must utilize equipment \alert{\alert{commonly found in hospitals}}
+\item There must not be significant \alert{\alert{human supervision}} nor interaction to generate an examination report.
+\end{itemize}
+\end{column}
+\begin{column}{0.55\columnwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/c-arm-fluoro-machine.jpg}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org2c81c12}]{Background - Projective Geometry}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/perspective-projection.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:orgea0b133}]{Background - Model-Image Registration}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+If we know the projective parameters of the fluoroscopy machine, can we tinker with \(T^{cam}_{implant}\) so that our virtual projection matches the fluoroscopic image?
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2.5in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/registered-tka.png}
+\caption{From \autocite{mahfouzRobustMethodRegistration2003}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org561975b}]{Background - Model-Image Registration}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+If we know the projective parameters of the fluoroscopy machine, can we tinker with \(T^{cam}_{implant}\) so that our virtual projection matches the fluoroscopic image?
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2.5in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/mahfouz-perspective-projection.png}
+\caption{From \autocite{mahfouzRobustMethodRegistration2003}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org5afe9d4}]{Historical Overview}
+Many different approaches have attempted to solve the model-image registration problem.
+\begin{itemize}
+\item Pre-computed projections
+\item Skin-mounted motion Capture
+\item Biplane Imaging
+\item Iterative Projections
+\item Roentgen Stereophotogrammetry
+\end{itemize}
+\end{frame}
+\begin{frame}[label={sec:org62bbd47}]{Pre-Computed Projections}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Saving space and memory by pre-computing as much as possible.
+\item Pre-computed distance maps \autocites{zuffiModelbasedMethodReconstruction1999}[][]{lavalleeRecoveringPositionOrientation1995}.
+\item Pre-computed shape libraries \autocite{banksAccurateMeasurementThreedimensional1996}
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/lavallee-distance-maps.png}
+\caption{From \autocite{lavalleeRecoveringPositionOrientation1995}}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/banks-nfd-library.png}
+\caption{From \autocite{banksAccurateMeasurementThreedimensional1996}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:orgebda42c}]{Limitations of Pre-Computed Projections}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Requires an accurate contour from the input image in order to perform calculations.
+\begin{itemize}
+\item Human supervision for isolated contour
+\item Inaccuaracy with naive edge detection
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/lavallee-distance-maps.png}
+\caption{From \autocite{lavalleeRecoveringPositionOrientation1995}}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/banks-nfd-library.png}
+\caption{From \autocite{banksAccurateMeasurementThreedimensional1996}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:orgede6730}]{Motion Capture (MoCap)}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Can measure motion of MoCap beads very accurately.
+\item Skin-mounted \autocites{gaoInvestigationSoftTissue2008}[][]{kuoInfluenceSoftTissue2011}[][]{linEffectsSoftTissue2016}.
+\item Bone pins \autocite{lafortuneThreedimensionalKinematicsHuman1992}.
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2.5in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/gao-skin-mocap.png}
+\caption{From \autocite{gaoInvestigationSoftTissue2008}}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2.5in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/lafortune-bone-mocap.png}
+\caption{From \autocite{lafortuneThreedimensionalKinematicsHuman1992}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org21295ad}]{Limitations of Motion Capture}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+Skin Mounted
+\begin{itemize}
+\item Doesn't accurately describe underlying skeletal motion with clinical accuracy \autocites{gaoInvestigationSoftTissue2008}[][]{kuoInfluenceSoftTissue2011}[][]{linEffectsSoftTissue2016}.
+\end{itemize}
+Bone Pins
+\begin{itemize}
+\item Any volunteers?
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2.5in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/gao-skin-mocap.png}
+\caption{From \autocite{gaoInvestigationSoftTissue2008}}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2.5in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/lafortune-bone-mocap.png}
+\caption{From \autocite{lafortuneThreedimensionalKinematicsHuman1992}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org1d59a0a}]{Biplane Imaging}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Utilizes multiple cameras to resolve 3D position and orientation\autocites{ivesterReconfigurableHighSpeedStereoRadiography2015}[][]{burtonAutomaticTrackingHealthy2021}.
+\begin{itemize}
+\item Highly accurate.
+\item Gold Standard.
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png}
+\caption{Both from \autocite{ivesterReconfigurableHighSpeedStereoRadiography2015}}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/ivester-stereo-projection.png}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org15c1b44}]{Limitations of Biplane Imaging}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Not many hospitals have biplane fluoroscopy setups.
+\item Clinically impractical
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png}
+\caption{Both from \autocite{ivesterReconfigurableHighSpeedStereoRadiography2015}}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.75in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/ivester-stereo-projection.png}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org0501026}]{Iterative Projections}
+\begin{columns}
+\begin{column}{0.54\columnwidth}
+\begin{itemize}
+\item Take advantage of modern computational graphics pipelines to quickly perform projection matching.
+\begin{itemize}
+\item Image/Intensity similarity metrics \autocite{mahfouzRobustMethodRegistration2003}
+\item Feature/Contour similarity metrics \autocite{floodAutomatedRegistration3D2018}
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/mahfouz-perspective-projection.png}
+\caption{From \autocite{mahfouzRobustMethodRegistration2003}}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/flood-dilated-contour.png}
+\caption{From \autocite{floodAutomatedRegistration3D2018}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org10a83aa}]{Limitations of (historic) Iterative Projection Methods}
+\begin{columns}
+\begin{column}{0.54\columnwidth}
+\begin{itemize}
+\item Requires human supervision for:
+\begin{itemize}
+\item Pose initialization
+\item Escaping local minima
+\item Implant detection
+\end{itemize}
+\item Chaotic and Noisy objective function
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/mahfouz-perspective-projection.png}
+\caption{From \autocite{mahfouzRobustMethodRegistration2003}}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=2in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/flood-dilated-contour.png}
+\caption{From \autocite{floodAutomatedRegistration3D2018}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org05235f6}]{Roentgen Stereophotogrammetry (RSA)}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Uses implanted tantalum beads for motion tracking \autocites{vroomanFastAccurateAutomated1998}[][]{selvikRoentgenStereophotogrammetryMethod1989}
+\item Extremely accurate \autocites{kapteinEvaluationThreePose2004}[][]{saariKneeKinematicsMedial2005}
+\item Gold standard Measurement \autocite{brobergValidationMachineLearning2023}
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=3in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/vrooman-mbrsa.png}
+\caption{From \autocite{vroomanFastAccurateAutomated1998}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org2917561}]{Limitations of RSA}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Involves additional surgical procedures for inserting tantalum beads.
+\item Human supervision
+\item Bi-plane imaging
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=3in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/vrooman-mbrsa.png}
+\caption{From \autocite{vroomanFastAccurateAutomated1998}}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\section{Aims}
+\label{sec:orgcfb868e}
+\begin{frame}[label={sec:org890ff06}]{Aims}
+\alert{Aim 1:} Joint Track Machine Learning: An Autonomous Method of Measuring Total Knee Arthroplasty Kinematics From Single-Plane X-Ray Images\footnote{Published in the Journal of Arthroplasty \autocite{jensenJointTrackMachine2023}}
+\vfill
+\alert{Aim 2:} Correcting Symmetric Implant Ambiguity in Measuring Total Knee Arthroplasty Kinematics from Single-Plane Fluoroscopy \footnote{In Revision for Publication in the Journal of Biomechanics}
+\vfill
+\alert{Aim 3:} Some Musings on a ``Kinematics Translator'' and Synthetic Kinematcs Data
+\vfill
+\alert{Aim 4:} This will definitely work on shoulders, right?\footnote{In Review for Publication in the Journal of Computers in Biology and Medicine}
+\end{frame}
+\subsection{Aim 1 - Joint Track Machine Learning}
+\label{sec:orgf6561bc}
+\begin{frame}[label={sec:orgd33ffa4}]{Goal}
+Demonstrate the feasibility of a fully autonomous, model-image registration pipeline.
+\end{frame}
+\begin{frame}[label={sec:org3e10317}]{Method}
+\begin{itemize}
+\item Three-tiered approach
+\begin{itemize}
+\item Convolutional Neural networks (CNN) for autonomous implant detection
+\item Normalized Fourier Descriptor shape libraries
+\item Robust contour-based global optimization scheme
+\end{itemize}
+\end{itemize}
+\begin{center}
+\includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/jtml-pipeline.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org821765a}]{Autonomous Implant Detection Using Convolutional Neural Networks}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item 2 CNNs
+\begin{itemize}
+\item Femoral and Tibial implants
+\end{itemize}
+\item High Resolution Network \autocite{wangDeepHighResolutionRepresentation2020}
+\end{itemize}
+\end{column}
+\begin{column}{0.5\columnwidth}
+\begin{center}
+\includegraphics[width=\columnwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/jtml-segmentation.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org525eaf1}]{Neural Network Data}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item \textasciitilde{}8000 images
+\begin{itemize}
+\item 7 TKA kinematics studies
+\begin{itemize}
+\item 71 subjects
+\item 7 implant manufacturers
+\item 36 distinct implants
+\item Squat, lunge, kneel, stair ascent
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[height=3in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/jtml-data.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:orgd9728f0}]{Neural Network Robustness}
+\begin{itemize}
+\item Additional augmentations introduced during training \autocite{buslaevAlbumentationsFastFlexible2020}.
+\end{itemize}
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/augmentations.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org75ac425}]{Normalized Fourier Descriptor Shape Libraries}
+\begin{columns}
+\begin{column}{0.37\columnwidth}
+\begin{itemize}
+\item Pose initialization using segmentation output.
+\item \(\pm 30^{\circ}\) library span at \(3^{\circ}\) increments.
+\end{itemize}
+\end{column}
+\begin{column}{0.7\columnwidth}
+\begin{center}
+\includegraphics[width=2in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/banks-nfd-library.png}
+\end{center}
+\begin{center}
+\includegraphics[width=3.25in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/jtml-nfd.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org770be4c}]{Pose Refinement Using Global Optimization}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Two main features
+\begin{itemize}
+\item Objective function
+\item Optimization routine
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.5\columnwidth}
+\begin{equation*}
+    \argmin_{x}\{f(x) : x \in \Omega\}
+\end{equation*}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org2f20f7f}]{Contour-based Objective Function}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item With accurate projection, contours provide a strong heuristic for orientation.
+\item Overlapping pixels between CNN segmentation and projected implant.
+\begin{itemize}
+\item \(L_1\) norm has quick parallel computation.
+\end{itemize}
+\end{itemize}
+
+\begin{equation*}
+  J = \sum_{i \in H}\sum_{j \in W}|I_{ij} - P_{ij}| = L_{1}(I,P)
+\end{equation*}
+
+\begin{itemize}
+\item Sensitive to minor perturbations
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/registered-tka.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:orgccaa48f}]{Improving Robustness}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Dilation decreases sensitivity to perturbations.
+\item Multi-stage optimization can reduce dilation back to original edges.
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/flood-dilated-contour.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org6fcfdc1}]{Optimization Routine}
+\begin{itemize}
+\item No analytic form of the objective function exists, it \alert{\alert{must}} be sampled at points of interest.
+\begin{itemize}
+\item Black Box Optimization \autocites{audetDerivativeFreeBlackboxOptimization2017}[][]{bajajBlackBoxOptimizationMethods2021}
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}[label={sec:org08ff2f3}]{Lipschitzian Optimization}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Robust, global, black-box optimization routine if Lipschitz constant (\(K\)) is known \autocite{shubertSequentialMethodSeeking1972}.
+\item Lipschitz constant bounds the rate of change of a function.
+\item What if you don't know the Lipschitz constant?
+\end{itemize}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[width=2in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/shubert-step1.png}
+\end{center}
+\begin{center}
+\includegraphics[width=2in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/shubert-step2.png}
+\end{center}
+\begin{center}
+\includegraphics[width=2in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/shubert-step3.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org122a852}]{Lipschitzian Optimization without the Lipschitz Constant}
+\begin{center}
+\includegraphics[width=2.5in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/jones-direct-title.png}
+\end{center}
+\begin{itemize}
+\item Sample end-points instead of intersecting lines.
+\item Potentially optimal regions based on value at center and total size.
+\begin{itemize}
+\item Trisect potentially optimal regions and re-sample centers
+\end{itemize}
+\end{itemize}
+\begin{center}
+\includegraphics[width=2.5in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/direct-1D.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:orgc652f7d}]{Trisecting Region}
+\begin{columns}
+\begin{column}{0.4\columnwidth}
+\begin{equation*}
+  \begin{bmatrix}
+    f(x=c_{1}) & d(c_{1})\\
+    f(x=c_{2}) & d(c_{2})\\
+    \vdots & \vdots \\
+    f(x=c_{N}) & d(c_{N})
+  \end{bmatrix}
+\end{equation*}
+Where
+
+\begin{align*}
+  f(x=c_{i}) &\equiv \text{Sampled function value} \\
+  d(c_{i}) & \equiv \text{ Sub-domain size } \\
+  & \text{ for } i \in [1,N]
+\end{align*}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/direct-1D-stage1.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org7efd96b}]{Another Iteration}
+\begin{columns}
+\begin{column}{0.4\columnwidth}
+\begin{equation*}
+  \begin{bmatrix}
+    f(x=c_{1}) & d(c_{1})\\
+    f(x=c_{2}) & d(c_{2})\\
+    \vdots & \vdots \\
+    f(x=c_{N}) & d(c_{N})
+  \end{bmatrix}
+\end{equation*}
+Where
+
+\begin{align*}
+  f(x=c_{i}) &\equiv \text{Sampled function value} \\
+  d(c_{i}) & \equiv \text{ Sub-domain size } \\
+  & \text{ for } i \in [1,N]
+\end{align*}
+\end{column}
+\begin{column}{0.6\columnwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/direct-1D-stage2.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:orga21b35e}]{Determining Potentially Optimal Regions}
+\begin{itemize}
+\item Convex hull \autocites{grahamEfficientAlgorithDetermining1972}[][]{jarvisIdentificationConvexHull1973}[][]{chanOptimalOutputsensitiveConvex1996}[][]{barberQuickhullAlgorithmConvex1996} of region size vs. center value
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/direct-convex-hull.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org4329879}]{DiRECT for Joint Track Machine Learning}
+\begin{itemize}
+\item Search region is along all 6 degrees of freedom.
+\begin{itemize}
+\item Normalize to \([0,1]\).
+\end{itemize}
+\item Three stages, each with decreasing levels of dilation.
+\begin{itemize}
+\item Iteration budget for each stage.
+\end{itemize}
+\end{itemize}
+\begin{center}
+\begin{tabular}{lllr}
+Stage & Budget [Iterations] & Search Range [mm,deg] & Dilation (pixels)\\
+\hline
+``Tree'' & \textasciitilde{}20,000 & \(\pm 45\) & 5\\
+``Branch'' & \textasciitilde{}20,000 & \(\pm 25\) & 3\\
+``Leaf'' & \textasciitilde{}10,000 & \(\pm 100\) \((z_{trans})\) / \(\pm 3\) \((else)\) & 1\\
+\end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:orgb063b5d}]{Testing Performance}
+Now that we have our refined poses, how well does out system perform?
+\begin{center}
+\includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/jtml-pipeline.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org6e559ac}]{Validation}
+\begin{itemize}
+\item Independent research group using Model-Based RSA.
+\item Determine the level of concordance between the two measurement systems
+\begin{itemize}
+\item Bland-Altmann Plots
+\end{itemize}
+\item Achieved clinically acceptable accuracy \autocites{brobergValidationMachineLearning2023}[][]{jensenJointTrackMachine2023}.
+\item Highly repeatable
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.7\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/broberg-bland-altmann.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org43e21a4}]{Awards}
+The work presented in this aim won the HAP Paul Award for Best Paper from the International Society for Technology in Arthroplasty's 2022 Annual Meeting.
+\begin{center}
+\includegraphics[width=0.7\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/ista-hap-paul-talk.png}
+\end{center}
+\end{frame}
+\subsection{Aim 2 - Correcting Symmetric Implant Ambiguity}
+\label{sec:org6f45fb7}
+\begin{frame}[label={sec:org7052cc9}]{Goal}
+\begin{itemize}
+\item The goal of this aim is to validate and test methods that can overcome single-plane limitations for model-image registration.
+\begin{itemize}
+\item Out-of-plane (OOP) Translation
+\item Symmetry Traps
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}[label={sec:orgac91e68}]{Translation}
+\begin{itemize}
+\item Depth perception is lost when using a single camera.
+\item Utilize a virtual ``spring'' to constrain relative OOP translation between implant components.
+\end{itemize}
+
+\begin{equation*}
+  J = \alpha L_{1}(I,P) + \beta ML(Fem,Tib)
+\end{equation*}
+
+Where
+\begin{equation*}
+  ML \equiv \text{ Relative mediolateral translation }
+\end{equation*}
+\end{frame}
+\begin{frame}[label={sec:org10ebd7e}]{Symmetry Traps}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+With a symmetric tibial implant, the contour is not always a perfect heuristic for true pose. Human operators typically utilize relative varus-valgus to determine correct pose.
+
+Found ``ambiguous zone'' within \(3^{\circ}\) of pure lateral pose with high propensity for symmetry traps \autocite{jensenJointTrackMachine2023}.
+\end{column}
+\begin{column}{0.5\columnwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/figures/raster/sym-trap-quadrants-no-captions.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:orgab15c48}]{Solving the Symmetric Pose}
+\begin{columns}
+\begin{column}{0.55\columnwidth}
+Algorithm devised to ``flip'' pose into symmetric counterpart.
+\begin{enumerate}
+\item Determine viewing ray from camera to implant centroid, denote \(\vec{v}\), normalize.
+\item Denote symmetric-plane normal vector \(\vec{s}\), normalize.
+\item Measure relative ``off-lateral'' orientation of implant, \(\cos(\theta) = \dfrac{\vec{v} \cdot \vec{s}}{||\vec{v} || ||\vec{s} || }\)
+\item Apply body-centered rotation to implant about \(\vec{m} = \vec{s} \times \vec{v}\) by \(\psi = 2\theta\).
+\end{enumerate}
+\end{column}
+\begin{column}{0.5\columnwidth}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{/home/ajensen123@ad.ufl.edu/figures/raster/symmetry_flipper.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:org4a8965e}]{Methods - Training Set}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item ``Symmetric'' poses for each of the 12,000 frames were calculated using the ``flipper'' algorithm, yielding \textasciitilde{}24,000 total training samples.
+
+The input for each sample was \([\theta_{F/E}, \theta_{V/V}, \theta_{I/E}, \psi]\), and the output was one of \(\{\text{True}, \text{Symmetric}\}\)
+\end{itemize}
+\end{column}
+\begin{column}{0.5\columnwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/figures/raster/symmetry-trap-dataset.png}
+\caption{The training data plotted with each axis representing an anatomical rotation (origin not to scale).}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}[label={sec:orgf57e9e4}]{Methods - Machine Learning}
+Using \texttt{scikit-learn}, we implemented the following classification algorithms:
+
+\begin{itemize}
+\item K-Nearest-Neighbors, Support Vector Machines, Stacked Generalization, Voting Classifier
+\end{itemize}
+\end{frame}
+\begin{frame}[label={sec:orgd0b64d1},fragile]{Methods - Fixing ``Symmetry Traps''}
+ For an input image sequence, we perform the following:
+
+\begin{enumerate}
+\item Each pose and its symmetric counterpart are fed into the machine learning classifier
+\begin{enumerate}
+\item If the outputs are different, take the pose labeled ``true'' as the correct pose.
+\item If the outputs are the same, (i.e. both a pose and its symmetric counterpart return ``true''), label image ``ambiguous''
+\end{enumerate}
+\item For all images that are \texttt{NOT} ambiguous, construct a cubic spline through the three rotation measurements.
+\item For all images that are labeled ``ambiguous'', determine which of the two poses is closer to the spline, and take that as the ``correct'' pose.
+\end{enumerate}
+\end{frame}
+\begin{frame}[label={sec:orgd837b4c}]{Results - ML Classification}
+\begin{center}
+\includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/figures/raster/sym-trap-ML-table.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:orgc65f4aa}]{Results - Fixing ``Symmetry Traps''}
+\begin{itemize}
+\item Accuracy: 91.9\%
+\item Sensitivity: 0.674
+\item Specificity: 0.940
+\end{itemize}
+
+We also measured the distribution of \(\psi\) for correct and incorrect frames.
+\begin{itemize}
+\item Average \(\psi_{correct}=16.6^{\circ}\).
+\item Average \(\psi_{incorrect} = 7.12^{\circ}\).
+\end{itemize}
+\end{frame}
+\begin{frame}[label={sec:org2576e0a}]{Results - Stratified \(\psi\) Correction Performance}
+\begin{center}
+\includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/figures/raster/stratified-psi-ML-table.png}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:org9aeb628}]{Discussion}
+\begin{itemize}
+\item Reliable post-processing method to overcome pernicious issue (30 years in the making!)
+\item Suggests an imaging setup for measuring kinematics slightly off-oblique to escape ``ambiguous zone''
+\end{itemize}
+\end{frame}
+\begin{frame}[label={sec:org59ea9cb},fragile, allowframebreaks, label=]{Presentations}
+\begin{refsection}
+  \input{nocites-pres}
+  \printbibliography[title=Presentations]
+\end{refsection}
+\end{frame}
+\begin{frame}[label={sec:org530be1d},fragile, allowframebreaks, label=]{Publications}
+\begin{refsection}
+  \input{nocites-pubs}
+  \printbibliography[title=Publications]
+\end{refsection}
+\end{frame}
+\begin{frame}[label={sec:orgf976cc2}]{Timeline}
+\begin{center}
+\begin{tabular}{ll}
+Date(s) & Event\\
+\hline
+2015-2019 & Mech. Eng. B.S, Magna Cum Laude, UF\\
+April 2019 - April 2020 & Internship at Exactech\\
+April 2020 & Started in Miller Lab\\
+August 2020 & Officially Started PhD at UF\\
+November 2021 & Best Presentation Award at ISTA: Emerging Technologies\\
+April 2022 & Submitted JTML for HAP Paul Award\\
+September 2022 & HAP Paul Award at ISTA 2022\\
+\hline
+June 2023 & Single-plane limitations paper submitted\\
+July 2023 & Est. IRB Approval\\
+August 2023 & v1.0 JTAT\\
+December 2023 \textasciitilde{} May 2024 & Patient Data Fully Collected (Aims 3/4)\\
+August 2024 & Papers for Aims 3/4 Submitted\\
+December 2024 - April 2025 & Est. Graduation\\
+\end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[label={sec:orgdeefea1},standout]{Thank you!}
+Thanks for listening!!
+\end{frame}
+\section{References}
+\label{sec:org277416b}
+\begin{frame}[label={sec:org9fde354},fragile, allowframebreaks, label=]{References}
+\AtNextBibliography{\tiny}
+\printbibliography
+\end{frame}
+\end{document}

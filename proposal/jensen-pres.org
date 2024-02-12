@@ -149,7 +149,6 @@ Many different approaches have attempted to solve the model-image registration p
 #+ATTR_LaTeX: :width 1.75in
 #+CAPTION: From [cite:@lavalleeRecoveringPositionOrientation1995]
 [[file:~/repo/lit-review/figures/raster/lavallee-distance-maps.png]]
-\vspace{-0.25in}
 #+ATTR_LaTeX: :width 1.75in
 #+CAPTION: From [cite:@banksAccurateMeasurementThreedimensional1996]
 [[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
@@ -168,7 +167,6 @@ Many different approaches have attempted to solve the model-image registration p
 #+ATTR_LaTeX: :width 1.75in
 #+CAPTION: From [cite:@lavalleeRecoveringPositionOrientation1995]
 [[file:~/repo/lit-review/figures/raster/lavallee-distance-maps.png]]
-\vspace{-0.25in}
 #+ATTR_LaTeX: :width 1.75in
 #+CAPTION: From [cite:@banksAccurateMeasurementThreedimensional1996]
 [[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
@@ -189,7 +187,6 @@ Many different approaches have attempted to solve the model-image registration p
 #+ATTR_LaTeX: :width 2.5in
 #+CAPTION: From [cite:@gaoInvestigationSoftTissue2008]
 [[file:~/repo/lit-review/figures/raster/gao-skin-mocap.png]]
-\vspace{-0.25in}
 #+ATTR_LaTeX: :width 2.5in
 #+CAPTION: From [cite:@lafortuneThreedimensionalKinematicsHuman1992]
 [[file:~/repo/lit-review/figures/raster/lafortune-bone-mocap.png]]
@@ -210,7 +207,6 @@ Bone Pins
 #+ATTR_LaTeX: :width 2.5in
 #+CAPTION: From [cite:@gaoInvestigationSoftTissue2008]
 [[file:~/repo/lit-review/figures/raster/gao-skin-mocap.png]]
-\vspace{-0.25in}
 #+ATTR_LaTeX: :width 2.5in
 #+CAPTION: From [cite:@lafortuneThreedimensionalKinematicsHuman1992]
 [[file:~/repo/lit-review/figures/raster/lafortune-bone-mocap.png]]
@@ -231,7 +227,6 @@ Bone Pins
 #+ATTR_LaTeX: :width 1.75in
 #+CAPTION: Both from [cite:@ivesterReconfigurableHighSpeedStereoRadiography2015]
 [[file:~/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png]]
-\vspace{-0.25in}
 #+ATTR_LaTeX: :width 1.75in
 #+CAPTION:
 [[file:~/repo/lit-review/figures/raster/ivester-stereo-projection.png]]
@@ -250,11 +245,10 @@ Bone Pins
 #+ATTR_LaTeX: :width 1.75in
 #+CAPTION: Both from [cite:@ivesterReconfigurableHighSpeedStereoRadiography2015]
 [[file:~/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png]]
-\vspace{-0.25in}
 #+ATTR_LaTeX: :width 1.75in
 #+CAPTION:
 [[file:~/repo/lit-review/figures/raster/ivester-stereo-projection.png]]
-
+E
 *** Iterative Projections
 **** :BMCOL:
 :PROPERTIES:
