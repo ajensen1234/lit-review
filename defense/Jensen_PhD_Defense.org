@@ -1,6 +1,7 @@
 #+AUTHOR: Andrew Jensen
-#+TITLE: Joint Track Machine Learning
-#+DATE: March 9, 2023
+#+TITLE: Methods for Autonomous Measurement of 3D Joint Kinematics from 2D Fluoroscopic Images
+#+SUBTITLE: A Dissertation Defense
+#+DATE: March 4, 2024
 #+BIBLIOGRAPHY: ../src/myBib.bib
 #+DESCRIPTION:
 #+KEYWORDS:
@@ -27,6 +28,7 @@
 #+latex_header: \usepackage[sorting=ynt,citestyle=numeric-comp,backend=biber,style=ieee]{biblatex}
 #+latex_header: \usepackage{threeparttable}
 #+latex_header: \usepackage{multirow}
+#+latex_header: \usepackage{tabularx}
 #+latex_header_extra: \usepackage{caption}
 #+latex_header_extra: \captionsetup[figure]{labelformat=empty}
 #+latex_header_extra: \DeclareMathOperator*{\argmax}{\arg\!max}
@@ -97,10 +99,7 @@ Orthopaedic surgeons and clinicians would readily adopt a **practical** and **in
 :END:
 #+ATTR_LaTeX: :width \textwidth
 [[file:~/repo/lit-review/figures/raster/c-arm-fluoro-machine.jpg]]
-* Background :B_ignoreheading:
-:PROPERTIES:
-:BEAMER_env: ignoreheading
-:END:
+* Background
 *** Background - Projective Geometry
 #+ATTR_latex: :width 0.8\textwidth
 [[file:~/repo/lit-review/figures/raster/perspective-projection.png]]
@@ -635,11 +634,11 @@ Algorithm devised to "flip" pose into symmetric counterpart.
 #+CAPTION: The training data plotted with each axis representing an anatomical rotation (origin not to scale).
 [[file:/home/ajensen123@ad.ufl.edu/figures/raster/symmetry-trap-dataset.png]]
 *** Methods - Machine Learning
-Using \texttt{scikit-learn}, we implemented the following classification algorithms:
+Using \texttt{scikit-learn}, the following classifiers were implemented:
 
 + Support Vector Machine, K-Nearest-Neighbors, AdaBoost, Histogram Gradient Boosting, Bagging Estimator, Stacked Generalization, Majority Voting Classifier
 *** Methods - Fixing "Symmetry Traps"
-For an input image sequence, we perform the following:
+For an input image sequence, the following is performed:
 
 1. Each pose and its symmetric counterpart are fed into the machine learning classifier
    1. If the outputs are different, take the pose labeled "true" as the correct pose.
@@ -654,7 +653,7 @@ For an input image sequence, we perform the following:
 + Sensitivity: 0.674
 + Specificity: 0.940
 
-We also measured the distribution of $\psi$ for correct and incorrect frames.
+The distribution of $\psi$ for correct and incorrect frames was measured.
 + Average $\psi_{correct}=16.6^{\circ}$.
 + Average $\psi_{incorrect} = 7.12^{\circ}$.
 *** Results - Stratified $\psi$ Correction Performance
@@ -663,6 +662,65 @@ We also measured the distribution of $\psi$ for correct and incorrect frames.
 *** Discussion
 + Reliable post-processing method to overcome pernicious issue (30 years in the making!)
 + Suggests an imaging setup for measuring kinematics slightly off-oblique to escape "ambiguous zone"
+** Aim 3 - Musings on a "Kinematics Translator" and Synthetic Kinematics Data
+** Aim 4 - This will definitely work on shoulders, right?
+
+*** Spoiler Alert
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.3
+:END:
+No, it won't.
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+#+attr_latex: :width 1.5in
+[[file:~/figures/raster/BAD_IE_HUM.png]]
+
+#+attr_latex: :width 1.5in
+[[file:~/figures/raster/BAD_PROXDIST_HUM.png]]
+
+
+*** Goal
+Establish a protocol for exploring the relative sensitivity of input orientation to projected shape
+*** JTML on Shoulders
+\begin{table}[h!]
+\small
+	\caption{Root mean squared differences between JointTrack Machine Learning optimized kinematics and manually registered kinematics on single-plane fluoroscopy} \label{tab:jtml-tsa-tka-vals}
+	\begin{tabularx}{\linewidth}{ccccccc}\hline
+		 Implant Type & $x_{trans} (mm)$ & $y_{trans} (mm)$ & $z_{trans} (mm)$ & $x_{rot} (^{\circ})$ & $y_{rot} (^{\circ})$ & $z_{rot} (^{\circ})$ \\ \hline
+		Humeral            & 8.46             & 8.64             & 152.78           & 22.59                & 64.74                & 11.81                \\
+		Glenosphere        & 0.97             & 1.44             & 32.58            & 13.72                & 26.40                & 8.30                 \\
+		Femoral            & 0.57             & 0.39             & 26.95            & 0.66                 & 0.73                 & 0.60                 \\
+		Tibial             & 0.67             & 0.64             & 27.17            & 1.63                 & 2.74                 & 0.66                 \\\hline
+	\end{tabularx}
+\end{table}
+
+*** JTML Modifications
+*** 2-Dimensional Shape
+*** Invariant Angular Radial Transform Descriptor
+*** Methods - Shape Difference
+The "input shapes" for each implant were the projected implants at $\pm 30^{\circ}$ along each rotational axis at $5^{\circ}$ increments.
+$1^{\circ}$ perturbations were applied along each rotation axis.
+
+\begin{equation}
+	\label{eq:shape-derivative}
+	\begin{split}
+		\Delta S(\delta)_{z,x,y}  \equiv & IARTD(R_{z,x,y,+\delta})                        \\
+		                                 & - IARTD(R_{z,x,y,-\delta})                      \\
+		\forall                          & \delta \in \{\delta_{x},\delta_{y},\delta_{z}\}
+	\end{split}
+\end{equation}
+*** Methods - Shape Sensitivity
+The $\Delta S(\delta)_{z,x,y}$ vector is normalized to account for overall scale of each element, in-plane rotation inputs are averaged, and the 2-norm of the difference vector is defined as the shape sensitivity.
+
+A larger vector would indicate that the shape changed more for that particular "input shape" and perturbation.
+
+\begin{equation}
+	\label{eq:z_rot_norm}
+	\mathbb{S}(\delta)_{x,y} = \dfrac{\sum_{z} \| S(\delta)_{z,x,y} \|_{2}}{N}
+\end{equation}
 * Publications and Presentations :B_ignoreheading:
 :PROPERTIES:
 :BEAMER_env: ignoreheading
@@ -693,26 +751,20 @@ We also measured the distribution of $\psi$ for correct and incorrect frames.
 :BEAMER_env: ignoreheading
 :END:
 *** Timeline
-| Date(s)                    | Event                                                  |
-|----------------------------+--------------------------------------------------------|
-| 2015-2019                  | Mech. Eng. B.S, Magna Cum Laude, UF                    |
-| April 2019 - April 2020    | Internship at Exactech                                 |
-| April 2020                 | Started in Miller Lab                                  |
-| August 2020                | Officially Started PhD at UF                           |
-| November 2021              | Best Presentation Award at ISTA: Emerging Technologies |
-| April 2022                 | Submitted JTML for HAP Paul Award                      |
-| September 2022             | HAP Paul Award at ISTA 2022                            |
-|----------------------------+--------------------------------------------------------|
-| June 2023                  | Single-plane limitations paper submitted               |
-| July 2023                  | Est. IRB Approval                                      |
-| August 2023                | v1.0 JTAT                                              |
-| December 2023 ~ May 2024   | Patient Data Fully Collected (Aims 3/4)                |
-| August 2024                | Papers for Aims 3/4 Submitted                          |
-| December 2024 - April 2025 | Est. Graduation                                        |
+| Date(s)                 | Event                                                  |
+|-------------------------+--------------------------------------------------------|
+| 2015-2019               | Mech. Eng. B.S, Magna Cum Laude, UF                    |
+| April 2019 - April 2020 | Internship at Exactech                                 |
+| April 2020              | Started in Miller Lab                                  |
+| August 2020             | Officially Started PhD at UF                           |
+| November 2021           | Best Presentation Award at ISTA: Emerging Technologies |
+| April 2022              | Submitted JTML for HAP Paul Award                      |
+| September 2022          | HAP Paul Award at ISTA 2022                            |
+| November 2023           | Symmetry Trap Paper Submitted                          |
+| December 2023           | Part-time Internship at Exactech Started               |
+| February 2024           | Revisions Requested for Symmetry Trap Paper            |
+| February 2024           | Implant Shape Sensitivity Paper Submitted              |
 *** Thank you!
-:PROPERTIES:
-:BEAMER_OPT: standout
-:END:
 Thanks for listening!!
 * References
 *** References
