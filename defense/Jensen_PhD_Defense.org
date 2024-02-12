@@ -42,7 +42,7 @@
 #+latex_header_extra: \usepackage{tcolorbox}
 #+latex_header_extra: \tcbuselibrary{fitting}
 #+cite_export: biblatex ieee
-
+#+latex_header: \renewcommand*{\bibfont}{\scriptsize}
 
 * Introduction :B_ignoreheading:
 :PROPERTIES:
@@ -681,7 +681,6 @@ No, it won't.
 #+attr_latex: :width 1.5in
 [[file:~/figures/raster/BAD_PROXDIST_HUM.png]]
 
-
 *** Goal
 Establish a protocol for exploring the relative sensitivity of input orientation to projected shape
 *** JTML on Shoulders
@@ -696,8 +695,29 @@ Establish a protocol for exploring the relative sensitivity of input orientation
 		Tibial             & 0.67             & 0.64             & 27.17            & 1.63                 & 2.74                 & 0.66                 \\\hline
 	\end{tabularx}
 \end{table}
+*** Modified Mean Surface Distance
++ In order to improve error gradient, a modified mean surface distance was incorporated into the cost function.
++ The mean of the dot product between the projection estimate and a distance map of the CNN segmentation.
 
-*** JTML Modifications
+\begin{equation}
+  \label{eq:DMCF}
+  J = \dfrac{ \sum_{(x,y) \in \text{Image}} Proj_{x,y}DM_{x,y} }{\sum_{(x,y)\in \text{Image}}Proj_{x,y}} = \dfrac{Proj \cdot DM}{\sum_{(x,y)\in \text{Image}}Proj_{x,y}}
+\end{equation}
+*** Modified Asymmetric Keypoint Distance
++ Early psychological research deemed curvature as highly salient for object recognition [cite:@attneaveInformationalAspectsVisual1954; @attneaveQuantitativeStudyShape1956]. This aimed to place additional emphasis on autonomously selected high-curvature regions.
+  + Extracted regions of high-curvature using Menger's Algorithm [cite:@legerMengerCurvatureRectifiability1999].
+  + Utilized a modified asymmetric surface distance on the discrete set of keypoints.
+
+\begin{equation}
+  \label{eq:curv-keypoint}
+  \begin{split}
+    \displaystyle J &= \dfrac{\sum_{k \in \mathbb{K}}(\min_{p\in Proj}(p \cdot DM_{k}))}{N_k} \\
+      &\text{where}\\
+    \mathbb{K} &= \text{Set of all keypoints} \\
+    DM_{k} &= \text{Distance map for keypoint $k$} \\
+  \end{split}
+\end{equation}
+
 *** 2-Dimensional Shape
 *** Invariant Angular Radial Transform Descriptor
 *** Methods - Shape Difference
@@ -769,13 +789,9 @@ Thanks for listening!!
 * References
 *** References
 :PROPERTIES:
-:BEAMER_OPT: fragile, allowframebreaks, label=
+:BEAMER_OPT: fragile, allowframebreaks,  label=
 :END:
-#+begin_src latex
-\AtNextBibliography{\tiny}
-\printbibliography
-#+end_src
-
+#+print_bibliography:
 * Footnotes
 
 [fn:1] Published in the Journal of Arthroplasty [cite:@jensenJointTrackMachine2023]
