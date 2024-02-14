@@ -698,11 +698,12 @@ Establish a protocol for exploring the relative sensitivity of input orientation
 *** Modified Mean Surface Distance
 + In order to improve error gradient, a modified mean surface distance was incorporated into the cost function.
 + The mean of the dot product between the projection estimate and a distance map of the CNN segmentation.
-
+#+begin_src latex
 \begin{equation}
   \label{eq:DMCF}
-  J = \dfrac{ \sum_{(x,y) \in \text{Image}} Proj_{x,y}DM_{x,y} }{\sum_{(x,y)\in \text{Image}}Proj_{x,y}} = \dfrac{Proj \cdot DM}{\sum_{(x,y)\in \text{Image}}Proj_{x,y}}
+  J = \dfrac{Proj \cdot DM}{\sum Proj}
 \end{equation}
+#+end_src
 *** Modified Asymmetric Keypoint Distance
 + Early psychological research deemed curvature as highly salient for object recognition [cite:@attneaveInformationalAspectsVisual1954; @attneaveQuantitativeStudyShape1956]. This aimed to place additional emphasis on autonomously selected high-curvature regions.
   + Extracted regions of high-curvature using Menger's Algorithm [cite:@legerMengerCurvatureRectifiability1999].
@@ -720,7 +721,55 @@ Establish a protocol for exploring the relative sensitivity of input orientation
 
 *** 2-Dimensional Shape
 *** Invariant Angular Radial Transform Descriptor
+The Invariant Angular Radial Transform provides an orthogonal spatial basis function to describe binary images.
+
+#+attr_latex: :width 0.7\textwidth
+#+caption: The basis "vectors" for the invariant angular radial transform. From [cite:@leeNewShapeDescription2012].
+[[file:~/figures/raster/ART_basis.png]]
+*** IARTD Feature Vector
+The complez feature vector for IARTD is constructed to ensure orthogonality and rotational invariance for the magnitude. Prior to calculation, the image coordinates are normalized such that $(0,0)$ is at the center, and each of the four corners are $(\pm 1, \pm 1)$.
+#+begin_src latex
+\begin{equation}
+  F_{np} = \int_{0}^{2\pi}\int_{0}^{1} f(\rho,\theta)V_{np}(\rho,\theta)\rho d\rho d\theta
+\end{equation}
+#+end_src
+
+
+#+begin_src latex
+\begin{equation}
+	\begin{split}
+		f(\rho,\theta) & \equiv \text{ Input image in polar coordinates}  \\
+		V_{np}(\rho,\theta)         & = \dfrac{1}{2\pi}e^{jp\theta}R_{n}(\rho)      \\
+		R_{n}(\rho)    & =
+		\begin{cases}
+			1                   & n=0     \\
+			2 \cos (\pi n \rho) & n \ne 0
+		\end{cases}
+	\end{split}
+\end{equation}
+#+end_src
+*** Normalizing IARTD Feature Vector
+We normalize the phase of the feature vector to ensure full rotational invariance.
+#+begin_src latex
+\begin{equation}
+  \begin{split}
+    \phi'_{np} &= \phi_{np}-\phi_{n,1} \\
+    F'_{np} &= F_{np}e^{-jp\phi_{n,1}}
+  \end{split}
+\end{equation}
+#+end_src
+The final feature vector is the constructed with the corrected phase and magnitude values. Values of $p<2$ are redundant and removed per the original authors' suggestion [cite:@leeNewShapeDescription2012].
+#+begin_src latex
+\begin{equation}
+  IARTD = \{|F'_{np}|,\phi'_{np}\} \text{ where } n\ge0,p\ge2
+\end{equation}
+#+end_src
+
 *** Methods - Shape Difference
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 The "input shapes" for each implant were the projected implants at $\pm 30^{\circ}$ along each rotational axis at $5^{\circ}$ increments.
 $1^{\circ}$ perturbations were applied along each rotation axis.
 
@@ -732,7 +781,14 @@ $1^{\circ}$ perturbations were applied along each rotation axis.
 		\forall                          & \delta \in \{\delta_{x},\delta_{y},\delta_{z}\}
 	\end{split}
 \end{equation}
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+attr_latex: :width 0.75\textwidth
+[[file:~/figures/raster/rTSA_humeral_rotation_axes.png]]
 *** Methods - Shape Sensitivity
+
 The $\Delta S(\delta)_{z,x,y}$ vector is normalized to account for overall scale of each element, in-plane rotation inputs are averaged, and the 2-norm of the difference vector is defined as the shape sensitivity.
 
 A larger vector would indicate that the shape changed more for that particular "input shape" and perturbation.
@@ -741,6 +797,70 @@ A larger vector would indicate that the shape changed more for that particular "
 	\label{eq:z_rot_norm}
 	\mathbb{S}(\delta)_{x,y} = \dfrac{\sum_{z} \| S(\delta)_{z,x,y} \|_{2}}{N}
 \end{equation}
+*** Results - Humeral Shape Sensitivity
+#+begin_src latex
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Humeral_dx_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Humeral_dy_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Humeral_dz_sensitivity.png}
+	\caption{The $\mathbb{S}$ plot for a humeral implant for $\delta$ rotations along the x, y, and z axis, respectively.}
+	\label{fig:hum_sensitivity_plot}
+\end{figure}
+#+end_src
+
+*** Results - Glenosphere Shape Sensitivity
+#+begin_src latex
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Glenosphere_dx_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Glenosphere_dy_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Glenosphere_dz_sensitivity.png}
+	\caption{The $\mathbb{S}$ plot for a glenosphere implant for $\delta$ rotations along the x, y, and z axis, respectively.}
+	\label{fig:sca_sensitivity_plot}
+\end{figure}
+
+#+end_src
+*** Results - Femoral Shape Sensitivity
+#+begin_src latex
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Femoral_dx_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Femoral_dy_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Femoral_dz_sensitivity.png}
+	\caption{The $\mathbb{S}$ plot for a femoral implant for $\delta$ rotations along the x, y, and z axis, respectively.}
+	\label{fig:fem_sensitivity_plot}
+\end{figure}
+#+end_src
+*** Results - Tibial Shape Sensitivity
+#+begin_src latex
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Tibial_dx_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Tibial_dy_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Tibial_dz_sensitivity.png}
+	\caption{The $\mathbb{S}$ plot for a tibial implant for $\delta$ rotations along the x, y, and z axis, respectively.}
+	\label{fig:tib_sensitivity_plot}
+\end{figure}
+#+end_src
+*** Key Takeaways
+- Humeral implant has the lowest $\delta_y$ sensitivity of all implants, which is the difficult registration axis.
+- Tibial and glenosphere implants demonstrate a "valley" along rotation axis representing near-symmetry.
+  - For tibial implants, this is the axis most commonly associated with "symmetry traps".
+#+begin_src latex
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Glenosphere_dy_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Tibial_dy_sensitivity.png}
+    \caption{Glenosphere (left) and tibial (right) $\delta_y$ shape sensitivities.}
+\end{figure}
+#+end_src
+* Conclusion
+*** Conclusions
+Throughout the past four years, I have:
+1. Established a fully autonomous method of measuring TKA kinematics from single plane fluoroscopy. This software is used globally by different research groups, and offers
+2. Utilized machine learning to address "symmetry traps", an inherent limitation in single-plane TKA kinematics measurements for nearly 30 years. Additionally, we offer an alternative imaging protocol for accurately measuring TKA kinematics in a clinical setting.
+3. Developed a pipeline for accessing the relative performance of autonomous registration for different implants, conclusively finding that implant geometry alone is not sufficient for every joint.
 * Publications and Presentations :B_ignoreheading:
 :PROPERTIES:
 :BEAMER_env: ignoreheading
@@ -784,6 +904,8 @@ A larger vector would indicate that the shape changed more for that particular "
 | December 2023           | Part-time Internship at Exactech Started               |
 | February 2024           | Revisions Requested for Symmetry Trap Paper            |
 | February 2024           | Implant Shape Sensitivity Paper Submitted              |
+|-------------------------+--------------------------------------------------------|
+| March 2024              | Revised Symmetry Trap Paper Submitted                  |
 *** Thank you!
 Thanks for listening!!
 * References
