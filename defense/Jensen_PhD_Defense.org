@@ -25,7 +25,7 @@
 #+columns: %45ITEM %10 BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
 #+beamer_theme: metropolis
 #+latex_header: \usetheme[progressbar=foot]{metropolis}
-#+latex_header: \usepackage[sorting=nyt,citestyle=numeric-comp,backend=biber,style=ieee]{biblatex}
+#+latex_header: \usepackage[sorting=none,citestyle=numeric-comp,backend=biber,style=ieee, isbn=false, url=false]{biblatex}
 #+latex_header: \usepackage{threeparttable}
 #+latex_header: \usepackage{multirow}
 #+latex_header: \usepackage{tabularx}
@@ -662,6 +662,35 @@ The distribution of $\psi$ for correct and incorrect frames was measured.
 + Reliable post-processing method to overcome pernicious issue (30 years in the making!)
 + Suggests an imaging setup for measuring kinematics slightly off-oblique to escape "ambiguous zone"
 ** Aim 3 - Musings on a "Kinematics Translator" and Synthetic Kinematics Data
+*** A Kinematics Translator?
++ We all understand the idea of translating a sentence (say, English) to a different language (say, French).
+  + The "meaning" (whatever that actually means[fn:4]) of the sentence stays the same, but the specific letters/phonemes used to produce that meaning are different.
++ If we imagine that a kinematics sequence during a specific movement (say, stair rise) is a "sentence", could it be "translated" into the kinematics sequence from another movement (say, level walking)?
+  + Could this reduce the total number of images needed for a clinical assessment?
+  + The "meaning" of the sentence would, in theory, be that patients "kinematics fingerprint".
+  + Does that "kinematics fingerprint" contain within it information about:
+    + Outcomes?
+    + Joint pathologies?
+*** A High-Level Mathematical Framework
+
+#+attr_latex: :width 0.65\textwidth
+#+CAPTION: The geometry of generative models, from [cite:@yeGeometryDeepLearning2022]
+[[file:~/figures/raster/ye_geometry_of_generative_models.png]]
+
+Common problems in machine learning can be viewed through this lens:
++ Overfitting, bias (in the fairness sense), etc
+*** There is not enough standardized kinematics data
+1. Different research groups give the same name to different movements.
+   + Squat, lunge, and kneel have no formal definiton, and some groups' "squat" has the same qualities as other groups' "lunge".
+2. There are no standardized set of movements to measure.
+   + Not enough data per-patient to be able to create any robust generative model.
+3. Different research groups have different data resolutions.
+   + Some groups measure kinematics at every frame, others interpolate 0-30-60-90-120 flexion angles.
+   + If the salient information is present, say, between 30-60 degrees flexion, then our latent space becomes filled with interpolations, rather than actual data.
+*** A path forward
+With a fully-autonomous system for measuring kinematics, interested research groups have asked us which movements to measure. Should this move toward widespread clinical adoption, standards for "Kinematics Evaluations" can be established to homogenize data.
+
+
 ** Aim 4 - This will definitely work on shoulders, right?
 
 *** Spoiler Alert
@@ -694,6 +723,16 @@ Establish a protocol for exploring the relative sensitivity of input orientation
 		Tibial             & 0.67             & 0.64             & 27.17            & 1.63                 & 2.74                 & 0.66                 \\\hline
 	\end{tabularx}
 \end{table}
+*** Improving Error Gradient
++ Current cost function formulation (Hamming Distance) is not well suited to "near" and "far" estimates
+#+begin_src latex
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/rTSA_target_contour.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/rTSA_estimate_contour.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/rTSA_hamming.png}
+\end{figure}
+#+end_src
 *** Modified Mean Surface Distance
 + In order to improve error gradient, a modified mean surface distance was incorporated into the cost function.
 + The mean of the dot product between the projection estimate and a distance map of the CNN segmentation.
@@ -702,6 +741,14 @@ Establish a protocol for exploring the relative sensitivity of input orientation
   \label{eq:DMCF}
   J = \dfrac{Proj \cdot DM}{\sum Proj}
 \end{equation}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/rTSA_target_DM.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/rTSA_estimate_DM.png}
+\end{figure}
+\vspace{-5mm}
+{\tiny It didn't work.}
 #+end_src
 *** Modified Asymmetric Keypoint Distance
 + Early psychological research deemed curvature as highly salient for object recognition [cite:@attneaveInformationalAspectsVisual1954; @attneaveQuantitativeStudyShape1956]. This aimed to place additional emphasis on autonomously selected high-curvature regions.
@@ -723,7 +770,16 @@ Establish a protocol for exploring the relative sensitivity of input orientation
   \end{split}
 \end{equation}
 
+#+begin_src latex
+{\tiny It didn't work...again.}
+#+end_src
 *** 2-Dimensional Shape
++ *Shape descriptors* offer ways to describe shape numerically [cite:@zhangReviewShapeRepresentation2004; @flusserInvariantShapeDescription1992].
+  + A goal is for the "distance" between shapes to be smaller when the shapes are more "similar".
++ *Invariant Shape Descriptors* are immune to standard scaling and similarity transformations [cite:@loweDistinctiveImageFeatures2004; @khotanzadInvariantImageRecognition1990].
+  + Normalized Fourier Descriptors [cite:@persoonShapeDiscriminationUsing1977; @linClassificationPartial2D1987; @wallaceEfficientThreedimensionalAircraft1980; @wallaceAnalysisThreedimensionalMovement1980; @banksAccurateMeasurementThreedimensional1996], Image Moments [cite:@kimRegionbasedShapeDescriptor2000; @khotanzadInvariantImageRecognition1990], and many more.
+  + This is much closer to a human-intuition of "shape".
+
 *** Invariant Angular Radial Transform Descriptor
 The Invariant Angular Radial Transform provides an orthogonal spatial basis function to describe binary images.
 
@@ -887,9 +943,9 @@ Throughout the past four years, I have:
 :END:
 #+begin_src latex
 \begin{refsection}
-  \newrefcontext[sorting=ynt]
-  \input{nocites-pubs}
-  \printbibliography[title=Publications]
+	\newrefcontext[sorting=ynt]
+	\input{nocites-pubs}
+	\printbibliography[title=Publications]
 \end{refsection}
 #+end_src
 * Timeline :B_ignoreheading:
@@ -914,6 +970,8 @@ Throughout the past four years, I have:
 | March 2024              | Revised Symmetry Trap Paper Submitted                  |
 *** Thank you!
 Thanks for listening!!
+
+Any Questions?
 * References
 *** References
 :PROPERTIES:
@@ -921,7 +979,7 @@ Thanks for listening!!
 :END:
 #+print_bibliography:
 * Footnotes
-
+[fn:4] For instance, a Platonist might argue these have to do with the forms, an Aristotelian would say it must invoke the instantiation of the four causes.
 [fn:1] Published in the Journal of Arthroplasty [cite:@jensenJointTrackMachine2023]
 [fn:2] In Revision for Publication in the Journal of Biomechanics
 [fn:3] In Review for Publication in the Journal of Computers in Biology and Medicine
