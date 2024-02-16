@@ -25,7 +25,7 @@
 #+columns: %45ITEM %10 BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
 #+beamer_theme: metropolis
 #+latex_header: \usetheme[progressbar=foot]{metropolis}
-#+latex_header: \usepackage[sorting=ynt,citestyle=numeric-comp,backend=biber,style=ieee]{biblatex}
+#+latex_header: \usepackage[sorting=nyt,citestyle=numeric-comp,backend=biber,style=ieee]{biblatex}
 #+latex_header: \usepackage{threeparttable}
 #+latex_header: \usepackage{multirow}
 #+latex_header: \usepackage{tabularx}
@@ -41,7 +41,6 @@
 #+LATEX_COMPILER: xelatex
 #+latex_header_extra: \usepackage{tcolorbox}
 #+latex_header_extra: \tcbuselibrary{fitting}
-#+cite_export: biblatex ieee
 #+latex_header: \renewcommand*{\bibfont}{\scriptsize}
 
 * Introduction :B_ignoreheading:
@@ -152,10 +151,10 @@ Many different approaches have attempted to solve the model-image registration p
 :PROPERTIES:
 :BEAMER_col: 0.6
 :END:
-#+ATTR_LaTeX: :width 1.75in
+#+ATTR_LaTeX: :width 1.5in
 #+CAPTION: From [cite:@lavalleeRecoveringPositionOrientation1995]
 [[file:~/repo/lit-review/figures/raster/lavallee-distance-maps.png]]
-#+ATTR_LaTeX: :width 1.75in
+#+ATTR_LaTeX: :width 1.5in
 #+CAPTION: From [cite:@banksAccurateMeasurementThreedimensional1996]
 [[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
 *** Limitations of Pre-Computed Projections
@@ -170,10 +169,10 @@ Many different approaches have attempted to solve the model-image registration p
 :PROPERTIES:
 :BEAMER_col: 0.6
 :END:
-#+ATTR_LaTeX: :width 1.75in
+#+ATTR_LaTeX: :width 1.5in
 #+CAPTION: From [cite:@lavalleeRecoveringPositionOrientation1995]
 [[file:~/repo/lit-review/figures/raster/lavallee-distance-maps.png]]
-#+ATTR_LaTeX: :width 1.75in
+#+ATTR_LaTeX: :width 1.5in
 #+CAPTION: From [cite:@banksAccurateMeasurementThreedimensional1996]
 [[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
 
@@ -193,7 +192,7 @@ Many different approaches have attempted to solve the model-image registration p
 #+ATTR_LaTeX: :width 2.5in
 #+CAPTION: From [cite:@gaoInvestigationSoftTissue2008]
 [[file:~/repo/lit-review/figures/raster/gao-skin-mocap.png]]
-#+ATTR_LaTeX: :width 2.5in
+#+ATTR_LaTeX: :width 2in
 #+CAPTION: From [cite:@lafortuneThreedimensionalKinematicsHuman1992]
 [[file:~/repo/lit-review/figures/raster/lafortune-bone-mocap.png]]
 *** Limitations of Motion Capture
@@ -213,7 +212,7 @@ Bone Pins
 #+ATTR_LaTeX: :width 2.5in
 #+CAPTION: From [cite:@gaoInvestigationSoftTissue2008]
 [[file:~/repo/lit-review/figures/raster/gao-skin-mocap.png]]
-#+ATTR_LaTeX: :width 2.5in
+#+ATTR_LaTeX: :width 2in
 #+CAPTION: From [cite:@lafortuneThreedimensionalKinematicsHuman1992]
 [[file:~/repo/lit-review/figures/raster/lafortune-bone-mocap.png]]
 
@@ -707,7 +706,12 @@ Establish a protocol for exploring the relative sensitivity of input orientation
 *** Modified Asymmetric Keypoint Distance
 + Early psychological research deemed curvature as highly salient for object recognition [cite:@attneaveInformationalAspectsVisual1954; @attneaveQuantitativeStudyShape1956]. This aimed to place additional emphasis on autonomously selected high-curvature regions.
   + Extracted regions of high-curvature using Menger's Algorithm [cite:@legerMengerCurvatureRectifiability1999].
-  + Utilized a modified asymmetric surface distance on the discrete set of keypoints.
+
+#+attr_latex: :width 0.85\textwidth
+[[file:~/figures/raster/TSA_curvature.png]]
+
+*** Modified Asymmetric Keypoint Distance
++ Utilized a modified asymmetric surface distance on the discrete set of keypoints.
 
 \begin{equation}
   \label{eq:curv-keypoint}
@@ -871,6 +875,7 @@ Throughout the past four years, I have:
 :END:
 #+begin_src latex
 \begin{refsection}
+  \newrefcontext[sorting=ynt]
   \input{nocites-pres}
   \printbibliography[title=Presentations]
 \end{refsection}
@@ -882,6 +887,7 @@ Throughout the past four years, I have:
 :END:
 #+begin_src latex
 \begin{refsection}
+  \newrefcontext[sorting=ynt]
   \input{nocites-pubs}
   \printbibliography[title=Publications]
 \end{refsection}
