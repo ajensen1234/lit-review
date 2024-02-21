@@ -1,13 +1,13 @@
-Using our knowledge of geometric transformations and projective geometries, we can build up a model of a camera step by step.
-We standardize our reference frame by having the $z$ direction along the focal direction of the camera, the $x$ direction to the right, and the $y$ direction such that the right-hand rule is maintained.
+Utilizing the knowledge of geometric transformations and projective geometries, a model of a camera can be systematically constructed step by step.
+The reference frame is standardized, with the $z$ direction along the focal direction of the camera, the $x$ direction to the right, and the $y$ direction such that the right-hand rule is maintained.
 The origin is at the center of the camera.
 
-We will describe the object of interest as a collection of points, $\mathbf{p}_i =  [x_i, y_i, z_i, 1] \text{ for } i = 1,2,\cdots,N$.
-For a complete picture, any given operation will be performed on all points.
-For simplicity, the following equations will demonstrate the process on a single point of the object.
+The object of interest is described as a collection of points, $\mathbf{p}_i =  [x_i, y_i, z_i, 1] \text{ for } i = 1,2,\cdots,N$.
+In practice, all operations are uniformly performed on all points.
+For clarity, the subsequent equations will illustrate the process using a single point of the object.
 
-First, we need to describe the location and orientation of the object with respect to the camera.
-This can be done with a 3D homogeneous transformation matrix (translation and rotation) (\cref{eq:4x4-homog-transformation}).
+The first step is describing the location and orientation of the object with respect to the camera.
+This rotation and translation can be captured using a single 3D homogenous transformation matrix (\cref{eq:4x4-homog-transformation}).
 
 \begin{equation}
     \tilde{\mathbf{p}}' = \begin{bmatrix}
@@ -16,7 +16,7 @@ This can be done with a 3D homogeneous transformation matrix (translation and ro
     \label{eq:4x4-homog-transformation}
 \end{equation}
 
-Then, we use a projective transformation that determines the perspective scaling between the object's location and the image plane at the focal distance.
+Then, a projective transform is applied to each point in the object, controlling for the relative size and scaling based on the focal distance.
 Geometrically, this relationship can be visualized with similar triangles (\cref{fig:perspective-projection}) and quantified using the ratio of lengths (\cref{eq:perspective-projection}).
 In these equations, $f'$ is the focal distance in units of length.
 
@@ -46,6 +46,7 @@ This introduces the idea of the principal point, $(c_x,c_y)$, which is the locat
 In the camera model, the principal point is a translation starting at the image plane's origin (Eq. \ref{eq:principal-point}).
 
 
+
 \begin{equation}
     \begin{aligned}
         \tilde{\mathbf{x}}_{i} &= \begin{bmatrix}
@@ -58,10 +59,10 @@ In the camera model, the principal point is a translation starting at the image 
     \label{eq:principal-point}
 \end{equation}
 
-Finally, we need to convert the image coordinates, $\tilde{\mathbf{x}}_i$, to pixel coordinates using the pixel scale factor (Eq.\ref{eq:pixel-scaling}).
-The pixel scale factor is defined by the parameters $k_x$ and $k_y$, which represent the number of pixels per unit distance in the x and y directions, respectively.
-By multiplying the perspective projection matrix by the pixel scale factor, we can obtain a new matrix that maps 3D points in world coordinates directly to pixel coordinates on the image.
 
+Lastly, the image coordinates, $\tilde{\mathbf{x}}_{i}$ must be converted to pixel coordinates using the pixel scaling factor.
+The pixel scale factor is defined by the parameters $k_x$ and $k_y$, which represent the number of pixels per unit distance in the x and y directions, respectively.
+Multiplying the perspective projection matrix by the pixel scale factor yields a new matrix that maps 3D points in ``world coordinates'' directly to pixel coordinates in the image.
 \begin{equation}
     \begin{aligned}
         \tilde{\mathbf{x}}_{pix} &= \begin{bmatrix}
@@ -79,9 +80,9 @@ By multiplying the perspective projection matrix by the pixel scale factor, we c
     \label{eq:pixel-scaling}
 \end{equation}
 
-At this point, we have placed an object in front of a camera using 3D transformations, and then projected the points of that object onto the image plane using a camera matrix and projective transform.
-A simple silhouette rasterization of the image would simply fill in the pixel values interpolated between each of the discrete points obtained from this projection.
-Generating a photo-realistic image would involve coloring, shading, and ray tracing, but this is unnecessary for this dissertation, and will not be discussed.
+
+To generate a simple binary rasterization of the image, the space between projected points is interpolated and filled in, resulting in a binary "shadow" of the object on the image plane.
+While more comprehensive image formation entails coloring, shading, and ray tracing, such complexity is unnecessary for the purpose of model-image registration of implant geometries in fluoroscopic images, and thus will not be addressed.
 
 %%% Local Variables:
 %%% mode: latex

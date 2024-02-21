@@ -1,14 +1,13 @@
-One of the key components in model image registration is image similarity.
-This fundamentally involves determining how closely the user's synthetic image matches the actual fluoroscopic image.
-The choice of similarity metric will be influenced by several key factors, including the a-priori availability of implant/bone geometry and the knowledge of image quality and contrast.
-Broadly, there are two classes of image similarity when performing model-image registration: intenisty-based and feature based.
+One of the key components in model image registration is image similarity, which entails evaluating the degree of correspondence between a user-generated synthetic image and an actual fluoroscopic image.
+The selection of a similarity metric is influenced by various factors, such as the pre-existing knowledge of implant/bone geometry and the understanding of image quality and contrast.
+Broadly, there are two classes of image similarity when performing model-image registration: intensity-based and feature based.
 
 \subsubsection{Intensity based}
 \label{sec:img-sim-intensity}
-Intensity based measures are those that utilize specific pixel information in order to determine the difference between two images.
-This can be either a global image similarity metric or a measure of specific regions of interest within the image.
+Intensity-based measures rely on the specific pixel values to quantify the difference between two images.
+These measures can apply to the global image similarity or to specific regions of interest within the images.
 
-A canonical difference between two images would be the p-norm separating them (\cref{eq:p-norm}), which iterates through each pixel of the two images and finds the p-norm difference between each pixel pair.
+A canonical difference between two images would be the p-norm separating them (\cref{eq:p-norm}), which computes the p-norm difference between corresponding pixel pairs across the two images.
 Common p-norms are the $L_1$ norm (\emph{absolute intensity differences} or \emph{mean absolute difference}) \cite{kanadeStereoMatchingAlgorithm1994} ($p=1$) and the $L_{2}$ norm, or Euclidean norm (\emph{squared intensity differences} or \emph{mean squared difference}) \cite{hannahComputerMatchingAreas1977}($p=2$).
 
 \begin{equation}
@@ -18,10 +17,10 @@ Common p-norms are the $L_1$ norm (\emph{absolute intensity differences} or \emp
 
 In Equation \cref{eq:p-norm}, $A$ and $B$ are the two images being compared, $w$ and $h$ are the width and height of the images, and $a_{xy}$ and $b_{xy}$ are the intensity values at pixel $(x,y)$ in the two images, respectively.
 
-While conceptually easy to use, the main limitation of p-norm measures is their lack of spatial information.
-For example, an image that has been shifted by a linear transformation would not score well using a p-norm, despite the two images containing only a minor shift, scale, or rotation. One method for overcoming this limitation is to use the cross-correlation, or sliding dot product, between images \cite{bendatRandomDataAnalysis2010,hannahComputerMatchingAreas1977} (\cref{eq:xcorr}).
-When used in conjunction with projective geometry, this can help locate regions of interest for a model-based registration pipeline.
-The cross-correlation is calculated using the following equation:
+While p-norm measures are conceptually straightforward to apply, their primary drawback is the absence of spatial information.
+For instance, an image that has been altered by a linear transformation might not achieve a favorable score using a p-norm, even though the two images differ only by a minor shift, scale, or rotation.
+To mitigate this limitation, cross-correlation, or the sliding dot product between images, can be employed \cite{bendatRandomDataAnalysis2010,hannahComputerMatchingAreas1977} (\cref{eq:xcorr}).
+This technique, when combined with projective geometry, aids in identifying regions of interest within a model-based registration framework.
 
 \begin{equation}
     \begin{aligned}
@@ -31,8 +30,10 @@ The cross-correlation is calculated using the following equation:
     \label{eq:xcorr}
 \end{equation}
 
-This will determine the regions of each image that are similar, causing the correlation function to ``light up'' at those areas in a similar way to the convolutional operation between two images.
-The normalized cross-correlation can also be used (\cref{eq:norm-xcorr}), which removes noise coming from each of the original images.
+Cross correlation efficiently identifies regions within each image that demonstrate similarity, resulting in higher function values at those pixel locations.
+This is very similar to how a convolution operation works.
+The implementation of normalized cross-correlation (\cref{eq:norm-xcorr}) further refines this process by attenuating noise inherent in the original images.
+This normalization ensures that the correlation measure is predominantly influenced by the structural correspondence between the images, enhancing the precision of similarity assessments within the framework of image registration, independent of variations in illumination or exposure.
 
 \begin{equation}
     \begin{aligned}
@@ -42,12 +43,13 @@ The normalized cross-correlation can also be used (\cref{eq:norm-xcorr}), which 
 
 \subsubsection{Feature based}
 \label{sec:img-sim-feature}
-Feature based image similarity metrics involve methods for identifying key features in images and using these features to measure differences between two images.
-These types of methods almost always involve some type of feature-extraction step, where the various features of interest are calculated and determined for subsequent use.
+Feature-based image similarity metrics utilize methods that identify key features within images, employing these features to gauge differences between two images.
+These approaches typically require a feature-extraction phase, during which the relevant features are identified and quantified for later analysis.
 The two main classes of features are \emph{keypoints} and \emph{edges}.
-The simplest method of keypoint detection is using a similar method to intensity-based matching, but having one of the ``images'' as a patch of the desired feature.
-With keypoints detected in the input image, one could determine the error of the current pose estimate by taking the Euclidean distance between all image keypoints and all projected keypoints: \cite{burtonAutomaticTrackingHealthy2021} (\cref{eq:kp-error}).
-With a-priori information about the keypoints, weights could be assigned to each keypoint in order to emphasize specific regions on the image and the model (\cref{eq:wkp-error})
+One of the simplest forms of keypoint detection is hand-crafting a convolution kernel containing the desired feature.
+The convolution operation will yield regions in the image containing that particular feature, which then become keypoints.
+With keypoints detected in the input image, one could determine the error of the current pose estimate by taking the Euclidean distance between all image keypoints and all projected keypoints \cite{burtonAutomaticTrackingHealthy2021} (\cref{eq:kp-error}).
+With a-priori information about the keypoints, weights could be assigned to each keypoint in order to emphasize specific regions on the image and the model (\cref{eq:wkp-error}).
 
 \begin{equation}
     \begin{aligned}

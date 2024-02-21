@@ -1,4 +1,6 @@
-\chapter{Correcting Symmetric Implant Ambiguity in Measuring Total Knee Arthroplasty Kinematics from Single-Plane Fluoroscopy}
+\chapter{Correcting Symmetric Implant Ambiguity in Measuring Total Knee Arthroplasty Kinematics from Single-Plane Fluoroscopy}{\renewcommand*{\thefootnote}{\fnsymbol{footnote}}\footnotetext{Submitted for publication to the Journal of Biomechanics}
+
+
 
 Measuring total knee arthroplasty (TKA) kinematics from fluoroscopic images has been an important contributor to knee implant design, post-operative assessment, and predictive modeling for wear and failure patterns for nearly 30 years \cite{banksRationaleResultsFixedBearing2019,banks2003HapPaul2004,freglyComputationalWearPrediction2005}.
 However, the application of this technology has been limited to research use by the challenges of performing these measurements quickly and reliably, as they often require expensive equipment and time-consuming processes \cite{banksAccurateMeasurementThreedimensional1996,lafortuneThreedimensionalKinematicsHuman1992,zuffiModelbasedMethodReconstruction1999,mahfouzRobustMethodRegistration2003}.
@@ -14,12 +16,12 @@ Unfortunately, fully autonomous solutions can’t utilize this reference point, 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.78\textwidth]{~/figures/raster/sym-trap-quadrants-no-captions.png}
-	\caption{Two examples of symmetry pose dyads with the correct (left) and symmetry trap (right) kinematics. For some orientations, the symmetry trap is obviously incorrect (top), and for others, it is more ambiguous (bottom).}
+	\caption[Two examples of symmetric tibial poses]{Two examples of symmetry pose dyads with the correct (left) and symmetry trap (right) kinematics. For some orientations, the symmetry trap is obviously incorrect (top), and for others, it is more ambiguous (bottom).}
 	\label{fig:symmetry-trap-quadrants}
 \end{figure}
 
 
-In this paper, we utilize 12,592 images from seven studies that utilized human-supervised TKA kinematics \cite{jennyREGISTRATIONKNEEKINEMATICS2015,kefalaAssessmentKneeKinematics2017,okamotoVivoKneeKinematics2011,palm-vlasakMinimalVariationTop2022,scottCanTotalKnee2016,watanabeKneeKinematicsAnterior2013,watanabeInvivoKinematicsHighflex2016} to explore the potential of a novel method to classify and correct ``symmetry trap'' poses in single-plane TKA kinematic measurements.
+In this paper, we utilize 12,592 images from seven studies that utilized human-supervised TKA kinematics \cite{jennyRegistrationKneeKinematics2015,kefalaAssessmentKneeKinematics2017,okamotoVivoKneeKinematics2011,palm-vlasakMinimalVariationTop2022,scottCanTotalKnee2016,watanabeKneeKinematicsAnterior2013,watanabeInvivoKinematicsHighflex2016} to explore the potential of a novel method to classify and correct ``symmetry trap'' poses in single-plane TKA kinematic measurements.
 The goal is to improve the accuracy and resolution of single-plane TKA measurements and enable more accessible and reliable kinematic data for orthopaedic applications.
 
 This research paper will answer two key questions:  (1) How effectively can machine learning methods distinguish between ``true'' and 'symmetry trap' poses in cases involving symmetric implants? (2) How well can we systematically correct ``symmetry traps'' arising in kinematics sequences obtained from fluoroscopic images?
@@ -35,7 +37,7 @@ To account for these, we then take the highest performing classifier and use it 
 We report the performance of our cubic spline correction algorithm on a dataset of autonomously measured kinematics \cite{jensenJointTrackMachine2023}.
 All programs were written in Python 3.10.
 
-The dataset used for development of the methodology comprises seven total studies \cite{jennyREGISTRATIONKNEEKINEMATICS2015,kefalaAssessmentKneeKinematics2017,okamotoVivoKneeKinematics2011,palm-vlasakMinimalVariationTop2022,scottCanTotalKnee2016,watanabeKneeKinematicsAnterior2013,watanabeInvivoKinematicsHighflex2016} comprising 12,592 images of radiographic data.
+The dataset used for development of the methodology comprises seven total studies \cite{jennyRegistrationKneeKinematics2015,kefalaAssessmentKneeKinematics2017,okamotoVivoKneeKinematics2011,palm-vlasakMinimalVariationTop2022,scottCanTotalKnee2016,watanabeKneeKinematicsAnterior2013,watanabeInvivoKinematicsHighflex2016} comprising 12,592 images of radiographic data.
 We completely withheld data from one study \cite{okamotoVivoKneeKinematics2011} during training to use later as an external test set.
 
 \subsection{Determining Symmetric Orientations}
@@ -136,37 +138,42 @@ Overall, the performance in the external test set was comparable to the performa
 
 \begin{landscape}
 	\begin{table}[h]
-		\caption{Machine Learning Classifier Performance}
+		\caption{Machine learning classifier performance}
 		\label{tab:symtrap-ml-results}
-		\small
 		\centering
-		\begin{tabularx}{1.0\linewidth}{V{12cm}X X X X V{3cm} V{3cm} V{3cm}}
-			\hline
-			Classifier                                                   & Hyperparameters                       & Test Set & Accuracy (\%)    & Sensitivity (\%) & Specificity (\%) & F1-Score        \\ \hline
-			\multirow{2}{*}{\parbox{3cm}{Support Vector Machine (RBF)}}  & \multirow{2}{*}{$C=1000$}             & Internal & $92.08$          & $94.75$          & $89.73$          & $0.92$          \\
-			                                                             &                                       & External & $\mathbf{94.21}$ & $97.12$          & $91.64$          & $\mathbf{0.94}$ \\
-			                                                             & \vspace{0.5cm}                                                                                                              \\
-			\multirow{2}{*}{\parbox{3cm}{Support Vector Machine (Poly)}} & \multirow{2}{*}{\parbox{3cm}{$C=1000$                                                                                       \\Poly Degree $=2$}}& Internal & $87.65$      & $92.54$         &  $83.8$                & $0.87$                          \\
-			                                                             &                                       & External & $92.08$          & $96.58$          & $88.38$          & $0.92$          \\
-			                                                             & \vspace{0.5cm}                                                                                                              \\
-			\multirow{2}{*}{\parbox{3cm}{K-Nearest-Neighbors}}           & \multirow{2}{*}{\parbox{3cm}{$N=4$                                                                                          \\Minkowski Dist.}} & Internal & $93.12$     & $93.96$          & $92.32$                 &  $0.93$                          \\
-			                                                             &                                       & External & $90.93$          & $93.62$          & $88.55$          & $0.91$          \\
-			                                                             & \vspace{0.5cm}                                                                                                              \\
-			\multirow{2}{*}{\parbox{3cm}{AdaBoost}}                      & \multirow{2}{*}{$N=200$}              & Internal & $88.78$          & $91.08$          & $86.74$          & $0.88$          \\
-			                                                             &                                       & External & $92.86$          & $\mathbf{97.23}$ & $89.22$          & $0.93$          \\
-			                                                             & \vspace{0.5cm}                                                                                                              \\
-			\multirow{2}{*}{\parbox{3cm}{Histogram Gradient Boosting}}   & \multirow{2}{*}{$L.R. = 0.1$}         & Internal & $93.11$          & $94.98$          & $91.4$           & $0.93$          \\
-			                                                             &                                       & External & $93.24$          & $96.67$          & $90.29$          & $0.93$          \\
-			                                                             & \vspace{0.5cm}                                                                                                              \\
-			\multirow{2}{*}{\parbox{3cm}{Bagging Estimator}}             & \multirow{2}{*}{$N=500$}              & Internal & $93.32$          & $94.28$          & $92.41$          & $0.93$          \\
-			                                                             &                                       & External & $93.82$          & $95.95$          & $\mathbf{91.88}$ & $0.94$          \\
-			                                                             & \vspace{0.5cm}                                                                                                              \\
-			\multirow{2}{*}{\parbox{3cm}{Stacked Generalization}}        & \multirow{2}{*}{N/A}                  & Internal & $\mathbf{94.3}$  & $94.78$          & $\mathbf{93.84}$ & $\mathbf{0.94}$ \\
-			                                                             &                                       & External & $92.86$          & $94.94$          & $90.96$          & $0.93$          \\
-			                                                             & \vspace{0.5cm}                                                                                                              \\
-			\multirow{2}{*}{\parbox{3cm}{Majority Voting Classifier}}    & \multirow{2}{*}{N/A}                  & Internal & $92.63$          & $\mathbf{95.85}$ & $89.86$          & $0.92$          \\
-			                                                             &                                       & External & $93.34$          & $96.87$          & $90.31$          & $0.93$          \\ \hline
-		\end{tabularx}
+		\begin{threeparttable}
+			\begin{tabularx}{1.0\linewidth}{V{12cm}X X X X V{3cm} V{3cm} V{3cm}}
+				\hline
+				Classifier                                                   & Hyperparameters                       & Test Set & Accuracy (\%)      & Sensitivity (\%)   & Specificity (\%)          & F1-Score          \\ \hline
+				\multirow{2}{*}{\parbox{3cm}{Support Vector Machine (RBF)}}  & \multirow{2}{*}{$C=1000$}             & Internal & $92.08$            & $94.75$            & $89.73$                   & $0.92$            \\
+				                                                             &                                       & External & ${94.21}$\tnote{b} & $97.12$            & $91.64$                   & ${0.94}$\tnote{b} \\
+				                                                             & \vspace{0.5cm}                                                                                                                             \\
+				\multirow{2}{*}{\parbox{3cm}{Support Vector Machine (Poly)}} & \multirow{2}{*}{\parbox{3cm}{$C=1000$                                                                                                      \\Poly Degree $=2$}}& Internal & $87.65$      & $92.54$         &  $83.8$                & $0.87$                          \\
+				                                                             &                                       & External & $92.08$            & $96.58$            & $88.38$                   & $0.92$            \\
+				                                                             & \vspace{0.5cm}                                                                                                                             \\
+				\multirow{2}{*}{\parbox{3cm}{K-Nearest-Neighbors}}           & \multirow{2}{*}{\parbox{3cm}{$N=4$                                                                                                         \\Minkowski Dist.}} & Internal & $93.12$     & $93.96$          & $92.32$                 &  $0.93$                          \\
+				                                                             &                                       & External & $90.93$            & $93.62$            & $88.55$                   & $0.91$            \\
+				                                                             & \vspace{0.5cm}                                                                                                                             \\
+				\multirow{2}{*}{\parbox{3cm}{AdaBoost}}                      & \multirow{2}{*}{$N=200$}              & Internal & $88.78$            & $91.08$            & $86.74$                   & $0.88$            \\
+				                                                             &                                       & External & $92.86$            & ${97.23}$\tnote{b} & $89.22$                   & $0.93$            \\
+				                                                             & \vspace{0.5cm}                                                                                                                             \\
+				\multirow{2}{*}{\parbox{3cm}{Histogram Gradient Boosting}}   & \multirow{2}{*}{$L.R. = 0.1$}         & Internal & $93.11$            & $94.98$            & $91.4$                    & $0.93$            \\
+				                                                             &                                       & External & $93.24$            & $96.67$            & $90.29$                   & $0.93$            \\
+				                                                             & \vspace{0.5cm}                                                                                                                             \\
+				\multirow{2}{*}{\parbox{3cm}{Bagging Estimator}}             & \multirow{2}{*}{$N=500$}              & Internal & $93.32$            & $94.28$            & $92.41$                   & $0.93$            \\
+				                                                             &                                       & External & $93.82$            & $95.95$            & ${91.88}$\tnote{b} & $0.94$            \\
+				                                                             & \vspace{0.5cm}                                                                                                                             \\
+				\multirow{2}{*}{\parbox{3cm}{Stacked Generalization}}        & \multirow{2}{*}{N/A}                  & Internal & ${94.3}$\tnote{a}  & $94.78$            & ${93.84}$\tnote{a}        & ${0.94}$\tnote{a} \\
+				                                                             &                                       & External & $92.86$            & $94.94$            & $90.96$                   & $0.93$            \\
+				                                                             & \vspace{0.5cm}                                                                                                                             \\
+				\multirow{2}{*}{\parbox{3cm}{Majority Voting Classifier}}    & \multirow{2}{*}{N/A}                  & Internal & $92.63$            & ${95.85}$\tnote{a} & $89.86$                   & $0.92$            \\
+				                                                             &                                       & External & $93.34$            & $96.87$            & $90.31$                   & $0.93$            \\ \hline
+			\end{tabularx}
+			\begin{tablenotes}
+				\item[a] Highest value in the internal test set.
+				\item[b] Highest value in the external test set.
+			\end{tablenotes}
+		\end{threeparttable}
 	\end{table}
 	\begin{table}[h]
 		\caption{Stratified-$\psi$ test set stacked generalization classification performance}

@@ -1,0 +1,985 @@
+#+AUTHOR: Andrew Jensen
+#+TITLE: Methods for Autonomous Measurement of 3D Joint Kinematics from 2D Fluoroscopic Images
+#+SUBTITLE: A Dissertation Defense
+#+DATE: March 4, 2024
+#+BIBLIOGRAPHY: ../src/myBib.bib
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:2 num:t toc:f \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+HTML_LINK_UP:
+#+HTML_LINK_HOME:
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+latex_header: \definecolor{UFBLUE}{HTML}{5d89cb}
+#+latex_header:\setbeamercolor{frametitle}{bg=UFBLUE}
+#+latex_header: \usepackage{graphicx}
+
+#+options: H:3
+#+latex_class: beamer
+#+LaTeX_CLASS_OPTIONS: [presentation, aspectratio=1610]
+#+columns: %45ITEM %10 BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
+#+beamer_theme: metropolis
+#+latex_header: \usetheme[progressbar=foot]{metropolis}
+#+latex_header: \usepackage[sorting=none,citestyle=numeric-comp,backend=biber,style=ieee, isbn=false, url=false]{biblatex}
+#+latex_header: \usepackage{threeparttable}
+#+latex_header: \usepackage{multirow}
+#+latex_header: \usepackage{tabularx}
+#+latex_header_extra: \usepackage{caption}
+#+latex_header_extra: \captionsetup[figure]{labelformat=empty}
+#+latex_header_extra: \DeclareMathOperator*{\argmax}{\arg\!max}
+#+latex_header_extra: \DeclareMathOperator*{\argmin}{\arg\!min}
+#+latex_header_extra: \AtBeginSubsection{\begin{frame}\tableofcontents[currentsection,currentsubsection]\end{frame}}
+#+beamer_color_theme:
+#+beamer_font_theme:
+#+beamer_inner_theme:
+#+beamer_outer_theme:
+#+LATEX_COMPILER: xelatex
+#+latex_header_extra: \usepackage{tcolorbox}
+#+latex_header_extra: \tcbuselibrary{fitting}
+#+latex_header: \renewcommand*{\bibfont}{\scriptsize}
+
+* Introduction :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+*** Acknowledgments
+I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
+
+* Motivation :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+*** The Problem
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ By 2030, roughly 3.5 million Total Knee Arthroplasty (TKA) will be performed in the US [cite:@kurtzProjectionsPrimaryRevision2007].
++ 20% of patients receiving TKA are dissatisfied.
+  + Instability, pain, unnatural [cite:@bakerRolePainFunction2007; @bournePatientSatisfactionTotal2010; @scottPredictingDissatisfactionFollowing2010].
++ No reliable method of clinically assessing and quantifying joint dynamics.
+  + Human supervision
+  + Time consuming
+  + Specialized equipment
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+ATTR_LaTeX: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/Physical_Examination_of_the_knee.jpg]]
+*** Our Proposition
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+Orthopaedic surgeons and clinicians would readily adopt a **practical** and **inexpensive** technology that allows them to **measure** a patient's knee kinematics during **activities of daily living**.
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:END:
+#+ATTR_LaTeX: :width 2in
+[[file:~/repo/lit-review/figures/raster/dynamic-knee-prescription.png]]
+*** Constraints
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.45
+:END:
++ It must fit within a **standard clinical workflow**
++ The technology must utilize equipment **commonly found in hospitals**
++ There must not be significant **human supervision** nor interaction to generate an examination report.
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:END:
+#+ATTR_LaTeX: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/c-arm-fluoro-machine.jpg]]
+* Background
+*** Background - Projective Geometry
+#+ATTR_latex: :width 0.8\textwidth
+[[file:~/repo/lit-review/figures/raster/perspective-projection.png]]
+*** Background - Model-Image Registration
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+If we know the projective parameters of the fluoroscopy machine, can we tinker with $T^{cam}_{implant}$ so that our virtual projection matches the fluoroscopic image?
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width 2.5in
+#+CAPTION:From [cite:@mahfouzRobustMethodRegistration2003]
+[[file:~/repo/lit-review/figures/raster/registered-tka.png]]
+*** Background - Model-Image Registration
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+If we know the projective parameters of the fluoroscopy machine, can we tinker with $T^{cam}_{implant}$ so that our virtual projection matches the fluoroscopic image?
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width 2.5in
+#+CAPTION:From [cite:@mahfouzRobustMethodRegistration2003]
+file:~/repo/lit-review/figures/raster/mahfouz-perspective-projection.png
+* Historical Methods :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+*** Historical Overview
+Many different approaches have attempted to solve the model-image registration problem.
++ Pre-computed projections
++ Skin-mounted motion Capture
++ Biplane Imaging
++ Iterative Projections
++ Roentgen Stereophotogrammetry
+*** Pre-Computed Projections
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Saving space and memory by pre-computing as much as possible.
++ Pre-computed distance maps [cite:@zuffiModelbasedMethodReconstruction1999; @lavalleeRecoveringPositionOrientation1995].
++ Pre-computed shape libraries [cite:@banksAccurateMeasurementThreedimensional1996]
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 1.5in
+#+CAPTION: From [cite:@lavalleeRecoveringPositionOrientation1995]
+[[file:~/repo/lit-review/figures/raster/lavallee-distance-maps.png]]
+#+ATTR_LaTeX: :width 1.5in
+#+CAPTION: From [cite:@banksAccurateMeasurementThreedimensional1996]
+[[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
+*** Limitations of Pre-Computed Projections
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Requires an accurate contour from the input image in order to perform calculations.
+  + Human supervision for isolated contour
+  + Inaccuaracy with naive edge detection
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 1.5in
+#+CAPTION: From [cite:@lavalleeRecoveringPositionOrientation1995]
+[[file:~/repo/lit-review/figures/raster/lavallee-distance-maps.png]]
+#+ATTR_LaTeX: :width 1.5in
+#+CAPTION: From [cite:@banksAccurateMeasurementThreedimensional1996]
+[[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
+
+*** Motion Capture (MoCap)
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Can measure motion of MoCap beads very accurately.
++ Skin-mounted [cite:@gaoInvestigationSoftTissue2008; @kuoInfluenceSoftTissue2011; @linEffectsSoftTissue2016].
++ Bone pins [cite:@lafortuneThreedimensionalKinematicsHuman1992].
+
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 2.5in
+#+CAPTION: From [cite:@gaoInvestigationSoftTissue2008]
+[[file:~/repo/lit-review/figures/raster/gao-skin-mocap.png]]
+#+ATTR_LaTeX: :width 2in
+#+CAPTION: From [cite:@lafortuneThreedimensionalKinematicsHuman1992]
+[[file:~/repo/lit-review/figures/raster/lafortune-bone-mocap.png]]
+*** Limitations of Motion Capture
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+Skin Mounted
++ Doesn't accurately describe underlying skeletal motion with clinical accuracy [cite:@gaoInvestigationSoftTissue2008; @kuoInfluenceSoftTissue2011; @linEffectsSoftTissue2016].
+Bone Pins
++ Any volunteers?
+
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 2.5in
+#+CAPTION: From [cite:@gaoInvestigationSoftTissue2008]
+[[file:~/repo/lit-review/figures/raster/gao-skin-mocap.png]]
+#+ATTR_LaTeX: :width 2in
+#+CAPTION: From [cite:@lafortuneThreedimensionalKinematicsHuman1992]
+[[file:~/repo/lit-review/figures/raster/lafortune-bone-mocap.png]]
+
+*** Biplane Imaging
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+ATTR_LaTeX: :width \textwidth
++ Utilizes multiple cameras to resolve 3D position and orientation[cite:@ivesterReconfigurableHighSpeedStereoRadiography2015; @burtonAutomaticTrackingHealthy2021].
+  + Highly accurate.
+  + Gold Standard.
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 1.75in
+#+CAPTION: Both from [cite:@ivesterReconfigurableHighSpeedStereoRadiography2015]
+[[file:~/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png]]
+#+ATTR_LaTeX: :width 1.75in
+#+CAPTION:
+[[file:~/repo/lit-review/figures/raster/ivester-stereo-projection.png]]
+*** Limitations of Biplane Imaging
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+ATTR_LaTeX: :width \textwidth
++ Not many hospitals have biplane fluoroscopy setups.
++ Clinically impractical
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 1.75in
+#+CAPTION: Both from [cite:@ivesterReconfigurableHighSpeedStereoRadiography2015]
+[[file:~/repo/lit-review/figures/raster/ivester-stereo-fluoromachine.png]]
+#+ATTR_LaTeX: :width 1.75in
+#+CAPTION:
+[[file:~/repo/lit-review/figures/raster/ivester-stereo-projection.png]]
+
+*** Iterative Projections
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.54
+:END:
++ Take advantage of modern computational graphics pipelines to quickly perform projection matching.
+  + Image/Intensity similarity metrics [cite:@mahfouzRobustMethodRegistration2003]
+  + Feature/Contour similarity metrics [cite:@floodAutomatedRegistration3D2018]
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 2in
+#+CAPTION: From [cite:@mahfouzRobustMethodRegistration2003]
+[[file:~/repo/lit-review/figures/raster/mahfouz-perspective-projection.png]]
+#+ATTR_LaTeX: :width 2in
+#+CAPTION: From [cite:@floodAutomatedRegistration3D2018]
+[[file:~/repo/lit-review/figures/raster/flood-dilated-contour.png]]
+*** Limitations of (historic) Iterative Projection Methods
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.54
+:END:
++ Requires human supervision for:
+  + Pose initialization
+  + Escaping local minima
+  + Implant detection
++ Chaotic and Noisy objective function
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LaTeX: :width 2in
+#+CAPTION: From [cite:@mahfouzRobustMethodRegistration2003]
+[[file:~/repo/lit-review/figures/raster/mahfouz-perspective-projection.png]]
+#+ATTR_LaTeX: :width 2in
+#+CAPTION: From [cite:@floodAutomatedRegistration3D2018]
+[[file:~/repo/lit-review/figures/raster/flood-dilated-contour.png]]
+
+*** Roentgen Stereophotogrammetry (RSA)
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Uses implanted tantalum beads for motion tracking [cite:@vroomanFastAccurateAutomated1998; @selvikRoentgenStereophotogrammetryMethod1989]
++ Extremely accurate [cite:@kapteinEvaluationThreePose2004; @saariKneeKinematicsMedial2005]
++ Gold standard Measurement [cite:@brobergValidationMachineLearning2023]
+
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width 3in
+#+CAPTION: From [cite:@vroomanFastAccurateAutomated1998]
+[[file:~/repo/lit-review/figures/raster/vrooman-mbrsa.png]]
+*** Limitations of RSA
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Involves additional surgical procedures for inserting tantalum beads.
++ Human supervision
++ Bi-plane imaging
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width 3in
+#+CAPTION: From [cite:@vroomanFastAccurateAutomated1998]
+[[file:~/repo/lit-review/figures/raster/vrooman-mbrsa.png]]
+
+* Aims
+*** Aims
+*Aim 1:* Joint Track Machine Learning: An Autonomous Method of Measuring Total Knee Arthroplasty Kinematics From Single-Plane X-Ray Images[fn:1]
+\vfill
+*Aim 2:* Correcting Symmetric Implant Ambiguity in Measuring Total Knee Arthroplasty Kinematics from Single-Plane Fluoroscopy [fn:2]
+\vfill
+*Aim 3:* Some Musings on a "Kinematics Translator" and Synthetic Kinematcs Data
+\vfill
+*Aim 4:* This will definitely work on shoulders, right?[fn:3]
+
+** Aim 1 - Joint Track Machine Learning
+*** Goal
+Demonstrate the feasibility of a fully autonomous, model-image registration pipeline.
+*** Method
++ Three-tiered approach
+  + Convolutional Neural networks (CNN) for autonomous implant detection
+  + Normalized Fourier Descriptor shape libraries
+  + Robust contour-based global optimization scheme
+#+ATTR_latex: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/jtml-pipeline.png]]
+*** Autonomous Implant Detection Using Convolutional Neural Networks
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ 2 CNNs
+  + Femoral and Tibial implants
++ High Resolution Network [cite:@wangDeepHighResolutionRepresentation2020]
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+ATTR_latex: :width \columnwidth
+[[file:~/repo/lit-review/figures/raster/jtml-segmentation.png]]
+*** Neural Network Data
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ ~8000 images
+   + 7 TKA kinematics studies
+    + 71 subjects
+    + 7 implant manufacturers
+    + 36 distinct implants
+    + Squat, lunge, kneel, stair ascent
+
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :height 3in
+[[file:~/repo/lit-review/figures/raster/jtml-data.png]]
+*** Neural Network Robustness
++ Additional augmentations introduced during training [cite:@buslaevAlbumentationsFastFlexible2020].
+[[file:~/repo/lit-review/figures/raster/augmentations.png]]
+*** Normalized Fourier Descriptor Shape Libraries
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.37
+:END:
++ Pose initialization using segmentation output.
++ $\pm 30^{\circ}$ library span at $3^{\circ}$ increments.
+
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+#+ATTR_latex: :width 2in
+[[file:~/repo/lit-review/figures/raster/banks-nfd-library.png]]
+#+ATTR_latex: :width 3.25in
+[[file:~/repo/lit-review/figures/raster/jtml-nfd.png]]
+*** Pose Refinement Using Global Optimization
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Two main features
+  + Objective function
+  + Optimization routine
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+begin_src latex
+
+\begin{equation*}
+    \argmin_{x}\{f(x) : x \in \Omega\}
+\end{equation*}
+#+end_src
+*** Contour-based Objective Function
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ With accurate projection, contours provide a strong heuristic for orientation.
++ Overlapping pixels between CNN segmentation and projected implant.
+  + $L_1$ norm has quick parallel computation.
+
+#+begin_src latex
+\begin{equation*}
+  J = \sum_{i \in H}\sum_{j \in W}|I_{ij} - P_{ij}| = L_{1}(I,P)
+\end{equation*}
+#+end_src
++ Sensitive to minor perturbations
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+[[file:~/repo/lit-review/figures/raster/registered-tka.png]]
+*** Improving Robustness
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+ + Dilation decreases sensitivity to perturbations.
+ + Multi-stage optimization can reduce dilation back to original edges.
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/flood-dilated-contour.png]]
+*** Optimization Routine
++ No analytic form of the objective function exists, it **must** be sampled at points of interest.
+  + Black Box Optimization [cite:@audetDerivativeFreeBlackboxOptimization2017; @bajajBlackBoxOptimizationMethods2021]
+
+*** Lipschitzian Optimization
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Robust, global, black-box optimization routine if Lipschitz constant ($K$) is known [cite:@shubertSequentialMethodSeeking1972].
++ Lipschitz constant bounds the rate of change of a function.
++ What if you don't know the Lipschitz constant?
+
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width 2in
+[[file:~/repo/lit-review/figures/raster/shubert-step1.png]]
+[[file:~/repo/lit-review/figures/raster/shubert-step2.png]]
+[[file:~/repo/lit-review/figures/raster/shubert-step3.png]]
+
+*** Lipschitzian Optimization without the Lipschitz Constant
+#+ATTR_latex: :width 2.5in
+[[file:~/repo/lit-review/figures/raster/jones-direct-title.png]]
++ Sample end-points instead of intersecting lines.
++ Potentially optimal regions based on value at center and total size.
+  + Trisect potentially optimal regions and re-sample centers
+#+ATTR_latex: :width 2.5in
+[[file:~/repo/lit-review/figures/raster/direct-1D.png]]
+*** Trisecting Region
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+begin_src latex
+\begin{equation*}
+  \begin{bmatrix}
+    f(x=c_{1}) & d(c_{1})\\
+    f(x=c_{2}) & d(c_{2})\\
+    \vdots & \vdots \\
+    f(x=c_{N}) & d(c_{N})
+  \end{bmatrix}
+\end{equation*}
+Where
+
+\begin{align*}
+  f(x=c_{i}) &\equiv \text{Sampled function value} \\
+  d(c_{i}) & \equiv \text{ Sub-domain size } \\
+  & \text{ for } i \in [1,N]
+\end{align*}
+#+end_src
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/direct-1D-stage1.png]]
+*** Another Iteration
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+begin_src latex
+\begin{equation*}
+  \begin{bmatrix}
+    f(x=c_{1}) & d(c_{1})\\
+    f(x=c_{2}) & d(c_{2})\\
+    \vdots & \vdots \\
+    f(x=c_{N}) & d(c_{N})
+  \end{bmatrix}
+\end{equation*}
+Where
+
+\begin{align*}
+  f(x=c_{i}) &\equiv \text{Sampled function value} \\
+  d(c_{i}) & \equiv \text{ Sub-domain size } \\
+  & \text{ for } i \in [1,N]
+\end{align*}
+#+end_src
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_latex: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/direct-1D-stage2.png]]
+
+*** Determining Potentially Optimal Regions
++ Convex hull [cite:@grahamEfficientAlgorithDetermining1972; @jarvisIdentificationConvexHull1973; @chanOptimalOutputsensitiveConvex1996; @barberQuickhullAlgorithmConvex1996] of region size vs. center value
+
+#+ATTR_latex: :width 0.6\textwidth
+[[file:~/repo/lit-review/figures/raster/direct-convex-hull.png]]
+*** DiRECT for Joint Track Machine Learning
++ Search region is along all 6 degrees of freedom.
+  + Normalize to $[0,1]$.
++ Three stages, each with decreasing levels of dilation.
+  + Iteration budget for each stage.
+| Stage      | Budget [Iterations] | Search Range [mm,deg]                      | Dilation (pixels) |
+|------------+---------------------+--------------------------------------------+-------------------|
+| ``Tree''   | ~20,000             | $\pm 45$                                   |                 5 |
+| ``Branch'' | ~20,000             | $\pm 25$                                   |                 3 |
+| ``Leaf''   | ~10,000             | $\pm 100$ $(z_{trans})$ / $\pm 3$ $(else)$ |                 1 |
+*** Testing Performance
+Now that we have our refined poses, how well does out system perform?
+#+ATTR_latex: :width \textwidth
+[[file:~/repo/lit-review/figures/raster/jtml-pipeline.png]]
+*** Validation
++ Independent research group using Model-Based RSA.
++ Determine the level of concordance between the two measurement systems
+  + Bland-Altmann Plots
++ Achieved clinically acceptable accuracy [cite:@brobergValidationMachineLearning2023; @jensenJointTrackMachine2023].
++ Highly repeatable
+
+#+ATTR_latex: :width 0.7\textwidth
+file:~/repo/lit-review/figures/raster/broberg-bland-altmann.png
+*** Awards
+The work presented in this aim won the HAP Paul Award for Best Paper from the International Society for Technology in Arthroplasty's 2022 Annual Meeting.
+#+ATTR_latex: :width 0.7\textwidth
+file:~/repo/lit-review/figures/raster/ista-hap-paul-talk.png
+** Aim 2 - Correcting Symmetric Implant Ambiguity
+*** Goal
++ The goal of this aim is to validate and test methods that can overcome single-plane limitations for model-image registration.
+  + Out-of-plane (OOP) Translation
+  + Symmetry Traps
+
+*** Translation
++ Depth perception is lost when using a single camera.
++ Utilize a virtual ``spring'' to constrain relative OOP translation between implant components.
+
+#+begin_src latex
+\begin{equation*}
+  J = \alpha L_{1}(I,P) + \beta ML(Fem,Tib)
+\end{equation*}
+
+Where
+\begin{equation*}
+  ML \equiv \text{ Relative mediolateral translation }
+\end{equation*}
+#+end_src
+*** Symmetry Traps
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+With a symmetric tibial implant, the contour is not always a perfect heuristic for true pose.
+
+Found ``ambiguous zone'' within $3^{\circ}$ of pure lateral pose with high propensity for symmetry traps [cite:@jensenJointTrackMachine2023].
+
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_Latex: :width \textwidth
+[[file:/home/ajensen123@ad.ufl.edu/figures/raster/sym-trap-quadrants-no-captions.png]]
+*** Solving the Symmetric Pose
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:END:
+Algorithm devised to "flip" pose into symmetric counterpart.
+1. Determine viewing ray from camera to implant centroid, denote $\vec{v}$, normalize.
+2. Denote symmetric-plane normal vector $\vec{s}$, normalize.
+3. Measure relative "off-lateral" orientation of implant, $\cos(\theta) = \dfrac{\vec{v} \cdot \vec{s}}{||\vec{v} || ||\vec{s} || }$
+4. Apply body-centered rotation to implant about $\vec{m} = \vec{s} \times \vec{v}$ by $\psi = 2\theta$.
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+ATTR_latex: :width 0.75\textwidth
+[[file:~/figures/raster/symmetry_flipper.png]]
+*** Methods - Training Set
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ "Symmetric" poses for each of the 12,000 frames were calculated using the "flipper" algorithm, yielding ~24,000 total training samples.
+
+  The input for each sample was $[\theta_{F/E}, \theta_{V/V}, \theta_{I/E}, \psi]$, and the output was one of $\{\text{True}, \text{Symmetric}\}$
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+ATTR_LATEX: :width \textwidth
+#+CAPTION: The training data plotted with each axis representing an anatomical rotation (origin not to scale).
+[[file:/home/ajensen123@ad.ufl.edu/figures/raster/symmetry-trap-dataset.png]]
+*** Methods - Machine Learning
+Using \texttt{scikit-learn}, the following classifiers were implemented:
+
++ Support Vector Machine, K-Nearest-Neighbors, AdaBoost, Histogram Gradient Boosting, Bagging Estimator, Stacked Generalization, Majority Voting Classifier
+*** Methods - Fixing "Symmetry Traps"
+For an input image sequence, the following is performed:
+
+1. Each pose and its symmetric counterpart are fed into the machine learning classifier
+   1. If the outputs are different, take the pose labeled "true" as the correct pose.
+   2. If the outputs are the same, (i.e. both a pose and its symmetric counterpart return "true"), label image "ambiguous"
+2. For all images that are =NOT= ambiguous, construct a cubic spline through the three rotation measurements.
+3. For all images that are labeled "ambiguous", determine which of the two poses is closer to the spline, and take that as the "correct" pose.
+*** Results - ML Classification
+#+ATTR_LATEX: :width \textwidth
+[[file:/home/ajensen123@ad.ufl.edu/figures/raster/sym-trap-ML-table.png]]
+*** Results - Fixing "Symmetry Traps"
++ Accuracy: 91.9%
++ Sensitivity: 0.674
++ Specificity: 0.940
+
+The distribution of $\psi$ for correct and incorrect frames was measured.
++ Average $\psi_{correct}=16.6^{\circ}$.
++ Average $\psi_{incorrect} = 7.12^{\circ}$.
+*** Results - Stratified $\psi$ Correction Performance
+#+attr_latex: :width \textwidth
+[[file:/home/ajensen123@ad.ufl.edu/figures/raster/stratified-psi-ML-table.png]]
+*** Discussion
++ Reliable post-processing method to overcome pernicious issue (30 years in the making!)
++ Suggests an imaging setup for measuring kinematics slightly off-oblique to escape "ambiguous zone"
+** Aim 3 - Musings on a "Kinematics Translator" and Synthetic Kinematics Data
+*** A Kinematics Translator?
++ We all understand the idea of translating a sentence (say, English) to a different language (say, French).
+  + The "meaning" (whatever that actually means[fn:4]) of the sentence stays the same, but the specific letters/phonemes used to produce that meaning are different.
++ If we imagine that a kinematics sequence during a specific movement (say, stair rise) is a "sentence", could it be "translated" into the kinematics sequence from another movement (say, level walking)?
+  + Could this reduce the total number of images needed for a clinical assessment?
+  + The "meaning" of the sentence would, in theory, be that patients "kinematics fingerprint".
+  + Does that "kinematics fingerprint" contain within it information about:
+    + Outcomes?
+    + Joint pathologies?
+*** A High-Level Mathematical Framework
+
+#+attr_latex: :width 0.65\textwidth
+#+CAPTION: The geometry of generative models, from [cite:@yeGeometryDeepLearning2022]
+[[file:~/figures/raster/ye_geometry_of_generative_models.png]]
+
+Common problems in machine learning can be viewed through this lens:
++ Overfitting, bias (in the fairness sense), etc
+*** There is not enough standardized kinematics data
+1. Different research groups give the same name to different movements.
+   + Squat, lunge, and kneel have no formal definiton, and some groups' "squat" has the same qualities as other groups' "lunge".
+2. There are no standardized set of movements to measure.
+   + Not enough data per-patient to be able to create any robust generative model.
+3. Different research groups have different data resolutions.
+   + Some groups measure kinematics at every frame, others interpolate 0-30-60-90-120 flexion angles.
+   + If the salient information is present, say, between 30-60 degrees flexion, then our latent space becomes filled with interpolations, rather than actual data.
+*** A path forward
+With a fully-autonomous system for measuring kinematics, interested research groups have asked us which movements to measure. Should this move toward widespread clinical adoption, standards for "Kinematics Evaluations" can be established to homogenize data.
+
+
+** Aim 4 - This will definitely work on shoulders, right?
+
+*** Spoiler Alert
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.3
+:END:
+No, it won't.
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+#+attr_latex: :width 1.5in
+[[file:~/figures/raster/BAD_IE_HUM.png]]
+
+#+attr_latex: :width 1.5in
+[[file:~/figures/raster/BAD_PROXDIST_HUM.png]]
+
+*** Goal
+Establish a protocol for exploring the relative sensitivity of input orientation to projected shape
+*** JTML on Shoulders
+\begin{table}[h!]
+\small
+	\caption{Root mean squared differences between JointTrack Machine Learning optimized kinematics and manually registered kinematics on single-plane fluoroscopy} \label{tab:jtml-tsa-tka-vals}
+	\begin{tabularx}{\linewidth}{ccccccc}\hline
+		 Implant Type & $x_{trans} (mm)$ & $y_{trans} (mm)$ & $z_{trans} (mm)$ & $x_{rot} (^{\circ})$ & $y_{rot} (^{\circ})$ & $z_{rot} (^{\circ})$ \\ \hline
+		Humeral            & 8.46             & 8.64             & 152.78           & 22.59                & 64.74                & 11.81                \\
+		Glenosphere        & 0.97             & 1.44             & 32.58            & 13.72                & 26.40                & 8.30                 \\
+		Femoral            & 0.57             & 0.39             & 26.95            & 0.66                 & 0.73                 & 0.60                 \\
+		Tibial             & 0.67             & 0.64             & 27.17            & 1.63                 & 2.74                 & 0.66                 \\\hline
+	\end{tabularx}
+\end{table}
+*** Improving Error Gradient
++ Current cost function formulation (Hamming Distance) is not well suited to "near" and "far" estimates
+#+begin_src latex
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/rTSA_target_contour.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/rTSA_estimate_contour.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/rTSA_hamming.png}
+\end{figure}
+#+end_src
+*** Modified Mean Surface Distance
++ In order to improve error gradient, a modified mean surface distance was incorporated into the cost function.
++ The mean of the dot product between the projection estimate and a distance map of the CNN segmentation.
+#+begin_src latex
+\begin{equation}
+  \label{eq:DMCF}
+  J = \dfrac{Proj \cdot DM}{\sum Proj}
+\end{equation}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/rTSA_target_DM.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/rTSA_estimate_DM.png}
+\end{figure}
+\vspace{-5mm}
+{\tiny It didn't work.}
+#+end_src
+*** Modified Asymmetric Keypoint Distance
++ Early psychological research deemed curvature as highly salient for object recognition [cite:@attneaveInformationalAspectsVisual1954; @attneaveQuantitativeStudyShape1956]. This aimed to place additional emphasis on autonomously selected high-curvature regions.
+  + Extracted regions of high-curvature using Menger's Algorithm [cite:@legerMengerCurvatureRectifiability1999].
+
+#+attr_latex: :width 0.85\textwidth
+[[file:~/figures/raster/TSA_curvature.png]]
+
+*** Modified Asymmetric Keypoint Distance
++ Utilized a modified asymmetric surface distance on the discrete set of keypoints.
+
+\begin{equation}
+  \label{eq:curv-keypoint}
+  \begin{split}
+    \displaystyle J &= \dfrac{\sum_{k \in \mathbb{K}}(\min_{p\in Proj}(p \cdot DM_{k}))}{N_k} \\
+      &\text{where}\\
+    \mathbb{K} &= \text{Set of all keypoints} \\
+    DM_{k} &= \text{Distance map for keypoint $k$} \\
+  \end{split}
+\end{equation}
+
+#+begin_src latex
+{\tiny It didn't work...again.}
+#+end_src
+*** 2-Dimensional Shape
++ *Shape descriptors* offer ways to describe shape numerically [cite:@zhangReviewShapeRepresentation2004; @flusserInvariantShapeDescription1992].
+  + A goal is for the "distance" between shapes to be smaller when the shapes are more "similar".
++ *Invariant Shape Descriptors* are immune to standard scaling and similarity transformations [cite:@loweDistinctiveImageFeatures2004; @khotanzadInvariantImageRecognition1990].
+  + Normalized Fourier Descriptors [cite:@persoonShapeDiscriminationUsing1977; @linClassificationPartial2D1987; @wallaceEfficientThreedimensionalAircraft1980; @wallaceAnalysisThreedimensionalMovement1980; @banksAccurateMeasurementThreedimensional1996], Image Moments [cite:@kimRegionbasedShapeDescriptor2000; @khotanzadInvariantImageRecognition1990], and many more.
+  + This is much closer to a human-intuition of "shape".
+
+*** Invariant Angular Radial Transform Descriptor
+The Invariant Angular Radial Transform provides an orthogonal spatial basis function to describe binary images.
+
+#+attr_latex: :width 0.7\textwidth
+#+caption: The basis "vectors" for the invariant angular radial transform. From [cite:@leeNewShapeDescription2012].
+[[file:~/figures/raster/ART_basis.png]]
+*** IARTD Feature Vector
+The complez feature vector for IARTD is constructed to ensure orthogonality and rotational invariance for the magnitude. Prior to calculation, the image coordinates are normalized such that $(0,0)$ is at the center, and each of the four corners are $(\pm 1, \pm 1)$.
+#+begin_src latex
+\begin{equation}
+  F_{np} = \int_{0}^{2\pi}\int_{0}^{1} f(\rho,\theta)V_{np}(\rho,\theta)\rho d\rho d\theta
+\end{equation}
+#+end_src
+
+
+#+begin_src latex
+\begin{equation}
+	\begin{split}
+		f(\rho,\theta) & \equiv \text{ Input image in polar coordinates}  \\
+		V_{np}(\rho,\theta)         & = \dfrac{1}{2\pi}e^{jp\theta}R_{n}(\rho)      \\
+		R_{n}(\rho)    & =
+		\begin{cases}
+			1                   & n=0     \\
+			2 \cos (\pi n \rho) & n \ne 0
+		\end{cases}
+	\end{split}
+\end{equation}
+#+end_src
+*** Normalizing IARTD Feature Vector
+We normalize the phase of the feature vector to ensure full rotational invariance.
+#+begin_src latex
+\begin{equation}
+  \begin{split}
+    \phi'_{np} &= \phi_{np}-\phi_{n,1} \\
+    F'_{np} &= F_{np}e^{-jp\phi_{n,1}}
+  \end{split}
+\end{equation}
+#+end_src
+The final feature vector is the constructed with the corrected phase and magnitude values. Values of $p<2$ are redundant and removed per the original authors' suggestion [cite:@leeNewShapeDescription2012].
+#+begin_src latex
+\begin{equation}
+  IARTD = \{|F'_{np}|,\phi'_{np}\} \text{ where } n\ge0,p\ge2
+\end{equation}
+#+end_src
+
+*** Methods - Shape Difference
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+The "input shapes" for each implant were the projected implants at $\pm 30^{\circ}$ along each rotational axis at $5^{\circ}$ increments.
+$1^{\circ}$ perturbations were applied along each rotation axis.
+
+\begin{equation}
+	\label{eq:shape-derivative}
+	\begin{split}
+		\Delta S(\delta)_{z,x,y}  \equiv & IARTD(R_{z,x,y,+\delta})                        \\
+		                                 & - IARTD(R_{z,x,y,-\delta})                      \\
+		\forall                          & \delta \in \{\delta_{x},\delta_{y},\delta_{z}\}
+	\end{split}
+\end{equation}
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+attr_latex: :width 0.75\textwidth
+[[file:~/figures/raster/rTSA_humeral_rotation_axes.png]]
+*** Methods - Shape Sensitivity
+
+The $\Delta S(\delta)_{z,x,y}$ vector is normalized to account for overall scale of each element, in-plane rotation inputs are averaged, and the 2-norm of the difference vector is defined as the shape sensitivity.
+
+A larger vector would indicate that the shape changed more for that particular "input shape" and perturbation.
+
+\begin{equation}
+	\label{eq:z_rot_norm}
+	\mathbb{S}(\delta)_{x,y} = \dfrac{\sum_{z} \| S(\delta)_{z,x,y} \|_{2}}{N}
+\end{equation}
+*** Results - Humeral Shape Sensitivity
+#+begin_src latex
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Humeral_dx_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Humeral_dy_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Humeral_dz_sensitivity.png}
+	\caption{The $\mathbb{S}$ plot for a humeral implant for $\delta$ rotations along the x, y, and z axis, respectively.}
+	\label{fig:hum_sensitivity_plot}
+\end{figure}
+#+end_src
+
+*** Results - Glenosphere Shape Sensitivity
+#+begin_src latex
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Glenosphere_dx_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Glenosphere_dy_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Glenosphere_dz_sensitivity.png}
+	\caption{The $\mathbb{S}$ plot for a glenosphere implant for $\delta$ rotations along the x, y, and z axis, respectively.}
+	\label{fig:sca_sensitivity_plot}
+\end{figure}
+
+#+end_src
+*** Results - Femoral Shape Sensitivity
+#+begin_src latex
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Femoral_dx_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Femoral_dy_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Femoral_dz_sensitivity.png}
+	\caption{The $\mathbb{S}$ plot for a femoral implant for $\delta$ rotations along the x, y, and z axis, respectively.}
+	\label{fig:fem_sensitivity_plot}
+\end{figure}
+#+end_src
+*** Results - Tibial Shape Sensitivity
+#+begin_src latex
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Tibial_dx_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Tibial_dy_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Tibial_dz_sensitivity.png}
+	\caption{The $\mathbb{S}$ plot for a tibial implant for $\delta$ rotations along the x, y, and z axis, respectively.}
+	\label{fig:tib_sensitivity_plot}
+\end{figure}
+#+end_src
+*** Key Takeaways
+- Humeral implant has the lowest $\delta_y$ sensitivity of all implants, which is the difficult registration axis.
+- Tibial and glenosphere implants demonstrate a "valley" along rotation axis representing near-symmetry.
+  - For tibial implants, this is the axis most commonly associated with "symmetry traps".
+#+begin_src latex
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Glenosphere_dy_sensitivity.png}
+	\includegraphics[width=0.3\linewidth]{~/figures/raster/Tibial_dy_sensitivity.png}
+    \caption{Glenosphere (left) and tibial (right) $\delta_y$ shape sensitivities.}
+\end{figure}
+#+end_src
+* Conclusion
+*** Conclusions
+Throughout the past four years, I have:
+1. Established a fully autonomous method of measuring TKA kinematics from single plane fluoroscopy. This software is used globally by different research groups, and offers
+2. Utilized machine learning to address "symmetry traps", an inherent limitation in single-plane TKA kinematics measurements for nearly 30 years. Additionally, we offer an alternative imaging protocol for accurately measuring TKA kinematics in a clinical setting.
+3. Developed a pipeline for accessing the relative performance of autonomous registration for different implants, conclusively finding that implant geometry alone is not sufficient for every joint.
+* Publications and Presentations :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+*** Presentations
+:PROPERTIES:
+:BEAMER_OPT: fragile, allowframebreaks, label=
+:END:
+#+begin_src latex
+\begin{refsection}
+  \newrefcontext[sorting=ynt]
+  \input{nocites-pres}
+  \printbibliography[title=Presentations]
+\end{refsection}
+#+end_src
+
+*** Publications
+:PROPERTIES:
+:BEAMER_OPT: fragile, allowframebreaks, label=
+:END:
+#+begin_src latex
+\begin{refsection}
+	\newrefcontext[sorting=ynt]
+	\input{nocites-pubs}
+	\printbibliography[title=Publications]
+\end{refsection}
+#+end_src
+* Timeline :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+*** Timeline
+| Date(s)                 | Event                                                  |
+|-------------------------+--------------------------------------------------------|
+| 2015-2019               | Mech. Eng. B.S, Magna Cum Laude, UF                    |
+| April 2019 - April 2020 | Internship at Exactech                                 |
+| April 2020              | Started in Miller Lab                                  |
+| August 2020             | Officially Started PhD at UF                           |
+| November 2021           | Best Presentation Award at ISTA: Emerging Technologies |
+| April 2022              | Submitted JTML for HAP Paul Award                      |
+| September 2022          | HAP Paul Award at ISTA 2022                            |
+| November 2023           | Symmetry Trap Paper Submitted                          |
+| December 2023           | Part-time Internship at Exactech Started               |
+| February 2024           | Revisions Requested for Symmetry Trap Paper            |
+| February 2024           | Implant Shape Sensitivity Paper Submitted              |
+|-------------------------+--------------------------------------------------------|
+| March 2024              | Revised Symmetry Trap Paper Submitted                  |
+*** Thank you!
+Thanks for listening!!
+
+Any Questions?
+* References
+*** References
+:PROPERTIES:
+:BEAMER_OPT: fragile, allowframebreaks,  label=
+:END:
+#+print_bibliography:
+* Footnotes
+[fn:4] For instance, a Platonist might argue these have to do with the forms, an Aristotelian would say it must invoke the instantiation of the four causes.
+[fn:1] Published in the Journal of Arthroplasty [cite:@jensenJointTrackMachine2023]
+[fn:2] In Revision for Publication in the Journal of Biomechanics
+[fn:3] In Review for Publication in the Journal of Computers in Biology and Medicine

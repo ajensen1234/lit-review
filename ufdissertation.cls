@@ -77,7 +77,16 @@
 \RequirePackage{titletoc}
 \RequirePackage{float}
 
-\RequirePackage[sort&compress,numbers]{natbib}
+%\RequirePackage[sort&compress,numbers]{natbib}
+\RequirePackage[
+	backend=biber,
+	citestyle=numeric-comp,
+	sorting=nty,
+	style=ieee,
+	url=false,
+	isbn=false,
+	doi=false,
+]{biblatex}
 %\RequirePackage{natbib}
 
 
@@ -578,9 +587,12 @@
 %  saves it in the macro \referenceFile. 
 %  We assume anyone using LaTeX will use BibTeX unless they specify otherwise. 
 %  The second argument sets the .bst file that should hold the bibtex style file.
-\providecommand{\setReferenceFile}[2]{
+% \providecommand{\setReferenceFile}[2]{
+% 	\edef\referenceFile{#1}
+% 	\edef\referenceStyle{#2}
+% }
+\providecommand{\setReferenceFile}[1]{
 	\edef\referenceFile{#1}
-	\edef\referenceStyle{#2}
 }
 
 
@@ -976,10 +988,10 @@
 \clearpage
 \addcontentsline{toc}{chapter}{LIST OF REFERENCES}
 \label{references}
-\bibliographystyle{\referenceStyle}
+%\bibliographystyle{\referenceStyle}
 \interlinepenalty=10000
 {\singlespacing
-\bibliography{\referenceFile}}
+\printbibliography}
 }
 {
 \@latex@warning{You haven't specified a reference file using the command \setReferenceFile. Hopefully this is intentional!}

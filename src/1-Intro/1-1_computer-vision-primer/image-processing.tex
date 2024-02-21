@@ -1,14 +1,14 @@
 Digital image processing is a field of computer vision that deals with the manipulation, analysis, and interpretation of digital images.
 It focuses on algorithms and techniques that extract meaningful information from images and enhance visual quality.
-We can leverage these algorithms to efficiently and autonomously extract information relevant to model-image registration.
+These algorithms can be utilized to efficiently and autonomously extract information relevent to model-image registration.
 
 \subsubsection{Filtering and convolution}
 \label{sec:filtering-convolution}
-As previously discussed, image formation yields a collection of 2D points, $\mathbf{x}_{pix}$.
-We can write the intensity values at each pixel location as a digital signal, $f(\mathbf{x}_{pix}) = f(i,j)$, where $(i,j)$ represents the pixel locations in the image, and the function returns the intensity value.
-We can then use standard methods of digital signal processing in order to extract meaningful information from images.
+From the previous section, image formation and projection yields a collection of 2D points in the image coordinate system, $\mathbf{x}_{pix}$.
+The intensity values at each pixel location can be expressed as a digital signal, $f(\mathbf{x}_{pix}) = f(i,j)$, where $(i,j)$ represents the pixel locations in the image, and the function returns the intensity value.
+Digital image processing then utilizing standard signal processing techniques to extract pertinent information from the image.
 
-The most widely used filter is a linear filter \cite{szeliskiComputerVisionAlgorithms2022}, where the output is some linear operation on the neighboring pixels (\cref{eq:convolution}).
+The most widely used filter is a linear filter \cite{szeliskiComputerVisionAlgorithms2022}, where the output is a linear operation on the neighboring pixels (\cref{eq:convolution}).
 This process is known as a \emph{convolution}.
 In a convolution, the kernel, $h$, is shifted along the input image, $f$, and the resultant image, $g$, is the dot product of those two matrices at that specific location.
 
@@ -22,8 +22,9 @@ In a convolution, the kernel, $h$, is shifted along the input image, $f$, and th
     \label{eq:convolution}
 \end{equation}
 
-The convolution operation is \emph{linear shift invariant}, which means that it obeys the superposition principle (\cref{eq:superposition}) and the shift invariance principle (\cref{eq:shift-invariance}).
-This is a powerful property, because it will behave the same everywhere on the input signal/image (e.g. an edge detector will detect an edge, no matter where the edge is on the input image).
+The convolution operation is characterized as linear shift invariant, indicating that it adheres to both the superposition principle (Equation \ref{eq:superposition}) and the shift invariance principle (Equation \ref{eq:shift-invariance}).
+This characteristic is significant as it ensures consistent behavior across the entire input signal or image.
+For example, an edge detector will reliably detect an edge regardless of its location on the input image, illustrating the operation's uniformity and predictability in processing.
 
 \begin{equation}
     h *(f + g) = h*f + h*g
@@ -61,9 +62,10 @@ Another is the box kernel, which averages the value of the nearest K pixels (\cr
     \label{eq:box-filter}
 \end{equation}
 
-Edge filters can also be created to detect vertical (\cref{eq:vert-edge-filter}), horizontal (\cref{eq:horiz-edge-filter}), or diagonal edges (\cref{eq:diag-edge-filter}).
-As each of the filters moves across the feature it is designed for, that region of the output will be more highly activated than other regions, extracting out the desired components.
-The orientation of each of these filters can be hand-selected to find desirable attributes in images.
+Edge filters can be created to detect vertical (\cref{eq:vert-edge-filter}), horizontal (\cref{eq:horiz-edge-filter}), or diagonal edges (\cref{eq:diag-edge-filter}).
+As the filter aligns with the feature it is tailored for, the resultant convolution is more highly activated.
+This provides useful spatial information about the presence of specific features.
+Additionally, the orientation of these filters can be hand-selected to find specific desirable properties in images.
 
 \begin{equation}
     \text{vertical edge filter} = \begin{bmatrix}
@@ -110,13 +112,14 @@ Lastly, we can use a corner filter to find corners in images (\cref{eq:corner-fi
     \label{eq:corner-filter}
 \end{equation}
 
-Entire subfields of computer vision and image analysis are devoted to creating increasingly useful and complex filters, or collections of filters. These include steerable filters, which determine information occurring in arbitrary directions \cite{freemanSteerableFiltersLocal1992}, recursive filtering \cite{nielsenRegularizationScalespaceEdge1996}, and non-linear filtering \cite{tomasiBilateralFilteringGray1998}.
+Entire subfields of computer vision and image analysis dedicate themselves to devising increasingly sophisticated and useful filters, or collections thereof.
+These include steerable filters, which determine information occurring in arbitrary directions \cite{freemanSteerableFiltersLocal1992}, recursive filtering \cite{nielsenRegularizationScalespaceEdge1996}, and non-linear filtering \cite{tomasiBilateralFilteringGray1998}.
 
 \subsubsection{Edge detection}
 Edge detection is a highly motivated sub-field of image processing in computer vision due to the immense usefulness of algorithmically determining the edges in a given image.
-For a human operator, it can be relatively easy to identify edges of interest, but how can this be achieved computationally?
-The first approach might be in viewing an image topographically, with regions of different colors and intensity represented by different ``heights''.
-Then, an edge simply becomes an area with a steep gradient (\cref{eq:img-grad}).
+While human operators might find it relatively straightforward to pinpoint edges of interest, the challenge lies in achieving this computationally.
+An initial strategy involves interpreting an image topographically, where regions of varying colors and intensities are depicted as differing "heights".
+Consequently, an edge is identified as an area exhibiting a steep gradient (Equation \ref{eq:img-grad}).
 
 \begin{equation}
     \begin{aligned}
@@ -125,7 +128,10 @@ Then, an edge simply becomes an area with a steep gradient (\cref{eq:img-grad}).
     \label{eq:img-grad}
 \end{equation}
 
-Finding the direction of the steepest ascent/descent at any given location will give us the normal to the local edge at that point. However, the derivative operator will accentuate and amplify high frequencies in the image, causing noise to overpower the signal. Removing the high-frequency information (a low-pass filter) in the image results in gradient detection that is much more aligned with the salient edges of the image. The Gaussian kernel is a good option for an isotropic low-pass filter on a 2D signal (image) (\cref{eq:gauss-kernel-grad})
+Determining the direction of the steepest ascent or descent at any location reveals the normal to the local edge at that point.
+However, the application of a derivative operator tends to enhance and amplify high frequencies within the image, potentially allowing noise to overshadow the actual signal.
+Mitigating the high-frequency information (via a low-pass filter) in the image facilitates gradient detection that more accurately reflects the prominent edges of the image.
+The Gaussian kernel emerges as an effective choice for an isotropic low-pass filter applied to a 2D signal (image) (Equation \ref{eq:gauss-kernel-grad}).
 
 \begin{equation}
     \begin{aligned}
@@ -138,21 +144,24 @@ Finding the direction of the steepest ascent/descent at any given location will 
 \end{equation}
 
 
-A widely-recognized edge detection algorithm was proposed by John Canny in 1986 \cite{cannyComputationalApproachEdge1986}, and utilizes a five-step process.
+John Canny's edge detection algorithm, introduced in 1986 \cite{cannyComputationalApproachEdge1986}, utilizes a five-step algorithm.
 First, a Gaussian kernel is applied as a low-pass filter (\cref{eq:gauss-kernel-grad}).
 Second, directional filters are used to find the gradients in each direction of the image.
-Third, a gradient magnitude threshold is applied to remove noise. Fourth, a double threshold is applied to remove both strong and weak edges.
-Last, edges are determined from hysteresis. The prevailing limitation of this algorithm is the need to set kernel size and edge-intensity.
+Third, a gradient magnitude threshold is applied to remove noise.
+Fourth, a double threshold is applied to remove both strong and weak edges.
+Last, edges are determined from hysteresis.
+The prevailing limitation of this algorithm is the need to set kernel size and edge-intensity.
 
 \subsubsection{Binary image processing}
 \label{sec:binary-img-proc}
 
-A binary image is a digital image that consists only of black and white pixels.
-It is often used for labeling or masking an underlying image, where the values of 1 and 0 represent the presence or absence of a particular feature or object.
-Binary images are often used in computer vision and image processing applications due to low computational overhead and quick analysis.
-They are also useful for storing and transmitting large amounts of data, as the use of only two values reduces the amount of information that needs to be stored and transmitted.
+A binary image is a type of digital image that consists solely of black and white pixels.
+These images are commonly utilized for labeling or masking underlying images, where the binary values, 1 and 0, indicate the presence or absence, respectively, of a specific feature or object.
+Binary images are favored in computer vision and image processing applications owing to their low computational requirements and the ability to facilitate rapid analysis.
+Additionally, they prove advantageous for storing and transmitting voluminous data efficiently, since the binary format significantly reduces the volume of information needing to be stored or transmitted.
 
-The primary method of processing binary images is morphological, which involves changing the shape of the ``blob'' in order to extract useful information from it.
+The predominant approach to processing binary images is through morphological operations, which modify the shape of the ``blob'' in the image to extract pertinent information.
+Morphological processing manipulates the structure of the image to highlight, suppress, or define features, making it a vital tool in areas such as feature extraction, image segmentation, and pattern recognition.
 
 \begin{figure}[h!]
     \includegraphics[width = \linewidth]{figs/background/png/binary-image-processing.jpg}
@@ -160,9 +169,9 @@ The primary method of processing binary images is morphological, which involves 
     \label{fig:binary-image-processing}
 \end{figure}
 
-Dilation and erosion are the two main operations that are used in model-image registration (\ref{eq:dilation-erosion}).
-These functions are each two-fold: first, a convolution operation is applied to the existing binary image, then a threshold is applied to the convolution output to determine if the central pixel is a 0 or 1.
-If $f$ is the input image, $s$ is the convolution kernel of $1$s, and $c=f\otimes s$ is the number of $1$s in the convolution output, then dilation and erosion can be expressed in the following way.
+Dilation and erosion represent the two principal operations employed in model-image registration (Equation \ref{eq:dilation-erosion}).
+Each of these operations involves a two-step process: initially, a convolution operation is performed on the binary image; subsequently, a threshold is applied to the output of the convolution to decide whether the central pixel will be assigned a value of 0 or 1.
+If $f$ denotes the input image, and $s$ symbolizes the convolution kernel of $1$s, and $c=f\otimes s$ indicates the count of $1$s in the convolution output, then dilation and erosion can be expressed mathematically (\cref{eq:dilation-erosion}).
 
 \begin{equation}
     \begin{aligned}

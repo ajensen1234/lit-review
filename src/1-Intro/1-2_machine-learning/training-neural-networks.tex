@@ -1,24 +1,23 @@
 \subsection{Training Neural Networks}
 
 The power of neural networks is that they are able to ``learn'' incredibly complex mappings from a set of training data.
-But how \emph{exactly} do they learn?
+However, the specific mechanisms underlying this automated learning warrant further explanation.
 
 \subsubsection{Neural network cost functions}
 
-The initial step in refining a machine learning pipeline is to identify the metric you aim to minimize (or maximize).
-This metric can encode specific insights about the task at hand, and it can also be used to promote a specific structure in the network itself (parsimony, sparsity, etc).
+Defining appropriate metrics constitutes an initial step in refining machine learning systems.
+This metric can encode specific insights about the task at hand, and it can also be used to promote a specific structure in the network itself like parsimony or sparsity.
 
-The \textbf{cost function} is exactly the metric that the learning algorithm is attempting to minimize.
-The application of different cost functions for different tasks in neural networks has been well studied.
-For regression, typically some type of distance metric is employed (mean absolute error, mean squared error, Kullback-Liebler distance), while classification tasks mostly utilize some type of cross-entropy or log likelihood metric \cite{paszkePyTorchImperativeStyle2019}.
+Cost functions explicitly encode these metrics for optimization by learning algorithms.
+Regression tasks often minimize distance metrics like mean absolute error, while classifications primarily utilize cross-entropy or log likelihoods \cite{paszkePyTorchImperativeStyle2019}.
+The choice of cost function thereby specifies insights to extract from data.
 
 \subsubsection{Optimizing and updating weights}
 
-For convex problems, there often exists a closed-form solution for the parameters that minimize a given objective function.
-However, neural networks are highly non-linear and non-convex, forcing researchers to employ different methods of updating parameter values in a direction of minimizing the objective function.
+Whereas convex functions typically enable a closed-form solution \cite{boydConvexOptimization2004} for solving the parameters, neural networks are highly nonlinear and nonconvex, necessitating iterative methods for determining solution minima.
 Backpropagation has emerged as the ubiquitous method for updating these highly non-linear systems \cite{rumelhartLearningRepresentationsBackpropagating1986}.
-This utilizes gradient descent (\cref{eq:grad-descent}) and the chain rule (\cref{eq:chain-rule}) in order to calculate the affect that each node has on the final output, and update it in the direction that maximally minimizes the current error.
-Researchers can control how aggressive the update is by changing the learning rate, $\eta$.
+This employs gradient descent (\cref{eq:grad-descent}) and the chain rule (\cref{eq:chain-rule}) to calculate each node's contribution to output error.
+Learning rates ($\eta$) control step sizes.
 
 \begin{equation}
     \begin{aligned}
@@ -40,6 +39,10 @@ Too large a learning rate can cause the network to ``bounce out'' of the global 
 Hyperparameter tuning often presents challenges, frequently relying on methodologies that extend beyond simple trial and error.
 Some groups have proposed different methods of incorporating dynamically changing update rules in order to incorporate physical properties into the network training stage.
 The most common is Adaptive Moment Estimation \cite{kingmaAdamMethodStochastic2017}, which incorporates Root Mean Squared Propagation \cite{hinton2012neural} and momentum learning.
+
+A major limitation to naive backpropogation with gradient descent is the need to manually tune the learning rate.
+Excessively small rates slow training and risk local minima,  and large rates can cause instability.
+Adaptive methods like Adam \cite{kingmaAdamMethodStochastic2017} and RMSprop \cite{hinton2012neural} incorporate momentum and parameter-specific tuning to automate convergence.
 
 %%% Local Variables:
 %%% mode: latex
