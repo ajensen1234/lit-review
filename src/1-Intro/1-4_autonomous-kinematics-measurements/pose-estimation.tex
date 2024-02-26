@@ -1,10 +1,22 @@
-Hand-in-hand with implant detection is the initial pose estimate that often needs to be input into the optimization routine. Once the contour of the implant was determined, many methods required a human operator to place the implant in the ``capture region'' of their optimizer in order for it to eventually find the correct solution. This takes human supervision to get correct, thus adding another impediment toward getting this technology into the clinic.
+Hand-in-hand with implant detection is the initial pose estimate that needs to be input into the optimization routine.
+Once the contour of the implant was determined, many methods required a human operator to place the implant in the ``capture region'' of the optimizer in order for it to converge to the correct solution.
+This often requires human supervision, thus adding another impediment toward a fully autonomous solution.
 
-To determine an initial estimate, we must rely on those methods that can leverage information present in the camera projection (\Cref{sec:img-form-camera-props}) and the 2D CNN output (\Cref{sec:implant-detection}). The primary method that takes advantage of this information utilizing normalized Fourier descriptor shape libraries, and extracting each of the 6 degrees-of-freedom from either the normalized coefficients or matching with the closest entry in the library \cite{wallaceAnalysisThreedimensionalMovement1980,wallaceEfficientThreedimensionalAircraft1980,banksModelBased3D1992,banksAccurateMeasurementThreedimensional1996}. The key feature that makes this method tractable for autonomous measurements is the availability of the implant pixels from the convolutional neural network.
+Normalized Fourier descriptors provide a method for calculating the 6-DOF pose of an object given only the camera projection and the 2-dimensional CNN output.
+This method works by generating shape libraries of the objects at known positions, and determining the distance from your target shape to each entry in the shape library \cite{wallaceEfficientThreedimensionalAircraft1980,wallaceAnalysisThreedimensionalMovement1980,banksAccurateMeasurementThreedimensional1996}.
+Historically, this method required human supervision to accurately extract the object's contour.
+The introduction of neural networks, however, have made this an autonomous process.
+
 
 \subsubsection{Generating normalized Fourier descriptors}
 \label{sec:nfd}
-The Fourier Transform is one that takes in a continuous and repeating function and represents it as a sum of sinusoidal signals. Because the implant contour is self intersection, we can view it as a continuous function that has period $2\pi$ radians, as it will loop back onto itself and start over. This allows us to take advantage of the Fast Fourier Transform (FFT) \cite{cochranWhatFastFourier1967}, which operates on a discrete set of points rather than a continuous function. First, the contour of the segmented implant is taken then resampled into 128 equi-spaced points. The choice of $2^n$ points allows the FFT algorithm to perform much more quickly than another choice of points. Each contour point on the image $(x, y)$ is then represented as a single complex point, $x = jy$, such that the 1D FFT algorithm can be used. If $s(n)$ represents the complex sequence of equi-spaced contour points in the implant, and $S(i)$ represents the frequency-domain representation of those points after the FFT is applied, then we can represent these functions as shown in \cref{eq:fft}.
+The Fourier Transform is one that takes in a continuous and repeating function and represents it as a sum of sinusoidal signals.
+Because the implant contour is periodic, we can view it as a continuous function that has period $2\pi$ radians, as it will loop back onto itself and start over.
+This allows us to take advantage of the Fast Fourier Transform (FFT) \cite{cochranWhatFastFourier1967}, which operates on a discrete set of points rather than a continuous function.
+First, the contour of the segmented implant is taken then resampled into 128 equi-spaced points.
+The choice of $2^n$ points allows the FFT algorithm to perform much more quickly than another choice of points \cite{cochranWhatFastFourier1967}.
+Each contour point on the image $(x, y)$ is then represented as a single complex point, $x = jy$, such that the 1D FFT algorithm can be used.
+If $s(n)$ represents the complex sequence of equi-spaced contour points in the implant, and $S(i)$ represents the frequency-domain representation of those points after the FFT is applied (\Cref{eq:fft}).
 
 \begin{equation}
     \begin{aligned}
@@ -17,10 +29,13 @@ The Fourier Transform is one that takes in a continuous and repeating function a
 \end{equation}
 
 As discussed in \Cref{sec:image-similarity}, spatial information in images is difficult for computers to understand without explicit calculation.
-Thus, we use the properties of the FFT to normalize each of the shapes based on location, rotation, and size in order to accurately compare the segmented mask to a generated library.
+Thus, the properties of the FFT are leveraged to normalize each of the shapes based on location, rotation, and size in order to accurately compare the segmented mask to a generated library.
 
 \paragraph*{Normalize position}
-By the properties of the FFT, we know that $S(0)$ is the geometric centroid of the contour. Thus, we can set this to zero for all contours to give a consistent reference point that is independent of the location of the input contour. We can save this value as the ``position normalization coefficient'' to determine the $(x,y)$ location of the implant later in the process. And, because of our usage of the 1D FFT, we know that the real portion of this coefficient is the x-value and the imaginary portion is the y-value.
+By the properties of the FFT, $S(0)$ is the geometric centroid of the contour.
+Setting this to zero for all contours to gives normalizes location and gives a consistent reference point that is independent of the location of the input contour.
+This value is stored as the ``position normalization coefficient'' to determine the $(x,y)$ location of the centroid of the implant.
+Additionally, in the 1D FFT, the real portion of this coefficient is the x-value and the imaginary portion is the y-value.
 
 \begin{equation}
     \begin{aligned}
@@ -30,7 +45,9 @@ By the properties of the FFT, we know that $S(0)$ is the geometric centroid of t
 \end{equation}
 
 \paragraph*{Normalize size}
-Because the implant is not self-intersecting, we know that $S(1)$ is the coefficient with the largest size, and it also represent the scale of the shape of the implant. So, we can normalize each shape by dividing each coefficient by the overall size of the contour, shown below.
+$S(1)$ is the coefficient with the largest size, and also represents the overall scale of the implant size \cite{banksAccurateMeasurementThreedimensional1996}.
+Dividing through by this coefficient normalizes the overall size of each implant in the shape library.
+This value is stored as a heuristic for the out-of-plane translation of the object, following basic projective geometry principles.
 
 \begin{equation}
     \begin{aligned}
@@ -43,9 +60,14 @@ Because the implant is not self-intersecting, we know that $S(1)$ is the coeffic
 
 \paragraph*{Normalize in-plane rotation and contour starting point}
 
-One of the most difficult parts of measuring the similarity between two contours, especially when they are composed of a set of discrete points, is that any distance measurement necessarily takes into account those discrete points in the order that they are presented. To illustrate this example, imagine two squares, each defined by the location of the corners $A_i,B_i,C_i,D_i$. If these two squares are perfectly overlapping, one might imagine that the Euclidean distance between each of the points, $(\sum_{P \in A,B,C,D} (P_1 - P_2)^2)^{\frac{1}{2}}$ would be equal to zero. This would only be true if the starting point of the contour was the same for each square (e.g. Corner $A$ was always the top left corner). If each square had $A$ starting in different locations, then even when the contours are perfectly aligned, the distance metric would be non-zero and uninformative. 
+One of the most difficult parts of measuring the similarity between two contours, especially when they are composed of a set of discrete points, is that any distance measurement necessarily takes into account those discrete points in the order that they are presented.
+To illustrate this example, imagine two squares, each defined by the location of the corners $A_i,B_i,C_i,D_i$.
+If these two squares are perfectly overlapping, one might imagine that the Euclidean distance between each of the points, $(\sum_{P \in A,B,C,D} (P_1 - P_2)^2)^{\frac{1}{2}}$ would be equal to zero.
+This would only be true if the starting point of the contour was the same for each square (e.g. Corner $A$ was always the top left corner).
+If each square had $A$ starting in different locations, then even when the contours are perfectly aligned, the distance metric would be non-zero and uninformative.
 
-We can use properties of the FFT to normalize the starting position of the contour in each of the segmentations as well as the general orientation of the contour. We can leverage the starting point shift property of the Fourier transform (\cref{eq:fft-starting-point}) and the rotation property (\cref{eq:fft-rotation}) in order to normalize both of these factors and ensure that similar shapes have the same orientation and starting point. 
+Multiple properties of the FFT can be used to normalize the starting position of the contour in each of the segmentations as well as the general orientation of the contour.
+The starting point shift property of the Fourier transform (\cref{eq:fft-starting-point}) and the rotation property (\cref{eq:fft-rotation}) are crucial in order to normalize both of these factors and ensure that similar shapes have the same orientation and starting point.
 
 \begin{equation}
     s(n-T) \xleftrightarrow[]{DFT} S(i)e^{-jiT}
@@ -57,10 +79,11 @@ We can use properties of the FFT to normalize the starting position of the conto
     \label{eq:fft-rotation}
 \end{equation}
 
-To normalize the starting point and rotation, we find $k$ such that $S(k)$ is the coefficient of second largest magnitude.
-We then apply a mixture of the starting point shift and the rotation property of the FFT to orient each contour (\cref{eq:fft-rot-norm}).
-We also want to find the ``rotation normalization coefficient'', which is the angle through which the contour needs to rotate to reach the normalized orientation.
-This is done by determining the phase of the normalization equation at $i = 0$, which controls the overall orientation of the contour. If $u$ is the phase of $S(1)$, and $v$ is the phase of $S(k)$, then we can find the normalized orientation.
+To normalize the starting point and rotation, $k$ is found such that $S(k)$ is the coefficient of second largest magnitude.
+Then a mixture of the starting point shift and the rotation property of the FFT is applied to orient each contour (\cref{eq:fft-rot-norm}).
+The ``rotation normalization coefficient'' is stored, which is the angle through which the contour needs to rotate to reach the normalized orientation.
+This is done by determining the phase of the normalization equation at $i = 0$, which controls the overall orientation of the contour.
+If $u$ is the phase of $S(1)$, and $v$ is the phase of $S(k)$, then we can find the normalized orientation.
 
 \begin{equation}
     \begin{aligned}
@@ -71,27 +94,32 @@ This is done by determining the phase of the normalization equation at $i = 0$, 
     \label{eq:fft-rot-norm}
 \end{equation}
 
-Once the in-plane rotations have been normalized, the contour has been completely normalized for $x, y,z$ translations and $z$ rotations. And, by storing these values, we are able to utilize them in determining an initial pose estimate. Then, we can use a library made up of known $x,y$ rotations, and compare the segmentation to this library to determine all 6 degrees-of-freedom.
+Once the in-plane rotations have been normalized, the contour has been completely normalized for $x, y,z$ translations and $z$ rotations.
+And, by storing these values, we are able to utilize them in determining an initial pose estimate.
+Then, a library of known $x,y$ rotations is constructed and compared to the segmentation to determine all 6 degrees-of-freedom.
 
 \subsubsection{Shape library}
-A shape library is created using a flat panel projection (\Cref{sec:img-form-camera-props}) of the implant at known $x$ and $y$ rotations, while holding all positions and orientations constant, then applying the normalization protocol described above to determine the normalized coefficients of each library entry. If $s_{x,y}(n)$ is the flat-panel projection of the implant with $x$ and $y$ rotations, then we can generate a library using the following procedure, where $FFT$ is the fast Fourier transform (\cref{eq:fft}) and $NFD$ is the process of normalizing the contour and extracting the relevant coefficients (\cref{sec:nfd}).
+A shape library is created using a flat panel projection (\Cref{sec:img-form-camera-props}) of the implant at known $x$ and $y$ rotations, while holding all positions and orientations constant, then applying the normalization protocol described above to determine the normalized coefficients of each library entry.
+If $s_{x,y}(n)$ is the flat-panel projection of the implant with $x$ and $y$ rotations, then a library can be generated using the following procedure (\Cref{eq:lib-generation}), where $FFT$ is the fast Fourier transform (\cref{eq:fft}) and $NFD$ is the process of normalizing the contour and extracting the relevant coefficients (\cref{sec:nfd}).
 
 \begin{equation}
     S^{lib}_{x,y}(i) = NFD(FFT(s_{x,y}(n)))
     \label{eq:lib-generation}
 \end{equation}
 
-Once the shape library is generated for a specific implant, we can start to determine the pose estimates for each degree of freedom.
+Once the shape library is generated for a specific implant, each degree of freedom can be determined.
 
 \subsubsection{Generating a pose estimate}
-First, we compare the Euclidean distance of the normalized segmentation contour to each value of the shape library; the $x$ and $y$ rotations that minimize this function are taken as the $x$ and $y$ rotations of the implant (\cref{eq:library-min}).
+First, the Euclidean distance of the Fourier descriptors from the normalized segmentation contour to each value of the shape library is computed.
+The $x$ and $y$ rotations that minimize this function are taken as the $x$ and $y$ rotations of the implant (\cref{eq:library-min}).
 
 \begin{equation}
     (\theta_{x,est},\theta_{y,est}) = \argmin_{x,y}(\sum_{i = -\frac{N}{2} + 1}^{\frac{N}{2}}(S^{seg}(i) - S^{lib}_{x,y}(i))^2)^{\frac{1}{2}}
     \label{eq:library-min}
 \end{equation}
 
-Then, we can determine the $z$ rotation estimate by comparing the values of the normalized $\theta$ values that were needed in \cref{eq:fft-rot-norm}. This process is shown in \cref{eq:z-rot-est}.
+Then, the $z$ rotation estimate is measured by comparing the values of the stored $\theta$ values (\Cref{eq:fft-rot-norm}).
+This process is shown in \cref{eq:z-rot-est}.
 
 \begin{equation}
     \begin{aligned}
@@ -101,7 +129,8 @@ Then, we can determine the $z$ rotation estimate by comparing the values of the 
 \label{eq:z-rot-est}
 \end{equation}
 
-We can then use the principals of projective geometry (\cref{fig:perspective-projection}) and similar triangles to determine the out-of-plane translation of the implant, given that the library was projected at a known depth. Using similar triangles, we are able to determine that the depth is inversely proportional to the overall magnitude of the projection, captured by the ``Size Coefficient'' (\cref{eq:z-est}). We also make the assumption that we have a weak perspective projection, meaning that the out-of-plane translations are small compared to the focal length of the fluoroscopy imaging setup.
+Then, principals of projective geometry (\cref{fig:perspective-projection}) and similar triangles are leveraged to determine the out-of-plane translation of the implant, given that the library was projected at a known depth.
+Using similar triangles, the depth is inversely proportional to the overall magnitude of the projection, captured by the ``Size Coefficient'' (\cref{eq:z-est}).
 
 \begin{equation}
     \begin{aligned}
@@ -116,7 +145,9 @@ We can then use the principals of projective geometry (\cref{fig:perspective-pro
     \label{eq:z-est}
 \end{equation}
 
-The $x$ and $y$ translations can be determined using the value of the $z$ translation estimate, along with the location of the centroid, saved as the ``Position Coefficient''. This is then refined further to account for the rotation of the implant and the distance of the implant's centroid to its origin. We can express this with a single matrix multiplication multiplied by a scale factor (\cref{eq:x-y-est}).
+The $x$ and $y$ translations can be determined using the value of the $z$ translation estimate, along with the location of the centroid, saved as the ``Position Coefficient''.
+This is then refined further to account for the rotation of the implant and the distance of the implant's centroid to its origin.
+This is expressed with a single matrix multiplication multiplied by a scale factor (\cref{eq:x-y-est}).
 
 \begin{equation}
     \begin{pmatrix}
@@ -131,7 +162,10 @@ The $x$ and $y$ translations can be determined using the value of the $z$ transl
     \label{eq:x-y-est}
 \end{equation}
 
-Once this step is complete, we have accounted for $x$ and $y$ rotations (\cref{eq:library-min}), $z$ rotations (\cref{eq:z-rot-est}), $x$ and $y$ translations (\cref{eq:x-y-est}), and $z$ translations (\cref{eq:z-est}). This provides a robust initial estimate when the only information available is the implant geometry and the segmentation output from the neural network. Furthermore, this can be done without any human supervision, providing a fully autonomous initialization for any pose refinement strategy, so long as the estimate is within the convergence region.
+Once this step is complete, $x$ and $y$ rotations (\cref{eq:library-min}), $z$ rotations (\cref{eq:z-rot-est}), $x$ and $y$ translations (\cref{eq:x-y-est}), and $z$ translations (\cref{eq:z-est}) are all established.
+This provides a robust initial estimate when the only information available is the implant geometry and the segmentation output from the neural network.
+Furthermore, this can be done without any human supervision, providing a fully autonomous initialization for any pose refinement strategy, so long as the estimate is within the convergence region.
+The resolution of the shape library can be constructed to ensure that the pose estimate is within the capture region of the chosen optimization routine.
 
 %%% Local Variables:
 %%% mode: latex

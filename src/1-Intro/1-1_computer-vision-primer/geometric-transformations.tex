@@ -18,7 +18,7 @@ Similarly, in three dimensions, a point consists of three elements, expressed as
 
 Homogeneous coordinates introduce an additional scaling parameter, $\tilde{w}$, facilitating simultaneous and successive rotations and translations via matrix multiplications.
 This augmentation enables the integration of projections and other transformations into linear algebra operations, even when the final outcome does not conform to the original vector space.
-For example, the conversion of a two-dimensional point, represented by $x = [2,3]^{T}$, into homogeneous coordinates results in $\tilde{x} = [2,3,1]^{T}$, where "1" serves as a placeholder accommodating the scale factor and preserving the original Cartesian coordinates during subsequent matrix transformations.
+For example, the conversion of a two-dimensional point, represented by $x = [2,3]^{T}$, into homogeneous coordinates results in $\tilde{x} = [2,3,1]^{T}$, where ``1'' serves as a placeholder accommodating the scale factor and preserving the original Cartesian coordinates during subsequent matrix transformations.
 The restoration of Cartesian coordinates post-transformations occurs through division by the final scale factor, $\tilde{w}$.
 Homogeneous coordinates for a point in N-dimensional space are encapsulated within a column vector matrix comprising N+1 elements, as shown in Equation \ref{eq:homog-point}.
 Notably, the relationship $\mathbf{\tilde{x}} = \tilde{w}\mathbf{\bar{x}}$ signifies the scaled form of $\bar{\mathbf{x}}$, with $\bar{\mathbf{x}}$ representing the original vector $\mathbf{x}$ appended with a ``1''.
