@@ -979,7 +979,7 @@ Any Questions?
 :END:
 #+print_bibliography:
 * Footnotes
-[fn:4] For instance, a Platonist might argue these have to do with the forms, an Aristotelian would say it must invoke the instantiation of the four causes.
 [fn:1] Published in the Journal of Arthroplasty [cite:@jensenJointTrackMachine2023]
 [fn:2] In Revision for Publication in the Journal of Biomechanics
 [fn:3] In Review for Publication in the Journal of Computers in Biology and Medicine
+[fn:4] For instance, a Platonist might argue these have to do with the forms, an Aristotelian would say it must invoke the instantiation of the four causes.

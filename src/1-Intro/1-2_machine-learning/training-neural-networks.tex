@@ -14,7 +14,7 @@ The choice of cost function thereby specifies insights to extract from data.
 
 \subsubsection{Optimizing and updating weights}
 
-Whereas convex functions typically enable a closed-form solution \cite{boydConvexOptimization2004} for solving the parameters, neural networks are highly nonlinear and nonconvex, necessitating iterative methods for determining solution minima.
+Whereas convex functions typically enable a closed-form solution \cite{boydConvexOptimization2004} for solving the parameters, neural networks are highly nonlinear and non-convex, necessitating iterative methods for determining solution minima.
 Backpropagation has emerged as the ubiquitous method for updating these highly non-linear systems \cite{rumelhartLearningRepresentationsBackpropagating1986}.
 This employs gradient descent (\cref{eq:grad-descent}) and the chain rule (\cref{eq:chain-rule}) to calculate each node's contribution to output error.
 Learning rates ($\eta$) control step sizes.

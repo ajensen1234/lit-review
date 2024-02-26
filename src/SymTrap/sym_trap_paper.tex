@@ -107,7 +107,7 @@ Thus, for every kinematics sequence we employ the following procedure:
 		      \item If both poses return the same label (i.e., both ``true'' or both ``symmetry trap''), label the pose as “ambiguous” and move to step 2.
 		      \item If no poses were labeled “ambiguous”, the procedure is finished.
 	      \end{enumerate}
-	\item Constuction of 3-Dimensional cubic b-spline of the movement
+	\item Construction of 3-Dimensional cubic b-spline of the movement
 	      \begin{enumerate}
 		      \item A spline is individually fit through the flexion/extension, internal/external rotation, and adduction/abduction angles for all images that were {\bf not} labeled ambiguous.
 	      \end{enumerate}
@@ -212,7 +212,7 @@ Thus, the incorrect images are closer to a true lateral single-plane image, mean
 \section{Discussion}
 Orthopaedic surgeons desire a practical method to clinically quantify TKA kinematics for post-operative assessment or exploration of unsatisfactory outcomes \cite{banksWhatPostoperativeOutcome2017}.
 To date, manual methods for quantifying TKA kinematics from single-plane radiographic images have been too time-consuming for clinical use. However, the application of machine learning methods has significantly enhanced their convenience \cite{jensenJointTrackMachine2023}.
-Modern autonomous kinematics measurement software, implemented on a modest laptop with a dedicated graphics card, demonstrats efficient processing capabilities, requiring approximately 5–15 seconds for analyzing a single image \cite{jensenJointTrackMachine2023}.
+Modern autonomous kinematics measurement software, implemented on a modest laptop with a dedicated graphics card, demonstrates efficient processing capabilities, requiring approximately 5–15 seconds for analyzing a single image \cite{jensenJointTrackMachine2023}.
 A critical step in making this technology ready for clinical use is to address the pose ambiguity issue that arises from single-camera views of symmetric tibial implant components in a time-efficient manner.
 We found that several machine learning algorithms were able to robustly identify and correct symmetric erroneous poses with greater than 90\% accuracy, making these measurement methods sufficiently autonomous and robust to be considered for clinical use.
 
@@ -242,7 +242,7 @@ With the techniques proposed in this work, we can drastically improve the overal
 Stratifying measurement performance by  (Table 2), it is clear that the joint viewing perspective is a dominant contributor to pose ambiguities.
 This suggests a modification to imaging protocols for measuring TKA kinematics is needed to minimize the number of images that fall into the “ambiguous zone”.
 Instead of “pure lateral” imaging that attempts to perfectly center the knee in the image frame, we suggest positioning the center of the knee 1–2 inches away from the center of projection, and to rotate the plane of the observed leg by 5 degrees from parallel with the image detector.
-These small adjustments to the imager/patient alignment would cause all kinematics to have $\psi > 5^{\circ}$, which improves classification accuracy by at least 20\%. Similar imaging protocol improvements have been proposed for bi-plane RSA\cite{niesenReorientingTibialBaseplate2020}.
+These small adjustments to the image/patient alignment would cause all kinematics to have $\psi > 5^{\circ}$, which improves classification accuracy by at least 20\%. Similar imaging protocol improvements have been proposed for bi-plane RSA\cite{niesenReorientingTibialBaseplate2020}.
 
 This study has some limitations. In this study, we use human-supervised kinematics from single-plane images, where there is always the possibility that the human operator fell into error when distinguishing between “true” and “symmetry trap” poses in a sequence of images. This can occur due to a myriad of factors, including low image quality and near-lateral imaging angles. To mitigate this, validated ground truth kinematics would be necessary to create a robust algorithm without any errors in the training data.
 
