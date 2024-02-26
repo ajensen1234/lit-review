@@ -1,4 +1,4 @@
-Hand-in-hand with implant detection is the initial pose estimate that very often needs to be input into the optimization routine. Once the contour of the implant was determined, many methods required a human operator to place the implant in the ``capture region'' of their optimizer in order for it to eventually find the correct solution. This takes human supervision to get correct, thus adding another impediment toward getting this technology into the clinic.
+Hand-in-hand with implant detection is the initial pose estimate that often needs to be input into the optimization routine. Once the contour of the implant was determined, many methods required a human operator to place the implant in the ``capture region'' of their optimizer in order for it to eventually find the correct solution. This takes human supervision to get correct, thus adding another impediment toward getting this technology into the clinic.
 
 To determine an initial estimate, we must rely on those methods that can leverage information present in the camera projection (\Cref{sec:img-form-camera-props}) and the 2D CNN output (\Cref{sec:implant-detection}). The primary method that takes advantage of this information utilizing normalized Fourier descriptor shape libraries, and extracting each of the 6 degrees-of-freedom from either the normalized coefficients or matching with the closest entry in the library \cite{wallaceAnalysisThreedimensionalMovement1980,wallaceEfficientThreedimensionalAircraft1980,banksModelBased3D1992,banksAccurateMeasurementThreedimensional1996}. The key feature that makes this method tractable for autonomous measurements is the availability of the implant pixels from the convolutional neural network.
 
@@ -16,7 +16,8 @@ The Fourier Transform is one that takes in a continuous and repeating function a
     \label{eq:fft}
 \end{equation}
 
-As discussed in \Cref{sec:image-similarity}, spatial information in images is difficult for computers to understand without explicit calculation. So, we use the properties of the FFT to normalize each of the shapes based on location, rotation, and size in order to accurately compare the segmented mask to a generated library.
+As discussed in \Cref{sec:image-similarity}, spatial information in images is difficult for computers to understand without explicit calculation.
+Thus, we use the properties of the FFT to normalize each of the shapes based on location, rotation, and size in order to accurately compare the segmented mask to a generated library.
 
 \paragraph*{Normalize position}
 By the properties of the FFT, we know that $S(0)$ is the geometric centroid of the contour. Thus, we can set this to zero for all contours to give a consistent reference point that is independent of the location of the input contour. We can save this value as the ``position normalization coefficient'' to determine the $(x,y)$ location of the implant later in the process. And, because of our usage of the 1D FFT, we know that the real portion of this coefficient is the x-value and the imaginary portion is the y-value.
@@ -56,7 +57,10 @@ We can use properties of the FFT to normalize the starting position of the conto
     \label{eq:fft-rotation}
 \end{equation}
 
-To normalize the starting point and rotation, we find $k$ such that $S(k)$ is the coefficient of second largest magnitude. We then apply a mixture of the starting point shift and the rotation property of the FFT to orient each contour (\cref{eq:fft-rot-norm}). We also want to find the ``rotation normalization coefficient'', which the the angle through which the contour needs to rotate to reach the normalized orientation. This is done by determining the phase of the normalization equation at $i = 0$, which controls the overall orientation of the contour. If $u$ is the phase of $S(1)$, and $v$ is the phase of $S(k)$, then we can find the normalized orientation.
+To normalize the starting point and rotation, we find $k$ such that $S(k)$ is the coefficient of second largest magnitude.
+We then apply a mixture of the starting point shift and the rotation property of the FFT to orient each contour (\cref{eq:fft-rot-norm}).
+We also want to find the ``rotation normalization coefficient'', which is the angle through which the contour needs to rotate to reach the normalized orientation.
+This is done by determining the phase of the normalization equation at $i = 0$, which controls the overall orientation of the contour. If $u$ is the phase of $S(1)$, and $v$ is the phase of $S(k)$, then we can find the normalized orientation.
 
 \begin{equation}
     \begin{aligned}

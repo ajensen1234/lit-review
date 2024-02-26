@@ -15,7 +15,7 @@ Let $\mathfrak{X}_{mvt}$ be the ambient kinematics space from which a particular
 Essentially, this is the space of all possible kinematics patterns for a particular movement.
 For simplicity, let's assume that this space $\mathfrak{X}_{mvt}$ follows some distribution, $\mu_{mvt}$.
 The ``latent space'' of the kinematics is $\mathfrak{Z}$ and follows some fixed distribution, $\xi$.
-For a universal translator, wherein the expressiveness of outputs resembles the underlying musculoskeletal system of that particular patient, you would not have a latent space for each movement, ($\mathfrak{Z}_{mvt}$), but rather, the single latent space would (hopefully) encode all relevant information about the patient.
+For a universal translator, wherein the expressiveness of outputs resembles the underlying musculoskeletal system of that particular patient, you would not have a latent space for each movement, ($\mathfrak{Z}_{mvt}$), but rather, the single latent space would encode all relevant information about the patient.
 
 Mathematically, this translator can be viewed as a collection of an encoder, $F$, which transforms the ambient space into the latent space, $F: \mathfrak{X}_{mvt,1} \mapsto \mathfrak{Z}$, and a decoder, $G$ which transforms the latent space back to the ambient space, $G: \mathfrak{Z} \mapsto \mathfrak{X}_{mvt,2}$. The encoder-decoder architecture is a design decision outside the scope of this dissertation, but common choices include Variational Autoencoder (VAE) and Transformer-based networks \cite{vaswaniAttentionAllYou2017}.
 However, the encoder architecture is generally parametrized by some collection of variables, $\phi$, and our decoder parametrized by $\theta$.
@@ -25,7 +25,7 @@ The specifics of the math are outside the scope of this dissertation, but for in
 \subsection{A Kinematics Translator}
 The primary goal of a kinematics translator is to develop a sufficiently rich representation of a patient's latent kinematic space, $\mathfrak{Z}$, with the smallest possible number of images required.
 This is achieved by enabling the ``translator'' to decode, for example, ``stair rise'' kinematics from ``walking'' kinematics without needing to explicitly measure ``walking'' kinematics.
-This has obvious benefits if one is trying to reduce the clinical footprint of autonomous kinematics measurements.
+This has benefits if one is trying to reduce the clinical footprint of autonomous kinematics measurements.
 
 \subsubsection{Methods and data}
 The training data used to build this network would come from the same published studies used for training our segmentation neural network and validating our autonomous algorithm (\Cref{sec:jtml}).
@@ -58,7 +58,7 @@ Unfortunately, few groups measured the same two movements reliably, leading to a
 \subsection{Problem 3: Groups measuring kinematics at different flexion angles}
 Another key issue in the proposed datasets is the flexion-angle resolution at which different groups measure kinematics.
 Some groups measure kinematics at every $n^{th}$ frame, typically resulting in a flexion resolution of $2-5^{\circ}$.
-These measurements are able to accurately capture the knee during the entire range of motion, and hopefully, provide a robust analysis of small kinematics changes between patients.
+These measurements are able to accurately capture the knee during the entire range of motion and provide a robust analysis of small kinematics changes between patients.
 
 However, other groups only measure kinematics at prescribed flexion angles (typically $30,60,90,120$), which loses resolution and comparative power for small motions.
 If, for example, the main difference between a healthy and pathological post-operative knee occurs between $30-60^{\circ}$, then these lower resolution measurements will be relatively useless at providing meaningful data for a comprehensive database or kinematics translation paradigm.

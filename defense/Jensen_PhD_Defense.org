@@ -679,9 +679,9 @@ The distribution of $\psi$ for correct and incorrect frames was measured.
 
 Common problems in machine learning can be viewed through this lens:
 + Overfitting, bias (in the fairness sense), etc
-*** There is not enough standardized kinematics data
+*** Not enough standardized kinematics data exists
 1. Different research groups give the same name to different movements.
-   + Squat, lunge, and kneel have no formal definiton, and some groups' "squat" has the same qualities as other groups' "lunge".
+   + Squat, lunge, and kneel have no formal definition, and some groups' "squat" has the same qualities as other groups' "lunge".
 2. There are no standardized set of movements to measure.
    + Not enough data per-patient to be able to create any robust generative model.
 3. Different research groups have different data resolutions.
@@ -787,7 +787,7 @@ The Invariant Angular Radial Transform provides an orthogonal spatial basis func
 #+caption: The basis "vectors" for the invariant angular radial transform. From [cite:@leeNewShapeDescription2012].
 [[file:~/figures/raster/ART_basis.png]]
 *** IARTD Feature Vector
-The complez feature vector for IARTD is constructed to ensure orthogonality and rotational invariance for the magnitude. Prior to calculation, the image coordinates are normalized such that $(0,0)$ is at the center, and each of the four corners are $(\pm 1, \pm 1)$.
+The complex feature vector for IARTD is constructed to ensure orthogonality and rotational invariance for the magnitude. Prior to calculation, the image coordinates are normalized such that $(0,0)$ is at the center, and each of the four corners are $(\pm 1, \pm 1)$.
 #+begin_src latex
 \begin{equation}
   F_{np} = \int_{0}^{2\pi}\int_{0}^{1} f(\rho,\theta)V_{np}(\rho,\theta)\rho d\rho d\theta
