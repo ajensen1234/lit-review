@@ -664,7 +664,6 @@ The distribution of $\psi$ for correct and incorrect frames was measured.
 ** Aim 3 - Musings on a "Kinematics Translator" and Synthetic Kinematics Data
 *** A Kinematics Translator?
 + We all understand the idea of translating a sentence (say, English) to a different language (say, French).
-  + The "meaning" (whatever that actually means[fn:4]) of the sentence stays the same, but the specific letters/phonemes used to produce that meaning are different.
 + If we imagine that a kinematics sequence during a specific movement (say, stair rise) is a "sentence", could it be "translated" into the kinematics sequence from another movement (say, level walking)?
   + Could this reduce the total number of images needed for a clinical assessment?
   + The "meaning" of the sentence would, in theory, be that patients "kinematics fingerprint".
@@ -982,4 +981,3 @@ Any Questions?
 [fn:1] Published in the Journal of Arthroplasty [cite:@jensenJointTrackMachine2023]
 [fn:2] In Revision for Publication in the Journal of Biomechanics
 [fn:3] In Review for Publication in the Journal of Computers in Biology and Medicine
-[fn:4] For instance, a Platonist might argue these have to do with the forms, an Aristotelian would say it must invoke the instantiation of the four causes.

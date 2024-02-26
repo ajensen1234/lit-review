@@ -4,7 +4,7 @@ Consequently, the TKA experimentation framework was replicated, applying it to T
 This section systematically categorizes the challenges encountered in adapting JTML for TSA, detailing each issue and its implications on the results.
 
 \subsection{Methods}
-The study utilized 823 post-operative reverse TSA (rTSA) images, complete with human-supervised kinematics, sourced from Nagoya University in compliance with IRB guidelines.
+The study utilized 823 post-operative rTSA images, complete with human-supervised kinematics, sourced from Nagoya University in compliance with IRB guidelines.
 These images were obtained using single-plane fluoroscopy to measure glenohumeral kinematics in patients performing anonymized movements.
 The collected data for each patient included deidentified radiographic images, imaging calibration files, and manufacturer-supplied glenoid and humeral implant surface geometry files.
 
@@ -12,12 +12,16 @@ The collected data for each patient included deidentified radiographic images, i
 The same CNN architecture previously used for TKA implants \cite{wangDeepHighResolutionRepresentation2020} (\cref{sec:jtml}) was employed, maintaining an 80/20 training/testing split.
 A key consideration in the methodology was the limited availability of human-supervised rTSA images with kinematics compared to TKA.
 To address this, the training set was augmented with non-affine transformations, specifically grid distortion and elastic transform \cite{buslaevAlbumentationsFastFlexible2020}.
-While such transformations increased training times in the TKA pipeline, their computational intensity was manageable given the smaller rTSA image dataset, enhancing the network's generalization capability for rTSA image segmentation.
+While such transformations prohibitively increased training times in the TKA pipeline, their computational intensity was manageable given the smaller rTSA image dataset, enhancing the network's generalization capability for rTSA image segmentation.
 
 Next, the DIRECT-JTA algorithm from the JTML suite was applied to rTSA images, evaluating the autonomous kinematics measurement platform.
 The efficacy of the algorithms will be assessed by comparing the root-mean-square difference between autonomous and human-supervised kinematic measurements on this novel test set.
 
 \subsection{Results}
+The root-mean-square errors for the humeral implant were roughly 9mm for in-plane translation and 150mm for out of plane translation.
+There are roughly 15 times higher than the corresponding femoral and tibial RMS differences.
+Additionally, humeral rotation differences all significantly exceed clinically acceptable errors.
+The most difficult rotation was the internal/external rotation axis, with an RMS difference of nearly $65^{\circ}$.
 \begin{table}[h!]
 	\caption{Root mean squared differences between JointTrack Machine Learning optimized kinematics and manually registered kinematics on single-plane fluoroscopy} \label{tab:jtml-tsa-tka-vals}
 	\begin{tabularx}{\linewidth}{V{10cm}XXXXXX}\hline

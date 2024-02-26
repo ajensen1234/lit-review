@@ -1,4 +1,4 @@
-% Created 2024-02-16 Fri 15:01
+% Created 2024-02-26 Mon 13:41
 % Intended LaTeX compiler: xelatex
 \documentclass[presentation, aspectratio=1610]{beamer}
 \usepackage{graphicx}
@@ -48,10 +48,10 @@
 \tableofcontents
 \end{frame}
 
-\begin{frame}[label={sec:orge95f682}]{Acknowledgments}
+\begin{frame}[label={sec:org0de72b9}]{Acknowledgments}
 I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
 \end{frame}
-\begin{frame}[label={sec:orgb254ad0}]{The Problem}
+\begin{frame}[label={sec:org7bd101b}]{The Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -75,7 +75,7 @@ I would like to thank the McJunkin Family Charitable Foundation for their genero
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org532cd77}]{Our Proposition}
+\begin{frame}[label={sec:org01e1def}]{Our Proposition}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 Orthopaedic surgeons and clinicians would readily adopt a \alert{\alert{practical}} and \alert{\alert{inexpensive}} technology that allows them to \alert{\alert{measure}} a patient's knee kinematics during \alert{\alert{activities of daily living}}.
@@ -87,7 +87,7 @@ Orthopaedic surgeons and clinicians would readily adopt a \alert{\alert{practica
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgc1450c8}]{Constraints}
+\begin{frame}[label={sec:org703bfa7}]{Constraints}
 \begin{columns}
 \begin{column}{0.45\columnwidth}
 \begin{itemize}
@@ -104,13 +104,13 @@ Orthopaedic surgeons and clinicians would readily adopt a \alert{\alert{practica
 \end{columns}
 \end{frame}
 \section{Background}
-\label{sec:orge0b2e76}
-\begin{frame}[label={sec:org537f01b}]{Background - Projective Geometry}
+\label{sec:org6016a81}
+\begin{frame}[label={sec:org0a01770}]{Background - Projective Geometry}
 \begin{center}
 \includegraphics[width=0.8\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/perspective-projection.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org204419c}]{Background - Model-Image Registration}
+\begin{frame}[label={sec:orga881ea7}]{Background - Model-Image Registration}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 If we know the projective parameters of the fluoroscopy machine, can we tinker with \(T^{cam}_{implant}\) so that our virtual projection matches the fluoroscopic image?
@@ -124,7 +124,7 @@ If we know the projective parameters of the fluoroscopy machine, can we tinker w
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org3a79b30}]{Background - Model-Image Registration}
+\begin{frame}[label={sec:org537fb20}]{Background - Model-Image Registration}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 If we know the projective parameters of the fluoroscopy machine, can we tinker with \(T^{cam}_{implant}\) so that our virtual projection matches the fluoroscopic image?
@@ -138,7 +138,7 @@ If we know the projective parameters of the fluoroscopy machine, can we tinker w
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org8f02208}]{Historical Overview}
+\begin{frame}[label={sec:org93cae74}]{Historical Overview}
 Many different approaches have attempted to solve the model-image registration problem.
 \begin{itemize}
 \item Pre-computed projections
@@ -148,7 +148,7 @@ Many different approaches have attempted to solve the model-image registration p
 \item Roentgen Stereophotogrammetry
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org7f3041d}]{Pre-Computed Projections}
+\begin{frame}[label={sec:org3c646f9}]{Pre-Computed Projections}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -171,7 +171,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orge169c02}]{Limitations of Pre-Computed Projections}
+\begin{frame}[label={sec:org8bef504}]{Limitations of Pre-Computed Projections}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -196,7 +196,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgb0deec5}]{Motion Capture (MoCap)}
+\begin{frame}[label={sec:org7cac22a}]{Motion Capture (MoCap)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -219,7 +219,7 @@ Many different approaches have attempted to solve the model-image registration p
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org6757ca6}]{Limitations of Motion Capture}
+\begin{frame}[label={sec:org0488dd2}]{Limitations of Motion Capture}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 Skin Mounted
@@ -245,7 +245,7 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org6b1f664}]{Biplane Imaging}
+\begin{frame}[label={sec:org0c5301e}]{Biplane Imaging}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -269,7 +269,7 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgcf08bda}]{Limitations of Biplane Imaging}
+\begin{frame}[label={sec:org7468575}]{Limitations of Biplane Imaging}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -290,7 +290,7 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org0166fa8}]{Iterative Projections}
+\begin{frame}[label={sec:org6735541}]{Iterative Projections}
 \begin{columns}
 \begin{column}{0.54\columnwidth}
 \begin{itemize}
@@ -315,7 +315,7 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org2ee3ec5}]{Limitations of (historic) Iterative Projection Methods}
+\begin{frame}[label={sec:org71a3ffd}]{Limitations of (historic) Iterative Projection Methods}
 \begin{columns}
 \begin{column}{0.54\columnwidth}
 \begin{itemize}
@@ -342,7 +342,7 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgadaa7c1}]{Roentgen Stereophotogrammetry (RSA)}
+\begin{frame}[label={sec:orgd544e06}]{Roentgen Stereophotogrammetry (RSA)}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -360,7 +360,7 @@ Bone Pins
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org578a08e}]{Limitations of RSA}
+\begin{frame}[label={sec:org64ca6a3}]{Limitations of RSA}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -379,8 +379,8 @@ Bone Pins
 \end{columns}
 \end{frame}
 \section{Aims}
-\label{sec:org014845a}
-\begin{frame}[label={sec:orgbce4f40}]{Aims}
+\label{sec:org793cf16}
+\begin{frame}[label={sec:org42c4b30}]{Aims}
 \alert{Aim 1:} Joint Track Machine Learning: An Autonomous Method of Measuring Total Knee Arthroplasty Kinematics From Single-Plane X-Ray Images\footnote{Published in the Journal of Arthroplasty \autocite{jensenJointTrackMachine2023}}
 \vfill
 \alert{Aim 2:} Correcting Symmetric Implant Ambiguity in Measuring Total Knee Arthroplasty Kinematics from Single-Plane Fluoroscopy \footnote{In Revision for Publication in the Journal of Biomechanics}
@@ -390,11 +390,11 @@ Bone Pins
 \alert{Aim 4:} This will definitely work on shoulders, right?\footnote{In Review for Publication in the Journal of Computers in Biology and Medicine}
 \end{frame}
 \subsection{Aim 1 - Joint Track Machine Learning}
-\label{sec:org0c80547}
-\begin{frame}[label={sec:org3c1eb1a}]{Goal}
+\label{sec:org9aa17da}
+\begin{frame}[label={sec:org9f7a9a9}]{Goal}
 Demonstrate the feasibility of a fully autonomous, model-image registration pipeline.
 \end{frame}
-\begin{frame}[label={sec:org392f17a}]{Method}
+\begin{frame}[label={sec:org109881a}]{Method}
 \begin{itemize}
 \item Three-tiered approach
 \begin{itemize}
@@ -407,7 +407,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/jtml-pipeline.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org4f3a2d0}]{Autonomous Implant Detection Using Convolutional Neural Networks}
+\begin{frame}[label={sec:org782ba9d}]{Autonomous Implant Detection Using Convolutional Neural Networks}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -425,7 +425,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orge084820}]{Neural Network Data}
+\begin{frame}[label={sec:orgaa6901f}]{Neural Network Data}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -448,7 +448,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orge7e9659}]{Neural Network Robustness}
+\begin{frame}[label={sec:org8528dfc}]{Neural Network Robustness}
 \begin{itemize}
 \item Additional augmentations introduced during training \autocite{buslaevAlbumentationsFastFlexible2020}.
 \end{itemize}
@@ -456,7 +456,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \includegraphics[width=.9\linewidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/augmentations.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgc5a1cfc}]{Normalized Fourier Descriptor Shape Libraries}
+\begin{frame}[label={sec:org70e79af}]{Normalized Fourier Descriptor Shape Libraries}
 \begin{columns}
 \begin{column}{0.37\columnwidth}
 \begin{itemize}
@@ -474,7 +474,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org8723276}]{Pose Refinement Using Global Optimization}
+\begin{frame}[label={sec:org5ec52b0}]{Pose Refinement Using Global Optimization}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -492,7 +492,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org18456b1}]{Contour-based Objective Function}
+\begin{frame}[label={sec:org31322df}]{Contour-based Objective Function}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -518,7 +518,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgd2ddfd6}]{Improving Robustness}
+\begin{frame}[label={sec:org398a86c}]{Improving Robustness}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -533,7 +533,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgadb5a3b}]{Optimization Routine}
+\begin{frame}[label={sec:org304d5f2}]{Optimization Routine}
 \begin{itemize}
 \item No analytic form of the objective function exists, it \alert{\alert{must}} be sampled at points of interest.
 \begin{itemize}
@@ -541,7 +541,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org76d621f}]{Lipschitzian Optimization}
+\begin{frame}[label={sec:orga0b6552}]{Lipschitzian Optimization}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -563,7 +563,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org3927ebb}]{Lipschitzian Optimization without the Lipschitz Constant}
+\begin{frame}[label={sec:org1cf8008}]{Lipschitzian Optimization without the Lipschitz Constant}
 \begin{center}
 \includegraphics[width=2.5in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/jones-direct-title.png}
 \end{center}
@@ -578,7 +578,7 @@ Demonstrate the feasibility of a fully autonomous, model-image registration pipe
 \includegraphics[width=2.5in]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/direct-1D.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org7accfcf}]{Trisecting Region}
+\begin{frame}[label={sec:orge51ee1d}]{Trisecting Region}
 \begin{columns}
 \begin{column}{0.4\columnwidth}
 \begin{equation*}
@@ -604,7 +604,7 @@ Where
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org389eeb5}]{Another Iteration}
+\begin{frame}[label={sec:org42124ac}]{Another Iteration}
 \begin{columns}
 \begin{column}{0.4\columnwidth}
 \begin{equation*}
@@ -630,7 +630,7 @@ Where
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org97ba071}]{Determining Potentially Optimal Regions}
+\begin{frame}[label={sec:org9d4b891}]{Determining Potentially Optimal Regions}
 \begin{itemize}
 \item Convex hull \autocites{grahamEfficientAlgorithDetermining1972}[][]{jarvisIdentificationConvexHull1973}[][]{chanOptimalOutputsensitiveConvex1996}[][]{barberQuickhullAlgorithmConvex1996} of region size vs. center value
 \end{itemize}
@@ -639,7 +639,7 @@ Where
 \includegraphics[width=0.6\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/direct-convex-hull.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org6f9196a}]{DiRECT for Joint Track Machine Learning}
+\begin{frame}[label={sec:orgba9fa71}]{DiRECT for Joint Track Machine Learning}
 \begin{itemize}
 \item Search region is along all 6 degrees of freedom.
 \begin{itemize}
@@ -660,13 +660,13 @@ Stage & Budget [Iterations] & Search Range [mm,deg] & Dilation (pixels)\\
 \end{tabular}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org00f2598}]{Testing Performance}
+\begin{frame}[label={sec:orgbb14c20}]{Testing Performance}
 Now that we have our refined poses, how well does out system perform?
 \begin{center}
 \includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/jtml-pipeline.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgda6dd74}]{Validation}
+\begin{frame}[label={sec:org35c1f81}]{Validation}
 \begin{itemize}
 \item Independent research group using Model-Based RSA.
 \item Determine the level of concordance between the two measurement systems
@@ -681,15 +681,15 @@ Now that we have our refined poses, how well does out system perform?
 \includegraphics[width=0.7\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/broberg-bland-altmann.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgb1c9ed7}]{Awards}
+\begin{frame}[label={sec:org7640064}]{Awards}
 The work presented in this aim won the HAP Paul Award for Best Paper from the International Society for Technology in Arthroplasty's 2022 Annual Meeting.
 \begin{center}
 \includegraphics[width=0.7\textwidth]{/home/ajensen123@ad.ufl.edu/repo/lit-review/figures/raster/ista-hap-paul-talk.png}
 \end{center}
 \end{frame}
 \subsection{Aim 2 - Correcting Symmetric Implant Ambiguity}
-\label{sec:org689480a}
-\begin{frame}[label={sec:org5861868}]{Goal}
+\label{sec:orgfcf232d}
+\begin{frame}[label={sec:orgdd6cb3f}]{Goal}
 \begin{itemize}
 \item The goal of this aim is to validate and test methods that can overcome single-plane limitations for model-image registration.
 \begin{itemize}
@@ -698,7 +698,7 @@ The work presented in this aim won the HAP Paul Award for Best Paper from the In
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgfba0ea6}]{Translation}
+\begin{frame}[label={sec:org8ed3c18}]{Translation}
 \begin{itemize}
 \item Depth perception is lost when using a single camera.
 \item Utilize a virtual ``spring'' to constrain relative OOP translation between implant components.
@@ -713,7 +713,7 @@ Where
   ML \equiv \text{ Relative mediolateral translation }
 \end{equation*}
 \end{frame}
-\begin{frame}[label={sec:org6b101b4}]{Symmetry Traps}
+\begin{frame}[label={sec:org428a406}]{Symmetry Traps}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 With a symmetric tibial implant, the contour is not always a perfect heuristic for true pose.
@@ -727,7 +727,7 @@ Found ``ambiguous zone'' within \(3^{\circ}\) of pure lateral pose with high pro
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgcefc03f}]{Solving the Symmetric Pose}
+\begin{frame}[label={sec:org5ccb787}]{Solving the Symmetric Pose}
 \begin{columns}
 \begin{column}{0.55\columnwidth}
 Algorithm devised to ``flip'' pose into symmetric counterpart.
@@ -745,7 +745,7 @@ Algorithm devised to ``flip'' pose into symmetric counterpart.
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgdff47a0}]{Methods - Training Set}
+\begin{frame}[label={sec:orge0e5178}]{Methods - Training Set}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -763,14 +763,14 @@ The input for each sample was \([\theta_{F/E}, \theta_{V/V}, \theta_{I/E}, \psi]
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org3b621e8}]{Methods - Machine Learning}
+\begin{frame}[label={sec:org8a9dad8}]{Methods - Machine Learning}
 Using \texttt{scikit-learn}, the following classifiers were implemented:
 
 \begin{itemize}
 \item Support Vector Machine, K-Nearest-Neighbors, AdaBoost, Histogram Gradient Boosting, Bagging Estimator, Stacked Generalization, Majority Voting Classifier
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orga91f020},fragile]{Methods - Fixing ``Symmetry Traps''}
+\begin{frame}[label={sec:orgc503425},fragile]{Methods - Fixing ``Symmetry Traps''}
  For an input image sequence, the following is performed:
 
 \begin{enumerate}
@@ -783,12 +783,12 @@ Using \texttt{scikit-learn}, the following classifiers were implemented:
 \item For all images that are labeled ``ambiguous'', determine which of the two poses is closer to the spline, and take that as the ``correct'' pose.
 \end{enumerate}
 \end{frame}
-\begin{frame}[label={sec:org5cbbded}]{Results - ML Classification}
+\begin{frame}[label={sec:org93e4c3b}]{Results - ML Classification}
 \begin{center}
 \includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/figures/raster/sym-trap-ML-table.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org7e4648c}]{Results - Fixing ``Symmetry Traps''}
+\begin{frame}[label={sec:orgc5e979c}]{Results - Fixing ``Symmetry Traps''}
 \begin{itemize}
 \item Accuracy: 91.9\%
 \item Sensitivity: 0.674
@@ -801,25 +801,22 @@ The distribution of \(\psi\) for correct and incorrect frames was measured.
 \item Average \(\psi_{incorrect} = 7.12^{\circ}\).
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org900e511}]{Results - Stratified \(\psi\) Correction Performance}
+\begin{frame}[label={sec:orgea67ecd}]{Results - Stratified \(\psi\) Correction Performance}
 \begin{center}
 \includegraphics[width=\textwidth]{/home/ajensen123@ad.ufl.edu/figures/raster/stratified-psi-ML-table.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orga266bdd}]{Discussion}
+\begin{frame}[label={sec:orgf2c4bd2}]{Discussion}
 \begin{itemize}
 \item Reliable post-processing method to overcome pernicious issue (30 years in the making!)
 \item Suggests an imaging setup for measuring kinematics slightly off-oblique to escape ``ambiguous zone''
 \end{itemize}
 \end{frame}
 \subsection{Aim 3 - Musings on a ``Kinematics Translator'' and Synthetic Kinematics Data}
-\label{sec:orgf627f86}
-\begin{frame}[label={sec:org6208cbc}]{A Kinematics Translator?}
+\label{sec:org2fabf09}
+\begin{frame}[label={sec:org4e9fe91}]{A Kinematics Translator?}
 \begin{itemize}
 \item We all understand the idea of translating a sentence (say, English) to a different language (say, French).
-\begin{itemize}
-\item The ``meaning'' (whatever that actually means\footnote{For instance, a Platonist might argue these have to do with the forms, an Aristotelian would say it must invoke the instantiation of the four causes.}) of the sentence stays the same, but the specific letters/phonemes used to produce that meaning are different.
-\end{itemize}
 \item If we imagine that a kinematics sequence during a specific movement (say, stair rise) is a ``sentence'', could it be ``translated'' into the kinematics sequence from another movement (say, level walking)?
 \begin{itemize}
 \item Could this reduce the total number of images needed for a clinical assessment?
@@ -832,7 +829,7 @@ The distribution of \(\psi\) for correct and incorrect frames was measured.
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org20403c9}]{A High-Level Mathematical Framework}
+\begin{frame}[label={sec:orgc8c6907}]{A High-Level Mathematical Framework}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.65\textwidth]{/home/ajensen123@ad.ufl.edu/figures/raster/ye_geometry_of_generative_models.png}
@@ -844,11 +841,11 @@ Common problems in machine learning can be viewed through this lens:
 \item Overfitting, bias (in the fairness sense), etc
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org3cd5f53}]{There is not enough standardized kinematics data}
+\begin{frame}[label={sec:org3f98a28}]{Not enough standardized kinematics data exists}
 \begin{enumerate}
 \item Different research groups give the same name to different movements.
 \begin{itemize}
-\item Squat, lunge, and kneel have no formal definiton, and some groups' ``squat'' has the same qualities as other groups' ``lunge''.
+\item Squat, lunge, and kneel have no formal definition, and some groups' ``squat'' has the same qualities as other groups' ``lunge''.
 \end{itemize}
 \item There are no standardized set of movements to measure.
 \begin{itemize}
@@ -861,13 +858,13 @@ Common problems in machine learning can be viewed through this lens:
 \end{itemize}
 \end{enumerate}
 \end{frame}
-\begin{frame}[label={sec:org2e275f6}]{A path forward}
-With a fully-autonomous system for measuring kinematics, interested research groups have asked us which movements to measure. Should this move toward widespread clinical adoption, standards for ``Kinematics Evaluations'' can be established to standardize data.
+\begin{frame}[label={sec:org7721a5c}]{A path forward}
+With a fully-autonomous system for measuring kinematics, interested research groups have asked us which movements to measure. Should this move toward widespread clinical adoption, standards for ``Kinematics Evaluations'' can be established to homogenize data.
 \end{frame}
 \subsection{Aim 4 - This will definitely work on shoulders, right?}
-\label{sec:orgdcb1613}
+\label{sec:org543e52a}
 
-\begin{frame}[label={sec:orgc193c0a}]{Spoiler Alert}
+\begin{frame}[label={sec:org1612646}]{Spoiler Alert}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 No, it won't.
@@ -883,10 +880,10 @@ No, it won't.
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org4d20e01}]{Goal}
+\begin{frame}[label={sec:org53f85ce}]{Goal}
 Establish a protocol for exploring the relative sensitivity of input orientation to projected shape
 \end{frame}
-\begin{frame}[label={sec:org32c4ba6}]{JTML on Shoulders}
+\begin{frame}[label={sec:orgc319bd0}]{JTML on Shoulders}
 \begin{table}[h!]
 \small
 	\caption{Root mean squared differences between JointTrack Machine Learning optimized kinematics and manually registered kinematics on single-plane fluoroscopy} \label{tab:jtml-tsa-tka-vals}
@@ -899,7 +896,7 @@ Establish a protocol for exploring the relative sensitivity of input orientation
 	\end{tabularx}
 \end{table}
 \end{frame}
-\begin{frame}[label={sec:org51d9eb3}]{Improving Error Gradient}
+\begin{frame}[label={sec:orgcfc33f7}]{Improving Error Gradient}
 \begin{itemize}
 \item Current cost function formulation (Hamming Distance) is not well suited to ``near'' and ``far'' estimates
 \end{itemize}
@@ -910,7 +907,7 @@ Establish a protocol for exploring the relative sensitivity of input orientation
 	\includegraphics[width=0.3\linewidth]{~/figures/raster/rTSA_hamming.png}
 \end{figure}
 \end{frame}
-\begin{frame}[label={sec:org6713349}]{Modified Mean Surface Distance}
+\begin{frame}[label={sec:orgbeb0bbb}]{Modified Mean Surface Distance}
 \begin{itemize}
 \item In order to improve error gradient, a modified mean surface distance was incorporated into the cost function.
 \item The mean of the dot product between the projection estimate and a distance map of the CNN segmentation.
@@ -928,7 +925,7 @@ Establish a protocol for exploring the relative sensitivity of input orientation
 \vspace{-5mm}
 {\tiny It didn't work.}
 \end{frame}
-\begin{frame}[label={sec:org7fa5c49}]{Modified Asymmetric Keypoint Distance}
+\begin{frame}[label={sec:orgd0a8e0a}]{Modified Asymmetric Keypoint Distance}
 \begin{itemize}
 \item Early psychological research deemed curvature as highly salient for object recognition \autocites{attneaveInformationalAspectsVisual1954}[][]{attneaveQuantitativeStudyShape1956}. This aimed to place additional emphasis on autonomously selected high-curvature regions.
 \begin{itemize}
@@ -940,7 +937,7 @@ Establish a protocol for exploring the relative sensitivity of input orientation
 \includegraphics[width=0.85\textwidth]{/home/ajensen123@ad.ufl.edu/figures/raster/TSA_curvature.png}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgbb5188d}]{Modified Asymmetric Keypoint Distance}
+\begin{frame}[label={sec:org9cbbef3}]{Modified Asymmetric Keypoint Distance}
 \begin{itemize}
 \item Utilized a modified asymmetric surface distance on the discrete set of keypoints.
 \end{itemize}
@@ -957,20 +954,20 @@ Establish a protocol for exploring the relative sensitivity of input orientation
 
 {\tiny It didn't work...again.}
 \end{frame}
-\begin{frame}[label={sec:org70a0d94}]{2-Dimensional Shape}
+\begin{frame}[label={sec:org76ca9e6}]{2-Dimensional Shape}
 \begin{itemize}
 \item \alert{Shape descriptors} offer ways to describe shape numerically \autocites{zhangReviewShapeRepresentation2004}[][]{flusserInvariantShapeDescription1992}.
 \begin{itemize}
 \item A goal is for the ``distance'' between shapes to be smaller when the shapes are more ``similar''.
 \end{itemize}
-\item \alert{Invariant Shape Descriptors} are immune to standard scaling and similarity transformations\autocites{loweDistinctiveImageFeatures2004}[][]{khotanzadInvariantImageRecognition1990}.
+\item \alert{Invariant Shape Descriptors} are immune to standard scaling and similarity transformations \autocites{loweDistinctiveImageFeatures2004}[][]{khotanzadInvariantImageRecognition1990}.
 \begin{itemize}
 \item Normalized Fourier Descriptors \autocites{persoonShapeDiscriminationUsing1977}[][]{linClassificationPartial2D1987}[][]{wallaceEfficientThreedimensionalAircraft1980}[][]{wallaceAnalysisThreedimensionalMovement1980}[][]{banksAccurateMeasurementThreedimensional1996}, Image Moments \autocites{kimRegionbasedShapeDescriptor2000}[][]{khotanzadInvariantImageRecognition1990}, and many more.
 \item This is much closer to a human-intuition of ``shape''.
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org6a4f383}]{Invariant Angular Radial Transform Descriptor}
+\begin{frame}[label={sec:orgb1d2872}]{Invariant Angular Radial Transform Descriptor}
 The Invariant Angular Radial Transform provides an orthogonal spatial basis function to describe binary images.
 
 \begin{figure}[htbp]
@@ -979,8 +976,8 @@ The Invariant Angular Radial Transform provides an orthogonal spatial basis func
 \caption{The basis ``vectors'' for the invariant angular radial transform. From \autocite{leeNewShapeDescription2012}.}
 \end{figure}
 \end{frame}
-\begin{frame}[label={sec:org92b3a78}]{IARTD Feature Vector}
-The complez feature vector for IARTD is constructed to ensure orthogonality and rotational invariance for the magnitude. Prior to calculation, the image coordinates are normalized such that \((0,0)\) is at the center, and each of the four corners are \((\pm 1, \pm 1)\).
+\begin{frame}[label={sec:org32e3178}]{IARTD Feature Vector}
+The complex feature vector for IARTD is constructed to ensure orthogonality and rotational invariance for the magnitude. Prior to calculation, the image coordinates are normalized such that \((0,0)\) is at the center, and each of the four corners are \((\pm 1, \pm 1)\).
 \begin{equation}
   F_{np} = \int_{0}^{2\pi}\int_{0}^{1} f(\rho,\theta)V_{np}(\rho,\theta)\rho d\rho d\theta
 \end{equation}
@@ -998,7 +995,7 @@ The complez feature vector for IARTD is constructed to ensure orthogonality and 
 	\end{split}
 \end{equation}
 \end{frame}
-\begin{frame}[label={sec:org94ceb80}]{Normalizing IARTD Feature Vector}
+\begin{frame}[label={sec:orgabc4e79}]{Normalizing IARTD Feature Vector}
 We normalize the phase of the feature vector to ensure full rotational invariance.
 \begin{equation}
   \begin{split}
@@ -1012,7 +1009,7 @@ The final feature vector is the constructed with the corrected phase and magnitu
   IARTD = \{|F'_{np}|,\phi'_{np}\} \text{ where } n\ge0,p\ge2
 \end{equation}
 \end{frame}
-\begin{frame}[label={sec:org37f8921}]{Methods - Shape Difference}
+\begin{frame}[label={sec:orgc59129b}]{Methods - Shape Difference}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 The ``input shapes'' for each implant were the projected implants at \(\pm 30^{\circ}\) along each rotational axis at \(5^{\circ}\) increments.
@@ -1034,7 +1031,7 @@ The ``input shapes'' for each implant were the projected implants at \(\pm 30^{\
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgfca7b21}]{Methods - Shape Sensitivity}
+\begin{frame}[label={sec:orgd99e43e}]{Methods - Shape Sensitivity}
 The \(\Delta S(\delta)_{z,x,y}\) vector is normalized to account for overall scale of each element, in-plane rotation inputs are averaged, and the 2-norm of the difference vector is defined as the shape sensitivity.
 
 A larger vector would indicate that the shape changed more for that particular ``input shape'' and perturbation.
@@ -1044,7 +1041,7 @@ A larger vector would indicate that the shape changed more for that particular `
 	\mathbb{S}(\delta)_{x,y} = \dfrac{\sum_{z} \| S(\delta)_{z,x,y} \|_{2}}{N}
 \end{equation}
 \end{frame}
-\begin{frame}[label={sec:org7943ef0}]{Results - Humeral Shape Sensitivity}
+\begin{frame}[label={sec:orgbcf6969}]{Results - Humeral Shape Sensitivity}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.3\linewidth]{~/figures/raster/Humeral_dx_sensitivity.png}
@@ -1054,7 +1051,7 @@ A larger vector would indicate that the shape changed more for that particular `
 	\label{fig:hum_sensitivity_plot}
 \end{figure}
 \end{frame}
-\begin{frame}[label={sec:org5d0f663}]{Results - Glenosphere Shape Sensitivity}
+\begin{frame}[label={sec:org7c3a2b8}]{Results - Glenosphere Shape Sensitivity}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.3\linewidth]{~/figures/raster/Glenosphere_dx_sensitivity.png}
@@ -1064,7 +1061,7 @@ A larger vector would indicate that the shape changed more for that particular `
 	\label{fig:sca_sensitivity_plot}
 \end{figure}
 \end{frame}
-\begin{frame}[label={sec:org9b47f6d}]{Results - Femoral Shape Sensitivity}
+\begin{frame}[label={sec:org3a09453}]{Results - Femoral Shape Sensitivity}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.3\linewidth]{~/figures/raster/Femoral_dx_sensitivity.png}
@@ -1074,7 +1071,7 @@ A larger vector would indicate that the shape changed more for that particular `
 	\label{fig:fem_sensitivity_plot}
 \end{figure}
 \end{frame}
-\begin{frame}[label={sec:orgff916c9}]{Results - Tibial Shape Sensitivity}
+\begin{frame}[label={sec:org1d87129}]{Results - Tibial Shape Sensitivity}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.3\linewidth]{~/figures/raster/Tibial_dx_sensitivity.png}
@@ -1084,7 +1081,7 @@ A larger vector would indicate that the shape changed more for that particular `
 	\label{fig:tib_sensitivity_plot}
 \end{figure}
 \end{frame}
-\begin{frame}[label={sec:org3884e1e}]{Key Takeaways}
+\begin{frame}[label={sec:orgc50addd}]{Key Takeaways}
 \begin{itemize}
 \item Humeral implant has the lowest \(\delta_y\) sensitivity of all implants, which is the difficult registration axis.
 \item Tibial and glenosphere implants demonstrate a ``valley'' along rotation axis representing near-symmetry.
@@ -1100,8 +1097,8 @@ A larger vector would indicate that the shape changed more for that particular `
 \end{figure}
 \end{frame}
 \section{Conclusion}
-\label{sec:org6e053fa}
-\begin{frame}[label={sec:org01c42c5}]{Conclusions}
+\label{sec:org422ee6b}
+\begin{frame}[label={sec:org8a992e7}]{Conclusions}
 Throughout the past four years, I have:
 \begin{enumerate}
 \item Established a fully autonomous method of measuring TKA kinematics from single plane fluoroscopy. This software is used globally by different research groups, and offers
@@ -1109,21 +1106,21 @@ Throughout the past four years, I have:
 \item Developed a pipeline for accessing the relative performance of autonomous registration for different implants, conclusively finding that implant geometry alone is not sufficient for every joint.
 \end{enumerate}
 \end{frame}
-\begin{frame}[label={sec:orgd45c12c},fragile, allowframebreaks, label=]{Presentations}
+\begin{frame}[label={sec:org0f8189d},fragile, allowframebreaks, label=]{Presentations}
 \begin{refsection}
   \newrefcontext[sorting=ynt]
   \input{nocites-pres}
   \printbibliography[title=Presentations]
 \end{refsection}
 \end{frame}
-\begin{frame}[label={sec:org8ba3566},fragile, allowframebreaks, label=]{Publications}
+\begin{frame}[label={sec:org1d291cd},fragile, allowframebreaks, label=]{Publications}
 \begin{refsection}
 	\newrefcontext[sorting=ynt]
 	\input{nocites-pubs}
 	\printbibliography[title=Publications]
 \end{refsection}
 \end{frame}
-\begin{frame}[label={sec:org28993e8}]{Timeline}
+\begin{frame}[label={sec:org7b12f9a}]{Timeline}
 \begin{center}
 \begin{tabular}{ll}
 Date(s) & Event\\
@@ -1144,14 +1141,14 @@ March 2024 & Revised Symmetry Trap Paper Submitted\\
 \end{tabular}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org4166c28}]{Thank you!}
+\begin{frame}[label={sec:orgacd0c0b}]{Thank you!}
 Thanks for listening!!
 
 Any Questions?
 \end{frame}
 \section{References}
-\label{sec:orge0ec713}
-\begin{frame}[label={sec:org80104b3},fragile, allowframebreaks,  label=]{References}
+\label{sec:org23ddfc0}
+\begin{frame}[label={sec:orgad2184a},fragile, allowframebreaks,  label=]{References}
 \printbibliography
 \end{frame}
 \end{document}
