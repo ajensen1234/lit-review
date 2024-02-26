@@ -1,13 +1,25 @@
-In a perfect situation, our objective function would directly measure the error between our 3D model's current pose and the true pose of the object. However, if we had a-priori access to the true pose of the object, then this entire pipeline would be worthless. Thus, we must find an objective function that can act as a heuristic for the difference between true pose of our model and the current pose of our model. Our access to the segmentation output from the CNN and the ability to project the silhouette of our model quickly makes contour comparison a natural choice for an objective function. The only assumptions that we make are (1) our projective algorithm and camera definition are the same as the camera that was used to take the original fluoroscopic image and (2) our 3D model is the same 3D model that is present in the image. If these two assumptions are correct, then the alignment of the image contour and the projected contour necessarily means that our pose is correct, unless you have a symmetric object (\cref{sec:aim2}).
+In a perfect situation, the objective function would directly measure the error between our 3D model's current pose and the true pose of the object.
+However, if there were a-priori access to the true pose of the object, then there would be no need for this optimization routine, as the true pose would be accessible.
+Thus, an objective function must be constructed that can act as a heuristic for the difference between true pose of our model and the current pose of our model.
+Access to the segmentation output from the CNN and the ability to project the silhouette of the model quickly makes contour comparison a natural choice for an objective function.
+This process assumes that (1) the projective algorithm and camera definition are the same as the camera that was used to take the original fluoroscopic image and (2) the 3D model is the same 3D model that is present in the image.
+If these two assumptions are correct, then the alignment of the image contour and the projected contour necessarily indicates accurate model registration to the image, unless you have a symmetric object (\Cref{sec:aim2}).
 
-First, we apply a Canny edge detector \cite{cannyComputationalApproachEdge1986} to extract the edges from our segmentation contour, $S$, and our projected 3D model, $P$, where edges are $1$, and every other pixel is $0$. We can then iterate over each pixel and take the absolute values of the $L_1$ norm between our segmented and projected contours (\cref{eq:contour-diff}).
+First, a Canny edge detector \cite{cannyComputationalApproachEdge1986} is applied to the segmentation output, $S$, and our projected 3D model, $P$, to extract the contours.
+Afterward, edges are $1$, and every other pixel is $0$.
+Then, the Hamming Distance, or $L_{1}$ distance, can be taken between the two contours to represent their overall difference (\Cref{eq:contour-diff}).
 
 \begin{equation}
     J = \sum_i^{Height}\sum_j^{Width}|S_{ij} - P_{ij}|
     \label{eq:contour-diff}
 \end{equation}
 
-Unfortunately, the contours of the projected model are extremely sensitive to pose, especially when representing angles using Euler decomposition. This results in a chaotic similarity function that has an extensive amount of local minima. Past methods have overcome this by dilating the contour of the projected image (\cref{eq:dilation-erosion}) and performing the same $L_1$ optimization routine. However, a lack of an isolated contour for the fluoroscopic image still lead to a slightly noisy objective function. Our proposed method takes advantage of the segmentation output for the neural network and dilates both the segmentation contour and the projected contour for a much smoother objective function allowing for a wider search range. As our objective function is minimized, we can decrease the level of dilation to return the metric back into its original form, which most accurately describes the difference between the projection and image.
+Unfortunately, the contours of the projected model are extremely sensitive to pose, especially when representing angles using Euler decomposition.
+This results in a chaotic similarity function that has an extensive amount of local minima.
+Past methods have overcome this by dilating the contour of the projected image (\cref{eq:dilation-erosion}) and utilizing the same $L_1$ cost function.
+However, a lack of an isolated contour for the fluoroscopic image still lead to a slightly noisy objective function.
+The proposed method takes advantage of the segmentation output for the neural network and dilates both the segmentation contour and the projected contour for a smoother objective function allowing for a wider search range.
+As the objective function is minimized, dilation can be decreased to return the metric back into its original form, which most accurately describes the difference between the projection and image.
 
 %%% Local Variables:
 %%% mode: latex

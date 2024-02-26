@@ -1,11 +1,18 @@
-Broadly, optimization is the process of minimizing or maximizing an objective function, $f(\mathbb{R}^{n}) \rightarrow \mathbb{R}$, potentially subject to some constraints (e.g. $x \in \Omega$) \cite{audetDerivativeFreeBlackboxOptimization2017}. We formalize this below (\cref{eq:optim}). The simplest optimization problems have an analytic form of the gradient of $f$ that can be solved directly, typically by setting the first derivative to zero (e.g. least squares).
+Broadly, optimization is the process of minimizing or maximizing an objective function, $f(\mathbb{R}^{n}) \rightarrow \mathbb{R}$, potentially subject to some constraints (e.g. $x \in \Omega$) \cite{audetDerivativeFreeBlackboxOptimization2017} (\Cref{eq:optim}).
+The simplest optimization problems have an analytic form of the gradient of $f$ that can be solved directly, typically by setting the first derivative to zero (e.g. least squares).
 
 \begin{equation}
     \argmin_{x}\{f(x) : x \in \Omega\}
     \label{eq:optim}
 \end{equation}
 
-A drawback to our pipeline is that there is no analytic form of the objective function between each segmentation and projected contour; they must be re-sampled over a specified range in order to approximate objective function values and gradients. This defines a \emph{black box} optimization routine, which is well studied in the literature \cite{audetDerivativeFreeBlackboxOptimization2017}. In this type of function, it is not possible to use gradient-based methods to determine a minimum value for the objective function, one must use heuristics or ad-hoc methods to find the minimum location. Lipschitzian optimization offers an appealing black box optimization approach because it satisfies our need for a global search algorithm with provable convergence. First, we start with the definition of Lipschitz continuous, which places bounds on the rate of change of a function specified by some constant, called the Lipschitz constant. With a known Lipschitz constant, it is possible to find the value for the global minimum of optimization function \cite{dreisigmeyerDIRECTSEARCHMETHODS2007}.
+A drawback to the model-image registration pipeline is that there is no analytic form of the objective function between each segmentation and projected contour; they must be re-sampled over a specified range in order to approximate objective function values and gradients.
+This defines a \emph{black box} optimization routine, which is well studied in the literature \cite{audetDerivativeFreeBlackboxOptimization2017}.
+In this type of function, it is not possible to use gradient-based methods to determine a minimum value for the objective function, one must use heuristics or ad-hoc methods to find the minimum location.
+Lipschitzian optimization offers an appealing black box optimization approach because it satisfies the need for a global search algorithm with provable convergence.
+First, we start with the definition of Lipschitz continuous, which places bounds on the rate of change of a function specified by some constant, called the Lipschitz constant.
+A function that is Lipschitz continuous has explicit bounds on the rate of change, known as the Lipschitz constant, offering a useful method for determine global minima and maxima.
+With a known Lipschitz constant, it is possible to find the value for the global minimum of optimization function \cite{dreisigmeyerDIRECTSEARCHMETHODS2007}.
 
 \begin{mdframed}
     \begin{definition}[Lipschitz Continuous]
@@ -20,7 +27,11 @@ A drawback to our pipeline is that there is no analytic form of the objective fu
     \end{definition}
 \end{mdframed}
 
-We can illustrate this convergence with a simple example: consider the function $f(x) \rightarrow \mathbb{R}, x \in [a,b]$. If we know that the function is Lipschitz continuous, the following conditions are true on the domain $x\in[a,b]$. This corresponds to the positive and negative slopes, $K$, applied to the extrema of the domain, and the intersection, $x$ is selected as the choice for subdivision. This process is repeated, where the region is further subdivided based on the lowest value of $f(x_i)$. The iterative process is stopped once the difference between successive domain splitting is below a pre-specified global tolerance. 
+This convergence can be illustrated with a simple example: consider the function $f(x) \rightarrow \mathbb{R}, x \in [a,b]$.
+If the function is Lipschitz continuous, many conditions are true on the domain $x\in[a,b]$ (\Cref{eq:shubert}).
+This corresponds to the positive and negative slopes, $K$, applied to the extrema of the domain, and the intersection, $x$ is selected as the choice for subdivision.
+This process is repeated, where the region is further subdivided based on the lowest value of $f(x_i)$.
+The iterative process is stopped once the difference between successive domain splitting is below a pre-specified global tolerance.
 
 \begin{equation}
     \begin{aligned}
@@ -42,11 +53,21 @@ We can illustrate this convergence with a simple example: consider the function 
     \caption{A visual representation of Shubert's algorithm, which finds the global minima iteratively through a repeated calculation of the intersection of two lines with slope $\pm K$. If $K$ is known, it will always find the global minimum.}
 \end{figure}
 
-While powerful, a-priori knowledge of the Lipschitz constant is needed for determining the global minima. Without it, there is no way of determining intersection points, and no way of selected new regions for subdivision and sampling. Shubert's Algorithm also has slow convergence, due to the inability to define parameters for when to explore local vs. global search. The Lipschitz constant, $K$, acts as a weight that places larger emphasis on global search when high, and local search when low.
+While powerful, a-priori knowledge of the Lipschitz constant is needed for determining the global minima.
+Without it, there is no way of determining intersection points, and no way of selected new regions for subdivision and sampling.
+Shubert's Algorithm also has slow convergence, due to the inability to define parameters for when to explore local vs. global search.
+The Lipschitz constant, $K$, acts as a weight that places larger emphasis on global search when high, and local search when low.
 
-Fortunately, methods exist for utilizing the power of Lipschitzian optimization without the need for explicit knowledge of the Lipschitz constant \cite{jonesLipschitzianOptimizationLipschitz1993}. These can both overcome the need for an a-priori knowledge of the Lipschitz constant, as well as offer some solutions of the slow convergence by providing methods for exploiting both local and global search simultaneously to find the minimum function values.
+Fortunately, methods exist for utilizing the power of Lipschitzian optimization without the need for explicit knowledge of the Lipschitz constant \cite{jonesLipschitzianOptimizationLipschitz1993,stripinisNewDIRECTGLhAlgorithm2021,stripinisDGONewDIRECTtype2021}.
+These can both overcome the need for an a-priori knowledge of the Lipschitz constant, as well as offer some solutions of the slow convergence by providing methods for exploiting both local and global search simultaneously to find the minimum function values.
 
-Jones et al. \cite{jonesLipschitzianOptimizationLipschitz1993} propose a method by which the center, $c$, of a domain is sampled, rather than the endpoints. This produces the equations below (\cref{eq:direct-lipschitz}). The inequalities represent slopes $+K$ and $-K$, respectively, and provide a maximum value for the lower bound of the function at the endpoints, $a$ and $b$. The midpoints of $[a,c]$, and $[c,b]$ are then calculated and the process is then repeated (\cref{fig:direct-1D}). The power of this method is that you can determine potentially optimal regions of the domain by choosing those points along the lower convex hull of the graph plotting sub-domain size vs center point function value. The points along this hull are those that could potentially include the function minimum, and each is chosen for further sub-sampling (\cref{fig:direct-convex-hull}). Determining the convex hull is a problem well studied in the literature \cite{barberQuickhullAlgorithmConvex1996,chanOptimalOutputsensitiveConvex1996,jarvisIdentificationConvexHull1973,grahamEfficientAlgorithDetermining1972}. This elegantly mixes local vs. global search, and drastically increases the speed of convergence.
+Jones et al. \cite{jonesLipschitzianOptimizationLipschitz1993} propose a method by which the center, $c$, of a domain is sampled, rather than the endpoints (\Cref{eq:direct-lipschitz}).
+The inequalities represent slopes $+K$ and $-K$, respectively, and provide a maximum value for the lower bound of the function at the endpoints, $a$ and $b$.
+The midpoints of $[a,c]$, and $[c,b]$ are then calculated and the process is then repeated (\cref{fig:direct-1D}).
+The power of this method is that potentially optimal regions of the domain are selected as points along the lower convex hull of the graph plotting sub-domain size vs center point function value (\Cref{fig:direct-convex-hull}).
+The points along this hull are those that could potentially include the function minimum, and each is chosen for further sub-sampling (\cref{fig:direct-convex-hull}).
+Determining the convex hull is a problem well studied in the literature \cite{barberQuickhullAlgorithmConvex1996,chanOptimalOutputsensitiveConvex1996,jarvisIdentificationConvexHull1973,grahamEfficientAlgorithDetermining1972}.
+This elegantly mixes local vs. global search, and drastically increases the speed of convergence.
 
 
 \begin{equation}
@@ -73,10 +94,15 @@ Jones et al. \cite{jonesLipschitzianOptimizationLipschitz1993} propose a method 
     \label{fig:direct-convex-hull}
 \end{figure}
 
-This can be extended into multiple dimensions without loss of generality. First, each dimension in the domain is normalized to the range $[0,1]$, and a hypercube is created in $\mathbb{R}^D$, where $D$ is the dimension of the domain you are searching. The first iteration trisects this hypercube along an arbitrary dimension, and further iterations trisect along the largest dimension of the hypercube. We select potentially optimal hypercubes by identifying points along the lower convex hull of the graph plotting hypercube size vs center point function value.
+This can be extended into multiple dimensions without loss of generality.
+First, each dimension in the domain is normalized to the range $[0,1]$, and a hypercube is created in $\mathbb{R}^D$, where $D$ is the dimension of the search domain.
+The first iteration trisects this hypercube along an arbitrary dimension, and further iterations trisect along the largest dimension of the hypercube.
+Potentially optimal hypercubes are selected by identifying points along the lower convex hull of the graph plotting hypercube size vs center point function value.
 
 
-For our purposes, we construct a hypercube along each of the 6 degrees-of-freedom that describe the pose of the implant in space, using bounds set by the user. The first epoch involves minimizing the objective function with larger bounds and a larger dilation. After all iterations have been used up, the algorithm is re-started with a smaller dilation and tighter bounds. The last epoch typically has the tightest bounds and no dilation. This pyramidal scheme offers a smooth objective function when the bounds are largest, which assists in escaping local minima, and an aggressive objective when the bounds are tight, and fewer local minima are present.
+
+In model-image registration, a 6-dimensional hypercube is constructed represented the 6 degrees of freedom of the object, with search bounds set by the user.
+DIRECT-JTA employs a multi-stage direct approach \cite{floodAutomatedRegistration3D2018}, where both the projection and the segmentation start out dilated (at a value set by the user), and successively decrease in dilation as the objective function approaches a minimum.
 
 %%% Local Variables:
 %%% mode: latex
