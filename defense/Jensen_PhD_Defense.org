@@ -572,20 +572,6 @@ file:~/repo/lit-review/figures/raster/ista-hap-paul-talk.png
   + Out-of-plane (OOP) Translation
   + Symmetry Traps
 
-*** Translation
-+ Depth perception is lost when using a single camera.
-+ Utilize a virtual ``spring'' to constrain relative OOP translation between implant components.
-
-#+begin_src latex
-\begin{equation*}
-  J = \alpha L_{1}(I,P) + \beta ML(Fem,Tib)
-\end{equation*}
-
-Where
-\begin{equation*}
-  ML \equiv \text{ Relative mediolateral translation }
-\end{equation*}
-#+end_src
 *** Symmetry Traps
 **** :BMCOL:
 :PROPERTIES:
@@ -688,7 +674,6 @@ Common problems in machine learning can be viewed through this lens:
    + If the salient information is present, say, between 30-60 degrees flexion, then our latent space becomes filled with interpolations, rather than actual data.
 *** A path forward
 With a fully-autonomous system for measuring kinematics, interested research groups have asked us which movements to measure. Should this move toward widespread clinical adoption, standards for "Kinematics Evaluations" can be established to homogenize data.
-
 
 ** Aim 4 - This will definitely work on shoulders, right?
 
@@ -817,7 +802,7 @@ We normalize the phase of the feature vector to ensure full rotational invarianc
   \end{split}
 \end{equation}
 #+end_src
-The final feature vector is the constructed with the corrected phase and magnitude values. Values of $p<2$ are redundant and removed per the original authors' suggestion [cite:@leeNewShapeDescription2012].
+The final feature vector is constructed with the corrected phase and magnitude values. Values of $p<2$ are redundant and removed per the original authors' suggestion [cite:@leeNewShapeDescription2012].
 #+begin_src latex
 \begin{equation}
   IARTD = \{|F'_{np}|,\phi'_{np}\} \text{ where } n\ge0,p\ge2
@@ -831,7 +816,7 @@ The final feature vector is the constructed with the corrected phase and magnitu
 :END:
 The "input shapes" for each implant were the projected implants at $\pm 30^{\circ}$ along each rotational axis at $5^{\circ}$ increments.
 $1^{\circ}$ perturbations were applied along each rotation axis.
-
+#+begin_src latex
 \begin{equation}
 	\label{eq:shape-derivative}
 	\begin{split}
@@ -840,6 +825,7 @@ $1^{\circ}$ perturbations were applied along each rotation axis.
 		\forall                          & \delta \in \{\delta_{x},\delta_{y},\delta_{z}\}
 	\end{split}
 \end{equation}
+#+end_src
 **** :BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -914,6 +900,12 @@ A larger vector would indicate that the shape changed more for that particular "
     \caption{Glenosphere (left) and tibial (right) $\delta_y$ shape sensitivities.}
 \end{figure}
 #+end_src
+*** Next Steps
++ Newer neural network
++ Avoid regressing directly on Euler decompositions
+  + Extruded map projections as $SO(3)$ parametrization?
+  + Gradient-free manifold optimization? (math nerds, please help)
++ Bony-landmark information
 * Conclusion
 *** Conclusions
 Throughout the past four years, I have:
@@ -959,18 +951,36 @@ Throughout the past four years, I have:
 | April 2020              | Started in Miller Lab                                  |
 | August 2020             | Officially Started PhD at UF                           |
 | November 2021           | Best Presentation Award at ISTA: Emerging Technologies |
-| April 2022              | Submitted JTML for HAP Paul Award                      |
 | September 2022          | HAP Paul Award at ISTA 2022                            |
 | November 2023           | Symmetry Trap Paper Submitted                          |
 | December 2023           | Part-time Internship at Exactech Started               |
 | February 2024           | Revisions Requested for Symmetry Trap Paper            |
-| February 2024           | Implant Shape Sensitivity Paper Submitted              |
 |-------------------------+--------------------------------------------------------|
+| March 2024              | Implant Shape Sensitivity Paper Submitted              |
 | March 2024              | Revised Symmetry Trap Paper Submitted                  |
+*** A Special Thanks
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Dr. Scott Banks
++ Drs. Kerry Costello, Catia Silva, Jessica Allen, Jennifer Nichols
++ The whole Gary J. Miller Lab Crew
+  + Paris Flood, Xheni Bare, Lindsey Palm-Vlasak, Sasank Desaraju, Duloc He, Noah Davis
+  + Nicholas Verdugo, Daniel Torrejon, Stefan Kieszkowski
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
++ Lauren Jensen
++ Robin and Erik Jensen
 *** Thank you!
 Thanks for listening!!
 
 Any Questions?
+
+#+attr_latex: :width 0.8\linewidth
+[[file:~/figures/raster/first_banks_email.png]]
 * References
 *** References
 :PROPERTIES:
