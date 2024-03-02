@@ -47,6 +47,28 @@
 :PROPERTIES:
 :BEAMER_env: ignoreheading
 :END:
+
+*** A PhD...offense?
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+[[file:~/figures/raster/thesis_defense_2x.png]]
+**** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+[[file:~/figures/raster/phd_offense.png]]
+*** A PhD...offense?
+[[file:~/figures/raster/banks_dissertation.png]]
+*** A PhD...offense?
+[[file:~/figures/raster/nichols_dissertation.png]]
+*** A PhD...offense?
+[[file:~/figures/raster/allen_dissertation.png]]
+*** A PhD...offense?
+[[file:~/figures/raster/costello_dissertation.png]]
+*** A PhD...offense?
+[[file:~/figures/raster/silva_dissertation.png]]
 *** Acknowledgments
 I would like to thank the McJunkin Family Charitable Foundation for their generous grant that supports this work.
 
@@ -77,7 +99,7 @@ I would like to thank the McJunkin Family Charitable Foundation for their genero
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-Orthopaedic surgeons and clinicians would readily adopt a **practical** and **inexpensive** technology that allows them to **measure** a patient's knee kinematics during **activities of daily living**.
+Orthopaedic surgeons and clinicians would readily adopt a **practical** and **inexpensive** technology that allows them to **measure** a patient's joint kinematics during **activities of daily living**.
 **** :BMCOL:
 :PROPERTIES:
 :BEAMER_col: 0.55
