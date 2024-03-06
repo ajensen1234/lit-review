@@ -2,7 +2,7 @@ Given the relatively poor performance of the standard optimization algorithm (DI
 The identification of global minima in this model-image registration challenge was facilitated by exploring several approaches to enhance image similarity representation.
 
 The first approach involved attempts to enhance the convexity of the problem.
-With the existing formulation, the cost was observed to reach maximum error ($\sum I + P$) when there was no overlap between the projection and the CNN, regardless of the projection's deviation, whether it be 5 or 500 pixels.
+With the existing formulation, the cost was observed to reach maximum error ($\sum I + P$) when there was no overlap between the projection and the CNN-generated segmented image, regardless of the projection's deviation, whether it be 5 or 500 pixels.
 This highlighted the need for a more nuanced error gradient.
 
 Secondly, an exploration of the perceptual psychology of shape was undertaken \cite{attneaveInformationalAspectsVisual1954,attneaveQuantitativeStudyShape1956}.
@@ -58,7 +58,7 @@ Similar to the Mean Average Surface Distance, this metric also necessitates sub-
 
 The last is the Hausdorff Distance (\Cref{fig:HD}) \cite{huttenlocherMultiresolutionTechniqueComparing1993,felzenszwalbDistanceTransformsSampled2012,huttenlocherComparingImagesUsing1993}.
 The Hausdorff distance is the maximum distance from a point on one boundary to the nearest point on another boundary. Typically the Hausdorff distance for an entire contour is taken as the average of the Hausdorff distances for a series of sampled points on the target contour.
-Like the previous two, the Hamming distance requires sub-kernels for every sampled point, and so it is not feasible.
+Like the previous two, the Hausdorff distance requires sub-kernels for every sampled point, and so it is not feasible.
 
 
 \begin{figure}[h!]
@@ -78,7 +78,6 @@ Consequently, a cost function was devised that utilizes pre-computed distance ma
 \subsection{Modified Mean Distance Cost Function}
 Initially, rather than calculating the average distance across all target points – a process that would necessitate spawning multiple sub-kernels – a distance map encoding the distance to the \emph{nearest point} on the target contour was introduced.
 
-With an arbitrary image point defined as $p_{xy}$, and the target contour defined as $T$, we can express this distance map as a grid, $\displaystyle DM_{xy}(T) = \min_{t\in T}d(p_{xy},t)$, where $d(p_{xy},t)$ is any distance function that you want to use. In our case, we use the $L_{1}$-distance for efficient computation. We use OpenCV's \texttt{distanceTransform()} function for this \cite{bradskiOpenCVLibrary2000}.
 
 With an arbitrary image point defined as $p_{xy}$, and the target contour defined as $T$, this distance map can be expressed as a grid, $\displaystyle DM_{xy}(T) = \min_{t\in T}d(p_{xy},t)$, where $d(p_{xy},t)$ represents any chosen distance function.
 In this case, the $L_{1}$-distance was selected for efficient computation, utilizing OpenCV's \texttt{distanceTransform()} function for this purpose \cite{bradskiOpenCVLibrary2000}.
@@ -228,9 +227,9 @@ The methodical and calculated approach to employing a wide array of mathematical
 
 Lastly, the inability of the methods to accurately perform model-image registration highlighted potential deficiencies in the overall pipeline.
 One such deficiency could be attributed to the performance ceiling of the CNN segmentation, though this seems unlikely given the state-of-the-art IOU scores.
-Incorporating a surface-based metric into the neural network error functions might yield a more robust segmentation.
+Incorporating a surface-based metric into the neural network error functions might yield a more robust segmentation \cite{reinkeCommonLimitationsImage2023,reinkeUnderstandingMetricrelatedPitfalls2023}.
 Another limitation could be the use of Euler angles in the optimization process, where a more robust rotation parametrization, such as Quaternions, might mitigate the non-commutativity issues.
-Additionally, the shape of humeral implants compared to TKA implants, which are more ``cylindrical,'' suggests that minor orientation changes do not significantly alter the projected shape, complicating optimization efforts.
+Additionally, the shape of humeral implants compared to TKA implants, which are more ``cylindrical,'' suggests that minor orientation changes do not significantly alter the projected shape, complicating optimization efforts (\Cref{sec:shape-sensitivity}).
 
 Each identified deficiency represents a promising avenue for future research and development.
 The exploration of these potential areas of improvement could lead to significant advancements in model-image registration techniques.
