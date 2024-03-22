@@ -22,7 +22,7 @@ In a convolution, the kernel, $h$, is shifted along the input image, $f$, and th
     \label{eq:convolution}
 \end{equation}
 
-The convolution operation is characterized as linear shift invariant, indicating that it adheres to both the superposition principle (Equation \ref{eq:superposition}) and the shift invariance principle (Equation \ref{eq:shift-invariance}).
+The convolution operation is characterized as linear shift invariant, indicating that it adheres to both the superposition principle (\cref{eq:superposition}) and the shift invariance principle (\cref{eq:shift-invariance}).
 This characteristic is significant as it ensures consistent behavior across the entire input signal or image.
 For example, an edge detector will reliably detect an edge regardless of its location on the input image, illustrating the operation's uniformity and predictability in processing.
 
@@ -119,7 +119,7 @@ These include steerable filters, which determine information occurring in arbitr
 Edge detection is a highly motivated sub-field of image processing in computer vision due to the immense usefulness of algorithmically determining the edges in a given image.
 While human operators might find it relatively straightforward to pinpoint edges of interest, the challenge lies in achieving this computationally.
 An initial strategy involves interpreting an image topographically, where regions of varying colors and intensities are depicted as differing ``heights''.
-Consequently, an edge is identified as an area exhibiting a steep gradient (Equation \ref{eq:img-grad}).
+Consequently, an edge is identified as an area exhibiting a steep gradient (\cref{eq:img-grad}).
 
 \begin{equation}
     \begin{aligned}
@@ -131,7 +131,7 @@ Consequently, an edge is identified as an area exhibiting a steep gradient (Equa
 Determining the direction of the steepest ascent or descent at any location reveals the normal to the local edge at that point.
 However, the application of a derivative operator tends to enhance and amplify high frequencies within the image, potentially allowing noise to overshadow the actual signal.
 Mitigating the high-frequency information (via a low-pass filter) in the image facilitates gradient detection that more accurately reflects the prominent edges of the image.
-The Gaussian kernel emerges as an effective choice for an isotropic low-pass filter applied to a 2D signal (image) (Equation \ref{eq:gauss-kernel-grad}).
+The Gaussian kernel emerges as an effective choice for an isotropic low-pass filter applied to a 2D signal (image) (\cref{eq:gauss-kernel-grad}).
 
 \begin{equation}
     \begin{aligned}
@@ -169,7 +169,7 @@ Morphological processing manipulates the structure of the image to highlight, su
     \label{fig:binary-image-processing}
 \end{figure}
 
-Dilation and erosion represent the two principal operations employed in model-image registration (Equation \ref{eq:dilation-erosion}).
+Dilation and erosion represent the two principal operations employed in model-image registration (\cref{eq:dilation-erosion}, \cref{fig:binary-image-processing}).
 Each of these operations involves a two-step process: initially, a convolution operation is performed on the binary image; subsequently, a threshold is applied to the output of the convolution to decide whether the central pixel will be assigned a value of 0 or 1.
 If $f$ denotes the input image, and $s$ symbolizes the convolution kernel of $1$s, and $c=f\otimes s$ indicates the count of $1$s in the convolution output, then dilation and erosion can be expressed mathematically (\cref{eq:dilation-erosion}).
 
