@@ -43,11 +43,11 @@ The iterative process is stopped once the difference between successive domain s
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width = 0.75\linewidth]{figures/raster/shubert-step1.png}
+        \includegraphics[width = 0.75\linewidth]{~/figures/raster/shubert-step1.png}
         \vspace{3mm}
-        \includegraphics[width = 0.75\linewidth]{figures/raster/shubert-step2.png}
+        \includegraphics[width = 0.75\linewidth]{~/figures/raster/shubert-step2.png}
         \vspace{3mm}
-        \includegraphics[width = 0.75\linewidth]{figures/raster/shubert-step3.png}
+        \includegraphics[width = 0.75\linewidth]{~/figures/raster/shubert-step3.png}
     \end{center}
     \label{fig:shubert}
     \caption{A visual representation of Shubert's algorithm, which finds the global minima iteratively through a repeated calculation of the intersection of two lines with slope $\pm K$. If $K$ is known, it will always find the global minimum.}
@@ -80,7 +80,7 @@ This elegantly mixes local vs. global search, and drastically increases the spee
 
 \begin{figure}[h!]
     \begin{center}
-        \includegraphics[width=0.85\linewidth]{figures/raster/direct-1D.png}
+        \includegraphics[width=0.85\linewidth]{~/figures/raster/direct-1D.png}
     \end{center}
     \caption[The DIviding RECTangles (DIRECT) algorithm in one dimension]{The DIviding RECTangles (DIRECT) algorithm in one dimension. It can find the global minimum of a function without a-priori knowledge of the Lipschitz constant. The value of the line with slope $\pm K$ at each of the end-points represents the theoretical minimum for the value of the function in that region. Thus, the size of the region and the value of the function at the center help the algorithm determine potentially optimal sub-regions.}
     \label{fig:direct-1D}
@@ -88,7 +88,7 @@ This elegantly mixes local vs. global search, and drastically increases the spee
 
 \begin{figure}[h!]
     \begin{center}
-      \includegraphics[width=0.65\linewidth]{figures/raster/direct-convex-hull.png}
+      \includegraphics[width=0.65\linewidth]{~/figures/raster/direct-convex-hull.png}
     \end{center}
     \caption[The potentially optimal regions of the DIRECT algorithm are those points that lay along the lower convex hull of the scatter plot of sub-domain size vs function value at center]{The potentially optimal regions of the DIRECT algorithm are those points that lay along the lower convex hull of the scatter plot of sub-domain size vs function value at center. This is due to those regions being the locations where the maximum possible rate of change in the function might be a minimum, without any prior knowledge of the Lipschitz constant.}
     \label{fig:direct-convex-hull}
