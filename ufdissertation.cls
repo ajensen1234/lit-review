@@ -173,8 +173,12 @@
 %%% They want Times New Roman, or Arial. 
 %%% Times New Roman is loaded by default, uncomment the \renewcommand below to switch it to Arial.
 
-%\usepackage{mlmodern}
-\RequirePackage{mathptmx}%  This is required to load and convert to times new roman
+% \usepackage{mlmodern}
+\RequirePackage{fontspec}
+\RequirePackage{unicode-math}
+\RequirePackage{mathpazo}
+\setmainfont{TeX Gyre Pagella}
+%\RequirePackage{mathptmx}%  This is required to load and convert to times new roman
 %\RequirePackage{helvet}%    This is required to load Arial Font
 %\renewcommand{\familydefault}{\sfdefault}% Converts default to actual Arial
 

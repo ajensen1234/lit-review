@@ -144,30 +144,30 @@ Overall, the performance in the external test set was comparable to the performa
 		\begin{threeparttable}
 			\begin{tabularx}{1.0\linewidth}{V{12cm}X X X X V{3cm} V{3cm} V{3cm}}
 				\hline
-				Classifier                                                   & Hyperparameters                       & Test Set & Accuracy (\%)      & Sensitivity (\%)   & Specificity (\%)          & F1-Score          \\ \hline
-				\multirow{2}{*}{\parbox{3cm}{Support Vector Machine (RBF)}}  & \multirow{2}{*}{$C=1000$}             & Internal & $92.08$            & $94.75$            & $89.73$                   & $0.92$            \\
-				                                                             &                                       & External & ${94.21}$\tnote{b} & $97.12$            & $91.64$                   & ${0.94}$\tnote{b} \\
-				                                                             & \vspace{0.5cm}                                                                                                                             \\
-				\multirow{2}{*}{\parbox{3cm}{Support Vector Machine (Poly)}} & \multirow{2}{*}{\parbox{3cm}{$C=1000$                                                                                                      \\Poly Degree $=2$}}& Internal & $87.65$      & $92.54$         &  $83.8$                & $0.87$                          \\
-				                                                             &                                       & External & $92.08$            & $96.58$            & $88.38$                   & $0.92$            \\
-				                                                             & \vspace{0.5cm}                                                                                                                             \\
-				\multirow{2}{*}{\parbox{3cm}{K-Nearest-Neighbors}}           & \multirow{2}{*}{\parbox{3cm}{$N=4$                                                                                                         \\Minkowski Dist.}} & Internal & $93.12$     & $93.96$          & $92.32$                 &  $0.93$                          \\
-				                                                             &                                       & External & $90.93$            & $93.62$            & $88.55$                   & $0.91$            \\
-				                                                             & \vspace{0.5cm}                                                                                                                             \\
-				\multirow{2}{*}{\parbox{3cm}{AdaBoost}}                      & \multirow{2}{*}{$N=200$}              & Internal & $88.78$            & $91.08$            & $86.74$                   & $0.88$            \\
-				                                                             &                                       & External & $92.86$            & ${97.23}$\tnote{b} & $89.22$                   & $0.93$            \\
-				                                                             & \vspace{0.5cm}                                                                                                                             \\
-				\multirow{2}{*}{\parbox{3cm}{Histogram Gradient Boosting}}   & \multirow{2}{*}{$L.R. = 0.1$}         & Internal & $93.11$            & $94.98$            & $91.4$                    & $0.93$            \\
-				                                                             &                                       & External & $93.24$            & $96.67$            & $90.29$                   & $0.93$            \\
-				                                                             & \vspace{0.5cm}                                                                                                                             \\
-				\multirow{2}{*}{\parbox{3cm}{Bagging Estimator}}             & \multirow{2}{*}{$N=500$}              & Internal & $93.32$            & $94.28$            & $92.41$                   & $0.93$            \\
+				Classifier                                                   & Hyperparameters                       & Test Set & Accuracy (\%)      & Sensitivity (\%)   & Specificity (\%)   & F1-Score          \\ \hline
+				\multirow{2}{*}{\parbox{3cm}{Support Vector Machine (RBF)}}  & \multirow{2}{*}{$C=1000$}             & Internal & $92.08$            & $94.75$            & $89.73$            & $0.92$            \\
+				                                                             &                                       & External & ${94.21}$\tnote{b} & $97.12$            & $91.64$            & ${0.94}$\tnote{b} \\
+				                                                             & \vspace{0.5cm}                                                                                                                      \\
+				\multirow{2}{*}{\parbox{3cm}{Support Vector Machine (Poly)}} & \multirow{2}{*}{\parbox{3cm}{$C=1000$                                                                                               \\Poly Degree $=2$}}& Internal & $87.65$      & $92.54$         &  $83.8$                & $0.87$                          \\
+				                                                             &                                       & External & $92.08$            & $96.58$            & $88.38$            & $0.92$            \\
+				                                                             & \vspace{0.5cm}                                                                                                                      \\
+				\multirow{2}{*}{\parbox{3cm}{K-Nearest-Neighbors}}           & \multirow{2}{*}{\parbox{3cm}{$N=4$                                                                                                  \\Minkowski Dist.}} & Internal & $93.12$     & $93.96$          & $92.32$                 &  $0.93$                          \\
+				                                                             &                                       & External & $90.93$            & $93.62$            & $88.55$            & $0.91$            \\
+				                                                             & \vspace{0.5cm}                                                                                                                      \\
+				\multirow{2}{*}{\parbox{3cm}{AdaBoost}}                      & \multirow{2}{*}{$N=200$}              & Internal & $88.78$            & $91.08$            & $86.74$            & $0.88$            \\
+				                                                             &                                       & External & $92.86$            & ${97.23}$\tnote{b} & $89.22$            & $0.93$            \\
+				                                                             & \vspace{0.5cm}                                                                                                                      \\
+				\multirow{2}{*}{\parbox{3cm}{Histogram Gradient Boosting}}   & \multirow{2}{*}{$L.R. = 0.1$}         & Internal & $93.11$            & $94.98$            & $91.4$             & $0.93$            \\
+				                                                             &                                       & External & $93.24$            & $96.67$            & $90.29$            & $0.93$            \\
+				                                                             & \vspace{0.5cm}                                                                                                                      \\
+				\multirow{2}{*}{\parbox{3cm}{Bagging Estimator}}             & \multirow{2}{*}{$N=500$}              & Internal & $93.32$            & $94.28$            & $92.41$            & $0.93$            \\
 				                                                             &                                       & External & $93.82$            & $95.95$            & ${91.88}$\tnote{b} & $0.94$            \\
-				                                                             & \vspace{0.5cm}                                                                                                                             \\
-				\multirow{2}{*}{\parbox{3cm}{Stacked Generalization}}        & \multirow{2}{*}{N/A}                  & Internal & ${94.3}$\tnote{a}  & $94.78$            & ${93.84}$\tnote{a}        & ${0.94}$\tnote{a} \\
-				                                                             &                                       & External & $92.86$            & $94.94$            & $90.96$                   & $0.93$            \\
-				                                                             & \vspace{0.5cm}                                                                                                                             \\
-				\multirow{2}{*}{\parbox{3cm}{Majority Voting Classifier}}    & \multirow{2}{*}{N/A}                  & Internal & $92.63$            & ${95.85}$\tnote{a} & $89.86$                   & $0.92$            \\
-				                                                             &                                       & External & $93.34$            & $96.87$            & $90.31$                   & $0.93$            \\ \hline
+				                                                             & \vspace{0.5cm}                                                                                                                      \\
+				\multirow{2}{*}{\parbox{3cm}{Stacked Generalization}}        & \multirow{2}{*}{N/A}                  & Internal & ${94.3}$\tnote{a}  & $94.78$            & ${93.84}$\tnote{a} & ${0.94}$\tnote{a} \\
+				                                                             &                                       & External & $92.86$            & $94.94$            & $90.96$            & $0.93$            \\
+				                                                             & \vspace{0.5cm}                                                                                                                      \\
+				\multirow{2}{*}{\parbox{3cm}{Majority Voting Classifier}}    & \multirow{2}{*}{N/A}                  & Internal & $92.63$            & ${95.85}$\tnote{a} & $89.86$            & $0.92$            \\
+				                                                             &                                       & External & $93.34$            & $96.87$            & $90.31$            & $0.93$            \\ \hline
 			\end{tabularx}
 			\begin{tablenotes}
 				\item[a] Highest value in the internal test set.
@@ -193,7 +193,7 @@ Overall, the performance in the external test set was comparable to the performa
 	\end{table}
 \end{landscape}
 
-\subsection{Stratified $\psi$ Test Set Performance}
+\subsection{Stratified \texorpdfstring{$\psi$}{ψ} Test Set Performance}
 As the value of $\psi$ increases, the performance of stacked generalization classification increases (\cref{tab:strat-psi}).
 At values closer to a pure-lateral view (~$0^{\circ}$), accuracy is roughly 71\%, and once the implants exceed $5^{\circ}$ off-lateral, accuracy increases to above 88\%.
 
@@ -204,56 +204,130 @@ At values closer to a pure-lateral view (~$0^{\circ}$), accuracy is roughly 71\%
 
 
 \subsection{Symmetry Trap Correction Performance}
-When applying the procedure to correct symmetry traps, we achieve an accuracy of 91.1\%, a sensitivity of 67.4\% and a specificity of 94\% on an external test set.
-The average “distance to symmetric pose” ($\psi$) was $16.6^{\circ}$ for the images correctly classified, and $7.12^{\circ}$ for the images incorrectly classified.
-For our initial internal test set, the distance to the symmetric pose was $25.6^{\circ}$ for images correctly classified, and $9.65^{\circ}$ for incorrectly classified images.
-Thus, the incorrect images are closer to a true lateral single-plane image, meaning the difference between the symmetric dyad of poses is smaller.
+When applying the procedure to correct symmetry traps, we achieve an accuracy of
+91.1\%, a sensitivity of 67.4\% and a specificity of 94\% on an external test
+set. The average “distance to symmetric pose” ($\psi$) was $16.6^{\circ}$ for
+the images correctly classified, and $7.12^{\circ}$ for the images incorrectly
+classified. For our initial internal test set, the distance to the symmetric
+pose was $25.6^{\circ}$ for images correctly classified, and $9.65^{\circ}$ for
+incorrectly classified images. Thus, the incorrect images are closer to a true
+lateral single-plane image, meaning the difference between the symmetric dyad of
+poses is smaller.
 
 \section{Discussion}
-Orthopaedic surgeons desire a practical method to clinically quantify TKA kinematics for post-operative assessment or exploration of unsatisfactory outcomes \cite{banksWhatPostoperativeOutcome2017}.
-To date, manual methods for quantifying TKA kinematics from single-plane radiographic images have been too time-consuming for clinical use. However, the application of machine learning methods has significantly enhanced their convenience \cite{jensenJointTrackMachine2023}.
-Modern autonomous kinematics measurement software, implemented on a modest laptop with a dedicated graphics card, demonstrates efficient processing capabilities, requiring approximately 5–15 seconds for analyzing a single image \cite{jensenJointTrackMachine2023}.
-A critical step in making this technology ready for clinical use is to address the pose ambiguity issue that arises from single-camera views of symmetric tibial implant components in a time-efficient manner.
-We found that several machine learning algorithms were able to robustly identify and correct symmetric erroneous poses with greater than 90\% accuracy, making these measurement methods sufficiently autonomous and robust to be considered for clinical use.
+Orthopaedic surgeons desire a practical method to clinically quantify TKA
+kinematics for post-operative assessment or exploration of unsatisfactory
+outcomes \cite{banksWhatPostoperativeOutcome2017}. To date, manual methods for
+quantifying TKA kinematics from single-plane radiographic images have been too
+time-consuming for clinical use. However, the application of machine learning
+methods has significantly enhanced their convenience
+\cite{jensenJointTrackMachine2023}. Modern autonomous kinematics measurement
+software, implemented on a modest laptop with a dedicated graphics card,
+demonstrates efficient processing capabilities, requiring approximately 5–15
+seconds for analyzing a single image \cite{jensenJointTrackMachine2023}. A
+critical step in making this technology ready for clinical use is to address the
+pose ambiguity issue that arises from single-camera views of symmetric tibial
+implant components in a time-efficient manner. We found that several machine
+learning algorithms were able to robustly identify and correct symmetric
+erroneous poses with greater than 90\% accuracy, making these measurement
+methods sufficiently autonomous and robust to be considered for clinical use.
 
-We demonstrated that classical machine learning techniques are extremely adept at handling the classification of “true” and “symmetry trap” TKA kinematics measurements from single-plane fluoroscopy.
-As a first study in this domain, benchmark comparisons with other metrics, datasets, or algorithms are not available.
-However, an accuracy level of at least 87\% establishes a useful performance benchmark in terms of clinical applications of these methods and for future research in this field.
-As expected, stacked generalization \cite{wolpertStackedGeneralization1992,smythLinearlyCombiningDensity1999}, where “the worst possible performance is the highest of any individual estimator” held true for our internal test set, and outperformed all other algorithms.
-Interestingly, the same trend did not hold for our external test set, which contained kinematics from patients, imaging machines, and surgeons that were completely withheld from training. In our external test set, SVMs with radial basis function kernel seems to outperform the other classifiers.
+We demonstrated that classical machine learning techniques are extremely adept
+at handling the classification of “true” and “symmetry trap” TKA kinematics
+measurements from single-plane fluoroscopy. As a first study in this domain,
+benchmark comparisons with other metrics, datasets, or algorithms are not
+available. However, an accuracy level of at least 87\% establishes a useful
+performance benchmark in terms of clinical applications of these methods and for
+future research in this field. As expected, stacked generalization
+\cite{wolpertStackedGeneralization1992,smythLinearlyCombiningDensity1999}, where
+“the worst possible performance is the highest of any individual estimator” held
+true for our internal test set, and outperformed all other algorithms.
+Interestingly, the same trend did not hold for our external test set, which
+contained kinematics from patients, imaging machines, and surgeons that were
+completely withheld from training. In our external test set, SVMs with radial
+basis function kernel seems to outperform the other classifiers.
 
 
-Our symmetry trap correction procedure has strong performance in the accuracy ($>91\%$) and specificity ($>94\%$).
-We note decreased sensitivity related to decreasing values of our $\psi$ term, consistent with intuition: when two possible poses are closer together, they are harder to disambiguate.
-When performance is measured based on $\psi$ values greater than 5 or 10 degrees, we see that our symmetry trap correction algorithm boasts notably increased performance (Table 2).
-Previous work has also shown an increase in the prevalence of symmetry traps in low-$\psi$ poses \cite{jensenJointTrackMachine2023}.
-We also note that in real-world data, we have imbalanced class representation because most symmetry traps are caught in the initial kinematics measurement, leaving only the most difficult cases for this algorithm to correct.
-These reasons both culminate with an expected decreased sensitivity when trying to correct symmetry trap poses.
-Future work might be able to address this problem using time-series machine learning algorithms like recurrent neural networks \cite{hochreiterLongShortTermMemory1997} and transformers \cite{vaswaniAttentionAllYou2017} to isolate specific images that have fallen into symmetry traps based on local and global relationships with other kinematics in that particular sequence.
-Additionally, 3D geometries could be used to impose penetration and separation penalties that are further used to refine ambiguous poses.
+Our symmetry trap correction procedure has strong performance in the accuracy
+($>91\%$) and specificity ($>94\%$). We note decreased sensitivity related to
+decreasing values of our $\psi$ term, consistent with intuition: when two
+possible poses are closer together, they are harder to disambiguate. When
+performance is measured based on $\psi$ values greater than 5 or 10 degrees, we
+see that our symmetry trap correction algorithm boasts notably increased
+performance (Table 2). Previous work has also shown an increase in the
+prevalence of symmetry traps in low-$\psi$ poses
+\cite{jensenJointTrackMachine2023}. We also note that in real-world data, we
+have imbalanced class representation because most symmetry traps are caught in
+the initial kinematics measurement, leaving only the most difficult cases for
+this algorithm to correct. These reasons both culminate with an expected
+decreased sensitivity when trying to correct symmetry trap poses. Future work
+might be able to address this problem using time-series machine learning
+algorithms like recurrent neural networks
+\cite{hochreiterLongShortTermMemory1997} and transformers
+\cite{vaswaniAttentionAllYou2017} to isolate specific images that have fallen
+into symmetry traps based on local and global relationships with other
+kinematics in that particular sequence. Additionally, 3D geometries could be
+used to impose penetration and separation penalties that are further used to
+refine ambiguous poses.
 
 
-The performance of autonomous measurements of single-plane fluoroscopy kinematics measurements already achieve clinically acceptable levels of error.
-Despite this, measurement errors still occur and roughly 67\% of images that are incorrectly optimized fall into symmetry traps \cite{jensenJointTrackMachine2023,brobergValidationMachineLearning2023}.
-With the techniques proposed in this work, we can drastically improve the overall performance of autonomous single-plane TKA kinematics measurements and remove the largest source of inaccuracy.
+The performance of autonomous measurements of single-plane fluoroscopy
+kinematics measurements already achieve clinically acceptable levels of error.
+Despite this, measurement errors still occur and roughly 67\% of images that are
+incorrectly optimized fall into symmetry traps
+\cite{jensenJointTrackMachine2023,brobergValidationMachineLearning2023}. With
+the techniques proposed in this work, we can drastically improve the overall
+performance of autonomous single-plane TKA kinematics measurements and remove
+the largest source of inaccuracy.
 
 
-Stratifying measurement performance by  (Table 2), it is clear that the joint viewing perspective is a dominant contributor to pose ambiguities.
-This suggests a modification to imaging protocols for measuring TKA kinematics is needed to minimize the number of images that fall into the “ambiguous zone”.
-Instead of “pure lateral” imaging that attempts to perfectly center the knee in the image frame, we suggest positioning the center of the knee 1–2 inches away from the center of projection, and to rotate the plane of the observed leg by 5 degrees from parallel with the image detector.
-These small adjustments to the image/patient alignment would cause all kinematics to have $\psi > 5^{\circ}$, which improves classification accuracy by at least 20\%. Similar imaging protocol improvements have been proposed for bi-plane RSA\cite{niesenReorientingTibialBaseplate2020}.
+Stratifying measurement performance by (Table 2), it is clear that the joint
+viewing perspective is a dominant contributor to pose ambiguities. This suggests
+a modification to imaging protocols for measuring TKA kinematics is needed to
+minimize the number of images that fall into the “ambiguous zone”. Instead of
+“pure lateral” imaging that attempts to perfectly center the knee in the image
+frame, we suggest positioning the center of the knee 1–2 inches away from the
+center of projection, and to rotate the plane of the observed leg by 5 degrees
+from parallel with the image detector. These small adjustments to the
+image/patient alignment would cause all kinematics to have $\psi > 5^{\circ}$,
+which improves classification accuracy by at least 20\%. Similar imaging
+protocol improvements have been proposed for bi-plane
+RSA\cite{niesenReorientingTibialBaseplate2020}.
 
-This study has some limitations. In this study, we use human-supervised kinematics from single-plane images, where there is always the possibility that the human operator fell into error when distinguishing between “true” and “symmetry trap” poses in a sequence of images. This can occur due to a myriad of factors, including low image quality and near-lateral imaging angles. To mitigate this, validated ground truth kinematics would be necessary to create a robust algorithm without any errors in the training data.
+This study has some limitations. In this study, we use human-supervised
+kinematics from single-plane images, where there is always the possibility that
+the human operator fell into error when distinguishing between “true” and
+“symmetry trap” poses in a sequence of images. This can occur due to a myriad of
+factors, including low image quality and near-lateral imaging angles. To
+mitigate this, validated ground truth kinematics would be necessary to create a
+robust algorithm without any errors in the training data.
 
-The correction algorithm recommended in this study assumes that the femoral implant has been properly registered with correct kinematics. While this is typically a good assumption because most femoral implants are asymmetric, and have an extremely low likelihood of falling into their own “symmetry traps” \cite{jensenJointTrackMachine2023}, improper registration of both a symmetric tibial implant and symmetric femoral implant would decrease the feasibility of the proposed procedure.
+The correction algorithm recommended in this study assumes that the femoral
+implant has been properly registered with correct kinematics. While this is
+typically a good assumption because most femoral implants are asymmetric, and
+have an extremely low likelihood of falling into their own “symmetry traps”
+\cite{jensenJointTrackMachine2023}, improper registration of both a symmetric
+tibial implant and symmetric femoral implant would decrease the feasibility of
+the proposed procedure.
 
 \section{Concluding Remarks}
-This study presents a novel method of overcoming one of the most pernicious issues facing researchers measuring TKA kinematics from single-plane fluoroscopy.
-Our algorithm combines 3 elements (1) calculating “symmetry trap” poses from “true” poses, (2) classical machine learning algorithms to classify a single pose as “true” or “symmetry trap” and (3) a procedure that applies those machine learning outputs to a contiguous sequence of kinematics to construct a spline and correct symmetry traps in real-world data.
-Additionally, the “symmetric flipper” algorithm provides a strong foundational approach for any symmetric object in a weak-perspective paradigm and can drastically reduce the complexity of many optimization algorithms by reducing the search space.
-Because this algorithm is model-agnostic, it could be used in many applications where orientation ambiguities arise.
-Our results also suggest slight alterations to imaging angles, which could reduce errors due to ambiguous poses resulting from symmetrical tibial implants.
-We believe that this method, along with recent advancements in autonomous kinematics measurements, will soon make it practical to perform dynamic TKA kinematics measurements in a clinical setting without the inherent limitations of single-plane radiographic imaging.
+This study presents a novel method of overcoming one of the most pernicious
+issues facing researchers measuring TKA kinematics from single-plane
+fluoroscopy. Our algorithm combines 3 elements (1) calculating “symmetry trap”
+poses from “true” poses, (2) classical machine learning algorithms to classify a
+single pose as “true” or “symmetry trap” and (3) a procedure that applies those
+machine learning outputs to a contiguous sequence of kinematics to construct a
+spline and correct symmetry traps in real-world data. Additionally, the
+“symmetric flipper” algorithm provides a strong foundational approach for any
+symmetric object in a weak-perspective paradigm and can drastically reduce the
+complexity of many optimization algorithms by reducing the search space. Because
+this algorithm is model-agnostic, it could be used in many applications where
+orientation ambiguities arise. Our results also suggest slight alterations to
+imaging angles, which could reduce errors due to ambiguous poses resulting from
+symmetrical tibial implants. We believe that this method, along with recent
+advancements in autonomous kinematics measurements, will soon make it practical
+to perform dynamic TKA kinematics measurements in a clinical setting without the
+inherent limitations of single-plane radiographic imaging.
 
 
 %%% Local Variables:

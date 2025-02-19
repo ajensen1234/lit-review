@@ -1,0 +1,28 @@
+\author{Andrew Jensen}
+\definecolor{UFBLUE}{HTML}{5d89cb}
+\usepackage{graphicx}
+\usetheme[progressbar=foot]{moloch}
+\usepackage[sorting=none,citestyle=numeric-comp,backend=biber, isbn=false, url=false]{biblatex}
+\usepackage{threeparttable}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty}
+\DeclareMathOperator*{\argmax}{\arg\!max}
+\DeclareMathOperator*{\argmin}{\arg\!min}
+\usepackage{tcolorbox}
+\tcbuselibrary{fitting}
+\setbeamercolor{frametitle}{bg=UFBLUE}
+\AtBeginSubsection{\begin{frame}\tableofcontents[currentsection,currentsubsection]\end{frame}}
+\renewcommand*{\bibfont}{\scriptsize}
+\setbeamercolor{title separator}{fg=UFBLUE}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{microtype}
+\setmainfont{TeX Gyre Pagella}
+\setsansfont{Source Sans 3}[Scale=0.95]
+\setmonofont{Hasklug Nerd Font}
+\setmathfont{TeX Gyre Pagella Math}
+\usepackage{xurl}  % Better URL handling
+\usepackage{siunitx}  % For consistent unit formatting
+\usepackage{booktabs}  % For professional tables

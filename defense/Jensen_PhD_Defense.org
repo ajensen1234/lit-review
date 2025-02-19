@@ -1,5 +1,6 @@
 #+AUTHOR: Andrew Jensen
 #+TITLE: Methods for Autonomous Measurement of 3D Joint Kinematics from 2D Fluoroscopic Images
+:DRAWER:
 #+SUBTITLE: A Dissertation Defense
 #+DATE: March 4, 2024
 #+BIBLIOGRAPHY: ../src/myBib.bib
@@ -12,37 +13,20 @@
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+HTML_LINK_UP:
 #+HTML_LINK_HOME:
-
 #+startup: beamer
 #+LaTeX_CLASS: beamer
-#+latex_header: \definecolor{UFBLUE}{HTML}{5d89cb}
-#+latex_header:\setbeamercolor{frametitle}{bg=UFBLUE}
-#+latex_header: \usepackage{graphicx}
-
 #+options: H:3
 #+latex_class: beamer
 #+LaTeX_CLASS_OPTIONS: [presentation, aspectratio=1610]
 #+columns: %45ITEM %10 BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
-#+beamer_theme: metropolis
-#+latex_header: \usetheme[progressbar=foot]{metropolis}
-#+latex_header: \usepackage[sorting=none,citestyle=numeric-comp,backend=biber,style=ieee, isbn=false, url=false]{biblatex}
-#+latex_header: \usepackage{threeparttable}
-#+latex_header: \usepackage{multirow}
-#+latex_header: \usepackage{tabularx}
-#+latex_header_extra: \usepackage{caption}
-#+latex_header_extra: \captionsetup[figure]{labelformat=empty}
-#+latex_header_extra: \DeclareMathOperator*{\argmax}{\arg\!max}
-#+latex_header_extra: \DeclareMathOperator*{\argmin}{\arg\!min}
-#+latex_header_extra: \AtBeginSubsection{\begin{frame}\tableofcontents[currentsection,currentsubsection]\end{frame}}
+#+latex_header_extra: \input{defense-preamble.tex}
+#+beamer_theme:
 #+beamer_color_theme:
 #+beamer_font_theme:
 #+beamer_inner_theme:
 #+beamer_outer_theme:
-#+LATEX_COMPILER: xelatex
-#+latex_header_extra: \usepackage{tcolorbox}
-#+latex_header_extra: \tcbuselibrary{fitting}
-#+latex_header: \renewcommand*{\bibfont}{\scriptsize}
-
+#+LATEX_COMPILER: lualatex
+:END:
 * Introduction :B_ignoreheading:
 :PROPERTIES:
 :BEAMER_env: ignoreheading
@@ -608,7 +592,7 @@ Found ``ambiguous zone'' within $3^{\circ}$ of pure lateral pose with high prope
 :BEAMER_col: 0.6
 :END:
 #+ATTR_Latex: :width \textwidth
-[[file:/home/ajensen123@ad.ufl.edu/figures/raster/sym-trap-quadrants-no-captions.png]]
+[[file:/home/ajj/figures/raster/sym-trap-quadrants-no-captions.png]]
 *** Solving the Symmetric Pose
 **** :BMCOL:
 :PROPERTIES:
@@ -639,7 +623,7 @@ Algorithm devised to "flip" pose into symmetric counterpart.
 :END:
 #+ATTR_LATEX: :width \textwidth
 #+CAPTION: The training data plotted with each axis representing an anatomical rotation (origin not to scale).
-[[file:/home/ajensen123@ad.ufl.edu/figures/raster/symmetry-trap-dataset.png]]
+[[file:/home/ajj/figures/raster/symmetry-trap-dataset.png]]
 *** Methods - Machine Learning
 Using \texttt{scikit-learn}, the following classifiers were implemented:
 
@@ -654,7 +638,7 @@ For an input image sequence, the following is performed:
 3. For all images that are labeled "ambiguous", determine which of the two poses is closer to the spline, and take that as the "correct" pose.
 *** Results - ML Classification
 #+ATTR_LATEX: :width \textwidth
-[[file:/home/ajensen123@ad.ufl.edu/figures/raster/sym-trap-ML-table.png]]
+[[file:/home/ajj/figures/raster/sym-trap-ML-table.png]]
 *** Results - Fixing "Symmetry Traps"
 + Accuracy: 91.9%
 + Sensitivity: 0.674
@@ -665,7 +649,7 @@ The distribution of $\psi$ for correct and incorrect frames was measured.
 + Average $\psi_{incorrect} = 7.12^{\circ}$.
 *** Results - Stratified $\psi$ Correction Performance
 #+attr_latex: :width \textwidth
-[[file:/home/ajensen123@ad.ufl.edu/figures/raster/stratified-psi-ML-table.png]]
+[[file:/home/ajj/figures/raster/stratified-psi-ML-table.png]]
 *** Discussion
 + Reliable post-processing method to overcome pernicious issue (30 years in the making!)
 + Suggests an imaging setup for measuring kinematics slightly off-oblique to escape "ambiguous zone"
@@ -1008,7 +992,7 @@ Any Questions?
 :PROPERTIES:
 :BEAMER_OPT: fragile, allowframebreaks,  label=
 :END:
-#+print_bibliography:
+#+print_bibliography: :heading none
 * Footnotes
 [fn:1] Published in the Journal of Arthroplasty [cite:@jensenJointTrackMachine2023]
 [fn:2] In Revision for Publication in the Journal of Biomechanics
